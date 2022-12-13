@@ -1,4 +1,4 @@
-package br.com.amorim.supermarket.repository;
+package br.com.amorim.supermarket.repository.subsection;
 
 import br.com.amorim.supermarket.model.subsection.SubSection;
 import org.springframework.data.jpa.repository.JpaRepository;

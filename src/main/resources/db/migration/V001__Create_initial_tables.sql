@@ -20,10 +20,9 @@ CREATE TABLE IF NOT EXISTS subsection (
     id UUID PRIMARY KEY,
     name VARCHAR(30) NOT NULL,
     code INTEGER NOT NULL,
-    products UUID NOT NULL,
     UNIQUE (id, code, name)
 );
 
 ALTER TABLE IF EXISTS product_data ADD CONSTRAINT FK_product_data_3
     FOREIGN KEY (subsection_id)
-    REFERENCES product_data (id);
+    REFERENCES subsection (id);
