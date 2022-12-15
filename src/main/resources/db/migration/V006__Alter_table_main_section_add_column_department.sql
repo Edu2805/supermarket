@@ -1,0 +1,1 @@
+ALTER TABLE IF EXISTS main_section ADD COLUMN department UUID NOT NULL;
