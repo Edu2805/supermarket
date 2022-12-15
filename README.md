@@ -4,6 +4,6 @@
 <p>Personal project to create a supermarket system with Java in the backend and PostgreSQL database. The frontend will be built in Angular in the future.</p>
 
 ### New features
-* Initial commits
+* Initial commits 
 
 <h4 align="center"> 🚧 Project under construction 🚧</h4>
