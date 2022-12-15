@@ -1,5 +1,3 @@
-<p align="center"><img height="80px" src="https://github.com/Edu2805/product-ordering-API/blob/main/img/logoSpring.png" width="80px"/></p>
-
 <h1 align="center">🛒  Spring Boot project - Supermarket 🛒</h1>
 <h2 align="center"> 💻 Advanced Spring boot project using some functional programming concepts. 💻</h2>
 
