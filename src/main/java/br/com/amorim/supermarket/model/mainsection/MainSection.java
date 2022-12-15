@@ -1,6 +1,5 @@
-package br.com.amorim.supermarket.model.subsection;
+package br.com.amorim.supermarket.model.mainsection;
 
-import br.com.amorim.supermarket.model.mainsection.MainSection;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,9 +17,8 @@ import java.util.UUID;
 @Setter
 
 @Entity
-@Table(name = "subsection")
-public class SubSection {
-
+@Table(name = "main_section")
+public class MainSection {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
@@ -32,9 +30,4 @@ public class SubSection {
     @Column(nullable = false)
     @NotNull(message = "Código não pode estar vazio")
     private BigInteger code;
-
-    @ManyToOne
-    @JoinColumn(name = "main_section")
-    private MainSection mainSection;
-
 }
