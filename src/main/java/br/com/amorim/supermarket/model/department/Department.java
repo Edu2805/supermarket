@@ -1,6 +1,5 @@
-package br.com.amorim.supermarket.model.mainsection;
+package br.com.amorim.supermarket.model.department;
 
-import br.com.amorim.supermarket.model.department.Department;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,8 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -25,8 +22,9 @@ import java.util.UUID;
 @Setter
 
 @Entity
-@Table(name = "main_section")
-public class MainSection {
+@Table(name = "department")
+public class Department {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
@@ -39,7 +37,4 @@ public class MainSection {
     @NotNull(message = "Código não pode estar vazio")
     private BigInteger code;
 
-    @ManyToOne
-    @JoinColumn(name = "department")
-    private Department department;
 }
