@@ -1,6 +1,7 @@
 package br.com.amorim.supermarket.model.employee;
 
 import br.com.amorim.supermarket.common.enums.Scholarity;
+import br.com.amorim.supermarket.model.establishment.Establishment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,14 +9,7 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.UniqueElements;
 import org.hibernate.validator.constraints.br.CPF;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
@@ -83,4 +77,8 @@ public class Employee {
     @Column(name = "mother_name", nullable = false, length = 50)
     @NotEmpty(message = "Nome da mãe não pode estar vazio")
     private String motherName;
+
+    @ManyToOne
+    @JoinColumn(name = "establishment")
+    private Establishment establishment;
 }
