@@ -1,16 +1,12 @@
 package br.com.amorim.supermarket.model.department;
 
+import br.com.amorim.supermarket.model.establishment.Establishment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
@@ -37,4 +33,7 @@ public class Department {
     @NotNull(message = "Código não pode estar vazio")
     private BigInteger code;
 
+    @ManyToOne
+    @JoinColumn(name = "establishment")
+    private Establishment establishment;
 }
