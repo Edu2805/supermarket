@@ -1,0 +1,1 @@
+ALTER TABLE IF EXISTS department ADD COLUMN establishment UUID NOT NULL;
