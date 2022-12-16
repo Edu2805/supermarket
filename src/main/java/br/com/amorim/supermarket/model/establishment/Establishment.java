@@ -55,7 +55,7 @@ public class Establishment {
     private String address;
 
     @Column(nullable = false, length = 11)
-    @NotEmpty(message = "Número de telefone não pode estar vazio")
+    @NotEmpty(message = "Número do telefone não pode estar vazio")
     private String phone;
 
     @Column(nullable = false, length = 60)
