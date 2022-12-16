@@ -1,0 +1,1 @@
+ALTER TABLE IF EXISTS employee ADD COLUMN establishment UUID NOT NULL;
