@@ -28,7 +28,7 @@ build:
     paths:
       - target/supermarket-0.0.1-SNAPSHOT.jar
 
-production:
+deploy:
   stage: deploy
   script:
     - echo "Deploy teste"
