@@ -33,4 +33,4 @@ deploy:
   script:
     - echo "Deploy teste"
   only:
-    - main
+    - master
