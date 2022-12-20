@@ -45,6 +45,7 @@ public class DepartmentService {
                                 "Departamento não encontrado"));
     }
 
+    @Transactional
     public void delete (UUID id) {
         departmentRepository.findById(id)
                 .map(existingDepartment -> {

@@ -33,6 +33,7 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
+    @Transactional
     public void update (Employee employee, UUID id) {
         employeeRepository.findById(id)
                 .map(existingEmployee -> {
@@ -44,6 +45,7 @@ public class EmployeeService {
                                 "Empregado não encontrado"));
     }
 
+    @Transactional
     public void delete (UUID id) {
         employeeRepository.findById(id)
                 .map(existingEmployee -> {
