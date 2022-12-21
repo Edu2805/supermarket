@@ -1,7 +1,8 @@
 package br.com.amorim.supermarket.service.establishment;
 
 import br.com.amorim.supermarket.model.establishment.Establishment;
-import br.com.amorim.supermarket.repository.establishment.EstablisumentRepository;
+import br.com.amorim.supermarket.repository.establishment.EstablishmentRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -11,17 +12,19 @@ import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
+@AllArgsConstructor
+
 @Service
 public class EstablishmentService {
 
-    EstablisumentRepository establisumentRepository;
+    EstablishmentRepository establishmentRepository;
 
     public List<Establishment> getAll () {
-        return establisumentRepository.findAll();
+        return establishmentRepository.findAll();
     }
 
     public Establishment findById (UUID id) {
-        return establisumentRepository.findById(id)
+        return establishmentRepository.findById(id)
                 .orElseThrow(() -> {
                     throw new ResponseStatusException(NOT_FOUND,
                             "Loja não encontrado");
@@ -29,15 +32,15 @@ public class EstablishmentService {
     }
     @Transactional
     public Establishment save (Establishment establishment) {
-        return establisumentRepository.save(establishment);
+        return establishmentRepository.save(establishment);
     }
 
     @Transactional
     public void update (Establishment establishment, UUID id) {
-        establisumentRepository.findById(id)
+        establishmentRepository.findById(id)
                 .map(existingEstablishment -> {
                     establishment.setId(existingEstablishment.getId());
-                    establisumentRepository.save(establishment);
+                    establishmentRepository.save(establishment);
                     return existingEstablishment;
                 }).orElseThrow(() ->
                         new ResponseStatusException(NOT_FOUND,
@@ -46,9 +49,9 @@ public class EstablishmentService {
 
     @Transactional
     public void delete (UUID id) {
-        establisumentRepository.findById(id)
+        establishmentRepository.findById(id)
                 .map(existingEstablishment -> {
-                    establisumentRepository.delete(existingEstablishment);
+                    establishmentRepository.delete(existingEstablishment);
                     return existingEstablishment;
                 }).orElseThrow(() ->
                         new ResponseStatusException(NOT_FOUND,
