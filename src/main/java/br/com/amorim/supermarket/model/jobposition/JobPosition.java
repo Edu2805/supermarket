@@ -1,6 +1,7 @@
 package br.com.amorim.supermarket.model.jobposition;
 
 import br.com.amorim.supermarket.model.employee.Employee;
+import br.com.amorim.supermarket.model.salary.Salary;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,6 +46,6 @@ public class JobPosition {
     private String assignments;
 
     @ManyToOne
-    @JoinColumn(name = "employee")
-    private Employee employee;
+    @JoinColumn(name = "salary")
+    private Salary salary;
 }

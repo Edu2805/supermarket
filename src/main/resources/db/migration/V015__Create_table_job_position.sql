@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS job_position (
     name VARCHAR(30) NOT NULL,
     code INTEGER NOT NULL,
     assignments VARCHAR(100),
-    employee UUID NOT NULL,
-    FOREIGN KEY (employee) REFERENCES employee (id),
+    salary UUID NOT NULL,
+    FOREIGN KEY (salary) REFERENCES salary (id),
     UNIQUE (id, name, code)
 );

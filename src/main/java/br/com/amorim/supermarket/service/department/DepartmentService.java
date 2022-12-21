@@ -2,6 +2,7 @@ package br.com.amorim.supermarket.service.department;
 
 import br.com.amorim.supermarket.model.department.Department;
 import br.com.amorim.supermarket.repository.department.DepartmentRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -10,6 +11,8 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
+
+@AllArgsConstructor
 
 @Service
 public class DepartmentService {

@@ -68,8 +68,4 @@ public class Salary {
     @Column(nullable = false, length = 100)
     @NotEmpty(message = "Beneficio não pode estar vazio")
     private String benefits;
-
-    @ManyToOne
-    @JoinColumn(name = "job_position")
-    private JobPosition jobPosition;
 }

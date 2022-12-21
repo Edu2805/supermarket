@@ -2,6 +2,7 @@ package br.com.amorim.supermarket.service.subsection;
 
 import br.com.amorim.supermarket.model.subsection.SubSection;
 import br.com.amorim.supermarket.repository.subsection.SubSectionRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -10,6 +11,8 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
+
+@AllArgsConstructor
 
 @Service
 public class SubSectionService {

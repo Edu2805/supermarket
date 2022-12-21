@@ -1,7 +1,8 @@
 package br.com.amorim.supermarket.model.employee;
 
 import br.com.amorim.supermarket.common.enums.Scholarity;
-import br.com.amorim.supermarket.model.establishment.Establishment;
+import br.com.amorim.supermarket.model.department.Department;
+import br.com.amorim.supermarket.model.jobposition.JobPosition;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -88,6 +89,10 @@ public class Employee {
     private String motherName;
 
     @ManyToOne
-    @JoinColumn(name = "establishment")
-    private Establishment establishment;
+    @JoinColumn(name = "department")
+    private Department department;
+
+    @ManyToOne
+    @JoinColumn(name = "job_position")
+    private JobPosition jobPosition;
 }

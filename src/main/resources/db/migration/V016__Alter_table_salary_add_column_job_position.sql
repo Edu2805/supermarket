@@ -1,1 +1,0 @@
-ALTER TABLE IF EXISTS salary ADD COLUMN job_position UUID NOT NULL;
