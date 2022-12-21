@@ -16,7 +16,7 @@ public class EstablishmentService {
 
     EstablisumentRepository establisumentRepository;
 
-    public List<Establishment> findBuId () {
+    public List<Establishment> getAll () {
         return establisumentRepository.findAll();
     }
 

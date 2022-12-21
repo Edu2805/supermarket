@@ -16,7 +16,7 @@ public class DepartmentService {
 
     DepartmentRepository departmentRepository;
 
-    public List<Department> getAll (UUID id) {
+    public List<Department> getAll () {
         return departmentRepository.findAll();
     }
 
