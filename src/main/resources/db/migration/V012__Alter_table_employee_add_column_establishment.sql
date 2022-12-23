@@ -1,1 +1,0 @@
-ALTER TABLE IF EXISTS employee ADD COLUMN department UUID NOT NULL;
