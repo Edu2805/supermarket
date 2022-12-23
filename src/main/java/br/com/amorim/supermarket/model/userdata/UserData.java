@@ -1,6 +1,6 @@
 package br.com.amorim.supermarket.model.userdata;
 
-import br.com.amorim.supermarket.common.enums.Role;
+import br.com.amorim.supermarket.common.enums.RoleType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,7 +41,7 @@ public class UserData {
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "role", nullable = false)
-    private Role role;
+    private RoleType role;
 
     @Column(name = "registration_date", nullable = false)
     @NotEmpty(message = "Data do registro do usuário não pode estar vazia")

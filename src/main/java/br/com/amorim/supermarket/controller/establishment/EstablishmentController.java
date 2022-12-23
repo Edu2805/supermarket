@@ -52,7 +52,7 @@ public class EstablishmentController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void delete (UUID id) {
+    public void delete (@PathVariable UUID id) {
         establishmentService.delete(id);
     }
 }

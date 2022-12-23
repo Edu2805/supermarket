@@ -1,6 +1,6 @@
 package br.com.amorim.supermarket.common.enums;
 
-public enum Role {
+public enum RoleType {
 
     ADMIN,
     EMPLOYEE,
