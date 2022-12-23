@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,6 +35,7 @@ public class UserDataService {
 
     @Transactional
     public UserData save (UserData userData) {
+        userData.setRegistrationDate(Timestamp.from(Instant.now()));
         return userDataRepository.save(userData);
     }
 
@@ -41,6 +44,7 @@ public class UserDataService {
         userDataRepository.findById(id)
                 .map(existingUserData -> {
                     userData.setId(existingUserData.getId());
+                    userData.setRegistrationDate(Timestamp.from(Instant.now()));
                     userDataRepository.save(userData);
                     return existingUserData;
                 }).orElseThrow(() ->

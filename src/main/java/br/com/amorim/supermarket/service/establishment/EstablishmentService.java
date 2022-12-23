@@ -27,7 +27,7 @@ public class EstablishmentService {
         return establishmentRepository.findById(id)
                 .orElseThrow(() -> {
                     throw new ResponseStatusException(NOT_FOUND,
-                            "Loja não encontrado");
+                            "Loja não encontrada");
                 });
     }
     @Transactional
@@ -44,7 +44,7 @@ public class EstablishmentService {
                     return existingEstablishment;
                 }).orElseThrow(() ->
                         new ResponseStatusException(NOT_FOUND,
-                                "Loja não encontrado"));
+                                "Loja não encontrada"));
     }
 
     @Transactional
@@ -55,6 +55,6 @@ public class EstablishmentService {
                     return existingEstablishment;
                 }).orElseThrow(() ->
                         new ResponseStatusException(NOT_FOUND,
-                                "Loja não encontrado"));
+                                "Loja não encontrada"));
     }
 }

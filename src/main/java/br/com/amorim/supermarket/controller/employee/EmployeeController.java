@@ -46,13 +46,13 @@ public class EmployeeController {
 
     @PutMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void update (Employee employee, UUID id) {
+    public void update (@RequestBody @Valid Employee employee, @PathVariable UUID id) {
         employeeService.update(employee, id);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void delete (UUID id) {
+    public void delete (@PathVariable UUID id) {
         employeeService.delete(id);
     }
 }

@@ -32,7 +32,7 @@ public class ProductData {
     private String name;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "scholarity", nullable = false)
+    @Column(name = "unity", nullable = false)
     private UnityType unity;
 
     @Column(name = "purchase_price", nullable = false, precision = 10, scale = 2)

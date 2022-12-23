@@ -1,6 +1,6 @@
 package br.com.amorim.supermarket.model.employee;
 
-import br.com.amorim.supermarket.common.enums.Scholarity;
+import br.com.amorim.supermarket.common.enums.ScholarityType;
 import br.com.amorim.supermarket.model.department.Department;
 import br.com.amorim.supermarket.model.jobposition.JobPosition;
 import br.com.amorim.supermarket.model.userdata.UserData;
@@ -75,7 +75,7 @@ public class Employee {
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "scholarity", nullable = false)
-    private Scholarity scholarity;
+    private ScholarityType scholarity;
 
     @Column(name = "dependents", nullable = false)
     private Boolean dependents;
