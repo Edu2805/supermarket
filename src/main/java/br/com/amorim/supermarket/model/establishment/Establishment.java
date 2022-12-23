@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.br.CNPJ;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,7 +39,6 @@ public class Establishment {
 
     @Column(nullable = false, length = 14)
     @NotEmpty(message = "CNPJ não pode estar vazio")
-    @CNPJ(message = "CNPJ inválido")
     private String cnpj;
 
     @Column(name = "state_registration", nullable = false, length = 20)

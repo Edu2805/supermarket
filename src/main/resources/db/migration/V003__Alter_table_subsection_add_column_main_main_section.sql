@@ -1,1 +1,0 @@
-ALTER TABLE IF EXISTS subsection ADD COLUMN main_section UUID NOT NULL;

@@ -1,19 +1,13 @@
 package br.com.amorim.supermarket.model.productdata;
 
+import br.com.amorim.supermarket.common.enums.UnityType;
 import br.com.amorim.supermarket.model.subsection.SubSection;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -37,9 +31,9 @@ public class ProductData {
     @NotEmpty(message = "Nome não pode estar vazio")
     private String name;
 
-    @Column(nullable = false)
-    @NotNull(message = "Quantidade não pode estar vazio")
-    private BigInteger unity;
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "scholarity", nullable = false)
+    private UnityType unity;
 
     @Column(name = "purchase_price", nullable = false, precision = 10, scale = 2)
     @NotNull(message = "Preço de compra não pode estar vazio")

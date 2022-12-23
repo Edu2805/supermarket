@@ -8,8 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.UniqueElements;
-import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -59,8 +57,6 @@ public class Employee {
 
     @Column(nullable = false, length = 11, unique = true)
     @NotEmpty(message = "CNPJ não pode estar vazio")
-    @UniqueElements(message = "Já existe um colaborador com esse CPF")
-    @CPF(message = "CPF inválido")
     private String cpf;
 
     @Column(length = 15)

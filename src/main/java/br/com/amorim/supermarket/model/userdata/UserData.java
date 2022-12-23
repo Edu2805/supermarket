@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import java.sql.Timestamp;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -41,4 +42,8 @@ public class UserData {
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "role", nullable = false)
     private Role role;
+
+    @Column(name = "registration_date", nullable = false)
+    @NotEmpty(message = "Data do registro do usuário não pode estar vazia")
+    private Timestamp registrationDate;
 }
