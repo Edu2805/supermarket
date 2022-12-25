@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS subsection (
 );
 
 CREATE TABLE IF NOT EXISTS main_section (
-  id UUID NOT NULL,
+   id UUID NOT NULL,
    name VARCHAR(30) NOT NULL,
    code DECIMAL NOT NULL,
    department UUID,
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS main_section (
 );
 
 CREATE TABLE IF NOT EXISTS department (
-  id UUID NOT NULL,
+   id UUID NOT NULL,
    name VARCHAR(30) NOT NULL,
    code DECIMAL NOT NULL,
    establishment UUID,
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS department (
 );
 
 CREATE TABLE IF NOT EXISTS establishment (
-  id UUID NOT NULL,
+   id UUID NOT NULL,
    name VARCHAR(50) NOT NULL,
    code DECIMAL NOT NULL,
    cnpj VARCHAR(14) NOT NULL,
@@ -55,22 +55,10 @@ CREATE TABLE IF NOT EXISTS establishment (
 
 CREATE TABLE IF NOT EXISTS employee (
    id UUID NOT NULL,
-   first_name VARCHAR(30) NOT NULL,
-   middle_name VARCHAR(30),
-   last_name VARCHAR(30) NOT NULL,
    register_number DECIMAL NOT NULL,
-   cpf VARCHAR(11) NOT NULL,
-   rg VARCHAR(15),
-   nationality VARCHAR(20) NOT NULL,
-   naturalness VARCHAR(20) NOT NULL,
-   birth_date date NOT NULL,
-   scholarity INTEGER NOT NULL,
-   dependents BOOLEAN NOT NULL,
-   father_name VARCHAR(50),
-   mother_name VARCHAR(50) NOT NULL,
+   person UUID,
    department UUID,
    job_position UUID,
-   user_data UUID,
    CONSTRAINT pk_employee PRIMARY KEY (id)
 );
 
@@ -97,11 +85,31 @@ CREATE TABLE IF NOT EXISTS job_position (
    CONSTRAINT pk_job_position PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS user_data (
-   id UUID NOT NULL,
-   user_name VARCHAR(10) NOT NULL,
+CREATE TABLE user_data (
+  id UUID NOT NULL,
+   user_name VARCHAR(50) NOT NULL,
    password VARCHAR(8) NOT NULL,
    role INTEGER NOT NULL,
    registration_date TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+   is_employee BOOLEAN NOT NULL,
    CONSTRAINT pk_user_data PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS person (
+   id UUID NOT NULL,
+   first_name VARCHAR(30) NOT NULL,
+   middle_name VARCHAR(30),
+   last_name VARCHAR(30) NOT NULL,
+   cpf VARCHAR(11) NOT NULL,
+   rg VARCHAR(15),
+   nationality VARCHAR(20),
+   naturalness VARCHAR(20),
+   birth_date date NOT NULL,
+   scholarity INTEGER,
+   dependents BOOLEAN,
+   father_name VARCHAR(50),
+   mother_name VARCHAR(50) NOT NULL,
+   email VARCHAR(50) NOT NULL,
+   user_data UUID,
+   CONSTRAINT pk_person PRIMARY KEY (id)
 );
