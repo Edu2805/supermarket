@@ -31,7 +31,7 @@ public class UserData {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(name = "user_name", nullable = false, length = 10)
+    @Column(name = "user_name", nullable = false, length = 50)
     @NotEmpty(message = "Usuário não pode estar vazio")
     private String userName;
 
@@ -46,4 +46,8 @@ public class UserData {
     @Column(name = "registration_date", nullable = false)
     @NotEmpty(message = "Data do registro do usuário não pode estar vazia")
     private Timestamp registrationDate;
+
+    @Column(name = "is_employee", nullable = false)
+    @NotEmpty(message = "É funcionário? não pode estar vazio")
+    private Boolean isEmployee;
 }

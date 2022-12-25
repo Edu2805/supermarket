@@ -1,9 +1,10 @@
 ALTER TABLE IF EXISTS department ADD CONSTRAINT unique_name_department UNIQUE (name);
 ALTER TABLE IF EXISTS department ADD CONSTRAINT unique_code_department UNIQUE (code);
 ALTER TABLE IF EXISTS employee ADD CONSTRAINT unique_register_number_employee UNIQUE (register_number);
-ALTER TABLE IF EXISTS employee ADD CONSTRAINT unique_cpf_employee UNIQUE (cpf);
-ALTER TABLE IF EXISTS employee ADD CONSTRAINT unique_rg_employee UNIQUE (rg);
-ALTER TABLE IF EXISTS employee ADD CONSTRAINT unique_user_data_employee UNIQUE (user_data);
+ALTER TABLE IF EXISTS employee ADD CONSTRAINT unique_person_employee UNIQUE (person);
+ALTER TABLE IF EXISTS person ADD CONSTRAINT unique_cpf_employee UNIQUE (cpf);
+ALTER TABLE IF EXISTS person ADD CONSTRAINT unique_rg_employee UNIQUE (rg);
+ALTER TABLE IF EXISTS person ADD CONSTRAINT unique_user_data_employee UNIQUE (user_data);
 ALTER TABLE IF EXISTS establishment ADD CONSTRAINT unique_code_establishment UNIQUE (code);
 ALTER TABLE IF EXISTS establishment ADD CONSTRAINT unique_cnpj_establishment UNIQUE (cnpj);
 ALTER TABLE IF EXISTS establishment ADD CONSTRAINT unique_state_registration_establishment UNIQUE (state_registration);
