@@ -2,6 +2,7 @@ package br.com.amorim.supermarket.service.productdata;
 
 import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.repository.productdata.ProductDataReposotiry;
+import br.com.amorim.supermarket.service.productdata.productvalidator.ProductValidatorsImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -10,6 +11,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @AllArgsConstructor
@@ -18,6 +20,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class ProductDataService {
 
     ProductDataReposotiry productDataReposotiry;
+    ProductValidatorsImpl productValidators;
 
     public List<ProductData> getAll() {
         return productDataReposotiry.findAll();
@@ -33,6 +36,15 @@ public class ProductDataService {
 
     @Transactional
     public ProductData save (ProductData productData) {
+        // todo Criar um Handler de erros
+        if (!productValidators.whenCreateWithOutProviderAndSubSection(productData)) {
+            throw new ResponseStatusException(BAD_REQUEST,
+                    "Houve um erro ao cadastrar o produto, verifique se o mesmo já possui uma subseção e um fornecedor cadastrado");
+        }
+        if (productValidators.whenCreateWithOutName(productData.getName())) {
+            throw new ResponseStatusException(BAD_REQUEST,
+                    "Não é possível cadastrar um produto sem o nome.");
+        }
         return productDataReposotiry.save(productData);
     }
 
