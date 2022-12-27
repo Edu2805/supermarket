@@ -1,5 +1,7 @@
 package br.com.amorim.supermarket.controller.productdata;
 
+import br.com.amorim.supermarket.controller.productdata.dto.ConvertProductMapperImpl;
+import br.com.amorim.supermarket.controller.productdata.dto.ProductDTO;
 import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.service.productdata.ProductDataService;
 import lombok.AllArgsConstructor;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,6 +31,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 public class ProductDataController {
 
     private ProductDataService productDataService;
+    private ConvertProductMapperImpl convertProductMapperImpl;
 
     @GetMapping
     public List<ProductData> findAll () {
@@ -40,8 +45,12 @@ public class ProductDataController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public ProductData save (@RequestBody @Valid ProductData productData) {
-        return productDataService.save(productData);
+    public ProductData save (@RequestBody @Valid ProductDTO productDTO) {
+        //todo calcular a margem, gerenciar o código interno
+        var newProduct = convertProductMapperImpl.createProductMapper(productDTO);
+        newProduct.setMargin(BigDecimal.valueOf(0.45));
+        newProduct.setInternalCode(BigInteger.valueOf(123));
+        return productDataService.save(newProduct);
     }
 
     @PutMapping("/{id}")

@@ -68,7 +68,7 @@ public class ProductData {
 
     @Column(nullable = false)
     @NotNull(message = "Estoque não pode estar vazio")
-    private BigInteger inventory;
+    private BigDecimal inventory;
 
     @ManyToOne
     @JoinColumn(name = "subsection_id")
