@@ -20,3 +20,7 @@ ALTER TABLE IF EXISTS product_data ADD CONSTRAINT unique_internal_code_data UNIQ
 ALTER TABLE IF EXISTS subsection ADD CONSTRAINT unique_name_subsection UNIQUE (name);
 ALTER TABLE IF EXISTS subsection ADD CONSTRAINT unique_code_subsection UNIQUE (code);
 ALTER TABLE IF EXISTS user_data ADD CONSTRAINT unique_columns_user_data UNIQUE (user_name);
+ALTER TABLE IF EXISTS provider ADD CONSTRAINT unique_code_provider UNIQUE (code);
+ALTER TABLE IF EXISTS provider ADD CONSTRAINT unique_subscription_number_provider UNIQUE (subscription_number);
+ALTER TABLE IF EXISTS provider ADD CONSTRAINT unique_state_registration_provider UNIQUE (state_registration);
+ALTER TABLE IF EXISTS provider ADD CONSTRAINT unique_municipal_registration_provider UNIQUE (municipal_registration);

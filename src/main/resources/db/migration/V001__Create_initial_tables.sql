@@ -7,12 +7,12 @@ CREATE TABLE IF NOT EXISTS product_data (
    purchase_price DECIMAL(10, 2) NOT NULL,
    sale_price DECIMAL(10, 2) NOT NULL,
    margin DECIMAL(10, 2),
-   provider VARCHAR(60) NOT NULL,
    ean_13 VARCHAR(13),
    dun_14 VARCHAR(14),
    internal_code DECIMAL NOT NULL,
    inventory DECIMAL NOT NULL,
    subsection_id UUID,
+   provider_product UUID,
    CONSTRAINT pk_product_data PRIMARY KEY (id)
 );
 
@@ -112,4 +112,18 @@ CREATE TABLE IF NOT EXISTS person (
    email VARCHAR(50) NOT NULL,
    user_data UUID,
    CONSTRAINT pk_person PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS provider (
+   id UUID NOT NULL,
+   name VARCHAR(50) NOT NULL,
+   code DECIMAL NOT NULL,
+   subscription_type INTEGER NOT NULL,
+   subscription_number VARCHAR(50) NOT NULL,
+   state_registration VARCHAR(20) NOT NULL,
+   municipal_registration VARCHAR(20),
+   address VARCHAR(60) NOT NULL,
+   phone VARCHAR(11) NOT NULL,
+   responsible VARCHAR(60) NOT NULL,
+   CONSTRAINT pk_provider PRIMARY KEY (id)
 );

@@ -6,3 +6,4 @@ ALTER TABLE IF EXISTS person ADD CONSTRAINT foreign_key_person_to_user_data FORE
 ALTER TABLE IF EXISTS main_section ADD CONSTRAINT foreign_key_department_to_main_section FOREIGN KEY (department) REFERENCES department (id);
 ALTER TABLE IF EXISTS product_data ADD CONSTRAINT foreign_key_subsection_to_product_data FOREIGN KEY (subsection_id) REFERENCES subsection (id);
 ALTER TABLE IF EXISTS subsection ADD CONSTRAINT foreign_key_main_section_to_sub_section FOREIGN KEY (main_section) REFERENCES main_section (id);
+ALTER TABLE IF EXISTS product_data ADD CONSTRAINT foreign_key_provider_product_to_product_data FOREIGN KEY (provider_product) REFERENCES provider (id);
