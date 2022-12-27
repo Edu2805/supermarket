@@ -1,13 +1,23 @@
 package br.com.amorim.supermarket.model.productdata;
 
 import br.com.amorim.supermarket.common.enums.UnityType;
+import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
 import br.com.amorim.supermarket.model.subsection.SubSection;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -46,10 +56,6 @@ public class ProductData {
     @Column(precision = 10, scale = 2)
     private BigDecimal margin;
 
-    @Column(nullable = false, length = 60)
-    @NotEmpty(message = "Fornecedor não pode estar vazio")
-    private String provider;
-
     @Column(name = "EAN_13", length = 13)
     private String ean13;
 
@@ -67,4 +73,8 @@ public class ProductData {
     @ManyToOne
     @JoinColumn(name = "subsection_id")
     private SubSection subSection;
+
+    @ManyToOne
+    @JoinColumn(name = "provider_product")
+    private ProviderProduct providerProduct;
 }
