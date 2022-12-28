@@ -3,7 +3,6 @@ package br.com.amorim.supermarket.controller.productdata.dto;
 import br.com.amorim.supermarket.common.enums.UnityType;
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
 import br.com.amorim.supermarket.model.subsection.SubSection;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,9 +13,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
