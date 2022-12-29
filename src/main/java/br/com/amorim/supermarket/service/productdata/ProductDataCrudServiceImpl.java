@@ -2,7 +2,7 @@ package br.com.amorim.supermarket.service.productdata;
 
 import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.repository.productdata.ProductDataReposotiry;
-import br.com.amorim.supermarket.service.productdata.calculatemargin.CalculateMarginImpl;
+import br.com.amorim.supermarket.service.productdata.calculatemargin.CalculateMargin;
 import br.com.amorim.supermarket.service.productdata.productvalidator.WhenCreateWithOutNameImpl;
 import br.com.amorim.supermarket.service.productdata.productvalidator.WhenCreateWithoutProviderImpl;
 import br.com.amorim.supermarket.service.productdata.productvalidator.WhenCreateWithoutSubSectionImpl;
@@ -22,13 +22,13 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @AllArgsConstructor
 
 @Service
-public class ProductDataCrudServiceImpl implements ProductDataCrudService{
+public class ProductDataCrudServiceImpl implements ProductDataCrudService {
 
     private ProductDataReposotiry productDataReposotiry;
     private WhenCreateWithOutNameImpl whenCreateWithOutName;
     private WhenCreateWithoutProviderImpl whenCreateWithoutProvider;
     private WhenCreateWithoutSubSectionImpl whenCreateWithoutSubSection;
-    private CalculateMarginImpl calculateMargin;
+    private CalculateMargin calculateMargin;
 
     @Override
     public List<ProductData> getAll() {
@@ -63,7 +63,7 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService{
         }
         BigDecimal margin = calculateMargin.calculate(productData);
         productData.setMargin(margin);
-        productData.setInternalCode(BigInteger.valueOf(4));
+        productData.setInternalCode(BigInteger.valueOf(7));
         return productDataReposotiry.save(productData);
     }
 
