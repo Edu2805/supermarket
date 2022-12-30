@@ -1,6 +1,6 @@
 package br.com.amorim.supermarket.controller.productdata;
 
-import br.com.amorim.supermarket.controller.productdata.dto.ConvertProductMapperImpl;
+import br.com.amorim.supermarket.controller.productdata.dto.ConvertProductMapper;
 import br.com.amorim.supermarket.controller.productdata.dto.ProductDTO;
 import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.service.productdata.ProductDataCrudServiceImpl;
@@ -29,7 +29,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 public class ProductDataController {
 
     private ProductDataCrudServiceImpl productDataService;
-    private ConvertProductMapperImpl convertProductMapperImpl;
+    private ConvertProductMapper convertProductMapper;
 
     @GetMapping
     public List<ProductData> findAll () {
@@ -44,7 +44,7 @@ public class ProductDataController {
     @PostMapping
     @ResponseStatus(CREATED)
     public ProductData save (@RequestBody @Valid ProductDTO productDTO) {
-        var newProduct = convertProductMapperImpl.createProductMapper(productDTO);
+        var newProduct = convertProductMapper.createProductMapper(productDTO);
         return productDataService.save(newProduct);
     }
 
