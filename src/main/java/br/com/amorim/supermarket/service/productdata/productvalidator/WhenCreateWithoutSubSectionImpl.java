@@ -16,6 +16,6 @@ public class WhenCreateWithoutSubSectionImpl implements WhenCreateWithoutSubSect
      */
     @Override
     public boolean validate(ProductData productData) {
-        return productData.getSubSection() != null;
+        return productData.getSubSection() == null;
     }
 }

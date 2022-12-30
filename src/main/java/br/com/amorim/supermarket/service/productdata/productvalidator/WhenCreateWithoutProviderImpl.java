@@ -17,6 +17,6 @@ public class WhenCreateWithoutProviderImpl implements WhenCreateWithoutProvider 
      */
     @Override
     public boolean validate(ProductData productData) {
-        return productData.getProviderProduct() != null;
+        return productData.getProviderProduct() == null;
     }
 }
