@@ -7,6 +7,7 @@ import br.com.amorim.supermarket.service.productdata.generateinternalcode.Genera
 import br.com.amorim.supermarket.service.productdata.productvalidator.WhenCreateWithoutName;
 import br.com.amorim.supermarket.service.productdata.productvalidator.WhenCreateWithoutProvider;
 import br.com.amorim.supermarket.service.productdata.productvalidator.WhenCreateWithoutSubSection;
+import br.com.amorim.supermarket.service.productdata.productvalidator.WhenCreateWithoutUnity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -33,6 +34,7 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
     private WhenCreateWithoutName whenCreateWithOutName;
     private WhenCreateWithoutProvider whenCreateWithoutProvider;
     private WhenCreateWithoutSubSection whenCreateWithoutSubSection;
+    private WhenCreateWithoutUnity whenCreateWithoutUnity;
     private CalculateMargin calculateMargin;
     private GenerateInternalCode generateInternalCode;
 
@@ -54,17 +56,21 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
     @Override
     public ProductData save (ProductData productData) {
         // todo Criar um Handler de erros
-        if (!whenCreateWithoutSubSection.validate(productData)) {
+        if (whenCreateWithoutSubSection.validate(productData)) {
             throw new ResponseStatusException(BAD_REQUEST,
                     "Houve um erro ao cadastrar o produto, verifique se o mesmo já possui uma subseção cadastrada");
         }
-        if (!whenCreateWithoutProvider.validate(productData)) {
+        if (whenCreateWithoutProvider.validate(productData)) {
             throw new ResponseStatusException(BAD_REQUEST,
                     "Houve um erro ao cadastrar o produto, verifique se o mesmo já possui um fornecedor cadastrado");
         }
         if (whenCreateWithOutName.validate(productData)) {
             throw new ResponseStatusException(BAD_REQUEST,
                     "Não é possível cadastrar um produto sem o nome.");
+        }
+        if (whenCreateWithoutUnity.validate(productData)) {
+            throw new ResponseStatusException(BAD_REQUEST,
+                    "Não é possível cadastrar um produto sem o tipo de unidade de medida.");
         }
         BigDecimal margin = calculateMargin.calculate(productData);
         BigInteger incrementInternalCode = generateInternalCode.generate(productData);
