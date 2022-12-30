@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS product_data (
    unity INTEGER NOT NULL,
    purchase_price DECIMAL(10, 2) NOT NULL,
    sale_price DECIMAL(10, 2) NOT NULL,
-   margin DECIMAL(10, 2),
+   margin DECIMAL(10, 4),
    ean_13 VARCHAR(13),
    dun_14 VARCHAR(14),
    internal_code DECIMAL NOT NULL,

@@ -3,9 +3,10 @@ package br.com.amorim.supermarket.service.productdata;
 import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.repository.productdata.ProductDataReposotiry;
 import br.com.amorim.supermarket.service.productdata.calculatemargin.CalculateMargin;
-import br.com.amorim.supermarket.service.productdata.productvalidator.WhenCreateWithOutNameImpl;
-import br.com.amorim.supermarket.service.productdata.productvalidator.WhenCreateWithoutProviderImpl;
-import br.com.amorim.supermarket.service.productdata.productvalidator.WhenCreateWithoutSubSectionImpl;
+import br.com.amorim.supermarket.service.productdata.generateinternalcode.GenerateInternalCode;
+import br.com.amorim.supermarket.service.productdata.productvalidator.WhenCreateWithoutName;
+import br.com.amorim.supermarket.service.productdata.productvalidator.WhenCreateWithoutProvider;
+import br.com.amorim.supermarket.service.productdata.productvalidator.WhenCreateWithoutSubSection;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -19,16 +20,21 @@ import java.util.UUID;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
+/**
+ * Implementação do CRUD de ProductData
+ */
+
 @AllArgsConstructor
 
 @Service
 public class ProductDataCrudServiceImpl implements ProductDataCrudService {
 
     private ProductDataReposotiry productDataReposotiry;
-    private WhenCreateWithOutNameImpl whenCreateWithOutName;
-    private WhenCreateWithoutProviderImpl whenCreateWithoutProvider;
-    private WhenCreateWithoutSubSectionImpl whenCreateWithoutSubSection;
+    private WhenCreateWithoutName whenCreateWithOutName;
+    private WhenCreateWithoutProvider whenCreateWithoutProvider;
+    private WhenCreateWithoutSubSection whenCreateWithoutSubSection;
     private CalculateMargin calculateMargin;
+    private GenerateInternalCode generateInternalCode;
 
     @Override
     public List<ProductData> getAll() {
@@ -48,7 +54,6 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
     @Override
     public ProductData save (ProductData productData) {
         // todo Criar um Handler de erros
-        // todo gerenciar o código interno
         if (!whenCreateWithoutSubSection.validate(productData)) {
             throw new ResponseStatusException(BAD_REQUEST,
                     "Houve um erro ao cadastrar o produto, verifique se o mesmo já possui uma subseção cadastrada");
@@ -62,8 +67,9 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
                     "Não é possível cadastrar um produto sem o nome.");
         }
         BigDecimal margin = calculateMargin.calculate(productData);
+        BigInteger incrementInternalCode = generateInternalCode.generate(productData);
         productData.setMargin(margin);
-        productData.setInternalCode(BigInteger.valueOf(7));
+        productData.setInternalCode(incrementInternalCode);
         return productDataReposotiry.save(productData);
     }
 
