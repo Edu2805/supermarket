@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
  * Classe que implementa a validação se o nome é null
  */
 
-@Component
-public class WhenCreateWithoutNameImpl implements WhenCreateWithoutName {
+@Component("validateName")
+public class WhenCreateWithoutNameImpl implements ProductValitador {
 
     /**
      * Implementa a lógica onde verifica se o name de ProductData é igual a null

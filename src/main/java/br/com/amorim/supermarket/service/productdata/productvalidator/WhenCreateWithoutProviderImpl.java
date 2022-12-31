@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
  * Classe que implementa a validação se o fornecedor é null
  */
 
-@Component
-public class WhenCreateWithoutProviderImpl implements WhenCreateWithoutProvider {
+@Component("validateProvider")
+public class WhenCreateWithoutProviderImpl implements ProductValitador {
 
     /**
      * Implementa a lógica onde verifica se o fornecedor de ProductData é diferente de null

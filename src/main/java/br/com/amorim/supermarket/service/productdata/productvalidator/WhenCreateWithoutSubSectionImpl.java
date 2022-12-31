@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 /**
  * Classe que implementa a validação se a sub-seção é null
  */
-@Component
-public class WhenCreateWithoutSubSectionImpl implements WhenCreateWithoutSubSection {
+@Component("validateSubsection")
+public class WhenCreateWithoutSubSectionImpl implements ProductValitador {
 
     /**
      * Implementa a lógica onde verifica se a sub-seção de ProductData é diferente de null
