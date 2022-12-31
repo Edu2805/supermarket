@@ -4,11 +4,10 @@ import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.repository.productdata.ProductDataReposotiry;
 import br.com.amorim.supermarket.service.productdata.calculatemargin.CalculateMargin;
 import br.com.amorim.supermarket.service.productdata.generateinternalcode.GenerateInternalCode;
-import br.com.amorim.supermarket.service.productdata.productvalidator.WhenCreateWithoutName;
-import br.com.amorim.supermarket.service.productdata.productvalidator.WhenCreateWithoutProvider;
-import br.com.amorim.supermarket.service.productdata.productvalidator.WhenCreateWithoutSubSection;
-import br.com.amorim.supermarket.service.productdata.productvalidator.WhenCreateWithoutUnity;
+import br.com.amorim.supermarket.service.productdata.productvalidator.ProductValitador;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -31,10 +30,14 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class ProductDataCrudServiceImpl implements ProductDataCrudService {
 
     private ProductDataReposotiry productDataReposotiry;
-    private WhenCreateWithoutName whenCreateWithOutName;
-    private WhenCreateWithoutProvider whenCreateWithoutProvider;
-    private WhenCreateWithoutSubSection whenCreateWithoutSubSection;
-    private WhenCreateWithoutUnity whenCreateWithoutUnity;
+    @Qualifier(value = "validateName") @NonNull private ProductValitador validateName;
+    @Qualifier(value = "validateProvider") @NonNull private ProductValitador validateProvider;
+    @Qualifier(value = "validateSubsection") @NonNull private ProductValitador validateSubsection;
+    @Qualifier(value = "validateUnity") @NonNull private ProductValitador validateUnity;
+    @Qualifier(value = "validateEAN13OrDUN14") @NonNull private ProductValitador validateEAN13OrDUN14;
+    @Qualifier(value = "validateInventory") @NonNull private ProductValitador validateInventory;
+    @Qualifier(value = "validatePurchasePrice") @NonNull private ProductValitador validatePurchasePrice;
+    @Qualifier(value = "validateSalePrice") @NonNull private ProductValitador validateSalePrice;
     private CalculateMargin calculateMargin;
     private GenerateInternalCode generateInternalCode;
 
@@ -56,21 +59,38 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
     @Override
     public ProductData save (ProductData productData) {
         // todo Criar um Handler de erros
-        if (whenCreateWithoutSubSection.validate(productData)) {
+        // todo Tentar isolar as mensagens em um método
+        if (validateSubsection.validate(productData)) {
             throw new ResponseStatusException(BAD_REQUEST,
                     "Houve um erro ao cadastrar o produto, verifique se o mesmo já possui uma subseção cadastrada");
         }
-        if (whenCreateWithoutProvider.validate(productData)) {
+        if (validateProvider.validate(productData)) {
             throw new ResponseStatusException(BAD_REQUEST,
                     "Houve um erro ao cadastrar o produto, verifique se o mesmo já possui um fornecedor cadastrado");
         }
-        if (whenCreateWithOutName.validate(productData)) {
+        if (validateName.validate(productData)) {
             throw new ResponseStatusException(BAD_REQUEST,
                     "Não é possível cadastrar um produto sem o nome.");
         }
-        if (whenCreateWithoutUnity.validate(productData)) {
+        if (validateUnity.validate(productData)) {
             throw new ResponseStatusException(BAD_REQUEST,
                     "Não é possível cadastrar um produto sem o tipo de unidade de medida.");
+        }
+        if (validateEAN13OrDUN14.validate(productData)) {
+            throw new ResponseStatusException(BAD_REQUEST,
+                    "Não é possível cadastrar um produto sem um EAN 13 ou um DUN 14.");
+        }
+        if (validateInventory.validate(productData)) {
+            throw new ResponseStatusException(BAD_REQUEST,
+                    "Não é possível cadastrar um produto com estoque nulo.");
+        }
+        if (validatePurchasePrice.validate(productData)) {
+            throw new ResponseStatusException(BAD_REQUEST,
+                    "Não é possível cadastrar um produto sem preço de compra.");
+        }
+        if (validateSalePrice.validate(productData)) {
+            throw new ResponseStatusException(BAD_REQUEST,
+                    "Não é possível cadastrar um produto sem preço de venda.");
         }
         BigDecimal margin = calculateMargin.calculate(productData);
         BigInteger incrementInternalCode = generateInternalCode.generate(productData);
