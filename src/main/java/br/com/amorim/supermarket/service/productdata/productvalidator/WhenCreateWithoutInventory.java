@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  */
 
 @Component("validateInventory")
-public class WhenCreateWithoutInventoryImpl implements ProductValitador{
+public class WhenCreateWithoutInventory implements ProductValitadorImpl {
 
     /**
      * Implementa a lógica onde verifica se o inventory de ProductData é igual a null

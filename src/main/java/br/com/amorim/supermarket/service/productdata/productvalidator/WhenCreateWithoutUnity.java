@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  */
 
 @Component("validateUnity")
-public class WhenCreateWithoutUnityImpl implements ProductValitador{
+public class WhenCreateWithoutUnity implements ProductValitadorImpl {
 
     /**
      * Implementa a lógica onde verifica se tipo de unidade de medida do produto é diferente de null

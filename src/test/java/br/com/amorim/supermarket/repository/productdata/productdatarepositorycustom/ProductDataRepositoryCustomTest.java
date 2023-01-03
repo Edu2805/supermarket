@@ -33,10 +33,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes= SupermarketApplication.class)
-public class ProductDataRepositoryCustomImplTest {
+public class ProductDataRepositoryCustomTest {
 
     @Autowired
-    private ProductDataRepositoryCustom productDataRepositoryCustom;
+    private ProductDataRepositoryCustomImpl productDataRepositoryCustom;
     @Autowired
     private DepartmentRepository departmentRepository;
     @Autowired

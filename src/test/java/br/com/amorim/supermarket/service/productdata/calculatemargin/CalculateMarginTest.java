@@ -19,12 +19,12 @@ import static java.util.UUID.randomUUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class CalculateMarginImplTest {
+public class CalculateMarginTest {
 
     @Mock
-    private CalculateMargin calculateMarginInterfaceMock;
+    private CalculateMarginImpl calculateMarginInterfaceMock;
     @InjectMocks
-    private CalculateMarginImpl calculateMarginImplMock;
+    private CalculateMargin calculateMarginImplMock;
     public static final java.util.UUID UUID = randomUUID();
     public static final String NAME = "Produto teste";
 
