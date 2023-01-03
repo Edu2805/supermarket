@@ -1,9 +1,9 @@
 package br.com.amorim.supermarket.controller.productdata;
 
-import br.com.amorim.supermarket.controller.productdata.dto.ConvertProductMapper;
+import br.com.amorim.supermarket.controller.productdata.dto.ConvertProductMapperImpl;
 import br.com.amorim.supermarket.controller.productdata.dto.ProductDTO;
 import br.com.amorim.supermarket.model.productdata.ProductData;
-import br.com.amorim.supermarket.service.productdata.ProductDataCrudService;
+import br.com.amorim.supermarket.service.productdata.ProductDataCrudServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,8 +28,8 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 @RequestMapping("product")
 public class ProductDataController {
 
-    private ProductDataCrudService productDataService;
-    private ConvertProductMapper convertProductMapper;
+    private ProductDataCrudServiceImpl productDataService;
+    private ConvertProductMapperImpl convertProductMapper;
 
     @GetMapping
     public List<ProductData> findAll () {

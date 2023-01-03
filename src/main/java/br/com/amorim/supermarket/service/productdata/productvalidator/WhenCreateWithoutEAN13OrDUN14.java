@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  */
 
 @Component("validateEAN13OrDUN14")
-public class WhenCreateWithoutEAN13OrDUN14Impl implements ProductValitador{
+public class WhenCreateWithoutEAN13OrDUN14 implements ProductValitadorImpl {
 
     /**
      * Implementa a lógica onde verifica se o EAN 13 ou DUN 14 estão preenchidos

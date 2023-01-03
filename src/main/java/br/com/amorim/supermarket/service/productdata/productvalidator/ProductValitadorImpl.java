@@ -5,7 +5,7 @@ import br.com.amorim.supermarket.model.productdata.ProductData;
 /**
  * Interface que assina o método para os validadores de ProductData
  */
-public interface ProductValitador {
+public interface ProductValitadorImpl {
 
     /**
      * Assinatura para a implementação dos validadores de ProductData

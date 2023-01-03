@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  */
 
 @Component("validateSalePrice")
-public class WhenCreateWithoutSalePriceImpl implements ProductValitador{
+public class WhenCreateWithoutSalePrice implements ProductValitadorImpl {
 
     /**
      * Implementa a lógica onde verifica se o sale price de ProductData é igual a null
