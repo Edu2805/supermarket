@@ -43,6 +43,7 @@ public class ProductData {
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "unity", nullable = false)
+    @NotNull(message = "Tipo de unidade de medida não pode estar nulo.")
     private UnityType unity;
 
     @Column(name = "purchase_price", nullable = false, precision = 10, scale = 2)
@@ -72,9 +73,11 @@ public class ProductData {
 
     @ManyToOne
     @JoinColumn(name = "subsection_id")
+    @NotNull(message = "Sub-Seção  não pode estar nulo.")
     private SubSection subSection;
 
     @ManyToOne
     @JoinColumn(name = "provider_product")
+    @NotNull(message = "Fornecedor não pode estar nulo.")
     private ProviderProduct providerProduct;
 }
