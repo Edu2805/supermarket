@@ -22,9 +22,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class CalculateMarginTest {
 
     @Mock
-    private CalculateMarginImpl calculateMarginInterfaceMock;
+    private CalculateMargin calculateMarginInterfaceMock;
     @InjectMocks
-    private CalculateMargin calculateMarginImplMock;
+    private CalculateMarginImpl calculateMarginImplMock;
     public static final java.util.UUID UUID = randomUUID();
     public static final String NAME = "Produto teste";
 

@@ -1,30 +1,21 @@
 package br.com.amorim.supermarket.service.productdata.generateinternalcode;
 
 import br.com.amorim.supermarket.model.productdata.ProductData;
-import br.com.amorim.supermarket.repository.productdata.productdatarepositorycustom.ProductDataRepositoryCustomImpl;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
 
 /**
- * Classe que irá implementar a geração do código interno
+ * Interface que irá criar a abstração para a geração do código interno do produto.
+ * Em sua implementação, essa interface será injetada para chamar o método que
+ * gera o código interno.
  */
 
-@AllArgsConstructor
-
-@Component
-public class GenerateInternalCode implements GenerateInternalCodeImpl {
-
-    private ProductDataRepositoryCustomImpl productDataRepositoryCustom;
+public interface GenerateInternalCode {
 
     /**
-     * Método que irá implementar a geração do código imterno do produto
+     * Assinatura para o método que irá gerar o código iterno do produto cadastrado
      * @param productData produto cadastrado
-     * @return código interno do produto
+     * @return código interno
      */
-    @Override
-    public BigInteger generate(ProductData productData) {
-        return productDataRepositoryCustom.generateInternalCode(productData);
-    }
+    BigInteger generate (ProductData productData);
 }
