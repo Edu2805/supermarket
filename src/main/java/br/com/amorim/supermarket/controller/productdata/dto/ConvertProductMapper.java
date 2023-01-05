@@ -1,29 +1,17 @@
 package br.com.amorim.supermarket.controller.productdata.dto;
 
 import br.com.amorim.supermarket.model.productdata.ProductData;
-import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Component;
 
 /**
- * Classe que gera o DTO de ProductData
+ * Interface que irá fazer o mapper de ProductData para seu DTO
  */
 
-@AllArgsConstructor
-
-@Component
-public class ConvertProductMapper implements ConvertProductMapperImpl {
-
-    private ModelMapper modelMapper;
+public interface ConvertProductMapper {
 
     /**
-     * Classe que irá converter o ProductData para o seu DTO para cadastro de
-     * produtos
+     * Assinutura para o método que irá fazer o mapper de ProductData para seu DTO
      * @param productDTO produto cadastrado
-     * @return ProductData mapeado para ProductDTO
+     * @return DTO do tipo ProductData
      */
-    @Override
-    public ProductData createProductMapper(ProductDTO productDTO) {
-        return modelMapper.map(productDTO, ProductData.class);
-    }
+    ProductData createProductMapper(ProductDTO productDTO);
 }

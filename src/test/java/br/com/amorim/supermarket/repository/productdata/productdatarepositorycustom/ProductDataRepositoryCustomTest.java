@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ProductDataRepositoryCustomTest {
 
     @Autowired
-    private ProductDataRepositoryCustomImpl productDataRepositoryCustom;
+    private ProductDataRepositoryCustom productDataRepositoryCustom;
     @Autowired
     private DepartmentRepository departmentRepository;
     @Autowired
