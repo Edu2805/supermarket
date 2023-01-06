@@ -1,4 +1,4 @@
-package br.com.amorim.supermarket.testutils.generateentities.providerproduct;
+package br.com.amorim.supermarket.testutils.generateentitiesunittests.providerproduct;
 
 import br.com.amorim.supermarket.common.enums.SubscriptionType;
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;

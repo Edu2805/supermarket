@@ -2,12 +2,11 @@ package br.com.amorim.supermarket.service.productdata.calculatemargin;
 
 import br.com.amorim.supermarket.common.enums.UnityType;
 import br.com.amorim.supermarket.model.productdata.ProductData;
-import br.com.amorim.supermarket.testutils.generateentities.providerproduct.ProviderProductTest;
-import br.com.amorim.supermarket.testutils.generateentities.subsection.SubSectionTest;
+import br.com.amorim.supermarket.testutils.generateentitiesunittests.providerproduct.ProviderProductTest;
+import br.com.amorim.supermarket.testutils.generateentitiesunittests.subsection.SubSectionTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -21,8 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 public class CalculateMarginTest {
 
-    @Mock
-    private CalculateMargin calculateMarginInterfaceMock;
     @InjectMocks
     private CalculateMarginImpl calculateMarginImplMock;
     public static final java.util.UUID UUID = randomUUID();

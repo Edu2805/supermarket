@@ -1,7 +1,7 @@
-package br.com.amorim.supermarket.testutils.generateentities.mainsection;
+package br.com.amorim.supermarket.testutils.generateentitiesunittests.mainsection;
 
 import br.com.amorim.supermarket.model.mainsection.MainSection;
-import br.com.amorim.supermarket.testutils.generateentities.department.DepartmentTest;
+import br.com.amorim.supermarket.testutils.generateentitiesunittests.department.DepartmentTest;
 
 import java.math.BigInteger;
 import static java.util.UUID.randomUUID;
