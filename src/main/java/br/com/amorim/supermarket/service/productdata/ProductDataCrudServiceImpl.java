@@ -1,12 +1,11 @@
 package br.com.amorim.supermarket.service.productdata;
 
-import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleException;
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.repository.productdata.ProductDataReposotiry;
 import br.com.amorim.supermarket.service.productdata.calculatemargin.CalculateMargin;
 import br.com.amorim.supermarket.service.productdata.generateinternalcode.GenerateInternalCode;
-import br.com.amorim.supermarket.service.productdata.productvalidator.ProductValidatorEAN13OrDUN14;
+import br.com.amorim.supermarket.service.productdata.productvalidator.ProductValidatorEan13OrDun14;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +25,10 @@ import java.util.UUID;
 public class ProductDataCrudServiceImpl implements ProductDataCrudService {
 
     private ProductDataReposotiry productDataReposotiry;
-    private ProductValidatorEAN13OrDUN14 validateEAN13OrDUN14;
+    private ProductValidatorEan13OrDun14 validateEan13OrDun14;
     private CalculateMargin calculateMargin;
     private GenerateInternalCode generateInternalCode;
+
 
     @Override
     public List<ProductData> getAll() {
@@ -47,12 +47,7 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
     @Transactional
     @Override
     public ProductData save (ProductData productData) {
-        // todo Criar um Handler de erros
-        // todo Tentar isolar as mensagens em um método
-        if (validateEAN13OrDUN14.validate(productData)) {
-            throw new BusinessRuleException(
-                    "Não é possível cadastrar um produto sem um EAN 13 ou um DUN 14.");
-        }
+        validateEan13OrDun14.validate(productData);
         BigDecimal margin = calculateMargin.calculate(productData);
         BigInteger incrementInternalCode = generateInternalCode.generate(productData);
         productData.setMargin(margin);

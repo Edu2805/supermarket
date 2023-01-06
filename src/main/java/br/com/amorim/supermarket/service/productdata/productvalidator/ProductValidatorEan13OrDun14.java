@@ -5,7 +5,7 @@ import br.com.amorim.supermarket.model.productdata.ProductData;
 /**
  * Interface que assina o método para o validador dos campos EAN 13 e DUN 14
  */
-public interface ProductValidatorEAN13OrDUN14 {
+public interface ProductValidatorEan13OrDun14 {
 
     /**
      * Assinatura para a implementação do validador dos campos EAN 13 e DUN 14

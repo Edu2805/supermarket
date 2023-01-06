@@ -1,4 +1,4 @@
-package br.com.amorim.supermarket.repository.productdata.productdatarepositorycustom;
+package br.com.amorim.supermarket.repository.productdata.generateinternalcoderepositorycustom;
 
 import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.model.productdata.QProductData;
@@ -15,7 +15,7 @@ import java.math.BigInteger;
 @AllArgsConstructor
 
 @Component
-public class ProductDataRepositoryCustomimpl implements ProductDataRepositoryCustom {
+public class GenerateInternalCodeRepositoryCustomimpl implements GenerateInternalCodeRepositoryCustom {
 
     private EntityManager entityManager;
 

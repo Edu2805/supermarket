@@ -1,4 +1,4 @@
-package br.com.amorim.supermarket.repository.productdata.productdatarepositorycustom;
+package br.com.amorim.supermarket.repository.productdata.generateinternalcoderepositorycustom;
 
 import br.com.amorim.supermarket.SupermarketApplication;
 import br.com.amorim.supermarket.common.enums.SubscriptionType;
@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ProductDataRepositoryCustomTest {
 
     @Autowired
-    private ProductDataRepositoryCustom productDataRepositoryCustom;
+    private GenerateInternalCodeRepositoryCustom productDataRepositoryCustom;
     @Autowired
     private DepartmentRepository departmentRepository;
     @Autowired
