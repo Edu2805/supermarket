@@ -1,4 +1,4 @@
-package br.com.amorim.supermarket.repository.productdata.productdatarepositorycustom;
+package br.com.amorim.supermarket.repository.productdata.generateinternalcoderepositorycustom;
 
 import br.com.amorim.supermarket.model.productdata.ProductData;
 
@@ -8,7 +8,7 @@ import java.math.BigInteger;
  * Interface que irá gerar a assinatura do método que irá criar o código interno
  * do produto no momento do cadastro
  */
-public interface ProductDataRepositoryCustom {
+public interface GenerateInternalCodeRepositoryCustom {
 
     /**
      * Método que gera um código interno com base em um código já existente ou não na base
