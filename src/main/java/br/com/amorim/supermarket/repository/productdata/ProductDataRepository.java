@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface ProductDataReposotiry extends JpaRepository<ProductData, UUID> {
+public interface ProductDataRepository extends JpaRepository<ProductData, UUID> {
 
     /**
      * Consulta na base se já existe um EAN 13

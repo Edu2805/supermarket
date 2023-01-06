@@ -2,7 +2,7 @@ package br.com.amorim.supermarket.service.productdata;
 
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.model.productdata.ProductData;
-import br.com.amorim.supermarket.repository.productdata.ProductDataReposotiry;
+import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
 import br.com.amorim.supermarket.service.productdata.calculatemargin.CalculateMargin;
 import br.com.amorim.supermarket.service.productdata.generateinternalcode.GenerateInternalCode;
 import br.com.amorim.supermarket.service.productdata.productvalidator.ProductValidatorEan13OrDun14;
@@ -24,7 +24,7 @@ import java.util.UUID;
 @Service
 public class ProductDataCrudServiceImpl implements ProductDataCrudService {
 
-    private ProductDataReposotiry productDataReposotiry;
+    private ProductDataRepository productDataRepository;
     private ProductValidatorEan13OrDun14 validateEan13OrDun14;
     private CalculateMargin calculateMargin;
     private GenerateInternalCode generateInternalCode;
@@ -32,12 +32,12 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
 
     @Override
     public List<ProductData> getAll() {
-        return productDataReposotiry.findAll();
+        return productDataRepository.findAll();
     }
 
     @Override
     public ProductData findById(UUID id) {
-        return productDataReposotiry.findById(id)
+        return productDataRepository.findById(id)
                 .orElseThrow(() -> {
                    throw new NotFoundException(
                            "Produto não encontrado");
@@ -52,16 +52,16 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
         BigInteger incrementInternalCode = generateInternalCode.generate(productData);
         productData.setMargin(margin);
         productData.setInternalCode(incrementInternalCode);
-        return productDataReposotiry.save(productData);
+        return productDataRepository.save(productData);
     }
 
     @Transactional
     @Override
     public void update (ProductData productData, UUID id) {
-        productDataReposotiry.findById(id)
+        productDataRepository.findById(id)
                 .map(existingProduct -> {
                     productData.setId(existingProduct.getId());
-                    productDataReposotiry.save(productData);
+                    productDataRepository.save(productData);
                     return existingProduct;
                 }).orElseThrow(() ->
                                 new NotFoundException(
@@ -72,9 +72,9 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
     @Transactional
     @Override
     public void delete (UUID id) {
-        productDataReposotiry.findById(id)
+        productDataRepository.findById(id)
                 .map(product -> {
-                    productDataReposotiry.delete(product);
+                    productDataRepository.delete(product);
                     return product;
                 }).orElseThrow(() ->
                         new NotFoundException(

@@ -1,4 +1,4 @@
-package br.com.amorim.supermarket.testutils.generateentities.establishment;
+package br.com.amorim.supermarket.testutils.generateentitiesunittests.establishment;
 
 import br.com.amorim.supermarket.model.establishment.Establishment;
 

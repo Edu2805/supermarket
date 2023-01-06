@@ -1,4 +1,4 @@
-package br.com.amorim.supermarket.repository.productdata.generateinternalcoderepositorycustom;
+package br.com.amorim.supermarket.repository.productdata.verifyean13ordun14;
 
 import br.com.amorim.supermarket.SupermarketApplication;
 import br.com.amorim.supermarket.common.enums.SubscriptionType;
@@ -18,6 +18,7 @@ import br.com.amorim.supermarket.repository.subsection.SubSectionRepository;
 import br.com.amorim.supermarket.testutils.generatecnpj.GenerateCNPJ;
 
 import org.junit.jupiter.api.Test;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,14 +32,14 @@ import java.math.BigInteger;
 import java.util.Random;
 
 import static java.util.UUID.randomUUID;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes= SupermarketApplication.class)
-class ProductDataRepositoryCustomTest {
+class VerifyEan13OrDun14RepositoryCustomImplTest {
 
     @Autowired
-    private GenerateInternalCodeRepositoryCustom generateInternalCodeRepositoryCustom;
+    private ProductDataRepository productDataRepository;
     @Autowired
     private DepartmentRepository departmentRepository;
     @Autowired
@@ -49,68 +50,93 @@ class ProductDataRepositoryCustomTest {
     private ProviderProductRepository providerProductRepository;
     @Autowired
     private SubSectionRepository subSectionRepository;
-    @Autowired
-    private ProductDataRepository productDataRepository;
 
     private ProductData productData1;
     private ProductData productData2;
     private ProductData productData3;
+    private ProductData productData4;
     public static final java.util.UUID UUID_1 = randomUUID();
-    public static final String NAME_1 = "Produto teste";
-    public static final java.util.UUID UUID_2 = randomUUID();
-    public static final String NAME_2 = "Produto teste";
-    public static final java.util.UUID UUID_3 = randomUUID();
-    public static final String NAME_3 = "Produto teste";
+    public static final String NAME_1 = "Produto teste 1";
+    public static final String NAME_2 = "Produto teste 2";
+    public static final String NAME_3 = "Produto teste 3";
+    public static final String NAME_4 = "Produto teste 4";
 
     private void startProduct () {
+        Random randomEan13Product1 = new Random();
+        Random randomDun14Product3 = new Random();
+        Random randomCode1 = new Random();
+        Random randomCode2 = new Random();
+        Random randomCode3 = new Random();
+        Random randomCode4 = new Random();
+
         var generateProvider = this.generateProvider();
         var generateEstablishment = this.generateEstablishment();
         var generateDepartment = this.generateDepartment(generateEstablishment);
         var generateMainSection = this.generateMainsection(generateDepartment);
         var generateSubsection = this.generateSubsection(generateMainSection);
+        var ean13 = randomEan13Product1.nextInt(789000000, 789999999);
+        var dun14 = randomDun14Product3.nextInt(978900000, 978999999);
+        var code1 = randomCode1.nextInt(1, 1000);
+        var code2 = randomCode2.nextInt(1001, 2000);
+        var code3 = randomCode3.nextInt(2001, 3000);
+        var code4 = randomCode4.nextInt(3001, 4000);
 
         productData1 = new ProductData();
-        productData1.setId(UUID_1);
         productData1.setName(NAME_1);
         productData1.setUnity(UnityType.UNITY);
         productData1.setPurchasePrice(BigDecimal.valueOf(10.90));
         productData1.setSalePrice(BigDecimal.valueOf(15.90));
-        productData1.setEan13("7891112223334");
-        productData1.setInternalCode(BigInteger.valueOf(1));
+        productData1.setMargin(BigDecimal.valueOf(0.9999));
+        productData1.setEan13(String.valueOf(ean13).concat("9999"));
+        productData1.setInternalCode(BigInteger.valueOf(code1));
         productData1.setInventory(BigDecimal.valueOf(100));
         productData1.setProviderProduct(generateProvider);
         productData1.setSubSection(generateSubsection);
         productDataRepository.save(productData1);
 
         productData2 = new ProductData();
-        productData2.setId(UUID_2);
         productData2.setName(NAME_2);
         productData2.setUnity(UnityType.UNITY);
         productData2.setPurchasePrice(BigDecimal.valueOf(10.90));
         productData2.setSalePrice(BigDecimal.valueOf(15.90));
-        productData2.setEan13("7891112223335");
-        productData2.setInternalCode(BigInteger.valueOf(2));
+        productData2.setMargin(BigDecimal.valueOf(0.9999));
+        productData2.setInternalCode(BigInteger.valueOf(code2));
         productData2.setInventory(BigDecimal.valueOf(100));
         productData2.setProviderProduct(generateProvider);
         productData2.setSubSection(generateSubsection);
         productDataRepository.save(productData2);
 
         productData3 = new ProductData();
-        productData3.setId(UUID_3);
         productData3.setName(NAME_3);
         productData3.setUnity(UnityType.UNITY);
         productData3.setPurchasePrice(BigDecimal.valueOf(10.90));
         productData3.setSalePrice(BigDecimal.valueOf(15.90));
-        productData3.setEan13("7891112223336");
+        productData3.setMargin(BigDecimal.valueOf(0.9999));
+        productData3.setDun14(String.valueOf(dun14).concat("99999"));
+        productData3.setInternalCode(BigInteger.valueOf(code3));
         productData3.setInventory(BigDecimal.valueOf(100));
         productData3.setProviderProduct(generateProvider);
         productData3.setSubSection(generateSubsection);
+        productDataRepository.save(productData3);
+
+        productData4 = new ProductData();
+        productData4.setName(NAME_4);
+        productData4.setUnity(UnityType.UNITY);
+        productData4.setPurchasePrice(BigDecimal.valueOf(10.90));
+        productData4.setSalePrice(BigDecimal.valueOf(15.90));
+        productData4.setMargin(BigDecimal.valueOf(0.9999));
+        productData4.setInternalCode(BigInteger.valueOf(code4));
+        productData4.setInventory(BigDecimal.valueOf(100));
+        productData4.setProviderProduct(generateProvider);
+        productData4.setSubSection(generateSubsection);
+        productDataRepository.save(productData4);
     }
 
     private void deleteProduct() {
         productDataRepository.delete(productData1);
         productDataRepository.delete(productData2);
         productDataRepository.delete(productData3);
+        productDataRepository.delete(productData4);
     }
 
     @BeforeEach
@@ -123,13 +149,18 @@ class ProductDataRepositoryCustomTest {
         this.deleteProduct();
     }
 
-    @Test void shouldGenerateASequenceInternalCode () {
-        var internalCodeGenerated = generateInternalCodeRepositoryCustom.generateInternalCode(productData3);
-        productData3.setInternalCode(internalCodeGenerated);
+    @Test
+    void shouldVerifyIfAlreadyExistsEan13InDatabaseBeforeSave () {
+        productData2.setEan13(productData1.getEan13());
+        var verifyEan13 = productDataRepository.existsByEan13(productData2.getEan13());
+        assertTrue(verifyEan13);
+    }
 
-        productDataRepository.save(productData3);
-
-        assertEquals(BigInteger.valueOf(3), internalCodeGenerated);
+    @Test
+    void shouldVerifyIfAlreadyExistsDun14InDatabaseBeforeSave () {
+        productData4.setDun14(productData3.getDun14());
+        var verifyDun14 = productDataRepository.existsByDun14(productData4.getDun14());
+        assertTrue(verifyDun14);
     }
 
     public ProviderProduct generateProvider() {
