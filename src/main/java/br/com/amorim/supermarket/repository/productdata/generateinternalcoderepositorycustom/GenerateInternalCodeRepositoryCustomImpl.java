@@ -15,7 +15,7 @@ import java.math.BigInteger;
 @AllArgsConstructor
 
 @Component
-public class GenerateInternalCodeRepositoryCustomimpl implements GenerateInternalCodeRepositoryCustom {
+public class GenerateInternalCodeRepositoryCustomImpl implements GenerateInternalCodeRepositoryCustom {
 
     private EntityManager entityManager;
 
