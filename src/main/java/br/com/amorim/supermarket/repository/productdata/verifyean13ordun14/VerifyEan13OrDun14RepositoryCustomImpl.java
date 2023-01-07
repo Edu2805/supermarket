@@ -11,17 +11,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class VerifyEan13OrDun14RepositoryCustomImpl implements VerifyEan13OrDun14RepositoryCustom{
 
-    private ProductDataRepository productDataReposotiry;
+    private ProductDataRepository productDataRepository;
 
     @Override
-    public void existsByEan13OrDun14(ProductData productData) {
-        if (productDataReposotiry.existsByEan13(productData.getEan13())) {
+    public boolean existsByEan13OrDun14(ProductData productData) {
+        if (productDataRepository.existsByEan13(productData.getEan13())) {
             throw new BusinessRuleException(
                         "Já existe um produto cadastrado com o mesmo EAN 13.");
         }
-        if (productDataReposotiry.existsByDun14(productData.getDun14())) {
+        if (productDataRepository.existsByDun14(productData.getDun14())) {
             throw new BusinessRuleException(
                     "Já existe um produto cadastrado com o mesmo DUN 14.");
         }
+        return false;
     }
 }

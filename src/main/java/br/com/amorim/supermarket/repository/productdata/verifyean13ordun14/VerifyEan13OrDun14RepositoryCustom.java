@@ -13,5 +13,5 @@ public interface VerifyEan13OrDun14RepositoryCustom {
      * existe um EAN 13 ou um DUN 14
      * @param productData produto cadastrado
      */
-    void existsByEan13OrDun14 (ProductData productData);
+    boolean existsByEan13OrDun14 (ProductData productData);
 }
