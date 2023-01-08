@@ -5,6 +5,7 @@ import br.com.amorim.supermarket.controller.productdata.dto.ProductDTO;
 import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.service.productdata.ProductDataCrudService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.CREATED;
@@ -32,7 +32,7 @@ public class ProductDataController {
     private ConvertProductMapper convertProductMapper;
 
     @GetMapping
-    public List<ProductData> findAll () {
+    public Page<ProductData> findAll () {
         return productDataService.getAll();
     }
 
