@@ -12,10 +12,5 @@ import java.math.BigInteger;
 
 public interface GenerateInternalCode {
 
-    /**
-     * Assinatura para o método que irá gerar o código iterno do produto cadastrado
-     * @param productData produto cadastrado
-     * @return código interno
-     */
     BigInteger generate (ProductData productData);
 }

@@ -3,7 +3,7 @@ package br.com.amorim.supermarket.service.productdata.productvalidator;
 import br.com.amorim.supermarket.common.enums.UnityType;
 import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleException;
 import br.com.amorim.supermarket.model.productdata.ProductData;
-import br.com.amorim.supermarket.repository.productdata.verifyean13ordun14.VerifyEan13OrDun14RepositoryCustom;
+import br.com.amorim.supermarket.repository.productdata.verifyean13ordun14repositorycustom.VerifyEan13OrDun14RepositoryCustom;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.providerproduct.ProviderProductTest;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.subsection.SubSectionTest;
 import org.junit.jupiter.api.Assertions;

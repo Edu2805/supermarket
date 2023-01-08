@@ -1,4 +1,4 @@
-package br.com.amorim.supermarket.repository.productdata.verifyean13ordun14;
+package br.com.amorim.supermarket.repository.productdata.verifyean13ordun14repositorycustom;
 
 import br.com.amorim.supermarket.SupermarketApplication;
 import br.com.amorim.supermarket.common.enums.SubscriptionType;

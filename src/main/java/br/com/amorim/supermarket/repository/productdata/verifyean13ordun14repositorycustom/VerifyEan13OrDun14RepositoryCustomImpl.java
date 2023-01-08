@@ -1,4 +1,4 @@
-package br.com.amorim.supermarket.repository.productdata.verifyean13ordun14;
+package br.com.amorim.supermarket.repository.productdata.verifyean13ordun14repositorycustom;
 
 import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleException;
 import br.com.amorim.supermarket.model.productdata.ProductData;

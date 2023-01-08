@@ -7,10 +7,6 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-/**
- * Classe resposável por calcular a margem de lucro do produto cadastrado
- */
-
 @AllArgsConstructor
 
 @Component
@@ -18,11 +14,9 @@ public class CalculateMarginImpl implements CalculateMargin {
 
     /**
      * ML = Margem de Lucro
-     * C = Custos
-     * D = Despesas
-     * P = Preço do produto ou serviço
-     * ML = [P – (C + D)] / P]
-     * A margem será salva no banco de dados em formato decimal
+     * C = Custos do produto
+     * P = Preço do produto
+     * ML = [P – C] / P]
      * @param productData produto no qual vai ser calculado a margem
      * @return a margem de lucro do produto
      */
