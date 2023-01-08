@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface ProductDataCrudService {
 
-    Page<ProductData> getAll();
+    Page<ProductData> getAll(int page, int size);
     ProductData findById(UUID id);
     ProductData save (ProductData productData);
     void update (ProductData productData, UUID id);

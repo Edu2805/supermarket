@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,8 +33,15 @@ public class ProductDataController {
     private ConvertProductMapper convertProductMapper;
 
     @GetMapping
-    public Page<ProductData> findAll () {
-        return productDataService.getAll();
+    public Page<ProductData> findAll (@RequestParam(
+            value = "page",
+            required = false,
+            defaultValue = "0") int page,
+                                      @RequestParam(
+                                              value = "size",
+                                              required = false,
+                                              defaultValue = "20") int size) {
+        return productDataService.getAll(page, size);
     }
 
     @GetMapping("/{id}")

@@ -4,19 +4,20 @@ import br.com.amorim.supermarket.model.department.Department;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.establishment.EstablishmentTest;
 
 import java.math.BigInteger;
-import static java.util.UUID.randomUUID;
+import java.util.Random;
 
 public class DepartmentTest {
 
-    public static final java.util.UUID UUID = randomUUID();
-    public static final String NAME = "Departamento teste";
-
     public Department generateDepartment () {
-        Department department = new Department();
         EstablishmentTest establishmentTest = new EstablishmentTest();
-        department.setId(UUID);
-        department.setName(NAME);
-        department.setCode(BigInteger.ONE);
+        Random randomName = new Random();
+        Random randomCode = new Random();
+        var name = randomName.nextInt(10000, 19999);
+        var code = randomCode.nextInt(1, 19999);
+
+        Department department = new Department();
+        department.setName(String.valueOf(name));
+        department.setCode(BigInteger.valueOf(code));
         department.setEstablishment(establishmentTest.generateEstablishment());
         return department;
     }
