@@ -8,9 +8,8 @@ import br.com.amorim.supermarket.service.productdata.generateinternalcode.Genera
 import br.com.amorim.supermarket.service.productdata.productvalidator.ProductValidatorEan13OrDun14;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -30,17 +29,12 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
 
 
     @Override
-    public Page<ProductData> getAll() {
-        int page = 0;
-        int size = 10;
-        PageRequest pageRequest = PageRequest.of(
-                page,
-                size,
-                Sort.Direction.ASC,
-                "internalCode");
-        return new PageImpl<>(
-                productDataRepository.findAll(),
-                pageRequest, size);
+    public Page<ProductData> getAll(int page, int size) {
+        if (page > 0)
+            page -= 1;
+
+        Pageable pageableRequest = PageRequest.of(page, size);
+        return productDataRepository.findAll(pageableRequest);
     }
 
     @Override
