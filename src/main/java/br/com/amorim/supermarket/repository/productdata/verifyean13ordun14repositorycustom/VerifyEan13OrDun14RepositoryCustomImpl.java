@@ -2,8 +2,6 @@ package br.com.amorim.supermarket.repository.productdata.verifyean13ordun14repos
 
 import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleException;
 import br.com.amorim.supermarket.model.productdata.ProductData;
-import br.com.amorim.supermarket.repository.productdata.verifyean13ordun14repositorycustom.existsbyean13OrDun14RepositoryCustom.ExistsByDun14RepositoryCustom;
-import br.com.amorim.supermarket.repository.productdata.verifyean13ordun14repositorycustom.existsbyean13OrDun14RepositoryCustom.ExistsByEan13RepositoryCustom;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -12,10 +10,7 @@ import javax.persistence.EntityManager;
 @AllArgsConstructor
 
 @Repository
-public class VerifyEan13OrDun14RepositoryCustomImpl implements
-        VerifyEan13OrDun14RepositoryCustom,
-        ExistsByEan13RepositoryCustom,
-        ExistsByDun14RepositoryCustom {
+public class VerifyEan13OrDun14RepositoryCustomImpl implements VerifyEan13OrDun14RepositoryCustom {
 
     private EntityManager entityManager;
 
@@ -32,8 +27,7 @@ public class VerifyEan13OrDun14RepositoryCustomImpl implements
         return false;
     }
 
-    @Override
-    public boolean existsByDun14(String dun14) {
+    private boolean existsByDun14(String dun14) {
 
         String query = "SELECT CASE WHEN count(p) > 0 " +
                 "THEN true ELSE false END FROM ProductData AS p ";
@@ -51,8 +45,7 @@ public class VerifyEan13OrDun14RepositoryCustomImpl implements
         return false;
     }
 
-    @Override
-    public boolean existsByEan13(String ean13) {
+    private boolean existsByEan13(String ean13) {
         String query = "SELECT CASE WHEN count(p) > 0 " +
                 "THEN true ELSE false END FROM ProductData AS p ";
         String conditional = "where";
