@@ -5,13 +5,14 @@ import br.com.amorim.supermarket.model.productdata.QProductData;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.math.BigInteger;
 
 @AllArgsConstructor
 
-@Component
+@Repository
 public class GenerateInternalCodeRepositoryCustomImpl implements GenerateInternalCodeRepositoryCustom {
 
     private EntityManager entityManager;
