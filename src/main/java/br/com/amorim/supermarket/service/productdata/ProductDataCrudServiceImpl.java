@@ -7,12 +7,15 @@ import br.com.amorim.supermarket.service.productdata.calculatemargin.CalculateMa
 import br.com.amorim.supermarket.service.productdata.generateinternalcode.GenerateInternalCode;
 import br.com.amorim.supermarket.service.productdata.productvalidator.ProductValidatorEan13OrDun14;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -27,8 +30,17 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
 
 
     @Override
-    public List<ProductData> getAll() {
-        return productDataRepository.findAll();
+    public Page<ProductData> getAll() {
+        int page = 0;
+        int size = 10;
+        PageRequest pageRequest = PageRequest.of(
+                page,
+                size,
+                Sort.Direction.ASC,
+                "internalCode");
+        return new PageImpl<>(
+                productDataRepository.findAll(),
+                pageRequest, size);
     }
 
     @Override
