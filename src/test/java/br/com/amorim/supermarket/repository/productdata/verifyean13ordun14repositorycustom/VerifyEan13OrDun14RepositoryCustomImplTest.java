@@ -1,6 +1,7 @@
 package br.com.amorim.supermarket.repository.productdata.verifyean13ordun14repositorycustom;
 
 import br.com.amorim.supermarket.SupermarketApplication;
+import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.enums.UnityType;
 import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleException;
 import br.com.amorim.supermarket.model.productdata.ProductData;
@@ -20,6 +21,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Random;
 
+import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -170,7 +172,7 @@ class VerifyEan13OrDun14RepositoryCustomImplTest {
 
     @Test
     void shouldReturnAExceptionMessageIfAlreadyExistsEan13InDatabaseBeforeSave () {
-        String messageError = "Já existe um produto cadastrado com o mesmo EAN 13.";
+        String messageError = getString(MessagesKeyType.PRODUCT_DATA_FIELD_EAN13_ALREADY_EXISTS.message);
         productData2.setEan13(productData1.getEan13());
 
         String exceptionMessage = assertThrows(
@@ -184,7 +186,7 @@ class VerifyEan13OrDun14RepositoryCustomImplTest {
 
     @Test
     void shouldReturnAExceptionMessageIfAlreadyExistsDun14InDatabaseBeforeSave () {
-        String messageError = "Já existe um produto cadastrado com o mesmo DUN 14.";
+        String messageError = getString(MessagesKeyType.PRODUCT_DATA_FIELD_DUN14_ALREADY_EXISTS.message);
         productData4.setDun14(productData3.getDun14());
 
         String exceptionMessage = assertThrows(
