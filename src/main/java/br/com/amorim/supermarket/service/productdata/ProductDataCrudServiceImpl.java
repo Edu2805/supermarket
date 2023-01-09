@@ -5,7 +5,7 @@ import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
 import br.com.amorim.supermarket.service.productdata.calculatemargin.CalculateMargin;
 import br.com.amorim.supermarket.service.productdata.generateinternalcode.GenerateInternalCode;
-import br.com.amorim.supermarket.service.productdata.productvalidator.ProductValidatorEan13OrDun14;
+import br.com.amorim.supermarket.service.productdata.productvalidatorean13anddun14.ProductValidatorEan13OrDun14;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

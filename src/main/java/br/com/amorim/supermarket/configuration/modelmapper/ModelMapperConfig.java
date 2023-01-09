@@ -1,4 +1,4 @@
-package br.com.amorim.supermarket.configuration;
+package br.com.amorim.supermarket.configuration.modelmapper;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

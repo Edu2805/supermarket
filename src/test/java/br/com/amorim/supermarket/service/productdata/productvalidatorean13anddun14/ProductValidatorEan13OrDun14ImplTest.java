@@ -1,5 +1,6 @@
-package br.com.amorim.supermarket.service.productdata.productvalidator;
+package br.com.amorim.supermarket.service.productdata.productvalidatorean13anddun14;
 
+import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.enums.UnityType;
 import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleException;
 import br.com.amorim.supermarket.model.productdata.ProductData;
@@ -15,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 
+import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
 import static java.util.UUID.randomUUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -56,7 +58,7 @@ class ProductValidatorEan13OrDun14ImplTest {
     @Test
     void shouldReturnABusinessExceptionMessageWhenEan13IsNull() {
         productData.setEan13(null);
-        String messageError = "Não é possível cadastrar um produto sem um EAN 13 ou um DUN 14.";
+        String messageError = getString(MessagesKeyType.PRODUCT_DATA_FIELD_EAN13_OR_DUN14_EMPTY.message);
 
         String exceptionMessage = Assertions.assertThrows(
                 BusinessRuleException.class, () -> {
@@ -71,7 +73,7 @@ class ProductValidatorEan13OrDun14ImplTest {
     void shouldReturnABusinessExceptionMessageWhenDun14IsNull() {
         productData.setEan13(null);
         productData.setDun14(null);
-        String messageError = "Não é possível cadastrar um produto sem um EAN 13 ou um DUN 14.";
+        String messageError = getString(MessagesKeyType.PRODUCT_DATA_FIELD_EAN13_OR_DUN14_EMPTY.message);
 
         String exceptionMessage = Assertions.assertThrows(
                 BusinessRuleException.class, () -> {
@@ -85,7 +87,7 @@ class ProductValidatorEan13OrDun14ImplTest {
     @Test
     void shouldReturnABusinessExceptionMessageWhenEan13AndDun14IsDifferentOfNull() {
         productData.setDun14("17893546701265");
-        String messageError = "Não é possível cadastrar um produto com EAN 13 e DUN 14 juntos. Deve haver ou um EAN 13 ou um DUN 14";
+        String messageError = getString(MessagesKeyType.PRODUCT_DATA_FIELD_EAN13_OR_DUN14_SAVE_TOGETHER.message);
 
         String exceptionMessage = Assertions.assertThrows(
                 BusinessRuleException.class, () -> {
