@@ -27,7 +27,7 @@ public class Employee {
     private UUID id;
 
     @Column(name = "register_number", nullable = false)
-    @NotNull(message = "Registro do funcionário não pode estar vazio")
+    @NotNull(message = "{br.com.supermarket.EMPLOYEE_FIELD_REGISTER_NUMBER_IS_NOT_EMPTY}")
     private BigInteger registerNumber;
 
     @OneToOne(fetch = FetchType.EAGER)

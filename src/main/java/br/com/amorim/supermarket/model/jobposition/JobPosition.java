@@ -1,6 +1,5 @@
 package br.com.amorim.supermarket.model.jobposition;
 
-import br.com.amorim.supermarket.model.employee.Employee;
 import br.com.amorim.supermarket.model.salary.Salary;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,15 +33,15 @@ public class JobPosition {
     private UUID id;
 
     @Column(nullable = false, length = 30)
-    @NotEmpty(message = "Nome não pode estar vazio")
+    @NotEmpty(message = "{br.com.supermarket.JOB_POSITION_FIELD_NAME_IS_NOT_EMPTY}")
     private String name;
 
     @Column(nullable = false)
-    @NotNull(message = "Código não pode estar vazio")
+    @NotNull(message = "{br.com.supermarket.JOB_POSITION_FIELD_INTERNAL_CODE_IS_NOT_EMPTY}")
     private BigInteger code;
 
     @Column(length = 100)
-    @NotEmpty(message = "Atribuições não pode estar vazio")
+    @NotEmpty(message = "{br.com.supermarket.JOB_POSITION_FIELD_ASSIGNMENTS_IS_NOT_EMPTY}")
     private String assignments;
 
     @ManyToOne

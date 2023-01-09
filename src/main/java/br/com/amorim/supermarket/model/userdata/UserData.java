@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.UUID;
 
@@ -32,22 +33,22 @@ public class UserData {
     private UUID id;
 
     @Column(name = "user_name", nullable = false, length = 50)
-    @NotEmpty(message = "Usuário não pode estar vazio")
+    @NotEmpty(message = "{br.com.supermarket.USER_DATA_FIELD_USER_NAME_IS_NOT_EMPTY}")
     private String userName;
 
     @Column(name = "password", nullable = false, length = 8)
-    @NotEmpty(message = "Senha não pode estar vazia")
+    @NotEmpty(message = "{br.com.supermarket.USER_DATA_FIELD_PASSWORD_IS_NOT_EMPTY}")
     private String password;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "role", nullable = false)
+    @NotNull(message = "{br.com.supermarket.USER_DATA_FIELD_ROLE_IS_NOT_EMPTY}")
     private RoleType role;
 
     @Column(name = "registration_date", nullable = false)
-    @NotEmpty(message = "Data do registro do usuário não pode estar vazia")
     private Timestamp registrationDate;
 
     @Column(name = "is_employee", nullable = false)
-    @NotEmpty(message = "É funcionário? não pode estar vazio")
+    @NotNull(message = "{br.com.supermarket.USER_DATA_FIELD_IS_EMPLOYEE_IS_NOT_EMPTY}")
     private Boolean isEmployee;
 }

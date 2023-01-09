@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +20,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -36,18 +38,19 @@ public class Person {
     private UUID id;
 
     @Column(name = "first_name", nullable = false, length = 30)
-    @NotEmpty(message = "Primeiro nome não pode estar vazio")
+    @NotEmpty(message = "{br.com.supermarket.EMPLOYEE_FIELD_FIRST_NAME_IS_NOT_EMPTY}")
     private String firstName;
 
     @Column(name = "middle_name", length = 30)
     private String middleName;
 
     @Column(name = "last_name", nullable = false, length = 30)
-    @NotEmpty(message = "Último nome não pode estar vazio")
+    @NotEmpty(message = "{br.com.supermarket.EMPLOYEE_FIELD_LAST_NAME_IS_NOT_EMPTY}")
     private String lastName;
 
     @Column(nullable = false, length = 11, unique = true)
-    @NotEmpty(message = "CNPJ não pode estar vazio")
+    @NotEmpty(message = "{br.com.supermarket.EMPLOYEE_FIELD_CPF_IS_NOT_EMPTY}")
+    @CPF(message = "{br.com.supermarket.EMPLOYEE_FIELD_INVALID_CPF}")
     private String cpf;
 
     @Column(length = 15)
@@ -60,7 +63,7 @@ public class Person {
     private String naturalness;
 
     @Column(name = "birth_date", nullable = false)
-    @NotEmpty(message = "Data de nascimento não pode estar vazia")
+    @NotNull(message = "{br.com.supermarket.EMPLOYEE_FIELD_BIRTH_DATE_IS_NOT_EMPTY}")
     private LocalDate birthDate;
 
     @Enumerated(EnumType.ORDINAL)
@@ -74,11 +77,11 @@ public class Person {
     private String fatherName;
 
     @Column(name = "mother_name", nullable = false, length = 50)
-    @NotEmpty(message = "Nome da mãe não pode estar vazio")
+    @NotEmpty(message = "{br.com.supermarket.EMPLOYEE_FIELD_MOTHER_NAME_IS_NOT_EMPTY}")
     private String motherName;
 
     @Column(name = "email", nullable = false, length = 50)
-    @NotEmpty(message = "Nome da mãe não pode estar vazio")
+    @NotEmpty(message = "{br.com.supermarket.EMPLOYEE_FIELD_EMAIL_IS_NOT_EMPTY}")
     private String email;
 
     @OneToOne(fetch = FetchType.EAGER)
