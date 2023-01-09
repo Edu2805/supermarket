@@ -33,37 +33,38 @@ public class ProviderProduct {
     private UUID id;
 
     @Column(nullable = false, length = 50)
-    @NotEmpty(message = "Nome não pode estar vazio")
+    @NotEmpty(message = "{br.com.supermarket.PROVIDER_PRODUCT_FIELD_NAME_IS_NOT_EMPTY}")
     private String name;
 
     @Column(nullable = false)
-    @NotNull(message = "Código não pode estar vazio")
+    @NotNull(message = "{br.com.supermarket.PROVIDER_PRODUCT_FIELD_INTERNAL_CODE_IS_NOT_EMPTY}")
     private BigInteger code;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "subscription_type", nullable = false)
+    @NotNull(message = "{br.com.supermarket.PROVIDER_PRODUCT_FIELD_SUBSCRIPTION_TYPE_IS_NOT_EMPTY}")
     private SubscriptionType subscriptionType;
 
     @Column(name = "subscription_number", length = 50)
-    @NotNull(message = "Número do documento não pode estar vazio")
+    @NotNull(message = "{br.com.supermarket.PROVIDER_PRODUCT_FIELD_SUBSCRIPTION_NUMBER_IS_NOT_EMPTY}")
     private String subscriptionNumber;
 
     @Column(name = "state_registration", nullable = false, length = 20)
-    @NotEmpty(message = "Inscrição estadual não pode estar vazia")
+    @NotEmpty(message = "{br.com.supermarket.PROVIDER_PRODUCT_FIELD_STATE_REGISTRATION_IS_NOT_EMPTY}")
     private String stateRegistration;
 
     @Column(name = "municipal_registration", length = 20)
     private String municipalRegistration;
 
     @Column(nullable = false, length = 60)
-    @NotEmpty(message = "Endereço não pode estar vazio")
+    @NotEmpty(message = "{br.com.supermarket.PROVIDER_PRODUCT_FIELD_ADDRESS_IS_NOT_EMPTY}")
     private String address;
 
     @Column(nullable = false, length = 11)
-    @NotEmpty(message = "Número do telefone não pode estar vazio")
+    @NotEmpty(message = "{br.com.supermarket.PROVIDER_PRODUCT_FIELD_PHONE_IS_NOT_EMPTY}")
     private String phone;
 
     @Column(nullable = false, length = 60)
-    @NotEmpty(message = "Responsável não pode estar vazio")
+    @NotEmpty(message = "{br.com.supermarket.PROVIDER_PRODUCT_FIELD_MANAGER_IS_NOT_EMPTY}")
     private String responsible;
 }

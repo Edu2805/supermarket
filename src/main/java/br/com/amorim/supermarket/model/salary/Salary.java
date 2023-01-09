@@ -30,38 +30,38 @@ public class Salary {
     private UUID id;
 
     @Column(nullable = false, length = 30)
-    @NotEmpty(message = "Posição/cargo não pode estar vazio")
+    @NotEmpty(message = "{br.com.supermarket.SALARY_FIELD_POSITION_IS_NOT_EMPTY}")
     private String position;
 
     @Column(nullable = false, length = 10)
-    @NotEmpty(message = "Faixa salarial não pode estar vazio")
+    @NotEmpty(message = "{br.com.supermarket.SALARY_FIELD_RANGE_IS_NOT_EMPTY}")
     private String salaryRange;
 
     @Column(name = "gross_salary", nullable = false, precision = 10, scale = 2)
-    @NotNull(message = "Salário bruto não pode estar vazio")
+    @NotNull(message = "{br.com.supermarket.SALARY_FIELD_GROSS_SALARY_IS_NOT_EMPTY}")
     private BigDecimal grossSalary;
 
     @Column(name = "net_salary", nullable = false, precision = 10, scale = 2)
-    @NotNull(message = "Salário líquido não pode estar vazio")
+    @NotNull(message = "{br.com.supermarket.SALARY_FIELD_NET_SALARY_IS_NOT_EMPTY}")
     private BigDecimal netSalary;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    @NotNull(message = "INSS não pode estar vazio")
+    @NotNull(message = "{br.com.supermarket.SALARY_FIELD_INSS_IS_NOT_EMPTY}")
     private BigDecimal inss;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    @NotNull(message = "FGTS não pode estar vazio")
+    @NotNull(message = "{br.com.supermarket.SALARY_FIELD_FGTS_IS_NOT_EMPTY}")
     private BigDecimal fgts;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    @NotNull(message = "IRRF não pode estar vazio")
+    @NotNull(message = "{br.com.supermarket.SALARY_FIELD_IRRF_IS_NOT_EMPTY}")
     private BigDecimal irrf;
 
     @Column(name = "salary_advance", nullable = false, precision = 10, scale = 2)
-    @NotNull(message = "Adiantamento salarial não pode estar vazio")
+    @NotNull(message = "{br.com.supermarket.SALARY_FIELD_SALARY_ADVANCE_IS_NOT_EMPTY}")
     private BigDecimal salaryAdvance;
 
     @Column(nullable = false, length = 100)
-    @NotEmpty(message = "Beneficio não pode estar vazio")
+    @NotEmpty(message = "{br.com.supermarket.SALARY_FIELD_BENEFITS_IS_NOT_EMPTY}")
     private String benefits;
 }

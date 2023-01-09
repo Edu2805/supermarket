@@ -10,7 +10,7 @@ public class ResourcesBundleMessages {
 
     private static final ResourceBundle bundle = ResourceBundle
             .getBundle("messages", Locale.getDefault());
-    private static final String DOMAIN_MESSAGE = "br.com.amorim.spermarket.";
+    private static final String DOMAIN_MESSAGE = "br.com.supermarket.";
 
     public static String getString(String chave) {
         String value = null;

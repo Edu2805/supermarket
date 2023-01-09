@@ -33,11 +33,11 @@ public class SubSection {
     private UUID id;
 
     @Column(nullable = false, length = 30)
-    @NotEmpty(message = "Nome não pode estar vazio")
+    @NotEmpty(message = "{br.com.supermarket.SUB_SECTION_FIELD_NAME_IS_NOT_EMPTY}")
     private String name;
 
     @Column(nullable = false)
-    @NotNull(message = "Código não pode estar vazio")
+    @NotNull(message = "{br.com.supermarket.SUB_SECTION_FIELD_INTERNAL_CODE_IS_NOT_EMPTY}")
     private BigInteger code;
 
     @ManyToOne

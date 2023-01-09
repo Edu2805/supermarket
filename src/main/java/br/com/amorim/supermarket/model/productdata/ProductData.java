@@ -38,20 +38,20 @@ public class ProductData {
     private UUID id;
 
     @Column(nullable = false, length = 30)
-    @NotEmpty(message = "{br.com.amorim.spermarket.PRODUCT_DATA_FIELD_NAME_IS_NOT_EMPTY}")
+    @NotEmpty(message = "{br.com.supermarket.PRODUCT_DATA_FIELD_NAME_IS_NOT_EMPTY}")
     private String name;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "unity", nullable = false)
-    @NotNull(message = "{br.com.amorim.spermarket.PRODUCT_DATA_FIELD_UNITY_IS_NOT_NULL}")
+    @NotNull(message = "{br.com.supermarket.PRODUCT_DATA_FIELD_UNITY_IS_NOT_NULL}")
     private UnityType unity;
 
     @Column(name = "purchase_price", nullable = false, precision = 10, scale = 2)
-    @NotNull(message = "{br.com.amorim.spermarket.PRODUCT_DATA_FIELD_PURCHASE_PRICE_IS_NOT_EMPTY}")
+    @NotNull(message = "{br.com.supermarket.PRODUCT_DATA_FIELD_PURCHASE_PRICE_IS_NOT_EMPTY}")
     private BigDecimal purchasePrice;
 
     @Column(name = "sale_price", nullable = false, precision = 10, scale = 2)
-    @NotNull(message = "{br.com.amorim.spermarket.PRODUCT_DATA_FIELD_SALE_PRICE_IS_NOT_EMPTY}")
+    @NotNull(message = "{br.com.supermarket.PRODUCT_DATA_FIELD_SALE_PRICE_IS_NOT_EMPTY}")
     private BigDecimal salePrice;
 
     @Column(precision = 10, scale = 2)
@@ -64,20 +64,20 @@ public class ProductData {
     private String dun14;
 
     @Column(name = "internal_code", nullable = false)
-    @NotNull(message = "{br.com.amorim.spermarket.PRODUCT_DATA_FIELD_INTERNAL_CODE_IS_NOT_EMPTY}")
+    @NotNull(message = "{br.com.supermarket.PRODUCT_DATA_FIELD_INTERNAL_CODE_IS_NOT_EMPTY}")
     private BigInteger internalCode;
 
     @Column(nullable = false)
-    @NotNull(message = "{br.com.amorim.spermarket.PRODUCT_DATA_FIELD_INVENTORY_IS_NOT_EMPTY}")
+    @NotNull(message = "{br.com.supermarket.PRODUCT_DATA_FIELD_INVENTORY_IS_NOT_EMPTY}")
     private BigDecimal inventory;
 
     @ManyToOne
     @JoinColumn(name = "subsection_id")
-    @NotNull(message = "{br.com.amorim.spermarket.PRODUCT_DATA_FIELD_SUB_SECTION_IS_NOT_NULL}")
+    @NotNull(message = "{br.com.supermarket.PRODUCT_DATA_FIELD_SUB_SECTION_IS_NOT_NULL}")
     private SubSection subSection;
 
     @ManyToOne
     @JoinColumn(name = "provider_product")
-    @NotNull(message = "{br.com.amorim.spermarket.PRODUCT_DATA_FIELD_PROVIDER_PRODUCT_IS_NOT_NULL}")
+    @NotNull(message = "{br.com.supermarket.PRODUCT_DATA_FIELD_PROVIDER_PRODUCT_IS_NOT_NULL}")
     private ProviderProduct providerProduct;
 }
