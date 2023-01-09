@@ -1,0 +1,15 @@
+package br.com.amorim.supermarket.common.enums;
+
+public enum MessagesKeyType {
+
+    PRODUCT_DATA_FIELD_EAN13_OR_DUN14_EMPTY ("PRODUCT_DATA_FIELD_EAN13_OR_DUN14_EMPTY"),
+    PRODUCT_DATA_FIELD_EAN13_OR_DUN14_SAVE_TOGETHER ("PRODUCT_DATA_FIELD_EAN13_OR_DUN14_SAVE_TOGETHER"),
+    PRODUCT_DATA_FIELD_EAN13_ALREADY_EXISTS ("PRODUCT_DATA_FIELD_EAN13_ALREADY_EXISTS"),
+    PRODUCT_DATA_FIELD_DUN14_ALREADY_EXISTS ("PRODUCT_DATA_FIELD_DUN14_ALREADY_EXISTS");
+
+    public final String message;
+
+    MessagesKeyType(String message) {
+        this.message = message;
+    }
+}

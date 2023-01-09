@@ -1,10 +1,13 @@
-package br.com.amorim.supermarket.service.productdata.productvalidator;
+package br.com.amorim.supermarket.service.productdata.productvalidatorean13anddun14;
 
+import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleException;
 import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.repository.productdata.verifyean13ordun14repositorycustom.VerifyEan13OrDun14RepositoryCustom;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
 
 @AllArgsConstructor
 
@@ -21,11 +24,9 @@ public class ProductValidatorEan13OrDun14Impl implements ProductValidatorEan13Or
     @Override
     public boolean validate(ProductData productData) {
         if (productData.getEan13() == null && productData.getDun14() == null) {
-            throw new BusinessRuleException(
-                    "Não é possível cadastrar um produto sem um EAN 13 ou um DUN 14.");
+            throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_FIELD_EAN13_OR_DUN14_EMPTY.message));
         } else if (productData.getEan13() != null && productData.getDun14() != null) {
-            throw new BusinessRuleException(
-                    "Não é possível cadastrar um produto com EAN 13 e DUN 14 juntos. Deve haver ou um EAN 13 ou um DUN 14");
+            throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_FIELD_EAN13_OR_DUN14_SAVE_TOGETHER.message));
         } else {
             verifyEan13OrDun14RepositoryCustom.existsByEan13OrDun14(productData);
         }

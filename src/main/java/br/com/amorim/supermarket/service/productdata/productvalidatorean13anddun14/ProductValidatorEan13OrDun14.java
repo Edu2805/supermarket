@@ -1,4 +1,4 @@
-package br.com.amorim.supermarket.service.productdata.productvalidator;
+package br.com.amorim.supermarket.service.productdata.productvalidatorean13anddun14;
 
 import br.com.amorim.supermarket.model.productdata.ProductData;
 
