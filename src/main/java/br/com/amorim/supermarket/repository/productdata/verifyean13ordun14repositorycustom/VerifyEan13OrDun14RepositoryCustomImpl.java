@@ -20,10 +20,10 @@ public class VerifyEan13OrDun14RepositoryCustomImpl implements VerifyEan13OrDun1
     @Override
     public boolean existsByEan13OrDun14(ProductData productData) {
         if (existsByEan13(productData.getEan13())) {
-            throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_FIELD_EAN13_ALREADY_EXISTS.message));
+            throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_EAN13_ALREADY_EXISTS.message));
         }
         if (existsByDun14(productData.getDun14())) {
-            throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_FIELD_DUN14_ALREADY_EXISTS.message));
+            throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_DUN14_ALREADY_EXISTS.message));
         }
         return false;
     }

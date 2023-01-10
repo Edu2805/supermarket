@@ -1,4 +1,4 @@
-package br.com.amorim.supermarket.service.productdata.productvalidatorean13anddun14;
+package br.com.amorim.supermarket.service.productdata.validateean13anddun14;
 
 import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleException;
@@ -12,7 +12,7 @@ import static br.com.amorim.supermarket.configuration.internacionalizationmessag
 @AllArgsConstructor
 
 @Component("validateEAN13OrDUN14")
-public class ProductValidatorEan13OrDun14Impl implements ProductValidatorEan13OrDun14 {
+public class ValidateProductEan13OrDun14Impl implements ValidateProductEan13OrDun14 {
 
     private VerifyEan13OrDun14RepositoryCustom verifyEan13OrDun14RepositoryCustom;
 
@@ -24,9 +24,9 @@ public class ProductValidatorEan13OrDun14Impl implements ProductValidatorEan13Or
     @Override
     public boolean validate(ProductData productData) {
         if (productData.getEan13() == null && productData.getDun14() == null) {
-            throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_FIELD_EAN13_OR_DUN14_EMPTY.message));
+            throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_EAN13_OR_DUN14_EMPTY.message));
         } else if (productData.getEan13() != null && productData.getDun14() != null) {
-            throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_FIELD_EAN13_OR_DUN14_SAVE_TOGETHER.message));
+            throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_EAN13_OR_DUN14_SAVE_TOGETHER.message));
         } else {
             verifyEan13OrDun14RepositoryCustom.existsByEan13OrDun14(productData);
         }

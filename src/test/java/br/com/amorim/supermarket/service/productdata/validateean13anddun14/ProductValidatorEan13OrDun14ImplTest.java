@@ -1,4 +1,4 @@
-package br.com.amorim.supermarket.service.productdata.productvalidatorean13anddun14;
+package br.com.amorim.supermarket.service.productdata.validateean13anddun14;
 
 import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.enums.UnityType;
@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class ProductValidatorEan13OrDun14ImplTest {
 
     @InjectMocks
-    private ProductValidatorEan13OrDun14Impl productValidatorEan13OrDun14;
+    private ValidateProductEan13OrDun14Impl productValidatorEan13OrDun14;
     @Mock
     private VerifyEan13OrDun14RepositoryCustom verifyEan13OrDun14RepositoryCustomMock;
 
@@ -58,7 +58,7 @@ class ProductValidatorEan13OrDun14ImplTest {
     @Test
     void shouldReturnABusinessExceptionMessageWhenEan13IsNull() {
         productData.setEan13(null);
-        String messageError = getString(MessagesKeyType.PRODUCT_DATA_FIELD_EAN13_OR_DUN14_EMPTY.message);
+        String messageError = getString(MessagesKeyType.PRODUCT_DATA_EAN13_OR_DUN14_EMPTY.message);
 
         String exceptionMessage = Assertions.assertThrows(
                 BusinessRuleException.class, () -> {
@@ -73,7 +73,7 @@ class ProductValidatorEan13OrDun14ImplTest {
     void shouldReturnABusinessExceptionMessageWhenDun14IsNull() {
         productData.setEan13(null);
         productData.setDun14(null);
-        String messageError = getString(MessagesKeyType.PRODUCT_DATA_FIELD_EAN13_OR_DUN14_EMPTY.message);
+        String messageError = getString(MessagesKeyType.PRODUCT_DATA_EAN13_OR_DUN14_EMPTY.message);
 
         String exceptionMessage = Assertions.assertThrows(
                 BusinessRuleException.class, () -> {
@@ -87,7 +87,7 @@ class ProductValidatorEan13OrDun14ImplTest {
     @Test
     void shouldReturnABusinessExceptionMessageWhenEan13AndDun14IsDifferentOfNull() {
         productData.setDun14("17893546701265");
-        String messageError = getString(MessagesKeyType.PRODUCT_DATA_FIELD_EAN13_OR_DUN14_SAVE_TOGETHER.message);
+        String messageError = getString(MessagesKeyType.PRODUCT_DATA_EAN13_OR_DUN14_SAVE_TOGETHER.message);
 
         String exceptionMessage = Assertions.assertThrows(
                 BusinessRuleException.class, () -> {
