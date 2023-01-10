@@ -56,60 +56,118 @@ class ProductValidatorEan13OrDun14ImplTest {
     }
 
     @Test
-    void shouldReturnABusinessExceptionMessageWhenEan13IsNull() {
+    void shouldReturnABusinessExceptionMessageWhenEan13IsNullBeforeSave() {
         productData.setEan13(null);
         String messageError = getString(MessagesKeyType.PRODUCT_DATA_EAN13_OR_DUN14_EMPTY.message);
 
         String exceptionMessage = Assertions.assertThrows(
                 BusinessRuleException.class, () -> {
-                    productValidatorEan13OrDun14.validate(productData);
+                    productValidatorEan13OrDun14.validateBeforeSave(productData);
                 }
         ).getMessage();
         assertEquals(messageError, exceptionMessage);
-        assertThrows(BusinessRuleException.class, () -> productValidatorEan13OrDun14.validate(productData));
+        assertThrows(BusinessRuleException.class, () -> productValidatorEan13OrDun14.validateBeforeSave(productData));
     }
 
     @Test
-    void shouldReturnABusinessExceptionMessageWhenDun14IsNull() {
+    void shouldReturnABusinessExceptionMessageWhenDun14IsNullBeforeSave() {
         productData.setEan13(null);
         productData.setDun14(null);
         String messageError = getString(MessagesKeyType.PRODUCT_DATA_EAN13_OR_DUN14_EMPTY.message);
 
         String exceptionMessage = Assertions.assertThrows(
                 BusinessRuleException.class, () -> {
-                    productValidatorEan13OrDun14.validate(productData);
+                    productValidatorEan13OrDun14.validateBeforeSave(productData);
                 }
         ).getMessage();
         assertEquals(messageError, exceptionMessage);
-        assertThrows(BusinessRuleException.class, () -> productValidatorEan13OrDun14.validate(productData));
+        assertThrows(BusinessRuleException.class, () -> productValidatorEan13OrDun14.validateBeforeSave(productData));
     }
 
     @Test
-    void shouldReturnABusinessExceptionMessageWhenEan13AndDun14IsDifferentOfNull() {
+    void shouldReturnABusinessExceptionMessageWhenEan13AndDun14IsDifferentOfNullBeforeSave() {
         productData.setDun14("17893546701265");
         String messageError = getString(MessagesKeyType.PRODUCT_DATA_EAN13_OR_DUN14_SAVE_TOGETHER.message);
 
         String exceptionMessage = Assertions.assertThrows(
                 BusinessRuleException.class, () -> {
-                    productValidatorEan13OrDun14.validate(productData);
+                    productValidatorEan13OrDun14.validateBeforeSave(productData);
                 }
         ).getMessage();
         assertEquals(messageError, exceptionMessage);
-        assertThrows(BusinessRuleException.class, () -> productValidatorEan13OrDun14.validate(productData));
+        assertThrows(BusinessRuleException.class, () -> productValidatorEan13OrDun14.validateBeforeSave(productData));
     }
 
     @Test
-    void shouldReturnFalseWhenEan13IsDifferentOfNull() {
+    void shouldReturnFalseWhenEan13IsDifferentOfNullBeforeSave() {
         productData.setDun14(null);
-        var validateEan13 = productValidatorEan13OrDun14.validate(productData);
+        var validateEan13 = productValidatorEan13OrDun14.validateBeforeSave(productData);
         assertFalse(validateEan13);
     }
 
     @Test
-    void shouldReturnFalseWhenDun14IsDifferentOfNull() {
+    void shouldReturnFalseWhenDun14IsDifferentOfNullBeforeSave() {
         productData.setEan13(null);
         productData.setDun14("17893546701265");
-        var validateEan13 = productValidatorEan13OrDun14.validate(productData);
+        var validateEan13 = productValidatorEan13OrDun14.validateBeforeSave(productData);
+        assertFalse(validateEan13);
+    }
+
+    @Test
+    void shouldReturnABusinessExceptionMessageWhenEan13IsNullBeforeUpdate() {
+        productData.setEan13(null);
+        String messageError = getString(MessagesKeyType.PRODUCT_DATA_EAN13_OR_DUN14_EMPTY.message);
+
+        String exceptionMessage = Assertions.assertThrows(
+                BusinessRuleException.class, () -> {
+                    productValidatorEan13OrDun14.validateBeforeUpdate(productData);
+                }
+        ).getMessage();
+        assertEquals(messageError, exceptionMessage);
+        assertThrows(BusinessRuleException.class, () -> productValidatorEan13OrDun14.validateBeforeUpdate(productData));
+    }
+
+    @Test
+    void shouldReturnABusinessExceptionMessageWhenDun14IsNullBeforeUpdate() {
+        productData.setEan13(null);
+        productData.setDun14(null);
+        String messageError = getString(MessagesKeyType.PRODUCT_DATA_EAN13_OR_DUN14_EMPTY.message);
+
+        String exceptionMessage = Assertions.assertThrows(
+                BusinessRuleException.class, () -> {
+                    productValidatorEan13OrDun14.validateBeforeUpdate(productData);
+                }
+        ).getMessage();
+        assertEquals(messageError, exceptionMessage);
+        assertThrows(BusinessRuleException.class, () -> productValidatorEan13OrDun14.validateBeforeUpdate(productData));
+    }
+
+    @Test
+    void shouldReturnABusinessExceptionMessageWhenEan13AndDun14IsDifferentOfNullBeforeUpdate() {
+        productData.setDun14("17893546701265");
+        String messageError = getString(MessagesKeyType.PRODUCT_DATA_EAN13_OR_DUN14_SAVE_TOGETHER.message);
+
+        String exceptionMessage = Assertions.assertThrows(
+                BusinessRuleException.class, () -> {
+                    productValidatorEan13OrDun14.validateBeforeUpdate(productData);
+                }
+        ).getMessage();
+        assertEquals(messageError, exceptionMessage);
+        assertThrows(BusinessRuleException.class, () -> productValidatorEan13OrDun14.validateBeforeUpdate(productData));
+    }
+
+    @Test
+    void shouldReturnFalseWhenEan13IsDifferentOfNullBeforeUpdate() {
+        productData.setDun14(null);
+        var validateEan13 = productValidatorEan13OrDun14.validateBeforeUpdate(productData);
+        assertFalse(validateEan13);
+    }
+
+    @Test
+    void shouldReturnFalseWhenDun14IsDifferentOfNullBeforeUpdate() {
+        productData.setEan13(null);
+        productData.setDun14("17893546701265");
+        var validateEan13 = productValidatorEan13OrDun14.validateBeforeUpdate(productData);
         assertFalse(validateEan13);
     }
 }

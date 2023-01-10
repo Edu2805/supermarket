@@ -22,7 +22,7 @@ public class ValidateProductEan13OrDun14Impl implements ValidateProductEan13OrDu
      * @return retorna true caso o EAN 13 ou DUN 14 for igual a null junto da mensagem de orientação ao usuário
      */
     @Override
-    public boolean validate(ProductData productData) {
+    public boolean validateBeforeSave(ProductData productData) {
         if (productData.getEan13() == null && productData.getDun14() == null) {
             throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_EAN13_OR_DUN14_EMPTY.message));
         } else if (productData.getEan13() != null && productData.getDun14() != null) {
@@ -31,5 +31,16 @@ public class ValidateProductEan13OrDun14Impl implements ValidateProductEan13OrDu
             verifyEan13OrDun14RepositoryCustom.existsByEan13OrDun14(productData);
         }
         return false;
+    }
+
+    @Override
+    public boolean validateBeforeUpdate(ProductData productData) {
+        if (productData.getEan13() == null && productData.getDun14() == null) {
+            throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_EAN13_OR_DUN14_EMPTY.message));
+        } else if (productData.getEan13() != null && productData.getDun14() != null) {
+            throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_EAN13_OR_DUN14_SAVE_TOGETHER.message));
+        } else {
+            return false;
+        }
     }
 }

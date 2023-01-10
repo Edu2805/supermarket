@@ -1,5 +1,6 @@
 package br.com.amorim.supermarket.service.productdata;
 
+import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
@@ -18,6 +19,8 @@ import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.UUID;
+
+import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
 
 @AllArgsConstructor
 
@@ -46,14 +49,14 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
         return productDataRepository.findById(id)
                 .orElseThrow(() -> {
                    throw new NotFoundException(
-                           "Produto não encontrado");
+                           getString(MessagesKeyType.PRODUCT_DATA_NOT_FOUND.message));
                 });
     }
 
     @Transactional
     @Override
     public ProductData save (ProductData productData) {
-        validateBeforeSaveAndUpdate(productData);
+        validateBeforeSave(productData);
         BigDecimal margin = calculateMargin.calculate(productData);
         BigInteger incrementInternalCode = generateInternalCode.generate(productData);
         productData.setMargin(margin);
@@ -61,8 +64,8 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
         return productDataRepository.save(productData);
     }
 
-    private void validateBeforeSaveAndUpdate (ProductData productData) {
-        validateEan13OrDun14.validate(productData);
+    private void validateBeforeSave(ProductData productData) {
+        validateEan13OrDun14.validateBeforeSave(productData);
         validateProductSubSection.validate(productData);
         validateProductProviderProduct.validate(productData);
     }
@@ -73,12 +76,22 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
         productDataRepository.findById(id)
                 .map(existingProduct -> {
                     productData.setId(existingProduct.getId());
+                    validateBeforeUpdate(existingProduct);
+                    BigDecimal margin = calculateMargin.calculate(existingProduct);
+                    BigInteger incrementInternalCode = generateInternalCode.generate(existingProduct);
+                    productData.setMargin(margin);
+                    productData.setInternalCode(incrementInternalCode);
                     productDataRepository.save(productData);
                     return existingProduct;
                 }).orElseThrow(() ->
                                 new NotFoundException(
-                                        "Produto não encontrado"));
+                                        getString(MessagesKeyType.PRODUCT_DATA_NOT_FOUND.message)));
+    }
 
+    private void validateBeforeUpdate(ProductData productData) {
+        validateEan13OrDun14.validateBeforeUpdate(productData);
+        validateProductSubSection.validate(productData);
+        validateProductProviderProduct.validate(productData);
     }
 
     @Transactional
@@ -90,6 +103,6 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
                     return product;
                 }).orElseThrow(() ->
                         new NotFoundException(
-                                "Produto não encontrado"));
+                                getString(MessagesKeyType.PRODUCT_DATA_NOT_FOUND.message)));
     }
 }
