@@ -53,14 +53,18 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
     @Transactional
     @Override
     public ProductData save (ProductData productData) {
-        validateEan13OrDun14.validate(productData);
-        validateProductSubSection.validate(productData);
-        validateProductProviderProduct.validate(productData);
+        validateBeforeSaveAndUpdate(productData);
         BigDecimal margin = calculateMargin.calculate(productData);
         BigInteger incrementInternalCode = generateInternalCode.generate(productData);
         productData.setMargin(margin);
         productData.setInternalCode(incrementInternalCode);
         return productDataRepository.save(productData);
+    }
+
+    private void validateBeforeSaveAndUpdate (ProductData productData) {
+        validateEan13OrDun14.validate(productData);
+        validateProductSubSection.validate(productData);
+        validateProductProviderProduct.validate(productData);
     }
 
     @Transactional
