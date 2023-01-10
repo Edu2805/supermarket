@@ -172,7 +172,7 @@ class VerifyEan13OrDun14RepositoryCustomImplTest {
 
     @Test
     void shouldReturnAExceptionMessageIfAlreadyExistsEan13InDatabaseBeforeSave () {
-        String messageError = getString(MessagesKeyType.PRODUCT_DATA_FIELD_EAN13_ALREADY_EXISTS.message);
+        String messageError = getString(MessagesKeyType.PRODUCT_DATA_EAN13_ALREADY_EXISTS.message);
         productData2.setEan13(productData1.getEan13());
 
         String exceptionMessage = assertThrows(
@@ -186,7 +186,7 @@ class VerifyEan13OrDun14RepositoryCustomImplTest {
 
     @Test
     void shouldReturnAExceptionMessageIfAlreadyExistsDun14InDatabaseBeforeSave () {
-        String messageError = getString(MessagesKeyType.PRODUCT_DATA_FIELD_DUN14_ALREADY_EXISTS.message);
+        String messageError = getString(MessagesKeyType.PRODUCT_DATA_DUN14_ALREADY_EXISTS.message);
         productData4.setDun14(productData3.getDun14());
 
         String exceptionMessage = assertThrows(

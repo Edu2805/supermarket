@@ -5,7 +5,8 @@ import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
 import br.com.amorim.supermarket.service.productdata.calculatemargin.CalculateMargin;
 import br.com.amorim.supermarket.service.productdata.generateinternalcode.GenerateInternalCode;
-import br.com.amorim.supermarket.service.productdata.productvalidatorean13anddun14.ProductValidatorEan13OrDun14;
+import br.com.amorim.supermarket.service.productdata.validateean13anddun14.ValidateProductEan13OrDun14;
+import br.com.amorim.supermarket.service.productdata.validatesubsection.ValidateProductSubSection;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,7 +24,8 @@ import java.util.UUID;
 public class ProductDataCrudServiceImpl implements ProductDataCrudService {
 
     private ProductDataRepository productDataRepository;
-    private ProductValidatorEan13OrDun14 validateEan13OrDun14;
+    private ValidateProductEan13OrDun14 validateEan13OrDun14;
+    private ValidateProductSubSection validateProductSubSection;
     private CalculateMargin calculateMargin;
     private GenerateInternalCode generateInternalCode;
 
@@ -50,6 +52,7 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
     @Override
     public ProductData save (ProductData productData) {
         validateEan13OrDun14.validate(productData);
+        validateProductSubSection.validate(productData);
         BigDecimal margin = calculateMargin.calculate(productData);
         BigInteger incrementInternalCode = generateInternalCode.generate(productData);
         productData.setMargin(margin);
