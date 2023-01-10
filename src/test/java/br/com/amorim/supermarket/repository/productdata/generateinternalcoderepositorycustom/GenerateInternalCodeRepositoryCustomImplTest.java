@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Random;
@@ -111,11 +112,13 @@ class GenerateInternalCodeRepositoryCustomImplTest {
         deleteProduct();
     }
 
+    @Transactional
     @Test
     void shouldSetTheFirstProductWithTheInternalCodeEqualToOne() {
         Assertions.assertEquals(BigInteger.valueOf(1), code1);
     }
 
+    @Transactional
     @Test
     void shouldAddCodeSequenceBeforeSaving() {
         var generateCode = generateInternalCodeRepositoryCustom.generateInternalCode(productData3);
