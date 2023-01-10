@@ -4,5 +4,5 @@ import br.com.amorim.supermarket.model.productdata.ProductData;
 
 public interface ConvertProductMapper {
 
-    ProductData createProductMapper(ProductDTO productDTO);
+    ProductData createOrUpdateProductMapper(ProductDTO productDTO);
 }

@@ -13,7 +13,7 @@ public class ConvertProductMapperImpl implements ConvertProductMapper {
     private ModelMapper modelMapper;
 
     @Override
-    public ProductData createProductMapper(ProductDTO productDTO) {
+    public ProductData createOrUpdateProductMapper(ProductDTO productDTO) {
         return modelMapper.map(productDTO, ProductData.class);
     }
 }

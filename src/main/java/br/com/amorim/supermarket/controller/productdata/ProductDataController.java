@@ -52,14 +52,15 @@ public class ProductDataController {
     @PostMapping
     @ResponseStatus(CREATED)
     public ProductData save (@RequestBody @Valid ProductDTO productDTO) {
-        var newProduct = convertProductMapper.createProductMapper(productDTO);
+        var newProduct = convertProductMapper.createOrUpdateProductMapper(productDTO);
         return productDataService.save(newProduct);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void update (@RequestBody @Valid ProductData productData, @PathVariable UUID id) {
-        productDataService.update(productData, id);
+    public void update (@RequestBody @Valid ProductDTO productDTO, @PathVariable UUID id) {
+        var newProduct = convertProductMapper.createOrUpdateProductMapper(productDTO);
+        productDataService.update(newProduct, id);
     }
 
     @DeleteMapping("/{id}")
