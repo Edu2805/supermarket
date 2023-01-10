@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Random;
@@ -170,6 +171,7 @@ class VerifyEan13OrDun14RepositoryCustomImplTest {
         this.deleteProduct();
     }
 
+    @Transactional
     @Test
     void shouldReturnAExceptionMessageIfAlreadyExistsEan13InDatabaseBeforeSave () {
         String messageError = getString(MessagesKeyType.PRODUCT_DATA_EAN13_ALREADY_EXISTS.message);
@@ -184,6 +186,7 @@ class VerifyEan13OrDun14RepositoryCustomImplTest {
         assertThrows(BusinessRuleException.class, () -> verifyEan13OrDun14RepositoryCustom.existsByEan13OrDun14(productData1));
     }
 
+    @Transactional
     @Test
     void shouldReturnAExceptionMessageIfAlreadyExistsDun14InDatabaseBeforeSave () {
         String messageError = getString(MessagesKeyType.PRODUCT_DATA_DUN14_ALREADY_EXISTS.message);

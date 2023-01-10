@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.transaction.Transactional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
@@ -66,6 +68,7 @@ class ProductDataCrudServiceImplTest {
         this.deleteProduct();
     }
 
+    @Transactional
     @Test
     void shouldReturnOnlyTwoProducts() {
         int page = 1;
@@ -75,12 +78,13 @@ class ProductDataCrudServiceImplTest {
         assertEquals(2, getAllPagable.getNumberOfElements());
     }
 
+    @Transactional
     @Test
     void shouldReturnAllProducts() {
         int page = 0;
         int size = 20;
         var getAllPagable = productDataCrudServiceImpl.getAll(page, size);
 
-        assertEquals(12, getAllPagable.getNumberOfElements());
+        assertEquals(6, getAllPagable.getNumberOfElements());
     }
 }
