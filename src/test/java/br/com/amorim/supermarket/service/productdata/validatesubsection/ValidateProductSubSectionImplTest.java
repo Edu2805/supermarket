@@ -19,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Optional;
+import java.util.UUID;
 
 import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
 import static java.util.UUID.randomUUID;
@@ -35,7 +36,7 @@ class ValidateProductSubSectionImplTest {
     @Mock
     private SubSectionRepository subSectionRepositoryMock;
 
-    public static final java.util.UUID UUID = randomUUID();
+    public static final java.util.UUID UUID_1 = randomUUID();
     public static final String NAME = "Produto teste";
 
     private ProductData productData;
@@ -44,7 +45,7 @@ class ValidateProductSubSectionImplTest {
 
     private void startProduct () {
         productData = new ProductData();
-        productData.setId(UUID);
+        productData.setId(UUID_1);
         productData.setName(NAME);
         productData.setUnity(UnityType.UNITY);
         productData.setPurchasePrice(BigDecimal.valueOf(10.90));
@@ -66,9 +67,9 @@ class ValidateProductSubSectionImplTest {
     @Test
     void shouldReturnNonExistentSubsectionMessageWhenSaved() {
         String messageError = getString(MessagesKeyType.PRODUCT_DATA_SUB_SECTION_NON_EXISTENT.message);
-        var invalidId = UUID;
+        var invalidId = "0eb5c7e2-b35c-44fa-a8cb-b5d91447da82";
 
-        when(subSectionRepositoryMock.findById(invalidId))
+        when(subSectionRepositoryMock.findById(UUID.fromString(invalidId)))
                 .thenReturn(Optional.of(productData.getSubSection()));
 
         String exceptionMessage = Assertions.assertThrows(
