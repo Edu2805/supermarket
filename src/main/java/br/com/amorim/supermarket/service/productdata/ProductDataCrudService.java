@@ -9,7 +9,7 @@ public interface ProductDataCrudService {
 
     Page<ProductData> getAll(int page, int size);
     ProductData findById(UUID id);
-    ProductData save (ProductData productData);
+    ProductData save (ProductData productData) throws Exception;
     void update (ProductData productData, UUID id);
     void delete (UUID id);
 }

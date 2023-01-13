@@ -1,6 +1,7 @@
 package br.com.amorim.supermarket.service.productdata;
 
 import br.com.amorim.supermarket.common.enums.MessagesKeyType;
+import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleException;
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
@@ -55,16 +56,25 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
 
     @Transactional
     @Override
-    public ProductData save (ProductData productData) {
+    public ProductData save (ProductData productData) throws Exception {
         validateBeforeSave(productData);
-        BigDecimal margin = calculateMargin.calculate(productData);
-        BigInteger incrementInternalCode = generateInternalCode.generate(productData);
-        productData.setMargin(margin);
-        productData.setInternalCode(incrementInternalCode);
+        setMargin(productData);
+        setInternalCode(productData);
         return productDataRepository.save(productData);
     }
 
-    private void validateBeforeSave(ProductData productData) {
+    private void setMargin (ProductData productData) {
+        BigDecimal margin = calculateMargin.calculate(productData);
+        productData.setMargin(margin);
+    }
+
+    private void setInternalCode (ProductData productData) {
+        BigInteger incrementInternalCode = generateInternalCode.generate(productData);
+        productData.setInternalCode(incrementInternalCode);
+    }
+
+    private void validateBeforeSave(ProductData productData)
+            throws BusinessRuleException, NotFoundException {
         validateEan13OrDun14.validateBeforeSave(productData);
         validateProductSubSection.validate(productData);
         validateProductProviderProduct.validate(productData);
