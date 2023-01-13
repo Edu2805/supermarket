@@ -111,7 +111,7 @@ class ProductDataCrudServiceImplTest {
     }
 
     @Test
-    void shouldSaveWithSuccess() {
+    void shouldSaveWithSuccess() throws Exception{
         when(calculateMarginMock.calculate(productData)).thenReturn(BigDecimal.valueOf(0.555));
         when(generateInternalCodeMock.generate(productData)).thenReturn(BigInteger.valueOf(1));
         when(productDataRepositoryMock.save(productData)).thenReturn(productData);
