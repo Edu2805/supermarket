@@ -34,7 +34,7 @@ public class ApplicationControllerAdvice {
     }
 
     @ExceptionHandler(InvalidDocumentException.class)
-    @ResponseStatus(NOT_FOUND)
+    @ResponseStatus(BAD_REQUEST)
     public ApiErros handlerInvalidDocumentException (InvalidDocumentException exception) {
         String messageError = exception.getMessage();
         return new ApiErros(messageError);
