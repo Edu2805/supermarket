@@ -51,7 +51,7 @@ public class ProductDataController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public ProductData save (@RequestBody @Valid ProductDTO productDTO) throws Exception {
+    public ProductData save (@RequestBody @Valid ProductDTO productDTO) {
         var newProduct = convertProductMapper.createOrUpdateProductMapper(productDTO);
         return productDataService.save(newProduct);
     }
