@@ -1,10 +1,14 @@
-package br.com.amorim.supermarket.common.verifydocument;
+package br.com.amorim.supermarket.common.verifydocument.cnpj;
+
+import org.springframework.stereotype.Component;
 
 import java.util.InputMismatchException;
 
-public class VerifyCNPJUtils {
+@Component
+public class VerifyCNPJUtilsImpl implements VerifyCNPJ {
 
-    public static boolean isCNPJ(String CNPJ) {
+    @Override
+    public boolean isCNPJ (String CNPJ) {
 
         CNPJ = removeSpecialCharacters(CNPJ);
 
@@ -59,7 +63,7 @@ public class VerifyCNPJUtils {
         }
     }
 
-    private static String removeSpecialCharacters(String doc) {
+    private String removeSpecialCharacters(String doc) {
         if (doc.contains(".")) {
             doc = doc.replace(".", "");
         }

@@ -1,10 +1,14 @@
-package br.com.amorim.supermarket.common.verifydocument;
+package br.com.amorim.supermarket.common.verifydocument.cpf;
+
+import org.springframework.stereotype.Component;
 
 import java.util.InputMismatchException;
 
-public class VerifyCPFUtils {
+@Component
+public class VerifyCPFUtilsImpl implements VerifyCPF {
 
-    public static boolean isCPF(String CPF) {
+    @Override
+    public boolean isCPF(String CPF) {
 
         CPF = removeSpecialCharacters(CPF);
 
@@ -55,7 +59,7 @@ public class VerifyCPFUtils {
         }
     }
 
-    private static String removeSpecialCharacters(String doc) {
+    private String removeSpecialCharacters(String doc) {
         if (doc.contains(".")) {
             doc = doc.replace(".", "");
         }
