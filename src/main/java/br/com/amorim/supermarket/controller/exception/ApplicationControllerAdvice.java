@@ -1,7 +1,8 @@
-package br.com.amorim.supermarket.controller.controlleradvice;
+package br.com.amorim.supermarket.controller.exception;
 
 import br.com.amorim.supermarket.common.exception.ApiErros;
 import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleException;
+import br.com.amorim.supermarket.common.exception.invaliddocument.InvalidDocumentException;
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -28,6 +29,13 @@ public class ApplicationControllerAdvice {
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(NOT_FOUND)
     public ApiErros handlerNotFoundException (NotFoundException exception) {
+        String messageError = exception.getMessage();
+        return new ApiErros(messageError);
+    }
+
+    @ExceptionHandler(InvalidDocumentException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ApiErros handlerInvalidDocumentException (InvalidDocumentException exception) {
         String messageError = exception.getMessage();
         return new ApiErros(messageError);
     }
