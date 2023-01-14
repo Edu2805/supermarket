@@ -1,5 +1,7 @@
 package br.com.amorim.supermarket.controller.providerproduct;
 
+import br.com.amorim.supermarket.controller.providerproduct.dto.ConvertProviderMapper;
+import br.com.amorim.supermarket.controller.providerproduct.dto.ProviderProductDTO;
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
 import br.com.amorim.supermarket.service.providerproduct.ProviderProductService;
 import lombok.AllArgsConstructor;
@@ -27,6 +29,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 public class ProviderProductController {
 
     private ProviderProductService providerProductService;
+    private ConvertProviderMapper convertProviderMapper;
 
     @GetMapping
     public List<ProviderProduct> findAll () {
@@ -40,14 +43,18 @@ public class ProviderProductController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public ProviderProduct save (@RequestBody @Valid ProviderProduct providerProduct) {
-        return providerProductService.save(providerProduct);
+    public ProviderProduct save (@RequestBody @Valid ProviderProductDTO providerProductDTO) {
+        var newProviderProduct = convertProviderMapper
+                .createOrUpdateProviderProductMapper(providerProductDTO);
+        return providerProductService.save(newProviderProduct);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void update (@RequestBody @Valid ProviderProduct providerProduct, @PathVariable UUID id) {
-        providerProductService.update(providerProduct, id);
+    public void update (@RequestBody @Valid ProviderProductDTO providerProductDTO, @PathVariable UUID id) {
+        var newProviderProduct = convertProviderMapper
+                .createOrUpdateProviderProductMapper(providerProductDTO);
+        providerProductService.update(newProviderProduct, id);
     }
 
     @DeleteMapping("/{id}")

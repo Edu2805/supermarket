@@ -56,7 +56,7 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
 
     @Transactional
     @Override
-    public ProductData save (ProductData productData) throws Exception {
+    public ProductData save (ProductData productData) {
         validateBeforeSave(productData);
         setMargin(productData);
         setInternalCode(productData);
