@@ -27,7 +27,7 @@ import static java.util.UUID.randomUUID;
 class GenerateInternalCodeRepositoryCustomImplTest {
 
     @Autowired
-    private GenerateInternalCodeRepositoryCustomImpl generateInternalCodeRepositoryCustom;
+    private GenerateInternalCodeProductRepositoryCustomImpl generateInternalCodeRepositoryCustom;
     @Autowired
     private ProductDataRepository productDataRepository;
     @Autowired

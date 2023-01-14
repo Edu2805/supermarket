@@ -2,7 +2,7 @@ package br.com.amorim.supermarket.service.productdata.generateinternalcode;
 
 import br.com.amorim.supermarket.common.enums.UnityType;
 import br.com.amorim.supermarket.model.productdata.ProductData;
-import br.com.amorim.supermarket.repository.productdata.generateinternalcoderepositorycustom.GenerateInternalCodeRepositoryCustom;
+import br.com.amorim.supermarket.repository.productdata.generateinternalcoderepositorycustom.GenerateInternalCodeProductRepositoryCustom;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.providerproduct.ProviderProductTest;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.subsection.SubSectionTest;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,9 +22,9 @@ import static org.mockito.Mockito.when;
 class GenerateInternalCodeImplTest {
 
     @InjectMocks
-    private GenerateInternalCodeImpl generateInternalCode;
+    private GenerateInternalCodeProductImpl generateInternalCode;
     @Mock
-    private GenerateInternalCodeRepositoryCustom productDataRepositoryCustomMock;
+    private GenerateInternalCodeProductRepositoryCustom productDataRepositoryCustomMock;
 
     public static final java.util.UUID UUID_1 = randomUUID();
     public static final String NAME_1 = "Produto teste 1";

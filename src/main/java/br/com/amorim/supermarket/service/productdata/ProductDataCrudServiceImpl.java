@@ -6,7 +6,7 @@ import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
 import br.com.amorim.supermarket.service.productdata.calculatemargin.CalculateMargin;
-import br.com.amorim.supermarket.service.productdata.generateinternalcode.GenerateInternalCode;
+import br.com.amorim.supermarket.service.productdata.generateinternalcode.GenerateInternalCodeProduct;
 import br.com.amorim.supermarket.service.productdata.validateean13anddun14.ValidateProductEan13OrDun14;
 import br.com.amorim.supermarket.service.productdata.validateproviderproduct.ValidateProductProviderProduct;
 import br.com.amorim.supermarket.service.productdata.validatesubsection.ValidateProductSubSection;
@@ -33,7 +33,7 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
     private ValidateProductSubSection validateProductSubSection;
     private ValidateProductProviderProduct validateProductProviderProduct;
     private CalculateMargin calculateMargin;
-    private GenerateInternalCode generateInternalCode;
+    private GenerateInternalCodeProduct generateInternalCode;
 
 
     @Override
