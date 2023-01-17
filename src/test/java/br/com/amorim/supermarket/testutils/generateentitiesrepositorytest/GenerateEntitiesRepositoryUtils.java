@@ -14,6 +14,7 @@ import br.com.amorim.supermarket.repository.mainsection.MainSectionRepository;
 import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
 import br.com.amorim.supermarket.repository.providerproduct.ProviderProductRepository;
 import br.com.amorim.supermarket.repository.subsection.SubSectionRepository;
+import br.com.amorim.supermarket.service.providerproduct.ProviderProductCrudService;
 import br.com.amorim.supermarket.testutils.generatecnpj.GenerateCNPJ;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,23 +41,20 @@ public class GenerateEntitiesRepositoryUtils {
     @Autowired
     private MainSectionRepository mainSectionRepository;
     @Autowired
-    private ProviderProductRepository providerProductRepository;
+    private ProviderProductCrudService providerProductCrudService;
     @Autowired
     private SubSectionRepository subSectionRepository;
 
     public ProviderProduct generateProvider() {
         Random randomName = new Random();
-        Random randomCode = new Random();
         Random randomMunicipalRegistration = new Random();
         Random randomStateRegistration = new Random();
         GenerateCNPJ generateCNPJ = new GenerateCNPJ();
         var name = randomName.nextInt(10000, 19999);
-        var code = randomCode.nextInt(1, 19999);
         var municipalRegistration = randomMunicipalRegistration.nextInt(1, 1999);
         var stateRegistration = randomStateRegistration.nextInt(1, 1999);
 
         ProviderProduct providerProduct = new ProviderProduct();
-        providerProduct.setCode(BigInteger.valueOf(code));
         providerProduct.setName(String.valueOf(name));
         providerProduct.setPhone("48999999999");
         providerProduct.setAddress("Avenida dos Testes, 666, Cidade dos Testes");
@@ -65,7 +63,7 @@ public class GenerateEntitiesRepositoryUtils {
         providerProduct.setResponsible("Senhor Teste");
         providerProduct.setSubscriptionType(SubscriptionType.CNPJ);
         providerProduct.setSubscriptionNumber(generateCNPJ.cnpj(false));
-        providerProductRepository.save(providerProduct);
+        providerProductCrudService.save(providerProduct);
         return providerProduct;
     }
 
