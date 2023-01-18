@@ -12,7 +12,6 @@ import br.com.amorim.supermarket.repository.department.DepartmentRepository;
 import br.com.amorim.supermarket.repository.establishment.EstablishmentRepository;
 import br.com.amorim.supermarket.repository.mainsection.MainSectionRepository;
 import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
-import br.com.amorim.supermarket.repository.providerproduct.ProviderProductRepository;
 import br.com.amorim.supermarket.repository.subsection.SubSectionRepository;
 import br.com.amorim.supermarket.service.providerproduct.ProviderProductCrudService;
 import br.com.amorim.supermarket.testutils.generatecnpj.GenerateCNPJ;
@@ -52,7 +51,7 @@ public class GenerateEntitiesRepositoryUtils {
         GenerateCNPJ generateCNPJ = new GenerateCNPJ();
         var name = randomName.nextInt(10000, 19999);
         var municipalRegistration = randomMunicipalRegistration.nextInt(1, 1999);
-        var stateRegistration = randomStateRegistration.nextInt(1, 1999);
+        var stateRegistration = randomStateRegistration.nextInt(2000, 2999);
 
         ProviderProduct providerProduct = new ProviderProduct();
         providerProduct.setName(String.valueOf(name));
