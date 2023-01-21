@@ -1,7 +1,6 @@
 package br.com.amorim.supermarket.service.providerproduct;
 
 import br.com.amorim.supermarket.common.enums.MessagesKeyType;
-import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleException;
 import br.com.amorim.supermarket.common.exception.invaliddocument.InvalidDocumentException;
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
@@ -11,6 +10,7 @@ import br.com.amorim.supermarket.service.providerproduct.validatedocument.cei.Va
 import br.com.amorim.supermarket.service.providerproduct.validatedocument.cnpj.ValidateCnpjDocument;
 import br.com.amorim.supermarket.service.providerproduct.validatedocument.cpf.ValidateCpfDocument;
 import br.com.amorim.supermarket.service.providerproduct.verifymunicipalorstateregistration.VerifyMunicipalOrStateRegistration;
+import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.service.providerproduct.verifysubscriptionnumber.VerifySubscriptionNumber;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -36,13 +36,15 @@ public class ProviderProductCrudServiceImpl implements ProviderProductCrudServic
     private ValidateCeiDocument validateCeiDocument;
     private VerifyMunicipalOrStateRegistration verifyMunicipalRegistration;
     private VerifySubscriptionNumber verifySubscriptionNumber;
+    private VerifyPageSize verifyPageSize;
 
 
     @Override
     public Page<ProviderProduct> getAll(int page, int size) {
-        if (page > 0)
+        if (page > 0) {
             page -= 1;
-
+        }
+        verifyPageSize.verifyPageSizeForGetAll(page, size);
         Pageable pageableRequest = PageRequest.of(page, size);
         return providerProductRepository.findAll(pageableRequest);
     }
@@ -65,17 +67,17 @@ public class ProviderProductCrudServiceImpl implements ProviderProductCrudServic
         return providerProductRepository.save(providerProduct);
     }
 
-    private void validateDocuments (ProviderProduct providerProduct) throws InvalidDocumentException {
+    private void validateDocuments (ProviderProduct providerProduct) {
         switch (providerProduct.getSubscriptionType()) {
             case CPF -> validateCpfDocument.isCpf(providerProduct);
             case CNPJ -> validateCnpjDocument.isCnpj(providerProduct);
             case CEI -> validateCeiDocument.isCei(providerProduct);
             default -> throw new InvalidDocumentException(
-                    getString(MessagesKeyType.PROVIDER_PRODUCT_GENERIC_SUBSCRIPTION_NUMBER_ALREADY_EXISTS.message));
+                    getString(MessagesKeyType.PROVIDER_PRODUCT_GENERIC_SUBSCRIPTION_NUMBER_NOT_EXISTS.message));
         }
     }
 
-    private void validateFields (ProviderProduct providerProduct) throws BusinessRuleException {
+    private void validateFields (ProviderProduct providerProduct) {
         verifySubscriptionNumber.verifySubscriptionNumber(providerProduct);
         verifyMunicipalRegistration.verifyMunicipalRegistration(providerProduct);
     }
@@ -91,6 +93,8 @@ public class ProviderProductCrudServiceImpl implements ProviderProductCrudServic
         providerProductRepository.findById(id)
                 .map(existingProvider -> {
                     providerProduct.setId(existingProvider.getId());
+                    validateDocuments(existingProvider);
+                    validateFields(existingProvider);
                     providerProductRepository.save(providerProduct);
                     return existingProvider;
                 }).orElseThrow(() ->
