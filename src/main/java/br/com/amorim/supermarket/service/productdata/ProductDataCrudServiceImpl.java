@@ -1,8 +1,8 @@
 package br.com.amorim.supermarket.service.productdata;
 
 import br.com.amorim.supermarket.common.enums.MessagesKeyType;
-import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleException;
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
+import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
 import br.com.amorim.supermarket.service.productdata.calculatemargin.CalculateMargin;
@@ -34,13 +34,15 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
     private ValidateProductProviderProduct validateProductProviderProduct;
     private CalculateMargin calculateMargin;
     private GenerateInternalCodeProduct generateInternalCode;
+    private VerifyPageSize verifyPageSize;
 
 
     @Override
     public Page<ProductData> getAll(int page, int size) {
-        if (page > 0)
+        if (page > 0) {
             page -= 1;
-
+        }
+        verifyPageSize.verifyPageSizeForGetAll(page, size);
         Pageable pageableRequest = PageRequest.of(page, size);
         return productDataRepository.findAll(pageableRequest);
     }
@@ -73,8 +75,7 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
         productData.setInternalCode(incrementInternalCode);
     }
 
-    private void validateBeforeSave(ProductData productData)
-            throws BusinessRuleException, NotFoundException {
+    private void validateBeforeSave(ProductData productData) {
         validateEan13OrDun14.validateBeforeSave(productData);
         validateProductSubSection.validate(productData);
         validateProductProviderProduct.validate(productData);

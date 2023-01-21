@@ -4,6 +4,5 @@ public enum SubscriptionType {
 
     CNPJ,
     CPF,
-    CEI,
-    OTHER_DOCUMENTS
+    CEI
 }
