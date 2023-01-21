@@ -1,5 +1,7 @@
 package br.com.amorim.supermarket.controller.establishment;
 
+import br.com.amorim.supermarket.controller.establishment.dto.ConvertEstablishmentMapper;
+import br.com.amorim.supermarket.controller.establishment.dto.EstablishmentDTO;
 import br.com.amorim.supermarket.model.establishment.Establishment;
 import br.com.amorim.supermarket.service.establishment.EstablishmentService;
 import lombok.AllArgsConstructor;
@@ -27,6 +29,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 public class EstablishmentController {
 
     private EstablishmentService establishmentService;
+    private ConvertEstablishmentMapper convertEstablishmentMapper;
 
     @GetMapping
     public List<Establishment> findAll () {
@@ -40,14 +43,18 @@ public class EstablishmentController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public Establishment save (@RequestBody @Valid Establishment establishment) {
-        return establishmentService.save(establishment);
+    public Establishment save (@RequestBody @Valid EstablishmentDTO establishmentDTO) {
+        var newEstablishment = convertEstablishmentMapper
+                .createOrUpdateEstablishmentMapper(establishmentDTO);
+        return establishmentService.save(newEstablishment);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void update (@RequestBody @Valid Establishment establishment, @PathVariable UUID id) {
-        establishmentService.update(establishment, id);
+    public void update (@RequestBody @Valid EstablishmentDTO establishmentDTO, @PathVariable UUID id) {
+        var newEstablishment = convertEstablishmentMapper
+                .createOrUpdateEstablishmentMapper(establishmentDTO);
+        establishmentService.update(newEstablishment, id);
     }
 
     @DeleteMapping("/{id}")
