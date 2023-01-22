@@ -1,16 +1,16 @@
 package br.com.amorim.supermarket.service.providerproduct.verifymunicipalorstateregistration;
 
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
-import br.com.amorim.supermarket.repository.providerproduct.verifymunicipalorstateregistrationrepositorycustom.VerifyMunicipalOrStateRegistrationCustom;
+import br.com.amorim.supermarket.repository.providerproduct.verifymunicipalorstateregistrationrepositorycustom.VerifyMunicipalOrStateRegistrationProviderProductRepositoryCustom;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
 
 @Component
-public class VerifyMunicipalOrStateRegistrationImpl implements VerifyMunicipalOrStateRegistration {
+public class VerifyMunicipalOrStateRegistrationProviderProductImpl implements VerifyMunicipalOrStateRegistrationProviderProduct {
 
-    private VerifyMunicipalOrStateRegistrationCustom verifyMunicipalOrStateRegistrationCustom;
+    private VerifyMunicipalOrStateRegistrationProviderProductRepositoryCustom verifyMunicipalOrStateRegistrationCustom;
 
     @Override
     public boolean verifyMunicipalRegistration(ProviderProduct providerProduct) {

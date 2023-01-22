@@ -12,7 +12,8 @@ import java.math.BigInteger;
 @AllArgsConstructor
 
 @Repository
-public class GenerateInternalCodeProviderProductRepositoryCustomImpl implements GenerateInternalCodeProviderProductRepositoryCustom {
+public class GenerateInternalCodeProviderProductRepositoryCustomImpl implements
+        GenerateInternalCodeProviderProductRepositoryCustom {
 
     private EntityManager entityManager;
 

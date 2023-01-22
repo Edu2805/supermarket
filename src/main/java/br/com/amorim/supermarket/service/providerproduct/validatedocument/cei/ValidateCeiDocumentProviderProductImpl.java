@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 
 @Component
-public class ValidateCeiDocumentImpl implements ValidateCeiDocument{
+public class ValidateCeiDocumentProviderProductImpl implements ValidateCeiDocumentProviderProduct {
 
     @Override
     public boolean isCei(ProviderProduct providerProduct) {

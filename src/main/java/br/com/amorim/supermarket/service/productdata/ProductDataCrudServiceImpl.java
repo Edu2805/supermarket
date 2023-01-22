@@ -76,7 +76,7 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
     }
 
     private void validateBeforeSave(ProductData productData) {
-        validateEan13OrDun14.validateBeforeSave(productData);
+        validateEan13OrDun14.validateBeforeSaveAndUpdate(productData);
         validateProductSubSection.validate(productData);
         validateProductProviderProduct.validate(productData);
     }
@@ -89,9 +89,8 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
                     productData.setId(existingProduct.getId());
                     validateBeforeUpdate(existingProduct);
                     BigDecimal margin = calculateMargin.calculate(existingProduct);
-                    BigInteger incrementInternalCode = generateInternalCode.generate(existingProduct);
                     productData.setMargin(margin);
-                    productData.setInternalCode(incrementInternalCode);
+                    productData.setInternalCode(existingProduct.getInternalCode());
                     productDataRepository.save(productData);
                     return existingProduct;
                 }).orElseThrow(() ->

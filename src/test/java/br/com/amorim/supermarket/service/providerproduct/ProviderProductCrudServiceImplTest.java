@@ -7,11 +7,11 @@ import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
 import br.com.amorim.supermarket.repository.providerproduct.ProviderProductRepository;
 import br.com.amorim.supermarket.service.providerproduct.generateinternalcode.GenerateInternalCodeProviderProduct;
-import br.com.amorim.supermarket.service.providerproduct.validatedocument.cei.ValidateCeiDocument;
-import br.com.amorim.supermarket.service.providerproduct.validatedocument.cnpj.ValidateCnpjDocument;
-import br.com.amorim.supermarket.service.providerproduct.validatedocument.cpf.ValidateCpfDocument;
-import br.com.amorim.supermarket.service.providerproduct.verifymunicipalorstateregistration.VerifyMunicipalOrStateRegistration;
-import br.com.amorim.supermarket.service.providerproduct.verifysubscriptionnumber.VerifySubscriptionNumber;
+import br.com.amorim.supermarket.service.providerproduct.validatedocument.cei.ValidateCeiDocumentProviderProduct;
+import br.com.amorim.supermarket.service.providerproduct.validatedocument.cnpj.ValidateCnpjDocumentProviderProduct;
+import br.com.amorim.supermarket.service.providerproduct.validatedocument.cpf.ValidateCpfDocumentProviderProduct;
+import br.com.amorim.supermarket.service.providerproduct.verifymunicipalorstateregistration.VerifyMunicipalOrStateRegistrationProviderProduct;
+import br.com.amorim.supermarket.service.providerproduct.verifysubscriptionnumber.VerifySubscriptionNumberProviderProduct;
 import br.com.amorim.supermarket.testutils.generatecnpj.GenerateCNPJ;
 import br.com.amorim.supermarket.testutils.generatecnpj.GenerateCPF;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.providerproduct.ProviderProductTest;
@@ -46,15 +46,15 @@ class ProviderProductCrudServiceImplTest {
     @Mock
     private GenerateInternalCodeProviderProduct generateInternalCodeProviderProductMock;
     @Mock
-    private ValidateCnpjDocument validateCnpjDocumentMock;
+    private ValidateCnpjDocumentProviderProduct validateCnpjDocumentMock;
     @Mock
-    private ValidateCpfDocument validateCpfDocumentMock;
+    private ValidateCpfDocumentProviderProduct validateCpfDocumentMock;
     @Mock
-    private ValidateCeiDocument validateCeiDocumentMock;
+    private ValidateCeiDocumentProviderProduct validateCeiDocumentMock;
     @Mock
-    private VerifyMunicipalOrStateRegistration verifyMunicipalRegistrationMock;
+    private VerifyMunicipalOrStateRegistrationProviderProduct verifyMunicipalRegistrationMock;
     @Mock
-    private VerifySubscriptionNumber verifySubscriptionNumberMock;
+    private VerifySubscriptionNumberProviderProduct verifySubscriptionNumberMock;
     @Mock
     private VerifyPageSize verifyPageSizeMock;
 
