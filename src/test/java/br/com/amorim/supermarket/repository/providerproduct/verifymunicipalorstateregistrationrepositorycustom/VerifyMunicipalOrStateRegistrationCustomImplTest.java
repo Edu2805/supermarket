@@ -98,4 +98,22 @@ class VerifyMunicipalOrStateRegistrationCustomImplTest {
         assertEquals(3, verifyMunicipalOrStateRegistrationCustom
                 .existsByMunicipalOrStateRegistration(providerProduct2));
     }
+
+    @Transactional
+    @Test
+    void shouldReturnThreeWhenIdAndMunicipalRegistrationIsNull() {
+        providerProduct2.setId(null);
+        providerProduct2.setMunicipalRegistration(null);
+        assertEquals(3, verifyMunicipalOrStateRegistrationCustom
+                .existsByMunicipalOrStateRegistration(providerProduct2));
+    }
+
+    @Transactional
+    @Test
+    void shouldReturnThreeWhenIdAndStateRegistrationIsNull() {
+        providerProduct2.setId(null);
+        providerProduct2.setStateRegistration(null);
+        assertEquals(3, verifyMunicipalOrStateRegistrationCustom
+                .existsByMunicipalOrStateRegistration(providerProduct2));
+    }
 }
