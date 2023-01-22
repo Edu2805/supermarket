@@ -9,10 +9,10 @@ import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
 import br.com.amorim.supermarket.model.subsection.SubSection;
 import br.com.amorim.supermarket.repository.department.DepartmentRepository;
-import br.com.amorim.supermarket.repository.establishment.EstablishmentRepository;
 import br.com.amorim.supermarket.repository.mainsection.MainSectionRepository;
 import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
 import br.com.amorim.supermarket.repository.subsection.SubSectionRepository;
+import br.com.amorim.supermarket.service.establishment.EstablishmentCrudService;
 import br.com.amorim.supermarket.service.providerproduct.ProviderProductCrudService;
 import br.com.amorim.supermarket.testutils.generatecnpj.GenerateCNPJ;
 import lombok.AllArgsConstructor;
@@ -36,13 +36,13 @@ public class GenerateEntitiesRepositoryUtils {
     @Autowired
     private DepartmentRepository departmentRepository;
     @Autowired
-    private EstablishmentRepository establishmentRepository;
-    @Autowired
     private MainSectionRepository mainSectionRepository;
+    @Autowired
+    private SubSectionRepository subSectionRepository;
     @Autowired
     private ProviderProductCrudService providerProductCrudService;
     @Autowired
-    private SubSectionRepository subSectionRepository;
+    private EstablishmentCrudService establishmentCrudService;
 
     public ProviderProduct generateProvider() {
         Random randomName = new Random();
@@ -68,27 +68,24 @@ public class GenerateEntitiesRepositoryUtils {
 
     public Establishment generateEstablishment () {
         Random randomName = new Random();
-        Random randomCode = new Random();
         Random randomMunicipalRegistration = new Random();
         Random randomStateRegistration = new Random();
         Random randomManager = new Random();
         GenerateCNPJ generateCNPJ = new GenerateCNPJ();
         var name = randomName.nextInt(10000, 19999);
-        var code = randomCode.nextInt(1, 19999);
         var municipalRegistration = randomMunicipalRegistration.nextInt(1, 1999);
         var stateRegistration = randomStateRegistration.nextInt(1, 1999);
         var manager = randomManager.nextInt(10000, 19999);
 
         Establishment establishment = new Establishment();
         establishment.setName(String.valueOf(name));
-        establishment.setCode(BigInteger.valueOf(code));
         establishment.setCnpj(generateCNPJ.cnpj(false));
         establishment.setManager(String.valueOf(manager));
         establishment.setAddress("Avenida Teste, 666, Cidade dos Testes");
         establishment.setMunicipalRegistration(String.valueOf(municipalRegistration));
         establishment.setStateRegistration(String.valueOf(stateRegistration));
         establishment.setPhone("4833333333");
-        establishmentRepository.save(establishment);
+        establishmentCrudService.save(establishment);
         return establishment;
     }
 

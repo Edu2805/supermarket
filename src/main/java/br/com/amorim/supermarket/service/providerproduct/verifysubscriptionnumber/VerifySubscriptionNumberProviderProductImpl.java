@@ -20,7 +20,12 @@ public class VerifySubscriptionNumberProviderProductImpl implements VerifySubscr
 
     @Override
     public boolean verifySubscriptionNumberBeforeSave(ProviderProduct providerProduct) {
-        return verifySubscriptionNumberCustom.existsBySubscriptionNumber(providerProduct);
+        if (verifySubscriptionNumberCustom.existsBySubscriptionNumber(providerProduct)) {
+            throw new BusinessRuleException(getString(
+                    MessagesKeyType.PROVIDER_PRODUCT_SUBSCRIPTION_NUMBER_ALREADY_EXISTS.message));
+        }
+
+        return false;
     }
 
     @Override

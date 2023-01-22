@@ -1,9 +1,7 @@
 package br.com.amorim.supermarket.repository.providerproduct.verifymunicipalorstateregistrationrepositorycustom;
 
 import br.com.amorim.supermarket.SupermarketApplication;
-import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.enums.SubscriptionType;
-import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleException;
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
 import br.com.amorim.supermarket.repository.providerproduct.ProviderProductRepository;
 import br.com.amorim.supermarket.testutils.generatecnpj.GenerateCNPJ;
@@ -16,12 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.transaction.Transactional;
 import java.util.Random;
 
-import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes= SupermarketApplication.class)
@@ -80,55 +76,26 @@ class VerifyMunicipalOrStateRegistrationCustomImplTest {
         deleteProvide();
     }
 
+    @Transactional
     @Test
-    void shouldShowAMessageErrorWhenMunicipalRegistrationAlreadyExistsInDatabase() {
-        String messageError = getString(MessagesKeyType.PROVIDER_PRODUCT_MUNICIPAL_REGISTER_ALREADY_EXISTS.message);
+    void shouldReturnOneWhenMunicipalRegistrationAlreadyExistsInDatabase() {
         providerProduct2.setMunicipalRegistration(providerProduct1.getMunicipalRegistration());
-
-        String exceptionMessage = assertThrows(
-                BusinessRuleException.class, () ->
-                        verifyMunicipalOrStateRegistrationCustom.existsByMunicipalOrStateRegistration(providerProduct2)
-        ).getMessage();
-
-        assertEquals(messageError, exceptionMessage);
-        assertThrows(BusinessRuleException.class, () ->
-                verifyMunicipalOrStateRegistrationCustom.existsByMunicipalOrStateRegistration(providerProduct2));
+        assertEquals(1, verifyMunicipalOrStateRegistrationCustom
+                .existsByMunicipalOrStateRegistration(providerProduct2));
     }
 
+    @Transactional
     @Test
-    void shouldShowAMessageErrorWhenStateRegistrationAlreadyExistsInDatabase() {
-        String messageError = getString(MessagesKeyType.PROVIDER_PRODUCT_STATE_REGISTER_ALREADY_EXISTS.message);
+    void shouldReturnTwoWhenStateRegistrationAlreadyExistsInDatabase() {
         providerProduct2.setStateRegistration(providerProduct1.getStateRegistration());
-
-        String exceptionMessage = assertThrows(
-                BusinessRuleException.class, () ->
-                        verifyMunicipalOrStateRegistrationCustom.existsByMunicipalOrStateRegistration(providerProduct2)
-        ).getMessage();
-
-        assertEquals(messageError, exceptionMessage);
-        assertThrows(BusinessRuleException.class, () ->
-                verifyMunicipalOrStateRegistrationCustom.existsByMunicipalOrStateRegistration(providerProduct2));
+        assertEquals(2, verifyMunicipalOrStateRegistrationCustom
+                .existsByMunicipalOrStateRegistration(providerProduct2));
     }
 
+    @Transactional
     @Test
-    void shouldReturnFalseWhenStateRegistrationIsNull() {
-        providerProduct2.setStateRegistration(null);
-
-        var verify = verifyMunicipalOrStateRegistrationCustom.existsByMunicipalOrStateRegistration(providerProduct2);
-        assertFalse(verify);
-    }
-
-    @Test
-    void shouldReturnFalseWhenMunicipalRegistrationIsNull() {
-        providerProduct2.setMunicipalRegistration(null);
-
-        var verify = verifyMunicipalOrStateRegistrationCustom.existsByMunicipalOrStateRegistration(providerProduct2);
-        assertFalse(verify);
-    }
-
-    @Test
-    void shouldSaveWithSuccess() {
-        var verify = verifyMunicipalOrStateRegistrationCustom.existsByMunicipalOrStateRegistration(providerProduct2);
-        assertFalse(verify);
+    void shouldReturnThreeAndSaveWithSuccess() {
+        assertEquals(3, verifyMunicipalOrStateRegistrationCustom
+                .existsByMunicipalOrStateRegistration(providerProduct2));
     }
 }

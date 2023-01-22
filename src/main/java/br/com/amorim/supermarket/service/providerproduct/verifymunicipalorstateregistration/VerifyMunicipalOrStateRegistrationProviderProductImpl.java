@@ -21,7 +21,15 @@ public class VerifyMunicipalOrStateRegistrationProviderProductImpl implements
 
     @Override
     public boolean verifyMunicipalOrStateRegistrationBeforeSave(ProviderProduct providerProduct) {
-        return verifyMunicipalOrStateRegistrationCustom.existsByMunicipalOrStateRegistration(providerProduct);
+        if (verifyMunicipalOrStateRegistrationCustom.existsByMunicipalOrStateRegistration(providerProduct) == 1) {
+            throw new BusinessRuleException(
+                    getString(MessagesKeyType.PROVIDER_PRODUCT_MUNICIPAL_REGISTER_ALREADY_EXISTS.message));
+        }
+        if (verifyMunicipalOrStateRegistrationCustom.existsByMunicipalOrStateRegistration(providerProduct) == 2) {
+            throw new BusinessRuleException(
+                    getString(MessagesKeyType.PROVIDER_PRODUCT_STATE_REGISTER_ALREADY_EXISTS.message));
+        }
+        return false;
     }
 
     @Override

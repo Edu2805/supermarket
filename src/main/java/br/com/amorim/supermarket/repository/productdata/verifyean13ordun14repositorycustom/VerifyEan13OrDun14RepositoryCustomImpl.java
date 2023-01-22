@@ -1,14 +1,10 @@
 package br.com.amorim.supermarket.repository.productdata.verifyean13ordun14repositorycustom;
 
-import br.com.amorim.supermarket.common.enums.MessagesKeyType;
-import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleException;
 import br.com.amorim.supermarket.model.productdata.ProductData;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-
-import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
 
 @AllArgsConstructor
 
@@ -18,14 +14,14 @@ public class VerifyEan13OrDun14RepositoryCustomImpl implements VerifyEan13OrDun1
     private EntityManager entityManager;
 
     @Override
-    public boolean existsByEan13OrDun14(ProductData productData) {
+    public int existsByEan13OrDun14(ProductData productData) {
         if (existsByEan13(productData.getEan13())) {
-            throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_EAN13_ALREADY_EXISTS.message));
+           return 1;
         }
         if (existsByDun14(productData.getDun14())) {
-            throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_DUN14_ALREADY_EXISTS.message));
+            return 2;
         }
-        return false;
+        return 3;
     }
 
     private boolean existsByDun14(String dun14) {
