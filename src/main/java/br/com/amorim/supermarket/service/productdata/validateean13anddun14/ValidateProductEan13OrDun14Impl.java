@@ -24,7 +24,7 @@ public class ValidateProductEan13OrDun14Impl implements ValidateProductEan13OrDu
      * @return retorna true caso o EAN 13 ou DUN 14 for igual a null junto da mensagem de orientação ao usuário
      */
     @Override
-    public boolean validateBeforeSaveAndUpdate(ProductData productData) {
+    public boolean validateBeforeSave(ProductData productData) {
         if (productData.getEan13() == null && productData.getDun14() == null) {
             throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_EAN13_OR_DUN14_EMPTY.message));
         } else if (productData.getEan13() != null && productData.getDun14() != null) {
@@ -36,7 +36,7 @@ public class ValidateProductEan13OrDun14Impl implements ValidateProductEan13OrDu
     }
 
     private void verifyIfAlreadyExistsEan13OrDun14InDatabase(ProductData productData) {
-        if(verifyEan13OrDun14RepositoryCustom.existsByEan13OrDun14(productData) == 1) {
+        if (verifyEan13OrDun14RepositoryCustom.existsByEan13OrDun14(productData) == 1) {
             throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_EAN13_ALREADY_EXISTS.message));
         }
         if (verifyEan13OrDun14RepositoryCustom.existsByEan13OrDun14(productData) == 2) {

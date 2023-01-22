@@ -6,6 +6,7 @@ import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleExcep
 import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
 import br.com.amorim.supermarket.repository.productdata.verifyean13ordun14repositorycustom.VerifyEan13OrDun14RepositoryCustom;
+import br.com.amorim.supermarket.testutils.generateentitiesunittests.productdata.ProductDataTest;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.providerproduct.ProviderProductTest;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.subsection.SubSectionTest;
 import org.junit.jupiter.api.Assertions;
@@ -16,12 +17,15 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
 import static java.util.UUID.randomUUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class ProductValidatorEan13OrDun14ImplTest {
@@ -65,11 +69,11 @@ class ProductValidatorEan13OrDun14ImplTest {
 
         String exceptionMessage = Assertions.assertThrows(
                 BusinessRuleException.class, () -> {
-                    productValidatorEan13OrDun14.validateBeforeSaveAndUpdate(productData);
+                    productValidatorEan13OrDun14.validateBeforeSave(productData);
                 }
         ).getMessage();
         assertEquals(messageError, exceptionMessage);
-        assertThrows(BusinessRuleException.class, () -> productValidatorEan13OrDun14.validateBeforeSaveAndUpdate(productData));
+        assertThrows(BusinessRuleException.class, () -> productValidatorEan13OrDun14.validateBeforeSave(productData));
     }
 
     @Test
@@ -80,11 +84,11 @@ class ProductValidatorEan13OrDun14ImplTest {
 
         String exceptionMessage = Assertions.assertThrows(
                 BusinessRuleException.class, () -> {
-                    productValidatorEan13OrDun14.validateBeforeSaveAndUpdate(productData);
+                    productValidatorEan13OrDun14.validateBeforeSave(productData);
                 }
         ).getMessage();
         assertEquals(messageError, exceptionMessage);
-        assertThrows(BusinessRuleException.class, () -> productValidatorEan13OrDun14.validateBeforeSaveAndUpdate(productData));
+        assertThrows(BusinessRuleException.class, () -> productValidatorEan13OrDun14.validateBeforeSave(productData));
     }
 
     @Test
@@ -94,17 +98,17 @@ class ProductValidatorEan13OrDun14ImplTest {
 
         String exceptionMessage = Assertions.assertThrows(
                 BusinessRuleException.class, () -> {
-                    productValidatorEan13OrDun14.validateBeforeSaveAndUpdate(productData);
+                    productValidatorEan13OrDun14.validateBeforeSave(productData);
                 }
         ).getMessage();
         assertEquals(messageError, exceptionMessage);
-        assertThrows(BusinessRuleException.class, () -> productValidatorEan13OrDun14.validateBeforeSaveAndUpdate(productData));
+        assertThrows(BusinessRuleException.class, () -> productValidatorEan13OrDun14.validateBeforeSave(productData));
     }
 
     @Test
     void shouldReturnFalseWhenEan13IsDifferentOfNullBeforeSave() {
         productData.setDun14(null);
-        var validateEan13 = productValidatorEan13OrDun14.validateBeforeSaveAndUpdate(productData);
+        var validateEan13 = productValidatorEan13OrDun14.validateBeforeSave(productData);
         assertFalse(validateEan13);
     }
 
@@ -112,7 +116,7 @@ class ProductValidatorEan13OrDun14ImplTest {
     void shouldReturnFalseWhenDun14IsDifferentOfNullBeforeSave() {
         productData.setEan13(null);
         productData.setDun14("17893546701265");
-        var validateEan13 = productValidatorEan13OrDun14.validateBeforeSaveAndUpdate(productData);
+        var validateEan13 = productValidatorEan13OrDun14.validateBeforeSave(productData);
         assertFalse(validateEan13);
     }
 
@@ -172,5 +176,86 @@ class ProductValidatorEan13OrDun14ImplTest {
         productData.setDun14("17893546701265");
         var validateEan13 = productValidatorEan13OrDun14.validateBeforeUpdate(productData);
         assertFalse(validateEan13);
+    }
+
+    @Test
+    void shouldReturnABusinessExceptionMessageWhenEan13AlreadyExistsBeforeSave() {
+        String messageError = getString(MessagesKeyType.PRODUCT_DATA_EAN13_ALREADY_EXISTS.message);
+
+        when(verifyEan13OrDun14RepositoryCustomMock.existsByEan13OrDun14(productData))
+                .thenReturn(1);
+
+        String exceptionMessage = Assertions.assertThrows(
+                BusinessRuleException.class, () -> {
+                    productValidatorEan13OrDun14.validateBeforeSave(productData);
+                }
+        ).getMessage();
+        assertEquals(messageError, exceptionMessage);
+        assertThrows(BusinessRuleException.class, () ->
+                productValidatorEan13OrDun14.validateBeforeSave(productData));
+
+    }
+
+    @Test
+    void shouldReturnABusinessExceptionMessageWhenDun14AlreadyExistsBeforeSave() {
+        productData.setEan13(null);
+        productData.setDun14("17892436543276");
+        String messageError = getString(MessagesKeyType.PRODUCT_DATA_DUN14_ALREADY_EXISTS.message);
+
+        when(verifyEan13OrDun14RepositoryCustomMock.existsByEan13OrDun14(productData))
+                .thenReturn(2);
+
+        String exceptionMessage = Assertions.assertThrows(
+                BusinessRuleException.class, () -> {
+                    productValidatorEan13OrDun14.validateBeforeSave(productData);
+                }
+        ).getMessage();
+        assertEquals(messageError, exceptionMessage);
+        assertThrows(BusinessRuleException.class, () ->
+                productValidatorEan13OrDun14.validateBeforeSave(productData));
+
+    }
+
+    @Test
+    void shouldReturnABusinessExceptionMessageWhenEan13AlreadyExistsBeforeUpdate() {
+        String messageError = getString(MessagesKeyType.PRODUCT_DATA_EAN13_ALREADY_EXISTS.message);
+        ProductDataTest productDataTest = new ProductDataTest();
+        var productData2 = productDataTest.generateProductData();
+        List<ProductData> productDataList = new ArrayList<>();
+
+        productData.setEan13(productData2.getEan13());
+        productDataList.add(productData2);
+
+        when(productDataRepository.findAll()).thenReturn(productDataList);
+
+        String exceptionMessage = Assertions.assertThrows(
+                BusinessRuleException.class, () -> {
+                    productValidatorEan13OrDun14.validateBeforeUpdate(productData);
+                }
+        ).getMessage();
+        assertEquals(messageError, exceptionMessage);
+    }
+
+    @Test
+    void shouldReturnABusinessExceptionMessageWhenDun14AlreadyExistsBeforeUpdate() {
+        String messageError = getString(MessagesKeyType.PRODUCT_DATA_DUN14_ALREADY_EXISTS.message);
+        ProductDataTest productDataTest = new ProductDataTest();
+        var productData2 = productDataTest.generateProductData();
+        List<ProductData> productDataList = new ArrayList<>();
+
+        productData2.setEan13(null);
+        productData2.setDun14("17892436543276");
+        productData.setEan13(productData2.getEan13());
+        productData.setDun14(productData2.getDun14());
+        productDataList.add(productData2);
+
+        when(productDataRepository.findAll()).thenReturn(productDataList);
+
+        String exceptionMessage = Assertions.assertThrows(
+                BusinessRuleException.class, () -> {
+                    productValidatorEan13OrDun14.validateBeforeUpdate(productData);
+                }
+        ).getMessage();
+        assertEquals(messageError, exceptionMessage);
     }
 }

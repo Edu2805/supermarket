@@ -76,7 +76,7 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
     }
 
     private void validateBeforeSave(ProductData productData) {
-        validateEan13OrDun14.validateBeforeSaveAndUpdate(productData);
+        validateEan13OrDun14.validateBeforeSave(productData);
         validateProductSubSection.validate(productData);
         validateProductProviderProduct.validate(productData);
     }
