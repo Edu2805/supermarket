@@ -61,13 +61,13 @@ public class ProviderProductCrudServiceImpl implements ProviderProductCrudServic
     @Transactional
     @Override
     public ProviderProduct save (ProviderProduct providerProduct) {
-        validateDocuments(providerProduct);
-        validateFields(providerProduct);
+        validateDocumentsBeforeSave(providerProduct);
+        validateFieldsBeforeSave(providerProduct);
         setInternalCode(providerProduct);
         return providerProductRepository.save(providerProduct);
     }
 
-    private void validateDocuments (ProviderProduct providerProduct) {
+    private void validateDocumentsBeforeSave(ProviderProduct providerProduct) {
         switch (providerProduct.getSubscriptionType()) {
             case CPF -> validateCpfDocument.isCpf(providerProduct);
             case CNPJ -> validateCnpjDocument.isCnpj(providerProduct);
@@ -77,9 +77,9 @@ public class ProviderProductCrudServiceImpl implements ProviderProductCrudServic
         }
     }
 
-    private void validateFields (ProviderProduct providerProduct) {
-        verifySubscriptionNumber.verifySubscriptionNumber(providerProduct);
-        verifyMunicipalRegistration.verifyMunicipalRegistration(providerProduct);
+    private void validateFieldsBeforeSave(ProviderProduct providerProduct) {
+        verifySubscriptionNumber.verifySubscriptionNumberBeforeSave(providerProduct);
+        verifyMunicipalRegistration.verifyMunicipalOrStateRegistrationBeforeSave(providerProduct);
     }
 
     private void setInternalCode (ProviderProduct providerProduct) {
@@ -93,8 +93,8 @@ public class ProviderProductCrudServiceImpl implements ProviderProductCrudServic
         providerProductRepository.findById(id)
                 .map(existingProvider -> {
                     providerProduct.setId(existingProvider.getId());
-                    validateDocuments(existingProvider);
-                    validateFields(existingProvider);
+                    validateDocumentsBeforeUpdate(providerProduct);
+                    validateFieldsBeforeUpdate(providerProduct);
                     providerProduct.setCode(existingProvider.getCode());
                     providerProductRepository.save(providerProduct);
                     return existingProvider;
@@ -102,6 +102,21 @@ public class ProviderProductCrudServiceImpl implements ProviderProductCrudServic
                          new NotFoundException(
                                  getString(MessagesKeyType.PROVIDER_PRODUCT_NOT_FOUND.message)));
 
+    }
+
+    private void validateDocumentsBeforeUpdate(ProviderProduct providerProduct) {
+        switch (providerProduct.getSubscriptionType()) {
+            case CPF -> validateCpfDocument.isCpf(providerProduct);
+            case CNPJ -> validateCnpjDocument.isCnpj(providerProduct);
+            case CEI -> validateCeiDocument.isCei(providerProduct);
+            default -> throw new InvalidDocumentException(
+                    getString(MessagesKeyType.PROVIDER_PRODUCT_GENERIC_SUBSCRIPTION_NUMBER_NOT_EXISTS.message));
+        }
+    }
+
+    private void validateFieldsBeforeUpdate(ProviderProduct providerProduct) {
+        verifySubscriptionNumber.verifySubscriptionNumberBeforeUpdate(providerProduct);
+        verifyMunicipalRegistration.verifyMunicipalOrStateRegistrationBeforeUpdate(providerProduct);
     }
 
     @Transactional

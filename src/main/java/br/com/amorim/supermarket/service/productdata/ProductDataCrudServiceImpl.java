@@ -87,8 +87,8 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
         productDataRepository.findById(id)
                 .map(existingProduct -> {
                     productData.setId(existingProduct.getId());
-                    validateBeforeUpdate(existingProduct);
-                    BigDecimal margin = calculateMargin.calculate(existingProduct);
+                    validateBeforeUpdate(productData);
+                    BigDecimal margin = calculateMargin.calculate(productData);
                     productData.setMargin(margin);
                     productData.setInternalCode(existingProduct.getInternalCode());
                     productDataRepository.save(productData);

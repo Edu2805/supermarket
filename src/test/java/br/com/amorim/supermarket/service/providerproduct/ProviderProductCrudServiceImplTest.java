@@ -110,7 +110,7 @@ class ProviderProductCrudServiceImplTest {
 
         when(validateCpfDocumentMock.isCpf(providerProduct))
                 .thenReturn(true);
-        when(verifySubscriptionNumberMock.verifySubscriptionNumber(providerProduct))
+        when(verifySubscriptionNumberMock.verifySubscriptionNumberBeforeSave(providerProduct))
                 .thenReturn(false);
         when(providerProductRepositoryMock.save(providerProduct)).thenReturn(providerProduct);
 
@@ -128,7 +128,7 @@ class ProviderProductCrudServiceImplTest {
 
         when(validateCpfDocumentMock.isCpf(providerProduct))
                 .thenReturn(true);
-        when(verifySubscriptionNumberMock.verifySubscriptionNumber(providerProduct))
+        when(verifySubscriptionNumberMock.verifySubscriptionNumberBeforeSave(providerProduct))
                 .thenReturn(false);
         when(providerProductRepositoryMock.save(providerProduct)).thenReturn(providerProduct);
 
@@ -146,7 +146,7 @@ class ProviderProductCrudServiceImplTest {
 
         when(validateCpfDocumentMock.isCpf(providerProduct))
                 .thenReturn(true);
-        when(verifySubscriptionNumberMock.verifySubscriptionNumber(providerProduct))
+        when(verifySubscriptionNumberMock.verifySubscriptionNumberBeforeSave(providerProduct))
                 .thenReturn(false);
         when(providerProductRepositoryMock.save(providerProduct)).thenReturn(providerProduct);
 
@@ -166,7 +166,7 @@ class ProviderProductCrudServiceImplTest {
                 .thenReturn(Optional.of(providerProduct));
         when(validateCpfDocumentMock.isCpf(providerProduct))
                 .thenReturn(true);
-        when(verifySubscriptionNumberMock.verifySubscriptionNumber(providerProduct))
+        when(verifySubscriptionNumberMock.verifySubscriptionNumberBeforeSave(providerProduct))
                 .thenReturn(false);
         when(providerProductRepositoryMock.save(providerProduct)).thenReturn(providerProduct);
 
