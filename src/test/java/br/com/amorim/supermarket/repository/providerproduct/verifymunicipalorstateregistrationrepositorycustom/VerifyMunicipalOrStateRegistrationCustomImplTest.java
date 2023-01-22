@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class VerifyMunicipalOrStateRegistrationCustomImplTest {
 
     @Autowired
-    private VerifyMunicipalOrStateRegistrationCustomImpl verifyMunicipalOrStateRegistrationCustom;
+    private VerifyMunicipalOrStateRegistrationProviderProductRepositoryCustomImpl verifyMunicipalOrStateRegistrationCustom;
     @Autowired
     private ProviderProductRepository providerProductRepository;
     @Autowired

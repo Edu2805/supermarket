@@ -22,7 +22,7 @@ public class ValidateProductEan13OrDun14Impl implements ValidateProductEan13OrDu
      * @return retorna true caso o EAN 13 ou DUN 14 for igual a null junto da mensagem de orientação ao usuário
      */
     @Override
-    public boolean validateBeforeSave(ProductData productData) {
+    public boolean validateBeforeSaveAndUpdate(ProductData productData) {
         if (productData.getEan13() == null && productData.getDun14() == null) {
             throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_EAN13_OR_DUN14_EMPTY.message));
         } else if (productData.getEan13() != null && productData.getDun14() != null) {

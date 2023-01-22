@@ -62,11 +62,11 @@ class ProductValidatorEan13OrDun14ImplTest {
 
         String exceptionMessage = Assertions.assertThrows(
                 BusinessRuleException.class, () -> {
-                    productValidatorEan13OrDun14.validateBeforeSave(productData);
+                    productValidatorEan13OrDun14.validateBeforeSaveAndUpdate(productData);
                 }
         ).getMessage();
         assertEquals(messageError, exceptionMessage);
-        assertThrows(BusinessRuleException.class, () -> productValidatorEan13OrDun14.validateBeforeSave(productData));
+        assertThrows(BusinessRuleException.class, () -> productValidatorEan13OrDun14.validateBeforeSaveAndUpdate(productData));
     }
 
     @Test
@@ -77,11 +77,11 @@ class ProductValidatorEan13OrDun14ImplTest {
 
         String exceptionMessage = Assertions.assertThrows(
                 BusinessRuleException.class, () -> {
-                    productValidatorEan13OrDun14.validateBeforeSave(productData);
+                    productValidatorEan13OrDun14.validateBeforeSaveAndUpdate(productData);
                 }
         ).getMessage();
         assertEquals(messageError, exceptionMessage);
-        assertThrows(BusinessRuleException.class, () -> productValidatorEan13OrDun14.validateBeforeSave(productData));
+        assertThrows(BusinessRuleException.class, () -> productValidatorEan13OrDun14.validateBeforeSaveAndUpdate(productData));
     }
 
     @Test
@@ -91,17 +91,17 @@ class ProductValidatorEan13OrDun14ImplTest {
 
         String exceptionMessage = Assertions.assertThrows(
                 BusinessRuleException.class, () -> {
-                    productValidatorEan13OrDun14.validateBeforeSave(productData);
+                    productValidatorEan13OrDun14.validateBeforeSaveAndUpdate(productData);
                 }
         ).getMessage();
         assertEquals(messageError, exceptionMessage);
-        assertThrows(BusinessRuleException.class, () -> productValidatorEan13OrDun14.validateBeforeSave(productData));
+        assertThrows(BusinessRuleException.class, () -> productValidatorEan13OrDun14.validateBeforeSaveAndUpdate(productData));
     }
 
     @Test
     void shouldReturnFalseWhenEan13IsDifferentOfNullBeforeSave() {
         productData.setDun14(null);
-        var validateEan13 = productValidatorEan13OrDun14.validateBeforeSave(productData);
+        var validateEan13 = productValidatorEan13OrDun14.validateBeforeSaveAndUpdate(productData);
         assertFalse(validateEan13);
     }
 
@@ -109,7 +109,7 @@ class ProductValidatorEan13OrDun14ImplTest {
     void shouldReturnFalseWhenDun14IsDifferentOfNullBeforeSave() {
         productData.setEan13(null);
         productData.setDun14("17893546701265");
-        var validateEan13 = productValidatorEan13OrDun14.validateBeforeSave(productData);
+        var validateEan13 = productValidatorEan13OrDun14.validateBeforeSaveAndUpdate(productData);
         assertFalse(validateEan13);
     }
 

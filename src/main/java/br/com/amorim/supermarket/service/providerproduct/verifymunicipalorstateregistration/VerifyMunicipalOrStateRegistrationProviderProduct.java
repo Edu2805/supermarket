@@ -2,7 +2,7 @@ package br.com.amorim.supermarket.service.providerproduct.verifymunicipalorstate
 
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
 
-public interface VerifyMunicipalOrStateRegistration {
+public interface VerifyMunicipalOrStateRegistrationProviderProduct {
 
     boolean verifyMunicipalRegistration (ProviderProduct providerProduct);
 }

@@ -2,7 +2,7 @@ package br.com.amorim.supermarket.repository.providerproduct.verifysubscriptionn
 
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
 
-public interface VerifySubscriptionNumberRepositoryCustom {
+public interface VerifySubscriptionNumberProviderProductRepositoryCustom {
 
     boolean existsBySubscriptionNumber (ProviderProduct providerProduct);
 }

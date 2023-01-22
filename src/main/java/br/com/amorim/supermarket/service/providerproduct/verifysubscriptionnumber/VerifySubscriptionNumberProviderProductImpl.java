@@ -1,16 +1,16 @@
 package br.com.amorim.supermarket.service.providerproduct.verifysubscriptionnumber;
 
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
-import br.com.amorim.supermarket.repository.providerproduct.verifysubscriptionnumberrepositorycustom.VerifySubscriptionNumberRepositoryCustom;
+import br.com.amorim.supermarket.repository.providerproduct.verifysubscriptionnumberrepositorycustom.VerifySubscriptionNumberProviderProductRepositoryCustom;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
 
 @Component
-public class VerifySubscriptionNumberImpl implements VerifySubscriptionNumber {
+public class VerifySubscriptionNumberProviderProductImpl implements VerifySubscriptionNumberProviderProduct {
 
-    private VerifySubscriptionNumberRepositoryCustom verifySubscriptionNumberCustom;
+    private VerifySubscriptionNumberProviderProductRepositoryCustom verifySubscriptionNumberCustom;
 
     @Override
     public boolean verifySubscriptionNumber(ProviderProduct providerProduct) {

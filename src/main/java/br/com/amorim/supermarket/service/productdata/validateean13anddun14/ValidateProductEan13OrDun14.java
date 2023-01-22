@@ -4,6 +4,6 @@ import br.com.amorim.supermarket.model.productdata.ProductData;
 
 public interface ValidateProductEan13OrDun14 {
 
-    boolean validateBeforeSave(ProductData productData);
+    boolean validateBeforeSaveAndUpdate(ProductData productData);
     boolean validateBeforeUpdate(ProductData productData);
 }

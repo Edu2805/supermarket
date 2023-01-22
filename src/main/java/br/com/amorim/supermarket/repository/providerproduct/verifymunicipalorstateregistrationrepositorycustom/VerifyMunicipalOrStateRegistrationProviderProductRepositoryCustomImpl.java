@@ -13,17 +13,22 @@ import static br.com.amorim.supermarket.configuration.internacionalizationmessag
 @AllArgsConstructor
 
 @Repository
-public class VerifyMunicipalOrStateRegistrationCustomImpl implements VerifyMunicipalOrStateRegistrationCustom{
+public class VerifyMunicipalOrStateRegistrationProviderProductRepositoryCustomImpl implements
+        VerifyMunicipalOrStateRegistrationProviderProductRepositoryCustom {
 
     private EntityManager entityManager;
 
     @Override
     public boolean existsByMunicipalOrStateRegistration(ProviderProduct providerProduct) {
-        if (existsMunicipalRegistration(providerProduct.getMunicipalRegistration())) {
-            throw new BusinessRuleException(getString(MessagesKeyType.PROVIDER_PRODUCT_MUNICIPAL_REGISTER_ALREADY_EXISTS.message));
+        if (providerProduct.getId() == null &&
+                existsMunicipalRegistration(providerProduct.getMunicipalRegistration())) {
+            throw new BusinessRuleException(
+                    getString(MessagesKeyType.PROVIDER_PRODUCT_MUNICIPAL_REGISTER_ALREADY_EXISTS.message));
         }
-        if (existsStateRegistration(providerProduct.getStateRegistration())) {
-            throw new BusinessRuleException(getString(MessagesKeyType.PROVIDER_PRODUCT_STATE_REGISTER_ALREADY_EXISTS.message));
+        if (providerProduct.getId() == null &&
+                existsStateRegistration(providerProduct.getStateRegistration())) {
+            throw new BusinessRuleException(
+                    getString(MessagesKeyType.PROVIDER_PRODUCT_STATE_REGISTER_ALREADY_EXISTS.message));
         }
         return false;
     }

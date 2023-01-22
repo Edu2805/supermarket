@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 class ValidateCnpjDocumentImplTest {
 
     @InjectMocks
-    private ValidateCnpjDocumentImpl validateCnpjDocument;
+    private ValidateCnpjDocumentProviderProductImpl validateCnpjDocument;
     @Mock
     private VerifyCNPJ verifyCNPJMock;
     private ProviderProduct providerProduct;

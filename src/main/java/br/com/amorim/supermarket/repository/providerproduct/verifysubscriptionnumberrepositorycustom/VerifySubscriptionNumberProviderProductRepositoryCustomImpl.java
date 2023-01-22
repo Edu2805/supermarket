@@ -13,14 +13,17 @@ import static br.com.amorim.supermarket.configuration.internacionalizationmessag
 @AllArgsConstructor
 
 @Repository
-public class VerifySubscriptionNumberRepositoryCustomImpl implements VerifySubscriptionNumberRepositoryCustom {
+public class VerifySubscriptionNumberProviderProductRepositoryCustomImpl implements
+        VerifySubscriptionNumberProviderProductRepositoryCustom {
 
     private EntityManager entityManager;
 
     @Override
     public boolean existsBySubscriptionNumber(ProviderProduct providerProduct) {
-        if (existsSubscriptionNumberQuery(providerProduct.getSubscriptionNumber())) {
-            throw new BusinessRuleException(getString(MessagesKeyType.PROVIDER_PRODUCT_SUBSCRIPTION_NUMBER_ALREADY_EXISTS.message));
+        if (providerProduct.getId() == null &&
+                existsSubscriptionNumberQuery(providerProduct.getSubscriptionNumber())) {
+            throw new BusinessRuleException(getString(
+                    MessagesKeyType.PROVIDER_PRODUCT_SUBSCRIPTION_NUMBER_ALREADY_EXISTS.message));
         }
         return false;
     }

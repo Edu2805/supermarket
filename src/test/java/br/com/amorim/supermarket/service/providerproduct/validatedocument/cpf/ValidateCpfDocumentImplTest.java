@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 class ValidateCpfDocumentImplTest {
 
     @InjectMocks
-    private ValidateCpfDocumentImpl validateCpfDocument;
+    private ValidateCpfDocumentProviderProductImpl validateCpfDocument;
     @Mock
     private VerifyCPF verifyCPFMock;
 

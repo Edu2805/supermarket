@@ -6,12 +6,12 @@ import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
 import br.com.amorim.supermarket.repository.providerproduct.ProviderProductRepository;
 import br.com.amorim.supermarket.service.providerproduct.generateinternalcode.GenerateInternalCodeProviderProduct;
-import br.com.amorim.supermarket.service.providerproduct.validatedocument.cei.ValidateCeiDocument;
-import br.com.amorim.supermarket.service.providerproduct.validatedocument.cnpj.ValidateCnpjDocument;
-import br.com.amorim.supermarket.service.providerproduct.validatedocument.cpf.ValidateCpfDocument;
-import br.com.amorim.supermarket.service.providerproduct.verifymunicipalorstateregistration.VerifyMunicipalOrStateRegistration;
+import br.com.amorim.supermarket.service.providerproduct.validatedocument.cei.ValidateCeiDocumentProviderProduct;
+import br.com.amorim.supermarket.service.providerproduct.validatedocument.cnpj.ValidateCnpjDocumentProviderProduct;
+import br.com.amorim.supermarket.service.providerproduct.validatedocument.cpf.ValidateCpfDocumentProviderProduct;
+import br.com.amorim.supermarket.service.providerproduct.verifymunicipalorstateregistration.VerifyMunicipalOrStateRegistrationProviderProduct;
 import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
-import br.com.amorim.supermarket.service.providerproduct.verifysubscriptionnumber.VerifySubscriptionNumber;
+import br.com.amorim.supermarket.service.providerproduct.verifysubscriptionnumber.VerifySubscriptionNumberProviderProduct;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,11 +31,11 @@ public class ProviderProductCrudServiceImpl implements ProviderProductCrudServic
 
     private ProviderProductRepository providerProductRepository;
     private GenerateInternalCodeProviderProduct generateInternalCodeProviderProduct;
-    private ValidateCnpjDocument validateCnpjDocument;
-    private ValidateCpfDocument validateCpfDocument;
-    private ValidateCeiDocument validateCeiDocument;
-    private VerifyMunicipalOrStateRegistration verifyMunicipalRegistration;
-    private VerifySubscriptionNumber verifySubscriptionNumber;
+    private ValidateCnpjDocumentProviderProduct validateCnpjDocument;
+    private ValidateCpfDocumentProviderProduct validateCpfDocument;
+    private ValidateCeiDocumentProviderProduct validateCeiDocument;
+    private VerifyMunicipalOrStateRegistrationProviderProduct verifyMunicipalRegistration;
+    private VerifySubscriptionNumberProviderProduct verifySubscriptionNumber;
     private VerifyPageSize verifyPageSize;
 
 
@@ -95,6 +95,7 @@ public class ProviderProductCrudServiceImpl implements ProviderProductCrudServic
                     providerProduct.setId(existingProvider.getId());
                     validateDocuments(existingProvider);
                     validateFields(existingProvider);
+                    providerProduct.setCode(existingProvider.getCode());
                     providerProductRepository.save(providerProduct);
                     return existingProvider;
                 }).orElseThrow(() ->
