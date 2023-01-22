@@ -20,17 +20,19 @@ import static br.com.amorim.supermarket.configuration.internacionalizationmessag
 @AllArgsConstructor
 
 @Service
-public class EstablishmentService {
+public class EstablishmentCrudServiceImpl implements EstablishmentCrudService {
 
     private EstablishmentRepository establishmentRepository;
     private GenerateInternalCodeEstablishment generateInternalCodeEstablishment;
     private VerifyMunicipalOrStateRegistrationEstablishment verifyMunicipalRegistration;
     private VerifyCnpjEstablishment verifyCnpjEstablishment;
 
+    @Override
     public List<Establishment> getAll () {
         return establishmentRepository.findAll();
     }
 
+    @Override
     public Establishment findById (UUID id) {
         return establishmentRepository.findById(id)
                 .orElseThrow(() -> {
@@ -39,6 +41,7 @@ public class EstablishmentService {
                 });
     }
     @Transactional
+    @Override
     public Establishment save (Establishment establishment) {
         validateFieldsBeforeSave(establishment);
         setInternalCode(establishment);
@@ -56,6 +59,7 @@ public class EstablishmentService {
     }
 
     @Transactional
+    @Override
     public void update (Establishment establishment, UUID id) {
         establishmentRepository.findById(id)
                 .map(existingEstablishment -> {
@@ -75,6 +79,7 @@ public class EstablishmentService {
     }
 
     @Transactional
+    @Override
     public void delete (UUID id) {
         establishmentRepository.findById(id)
                 .map(existingEstablishment -> {

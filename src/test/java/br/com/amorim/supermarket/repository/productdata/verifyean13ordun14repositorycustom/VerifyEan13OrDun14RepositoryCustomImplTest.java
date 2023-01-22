@@ -1,9 +1,7 @@
 package br.com.amorim.supermarket.repository.productdata.verifyean13ordun14repositorycustom;
 
 import br.com.amorim.supermarket.SupermarketApplication;
-import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.enums.UnityType;
-import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleException;
 import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
 
@@ -22,10 +20,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Random;
 
-import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes= SupermarketApplication.class)
@@ -173,41 +168,27 @@ class VerifyEan13OrDun14RepositoryCustomImplTest {
 
     @Transactional
     @Test
-    void shouldReturnAExceptionMessageIfAlreadyExistsEan13InDatabaseBeforeSave () {
-        String messageError = getString(MessagesKeyType.PRODUCT_DATA_EAN13_ALREADY_EXISTS.message);
+    void shouldReturnOneIfAlreadyExistsEan13InDatabaseBeforeSave () {
         productData2.setEan13(productData1.getEan13());
-
-        String exceptionMessage = assertThrows(
-                BusinessRuleException.class, () ->
-                        verifyEan13OrDun14RepositoryCustom.existsByEan13OrDun14(productData1)
-        ).getMessage();
-
-        assertEquals(messageError, exceptionMessage);
-        assertThrows(BusinessRuleException.class, () -> verifyEan13OrDun14RepositoryCustom.existsByEan13OrDun14(productData1));
+        assertEquals(1, verifyEan13OrDun14RepositoryCustom.existsByEan13OrDun14(productData1));
     }
 
     @Transactional
     @Test
-    void shouldReturnAExceptionMessageIfAlreadyExistsDun14InDatabaseBeforeSave () {
-        String messageError = getString(MessagesKeyType.PRODUCT_DATA_DUN14_ALREADY_EXISTS.message);
+    void shouldReturnTwoIfAlreadyExistsDun14InDatabaseBeforeSave () {
         productData4.setDun14(productData3.getDun14());
-
-        String exceptionMessage = assertThrows(
-                BusinessRuleException.class, () ->
-                        verifyEan13OrDun14RepositoryCustom.existsByEan13OrDun14(productData3)
-        ).getMessage();
-
-        assertEquals(messageError, exceptionMessage);
-        assertThrows(BusinessRuleException.class, () -> verifyEan13OrDun14RepositoryCustom.existsByEan13OrDun14(productData3));
+        assertEquals(2, verifyEan13OrDun14RepositoryCustom.existsByEan13OrDun14(productData4));
     }
 
+    @Transactional
     @Test
-    void shouldNotReturnAExceptionMessageIfAlreadyExistsEan13InDatabaseBeforeSave () {
-        assertFalse(verifyEan13OrDun14RepositoryCustom.existsByEan13OrDun14(productData5));
+    void shouldReturnThreeIfNotExistsEan13InDatabaseBeforeSave () {
+        assertEquals(3, verifyEan13OrDun14RepositoryCustom.existsByEan13OrDun14(productData5));
     }
 
+    @Transactional
     @Test
-    void shouldNotReturnAExceptionMessageIfAlreadyExistsDun14InDatabaseBeforeSave () {
-        assertFalse(verifyEan13OrDun14RepositoryCustom.existsByEan13OrDun14(productData6));
+    void shouldReturnThreeIfNotExistsDun14InDatabaseBeforeSave () {
+        assertEquals(3, verifyEan13OrDun14RepositoryCustom.existsByEan13OrDun14(productData6));
     }
 }

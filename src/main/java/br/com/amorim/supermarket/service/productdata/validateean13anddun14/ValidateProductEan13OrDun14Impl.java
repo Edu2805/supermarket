@@ -30,9 +30,18 @@ public class ValidateProductEan13OrDun14Impl implements ValidateProductEan13OrDu
         } else if (productData.getEan13() != null && productData.getDun14() != null) {
             throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_EAN13_OR_DUN14_SAVE_TOGETHER.message));
         } else {
-            verifyEan13OrDun14RepositoryCustom.existsByEan13OrDun14(productData);
+            verifyIfAlreadyExistsEan13OrDun14InDatabase(productData);
         }
         return false;
+    }
+
+    private void verifyIfAlreadyExistsEan13OrDun14InDatabase(ProductData productData) {
+        if(verifyEan13OrDun14RepositoryCustom.existsByEan13OrDun14(productData) == 1) {
+            throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_EAN13_ALREADY_EXISTS.message));
+        }
+        if (verifyEan13OrDun14RepositoryCustom.existsByEan13OrDun14(productData) == 2) {
+            throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_DUN14_ALREADY_EXISTS.message));
+        }
     }
 
     @Override

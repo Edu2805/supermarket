@@ -1,14 +1,10 @@
 package br.com.amorim.supermarket.repository.providerproduct.verifysubscriptionnumberrepositorycustom;
 
-import br.com.amorim.supermarket.common.enums.MessagesKeyType;
-import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleException;
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-
-import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
 
 @AllArgsConstructor
 
@@ -20,12 +16,8 @@ public class VerifySubscriptionNumberProviderProductRepositoryCustomImpl impleme
 
     @Override
     public boolean existsBySubscriptionNumber(ProviderProduct providerProduct) {
-        if (providerProduct.getId() == null &&
-                existsSubscriptionNumberQuery(providerProduct.getSubscriptionNumber())) {
-            throw new BusinessRuleException(getString(
-                    MessagesKeyType.PROVIDER_PRODUCT_SUBSCRIPTION_NUMBER_ALREADY_EXISTS.message));
-        }
-        return false;
+        return providerProduct.getId() == null &&
+                existsSubscriptionNumberQuery(providerProduct.getSubscriptionNumber());
     }
 
     private boolean existsSubscriptionNumberQuery(String subscriptionNumber) {

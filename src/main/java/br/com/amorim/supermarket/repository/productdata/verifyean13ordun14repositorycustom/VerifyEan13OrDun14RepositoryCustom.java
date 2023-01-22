@@ -4,5 +4,5 @@ import br.com.amorim.supermarket.model.productdata.ProductData;
 
 public interface VerifyEan13OrDun14RepositoryCustom {
 
-    boolean existsByEan13OrDun14 (ProductData productData);
+    int existsByEan13OrDun14 (ProductData productData);
 }
