@@ -4,5 +4,6 @@ import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
 
 public interface VerifyMunicipalOrStateRegistrationProviderProduct {
 
-    boolean verifyMunicipalRegistration (ProviderProduct providerProduct);
+    boolean verifyMunicipalOrStateRegistrationBeforeSave(ProviderProduct providerProduct);
+    boolean verifyMunicipalOrStateRegistrationBeforeUpdate(ProviderProduct providerProduct);
 }

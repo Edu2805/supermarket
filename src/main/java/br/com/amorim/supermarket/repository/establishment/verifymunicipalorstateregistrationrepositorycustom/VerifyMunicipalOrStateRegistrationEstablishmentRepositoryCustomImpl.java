@@ -1,14 +1,11 @@
 package br.com.amorim.supermarket.repository.establishment.verifymunicipalorstateregistrationrepositorycustom;
 
-import br.com.amorim.supermarket.common.enums.MessagesKeyType;
-import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleException;
 import br.com.amorim.supermarket.model.establishment.Establishment;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 
-import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
 
 @AllArgsConstructor
 
@@ -19,18 +16,16 @@ public class VerifyMunicipalOrStateRegistrationEstablishmentRepositoryCustomImpl
     private EntityManager entityManager;
 
     @Override
-    public boolean existsByMunicipalOrStateRegistration(Establishment establishment) {
+    public int existsByMunicipalOrStateRegistration(Establishment establishment) {
         if (establishment.getId() == null &&
                 existsMunicipalRegistration(establishment.getMunicipalRegistration())) {
-            throw new BusinessRuleException(
-                    getString(MessagesKeyType.ESTABLISHMENT_MUNICIPAL_REGISTER_ALREADY_EXISTS.message));
+            return 1;
         }
         if (establishment.getId() == null &&
                 existsStateRegistration(establishment.getStateRegistration())) {
-            throw new BusinessRuleException(
-                    getString(MessagesKeyType.ESTABLISHMENT_STATE_REGISTER_ALREADY_EXISTS.message));
+            return 2;
         }
-        return false;
+        return 3;
     }
 
     private boolean existsMunicipalRegistration(String municipalRegistration) {

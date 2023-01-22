@@ -4,6 +4,7 @@ import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.enums.UnityType;
 import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleException;
 import br.com.amorim.supermarket.model.productdata.ProductData;
+import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
 import br.com.amorim.supermarket.repository.productdata.verifyean13ordun14repositorycustom.VerifyEan13OrDun14RepositoryCustom;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.providerproduct.ProviderProductTest;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.subsection.SubSectionTest;
@@ -29,6 +30,8 @@ class ProductValidatorEan13OrDun14ImplTest {
     private ValidateProductEan13OrDun14Impl productValidatorEan13OrDun14;
     @Mock
     private VerifyEan13OrDun14RepositoryCustom verifyEan13OrDun14RepositoryCustomMock;
+    @Mock
+    private ProductDataRepository productDataRepository;
 
     public static final java.util.UUID UUID = randomUUID();
     public static final String NAME = "Produto teste 3";

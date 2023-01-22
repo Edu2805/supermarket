@@ -4,5 +4,5 @@ import br.com.amorim.supermarket.model.establishment.Establishment;
 
 public interface VerifyMunicipalOrStateRegistrationEstablishmentRepositoryCustom {
 
-    boolean existsByMunicipalOrStateRegistration (Establishment establishment);
+    int existsByMunicipalOrStateRegistration (Establishment establishment);
 }

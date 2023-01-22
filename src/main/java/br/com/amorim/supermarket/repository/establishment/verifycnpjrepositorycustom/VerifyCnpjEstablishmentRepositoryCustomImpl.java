@@ -1,14 +1,11 @@
 package br.com.amorim.supermarket.repository.establishment.verifycnpjrepositorycustom;
 
-import br.com.amorim.supermarket.common.enums.MessagesKeyType;
-import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleException;
 import br.com.amorim.supermarket.model.establishment.Establishment;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 
-import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
 
 @AllArgsConstructor
 
@@ -21,8 +18,7 @@ public class VerifyCnpjEstablishmentRepositoryCustomImpl implements VerifyCnpjEs
     public boolean existsByCnpj(Establishment establishment) {
         if (establishment.getId() == null &&
             existsSubscriptionNumberQuery(establishment.getCnpj())) {
-            throw new BusinessRuleException(getString(
-                    MessagesKeyType.ESTABLISHMENT_CNPJ_ALREADY_EXISTS.message));
+            return true;
         }
         return false;
     }

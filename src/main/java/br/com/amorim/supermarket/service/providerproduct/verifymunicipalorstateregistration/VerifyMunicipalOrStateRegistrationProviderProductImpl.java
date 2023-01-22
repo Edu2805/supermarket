@@ -1,19 +1,48 @@
 package br.com.amorim.supermarket.service.providerproduct.verifymunicipalorstateregistration;
 
+import br.com.amorim.supermarket.common.enums.MessagesKeyType;
+import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleException;
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
+import br.com.amorim.supermarket.repository.providerproduct.ProviderProductRepository;
 import br.com.amorim.supermarket.repository.providerproduct.verifymunicipalorstateregistrationrepositorycustom.VerifyMunicipalOrStateRegistrationProviderProductRepositoryCustom;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
+
 @AllArgsConstructor
 
 @Component
-public class VerifyMunicipalOrStateRegistrationProviderProductImpl implements VerifyMunicipalOrStateRegistrationProviderProduct {
+public class VerifyMunicipalOrStateRegistrationProviderProductImpl implements
+        VerifyMunicipalOrStateRegistrationProviderProduct {
 
     private VerifyMunicipalOrStateRegistrationProviderProductRepositoryCustom verifyMunicipalOrStateRegistrationCustom;
+    private ProviderProductRepository providerProductRepository;
 
     @Override
-    public boolean verifyMunicipalRegistration(ProviderProduct providerProduct) {
+    public boolean verifyMunicipalOrStateRegistrationBeforeSave(ProviderProduct providerProduct) {
         return verifyMunicipalOrStateRegistrationCustom.existsByMunicipalOrStateRegistration(providerProduct);
+    }
+
+    @Override
+    public boolean verifyMunicipalOrStateRegistrationBeforeUpdate(ProviderProduct providerProduct) {
+        var getProducts = providerProductRepository.findAll();
+        getProducts.forEach(provider -> {
+            if (provider.getMunicipalRegistration() != null && (
+                    provider.getMunicipalRegistration().equals(providerProduct.getMunicipalRegistration()))) {
+                if (!provider.getId().equals(providerProduct.getId())) {
+                    throw new BusinessRuleException(getString(
+                            MessagesKeyType.PROVIDER_PRODUCT_MUNICIPAL_REGISTRATION_ALREADY_EXISTS_WHEN_UPDATE.message));
+                }
+            }
+            if (provider.getStateRegistration() != null && (
+                    provider.getStateRegistration().equals(providerProduct.getStateRegistration()))) {
+                if (!provider.getId().equals(providerProduct.getId())) {
+                    throw new BusinessRuleException(getString(
+                            MessagesKeyType.PROVIDER_PRODUCT_STATE_REGISTRATION_ALREADY_EXISTS_WHEN_UPDATE.message));
+                }
+            }
+        });
+        return false;
     }
 }

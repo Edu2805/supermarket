@@ -4,5 +4,6 @@ import br.com.amorim.supermarket.model.establishment.Establishment;
 
 public interface VerifyMunicipalOrStateRegistrationEstablishment {
 
-    boolean verifyMunicipalOrStateRegistration (Establishment establishment);
+    boolean verifyMunicipalOrStateRegistrationBeforeSave(Establishment establishment);
+    boolean verifyMunicipalOrStateRegistrationBeforeUpdate(Establishment establishment);
 }

@@ -4,9 +4,8 @@ import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.model.establishment.Establishment;
 import br.com.amorim.supermarket.repository.establishment.EstablishmentRepository;
-import br.com.amorim.supermarket.repository.establishment.verifycnpjrepositorycustom.VerifyCnpjEstablishmentRepositoryCustom;
 import br.com.amorim.supermarket.service.establishment.generateinternalcode.GenerateInternalCodeEstablishment;
-import br.com.amorim.supermarket.service.establishment.verifymanagerestablishment.VerifyManagerEstablishment;
+import br.com.amorim.supermarket.service.establishment.verifycnpjestablishment.VerifyCnpjEstablishment;
 import br.com.amorim.supermarket.service.establishment.verifymunicipalorstateregistration.VerifyMunicipalOrStateRegistrationEstablishment;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,8 +25,7 @@ public class EstablishmentService {
     private EstablishmentRepository establishmentRepository;
     private GenerateInternalCodeEstablishment generateInternalCodeEstablishment;
     private VerifyMunicipalOrStateRegistrationEstablishment verifyMunicipalRegistration;
-    private VerifyCnpjEstablishmentRepositoryCustom verifySubscriptionNumber;
-    private VerifyManagerEstablishment verifyManagerEstablishment;
+    private VerifyCnpjEstablishment verifyCnpjEstablishment;
 
     public List<Establishment> getAll () {
         return establishmentRepository.findAll();
@@ -42,7 +40,7 @@ public class EstablishmentService {
     }
     @Transactional
     public Establishment save (Establishment establishment) {
-        validateFields(establishment);
+        validateFieldsBeforeSave(establishment);
         setInternalCode(establishment);
         return establishmentRepository.save(establishment);
     }
@@ -52,10 +50,9 @@ public class EstablishmentService {
         establishment.setCode(incrementInternalCode);
     }
 
-    private void validateFields (Establishment establishment) {
-        verifySubscriptionNumber.existsByCnpj(establishment);
-        verifyMunicipalRegistration.verifyMunicipalOrStateRegistration(establishment);
-        verifyManagerEstablishment.verifyManagerEstablishmentRegistred(establishment);
+    private void validateFieldsBeforeSave(Establishment establishment) {
+        verifyCnpjEstablishment.verifyCnpjEstablishmentBeforeSave(establishment);
+        verifyMunicipalRegistration.verifyMunicipalOrStateRegistrationBeforeSave(establishment);
     }
 
     @Transactional
@@ -63,13 +60,18 @@ public class EstablishmentService {
         establishmentRepository.findById(id)
                 .map(existingEstablishment -> {
                     establishment.setId(existingEstablishment.getId());
-                    validateFields(existingEstablishment);
+                    validateFieldsBeforeUpdate(establishment);
                     establishment.setCode(existingEstablishment.getCode());
                     establishmentRepository.save(establishment);
                     return existingEstablishment;
                 }).orElseThrow(() ->
                         new NotFoundException(
                                 getString(MessagesKeyType.ESTABLISHMENT_NOT_FOUND.message)));
+    }
+
+    private void validateFieldsBeforeUpdate(Establishment establishment) {
+        verifyCnpjEstablishment.verifyCnpjEstablishmentBeforeUpdate(establishment);
+        verifyMunicipalRegistration.verifyMunicipalOrStateRegistrationBeforeUpdate(establishment);
     }
 
     @Transactional

@@ -9,7 +9,6 @@ ALTER TABLE IF EXISTS establishment ADD CONSTRAINT unique_code_establishment UNI
 ALTER TABLE IF EXISTS establishment ADD CONSTRAINT unique_cnpj_establishment UNIQUE (cnpj);
 ALTER TABLE IF EXISTS establishment ADD CONSTRAINT unique_state_registration_establishment UNIQUE (state_registration);
 ALTER TABLE IF EXISTS establishment ADD CONSTRAINT unique_municipal_registration_establishment UNIQUE (municipal_registration);
-ALTER TABLE IF EXISTS establishment ADD CONSTRAINT unique_manager_establishment UNIQUE (manager);
 ALTER TABLE IF EXISTS job_position ADD CONSTRAINT unique_name_job_position UNIQUE (name);
 ALTER TABLE IF EXISTS job_position ADD CONSTRAINT unique_code_job_position UNIQUE (code);
 ALTER TABLE IF EXISTS main_section ADD CONSTRAINT unique_name_mainsection UNIQUE (name);
