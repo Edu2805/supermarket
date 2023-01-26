@@ -6,6 +6,7 @@ import br.com.amorim.supermarket.testutils.generatecnpj.GenerateCNPJ;
 
 import java.math.BigInteger;
 import java.util.Random;
+import java.util.UUID;
 
 public class ProviderProductTest {
 
@@ -21,6 +22,7 @@ public class ProviderProductTest {
         var stateRegistration = randomStateRegistration.nextInt(1, 1999);
 
         ProviderProduct providerProduct = new ProviderProduct();
+        providerProduct.setId(UUID.randomUUID());
         providerProduct.setCode(BigInteger.valueOf(code));
         providerProduct.setName(String.valueOf(name));
         providerProduct.setPhone("48999999999");

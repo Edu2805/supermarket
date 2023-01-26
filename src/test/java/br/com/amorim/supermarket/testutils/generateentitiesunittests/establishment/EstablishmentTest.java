@@ -5,6 +5,7 @@ import br.com.amorim.supermarket.testutils.generatecnpj.GenerateCNPJ;
 
 import java.math.BigInteger;
 import java.util.Random;
+import java.util.UUID;
 
 public class EstablishmentTest {
 
@@ -22,6 +23,7 @@ public class EstablishmentTest {
         var manager = randomManager.nextInt(10000, 19999);
 
         Establishment establishment = new Establishment();
+        establishment.setId(UUID.randomUUID());
         establishment.setName(String.valueOf(name));
         establishment.setCode(BigInteger.valueOf(code));
         establishment.setCnpj(generateCNPJ.cnpj(false));
