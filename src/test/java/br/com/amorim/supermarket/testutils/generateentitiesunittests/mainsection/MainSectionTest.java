@@ -5,6 +5,7 @@ import br.com.amorim.supermarket.testutils.generateentitiesunittests.department.
 
 import java.math.BigInteger;
 import java.util.Random;
+import java.util.UUID;
 
 public class MainSectionTest {
     public MainSection generateMainsection () {
@@ -15,6 +16,7 @@ public class MainSectionTest {
         var code = randomCode.nextInt(1, 19999);
 
         MainSection mainSection = new MainSection();
+        mainSection.setId(UUID.randomUUID());
         mainSection.setName(String.valueOf(name));
         mainSection.setCode(BigInteger.valueOf(code));
         mainSection.setDepartment(departmentTest.generateDepartment());

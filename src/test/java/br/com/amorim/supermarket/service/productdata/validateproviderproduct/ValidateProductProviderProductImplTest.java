@@ -81,7 +81,7 @@ class ValidateProductProviderProductImplTest {
 
     @Test
     void shouldReturnFalseWhenProviderProductIdIsCorrect() {
-        when(providerProductRepositoryMock.findById(productData.getSubSection().getId()))
+        when(providerProductRepositoryMock.findById(productData.getProviderProduct().getId()))
                 .thenReturn(Optional.of(productData.getProviderProduct()));
 
         var validate = validateProductProviderProduct.validate(productData);

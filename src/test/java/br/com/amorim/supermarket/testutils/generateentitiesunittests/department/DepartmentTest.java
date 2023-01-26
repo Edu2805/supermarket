@@ -5,6 +5,7 @@ import br.com.amorim.supermarket.testutils.generateentitiesunittests.establishme
 
 import java.math.BigInteger;
 import java.util.Random;
+import java.util.UUID;
 
 public class DepartmentTest {
 
@@ -16,6 +17,7 @@ public class DepartmentTest {
         var code = randomCode.nextInt(1, 19999);
 
         Department department = new Department();
+        department.setId(UUID.randomUUID());
         department.setName(String.valueOf(name));
         department.setCode(BigInteger.valueOf(code));
         department.setEstablishment(establishmentTest.generateEstablishment());
