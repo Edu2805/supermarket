@@ -158,13 +158,62 @@ class ProviderProductCrudServiceImplTest {
     }
 
     @Test
-    void shouldUpdateWithSuccess() {
+    void shouldValidateCnpjAndUpdateWithSuccess() {
         var knownId = providerProduct.getId();
+        providerProduct.setSubscriptionType(SubscriptionType.CNPJ);
+        ArgumentCaptor<UUID> knownIdCapture = ArgumentCaptor.forClass(UUID.class);
+
+        when(providerProductRepositoryMock.findById(knownIdCapture.capture()))
+                .thenReturn(Optional.of(providerProduct));
+        when(validateCnpjDocumentMock.isCnpj(providerProduct))
+                .thenReturn(true);
+        when(verifySubscriptionNumberMock.verifySubscriptionNumberBeforeSave(providerProduct))
+                .thenReturn(false);
+        when(providerProductRepositoryMock.save(providerProduct)).thenReturn(providerProduct);
+
+        providerProductCrudService.update(providerProduct, knownId);
+
+        assertEquals(knownId, knownIdCapture.getValue());
+        assertEquals(providerProduct.getCode(),
+                providerProductRepositoryMock.save(providerProduct).getCode());
+        assertEquals(providerProduct.getClass(),
+                providerProductRepositoryMock.save(providerProduct).getClass());
+    }
+
+    @Test
+    void shouldValidateCpfAndUpdateWithSuccess() {
+        var knownId = providerProduct.getId();
+        providerProduct.setSubscriptionType(SubscriptionType.CPF);
+        providerProduct.setSubscriptionNumber(generateCPF.cpf(false));
         ArgumentCaptor<UUID> knownIdCapture = ArgumentCaptor.forClass(UUID.class);
 
         when(providerProductRepositoryMock.findById(knownIdCapture.capture()))
                 .thenReturn(Optional.of(providerProduct));
         when(validateCpfDocumentMock.isCpf(providerProduct))
+                .thenReturn(true);
+        when(verifySubscriptionNumberMock.verifySubscriptionNumberBeforeSave(providerProduct))
+                .thenReturn(false);
+        when(providerProductRepositoryMock.save(providerProduct)).thenReturn(providerProduct);
+
+        providerProductCrudService.update(providerProduct, knownId);
+
+        assertEquals(knownId, knownIdCapture.getValue());
+        assertEquals(providerProduct.getCode(),
+                providerProductRepositoryMock.save(providerProduct).getCode());
+        assertEquals(providerProduct.getClass(),
+                providerProductRepositoryMock.save(providerProduct).getClass());
+    }
+
+    @Test
+    void shouldValidateCeiAndUpdateWithSuccess() {
+        var knownId = providerProduct.getId();
+        providerProduct.setSubscriptionType(SubscriptionType.CEI);
+        providerProduct.setSubscriptionNumber(generateCPF.cpf(false));
+        ArgumentCaptor<UUID> knownIdCapture = ArgumentCaptor.forClass(UUID.class);
+
+        when(providerProductRepositoryMock.findById(knownIdCapture.capture()))
+                .thenReturn(Optional.of(providerProduct));
+        when(validateCeiDocumentMock.isCei(providerProduct))
                 .thenReturn(true);
         when(verifySubscriptionNumberMock.verifySubscriptionNumberBeforeSave(providerProduct))
                 .thenReturn(false);

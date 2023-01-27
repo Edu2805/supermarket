@@ -3,6 +3,7 @@ package br.com.amorim.supermarket.service.providerproduct;
 import br.com.amorim.supermarket.SupermarketApplication;
 import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.exception.invalidactionexception.InvalidActionException;
+import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
 import br.com.amorim.supermarket.repository.providerproduct.ProviderProductRepository;
 import br.com.amorim.supermarket.testutils.generateentitiesrepositorytest.GenerateEntitiesRepositoryUtils;
@@ -11,6 +12,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -36,6 +39,8 @@ public class ProviderProductRepositoryTest {
     private ProviderProductRepository providerProductRepository;
     @Autowired
     GenerateEntitiesRepositoryUtils generateEntities;
+    @Autowired
+    private VerifyPageSize verifyPageSize;
 
     private ProviderProduct providerProduct1;
     private ProviderProduct providerProduct2;
@@ -124,6 +129,11 @@ public class ProviderProductRepositoryTest {
         int size = 15;
         var getAllPagable = providerProductCrudService.getAll(page, size);
 
+        verifyPageSize.verifyPageSizeForGetAll(page, size);
+        Pageable pageableRequest = PageRequest.of(page, size);
+
+        providerProductRepository.findAll(pageableRequest);
+
         assertEquals(15, getAllPagable.getNumberOfElements());
     }
 
@@ -136,10 +146,10 @@ public class ProviderProductRepositoryTest {
 
         String exceptionMessage = assertThrows(
                 InvalidActionException.class, () ->
-                        providerProductCrudService.getAll(page, size)
+                        verifyPageSize.verifyPageSizeForGetAll(page, size)
         ).getMessage();
 
         assertEquals(messageError, exceptionMessage);
-        assertThrows(InvalidActionException.class, () -> providerProductCrudService.getAll(page, size));
+        assertThrows(InvalidActionException.class, () -> verifyPageSize.verifyPageSizeForGetAll(page, size));
     }
 }
