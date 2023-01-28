@@ -73,8 +73,8 @@ public class GenerateEntitiesRepositoryUtils {
         Random randomManager = new Random();
         GenerateCNPJ generateCNPJ = new GenerateCNPJ();
         var name = randomName.nextInt(10000, 19999);
-        var municipalRegistration = randomMunicipalRegistration.nextInt(1, 1999);
-        var stateRegistration = randomStateRegistration.nextInt(1, 1999);
+        var municipalRegistration = randomMunicipalRegistration.nextInt(1, 199999);
+        var stateRegistration = randomStateRegistration.nextInt(1, 199999);
         var manager = randomManager.nextInt(10000, 19999);
 
         Establishment establishment = new Establishment();
