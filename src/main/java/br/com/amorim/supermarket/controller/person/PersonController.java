@@ -1,5 +1,7 @@
 package br.com.amorim.supermarket.controller.person;
 
+import br.com.amorim.supermarket.controller.person.dto.ConverterPersonMapperImpl;
+import br.com.amorim.supermarket.controller.person.dto.PersonDTO;
 import br.com.amorim.supermarket.model.person.Person;
 import br.com.amorim.supermarket.service.person.PersonService;
 import lombok.AllArgsConstructor;
@@ -27,6 +29,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 public class PersonController {
 
     private PersonService personService;
+    private ConverterPersonMapperImpl converterPersonMapper;
 
     @GetMapping
     public List<Person> findAll () {
@@ -40,14 +43,16 @@ public class PersonController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public Person save (@RequestBody @Valid Person person) {
-        return personService.save(person);
+    public Person save (@RequestBody @Valid PersonDTO personDTO) {
+        var newPerson = converterPersonMapper.createOrUpdatePersonMapper(personDTO);
+        return personService.save(newPerson);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void update (@RequestBody @Valid Person person, @PathVariable UUID id) {
-        personService.update(person, id);
+    public void update (@RequestBody @Valid PersonDTO personDTO, @PathVariable UUID id) {
+        var newPerson = converterPersonMapper.createOrUpdatePersonMapper(personDTO);
+        personService.update(newPerson, id);
     }
 
     @DeleteMapping("/{id}")
