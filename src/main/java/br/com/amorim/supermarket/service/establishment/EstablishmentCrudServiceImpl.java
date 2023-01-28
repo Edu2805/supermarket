@@ -2,17 +2,20 @@ package br.com.amorim.supermarket.service.establishment;
 
 import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
+import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.establishment.Establishment;
 import br.com.amorim.supermarket.repository.establishment.EstablishmentRepository;
 import br.com.amorim.supermarket.service.establishment.generateinternalcode.GenerateInternalCodeEstablishment;
 import br.com.amorim.supermarket.service.establishment.verifycnpjestablishment.VerifyCnpjEstablishment;
 import br.com.amorim.supermarket.service.establishment.verifymunicipalorstateregistration.VerifyMunicipalOrStateRegistrationEstablishment;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigInteger;
-import java.util.List;
 import java.util.UUID;
 
 import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
@@ -26,10 +29,16 @@ public class EstablishmentCrudServiceImpl implements EstablishmentCrudService {
     private GenerateInternalCodeEstablishment generateInternalCodeEstablishment;
     private VerifyMunicipalOrStateRegistrationEstablishment verifyMunicipalRegistration;
     private VerifyCnpjEstablishment verifyCnpjEstablishment;
+    private VerifyPageSize verifyPageSize;
 
     @Override
-    public List<Establishment> getAll () {
-        return establishmentRepository.findAll();
+    public Page<Establishment> getAll (int page, int size) {
+        if (page > 0) {
+            page -= 1;
+        }
+        verifyPageSize.verifyPageSizeForGetAll(size);
+        Pageable pageableRequest = PageRequest.of(page, size);
+        return establishmentRepository.findAll(pageableRequest);
     }
 
     @Override

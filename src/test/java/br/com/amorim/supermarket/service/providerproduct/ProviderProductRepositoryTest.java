@@ -129,7 +129,7 @@ public class ProviderProductRepositoryTest {
         int size = 15;
         var getAllPagable = providerProductCrudService.getAll(page, size);
 
-        verifyPageSize.verifyPageSizeForGetAll(page, size);
+        verifyPageSize.verifyPageSizeForGetAll(size);
         Pageable pageableRequest = PageRequest.of(page, size);
 
         providerProductRepository.findAll(pageableRequest);
@@ -141,15 +141,14 @@ public class ProviderProductRepositoryTest {
     @Test
     void shouldReturnAMessageErrorWhenTheSizeExceedsTheAllowed() {
         String messageError = getString(MessagesKeyType.COMMON_PAGE_SIZE_INVALID_PAGE_SIZE.message);
-        int page = 0;
         int size = 21;
 
         String exceptionMessage = assertThrows(
                 InvalidActionException.class, () ->
-                        verifyPageSize.verifyPageSizeForGetAll(page, size)
+                        verifyPageSize.verifyPageSizeForGetAll(size)
         ).getMessage();
 
         assertEquals(messageError, exceptionMessage);
-        assertThrows(InvalidActionException.class, () -> verifyPageSize.verifyPageSizeForGetAll(page, size));
+        assertThrows(InvalidActionException.class, () -> verifyPageSize.verifyPageSizeForGetAll(size));
     }
 }

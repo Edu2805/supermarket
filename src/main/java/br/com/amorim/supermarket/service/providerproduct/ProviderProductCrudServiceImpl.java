@@ -44,7 +44,7 @@ public class ProviderProductCrudServiceImpl implements ProviderProductCrudServic
         if (page > 0) {
             page -= 1;
         }
-        verifyPageSize.verifyPageSizeForGetAll(page, size);
+        verifyPageSize.verifyPageSizeForGetAll(size);
         Pageable pageableRequest = PageRequest.of(page, size);
         return providerProductRepository.findAll(pageableRequest);
     }
