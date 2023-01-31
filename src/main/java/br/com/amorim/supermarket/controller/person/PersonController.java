@@ -3,7 +3,7 @@ package br.com.amorim.supermarket.controller.person;
 import br.com.amorim.supermarket.controller.person.dto.ConverterPersonMapperImpl;
 import br.com.amorim.supermarket.controller.person.dto.PersonDTO;
 import br.com.amorim.supermarket.model.person.Person;
-import br.com.amorim.supermarket.service.person.PersonServiceCrudServiceImpl;
+import br.com.amorim.supermarket.service.person.PersonCrudServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,7 +29,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 @RequestMapping("person")
 public class PersonController {
 
-    private PersonServiceCrudServiceImpl personService;
+    private PersonCrudServiceImpl personService;
     private ConverterPersonMapperImpl converterPersonMapper;
 
     @GetMapping

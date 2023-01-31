@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 
 import java.util.UUID;
 
-public interface PersonServiceCrudService {
+public interface PersonCrudService {
 
     Page<Person> getAll(int page, int size);
     Person findById(UUID id);

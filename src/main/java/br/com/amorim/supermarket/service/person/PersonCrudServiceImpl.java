@@ -18,7 +18,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @AllArgsConstructor
 
 @Service
-public class PersonServiceCrudServiceImpl implements PersonServiceCrudService {
+public class PersonCrudServiceImpl implements PersonCrudService {
 
     PersonRepository personRepository;
     private VerifyPageSize verifyPageSize;
