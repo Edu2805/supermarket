@@ -42,7 +42,7 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
         if (page > 0) {
             page -= 1;
         }
-        verifyPageSize.verifyPageSizeForGetAll(size);
+        verifyPageSize.verifyPageSizeForGetAll(page, size);
         Pageable pageableRequest = PageRequest.of(page, size);
         return productDataRepository.findAll(pageableRequest);
     }
