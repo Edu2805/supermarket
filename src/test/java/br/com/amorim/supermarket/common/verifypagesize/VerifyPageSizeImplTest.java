@@ -42,6 +42,38 @@ class VerifyPageSizeImplTest {
     }
 
     @Test
+    void shouldShowAInvalidActionExceptionMessageWhenPageSizeIsLessThanOne() {
+        int page = 1;
+        int size = 0;
+        var errorMessage = getString(MessagesKeyType.COMMON_SIZE_CANNOT_BE_LESS_THAN_ONE.message);
+
+        String exceptionMessage = Assertions.assertThrows(
+                InvalidActionException.class, () -> {
+                    verifyPageSize.verifyPageSizeForGetAll(page, size);
+                }
+        ).getMessage();
+        assertEquals(errorMessage, exceptionMessage);
+        assertThrows(InvalidActionException.class, () ->
+                verifyPageSize.verifyPageSizeForGetAll(page, size));
+    }
+
+    @Test
+    void shouldShowAInvalidActionExceptionMessageWhenPageIsLessThanZero() {
+        int page = -1;
+        int size = 20;
+        var errorMessage = getString(MessagesKeyType.COMMON_PAGE_CANNOT_BE_LESS_THAN_ONE.message);
+
+        String exceptionMessage = Assertions.assertThrows(
+                InvalidActionException.class, () -> {
+                    verifyPageSize.verifyPageSizeForGetAll(page, size);
+                }
+        ).getMessage();
+        assertEquals(errorMessage, exceptionMessage);
+        assertThrows(InvalidActionException.class, () ->
+                verifyPageSize.verifyPageSizeForGetAll(page, size));
+    }
+
+    @Test
     void shouldReturnTrueWhenPageSizeIsLessOrEqualsThanTwenty() {
         int page = 1;
         int size = 20;
