@@ -27,23 +27,25 @@ class VerifyPageSizeImplTest {
 
     @Test
     void shouldShowAInvalidActionExceptionMessageWhenPageSizeIsGreaterThanTwenty() {
+        int page = 1;
         int size = 21;
         var errorMessage = getString(MessagesKeyType.COMMON_PAGE_SIZE_INVALID_PAGE_SIZE.message);
 
         String exceptionMessage = Assertions.assertThrows(
                 InvalidActionException.class, () -> {
-                    verifyPageSize.verifyPageSizeForGetAll(size);
+                    verifyPageSize.verifyPageSizeForGetAll(page, size);
                 }
         ).getMessage();
         assertEquals(errorMessage, exceptionMessage);
         assertThrows(InvalidActionException.class, () ->
-                verifyPageSize.verifyPageSizeForGetAll(size));
+                verifyPageSize.verifyPageSizeForGetAll(page, size));
     }
 
     @Test
     void shouldReturnTrueWhenPageSizeIsLessOrEqualsThanTwenty() {
+        int page = 1;
         int size = 20;
-        var lessThanTwenty = verifyPageSize.verifyPageSizeForGetAll(size);
+        var lessThanTwenty = verifyPageSize.verifyPageSizeForGetAll(page, size);
         assertFalse(lessThanTwenty);
     }
 }

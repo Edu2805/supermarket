@@ -13,10 +13,18 @@ import static br.com.amorim.supermarket.configuration.internacionalizationmessag
 public class VerifyPageSizeImpl implements VerifyPageSize {
 
     @Override
-    public boolean verifyPageSizeForGetAll(int size) {
+    public boolean verifyPageSizeForGetAll(int page, int size) {
         if (size > 20) {
             throw new InvalidActionException(
                     getString(MessagesKeyType.COMMON_PAGE_SIZE_INVALID_PAGE_SIZE.message));
+        }
+        if (size < 1) {
+            throw new InvalidActionException(
+                    getString(MessagesKeyType.COMMON_SIZE_CANNOT_BE_LESS_THAN_ONE.message));
+        }
+        if (page < 0) {
+            throw new InvalidActionException(
+                    getString(MessagesKeyType.COMMON_PAGE_CANNOT_BE_LESS_THAN_ONE.message));
         }
         return false;
     }
