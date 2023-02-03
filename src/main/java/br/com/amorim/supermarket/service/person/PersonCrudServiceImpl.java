@@ -3,6 +3,7 @@ package br.com.amorim.supermarket.service.person;
 import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.person.Person;
 import br.com.amorim.supermarket.repository.person.PersonRepository;
+import br.com.amorim.supermarket.service.person.verifycpf.VerifyPersonCpf;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,8 +21,9 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @Service
 public class PersonCrudServiceImpl implements PersonCrudService {
 
-    PersonRepository personRepository;
+    private PersonRepository personRepository;
     private VerifyPageSize verifyPageSize;
+    private VerifyPersonCpf verifyPersonCpf;
 
     @Override
     public Page<Person> getAll(int page, int size) {
@@ -45,6 +47,7 @@ public class PersonCrudServiceImpl implements PersonCrudService {
     @Transactional
     @Override
     public Person save (Person person) {
+        verifyPersonCpf.verifyPersonCpfBeforeSave(person);
         return personRepository.save(person);
     }
 
