@@ -20,14 +20,14 @@ import java.time.LocalDate;
 public class PersonDTO {
 
     @NotBlank(message = "{br.com.supermarket.PERSON_DTO_FIELD_NAME_IS_NOT_EMPTY}")
-    @Size(min = 5, max = 30, message = "{br.com.supermarket.PERSON_DTO_FIELD_NAME_IS_NOT_GREATER_THAN_30_AND_LESS_THEN_5}")
+    @Size(min = 2, max = 30, message = "{br.com.supermarket.PERSON_DTO_FIELD_NAME_IS_NOT_GREATER_THAN_30_AND_LESS_THEN_2}")
     private String firstName;
 
-    @Size(min = 5, max = 30, message = "{br.com.supermarket.PERSON_DTO_FIELD_MIDDLE_NAME_IS_NOT_GREATER_THAN_30_AND_LESS_THEN_5}")
+    @Size(min = 2, max = 30, message = "{br.com.supermarket.PERSON_DTO_FIELD_MIDDLE_NAME_IS_NOT_GREATER_THAN_30_AND_LESS_THEN_2}")
     private String middleName;
 
     @NotBlank(message = "{br.com.supermarket.PERSON_DTO_FIELD_LAST_NAME_IS_NOT_EMPTY}")
-    @Size(min = 5, max = 30, message = "{br.com.supermarket.PERSON_DTO_FIELD_LAST_NAME_IS_NOT_GREATER_THAN_30_AND_LESS_THEN_5}")
+    @Size(min = 2, max = 30, message = "{br.com.supermarket.PERSON_DTO_FIELD_LAST_NAME_IS_NOT_GREATER_THAN_30_AND_LESS_THEN_2}")
     private String lastName;
 
     @Size(min = 11, max = 11, message = "{br.com.supermarket.PERSON_DTO_FIELD_CPF_MUST_HAVE_A_MAXIMUM_11_DIGITS}")
@@ -51,11 +51,11 @@ public class PersonDTO {
 
     private Boolean dependents;
 
-    @Size(min = 5, max = 50, message = "{br.com.supermarket.PERSON_DTO_FIELD_FATHER_NAME_IS_NOT_GREATER_THAN_30_AND_LESS_THEN_5}")
+    @Size(min = 2, max = 50, message = "{br.com.supermarket.PERSON_DTO_FIELD_FATHER_NAME_IS_NOT_GREATER_THAN_50_AND_LESS_THEN_2}")
     private String fatherName;
 
     @NotBlank(message = "{br.com.supermarket.PERSON_DTO_FIELD_MOTHER_NAME_IS_NOT_EMPTY}")
-    @Size(min = 5, max = 50, message = "{br.com.supermarket.PERSON_DTO_FIELD_MOTHER_NAME_IS_NOT_GREATER_THAN_30_AND_LESS_THEN_5}")
+    @Size(min = 2, max = 50, message = "{br.com.supermarket.PERSON_DTO_FIELD_MOTHER_NAME_IS_NOT_GREATER_THAN_50_AND_LESS_THEN_2}")
     private String motherName;
 
     @NotBlank(message = "{br.com.supermarket.PERSON_DTO_FIELD_EMAIL_IS_NOT_EMPTY}")
