@@ -148,7 +148,7 @@ public class GenerateEntitiesRepositoryUtils {
         productData.setPurchasePrice(BigDecimal.valueOf(10.90));
         productData.setSalePrice(BigDecimal.valueOf(15.90));
         productData.setMargin(BigDecimal.valueOf(0.5555));
-        productData.setInternalCode(BigInteger.valueOf(code));
+        productData.setCode(BigInteger.valueOf(code));
         productData.setEan13(String.valueOf(ean13).concat("9999"));
         productData.setInventory(BigDecimal.valueOf(100));
         productData.setProviderProduct(providerProduct);

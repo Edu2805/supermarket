@@ -81,7 +81,7 @@ class VerifyEan13OrDun14RepositoryCustomImplTest {
         productData1.setSalePrice(BigDecimal.valueOf(15.90));
         productData1.setMargin(BigDecimal.valueOf(0.9999));
         productData1.setEan13(String.valueOf(ean13Product1).concat("9999"));
-        productData1.setInternalCode(BigInteger.valueOf(code1));
+        productData1.setCode(BigInteger.valueOf(code1));
         productData1.setInventory(BigDecimal.valueOf(100));
         productData1.setProviderProduct(generateProvider);
         productData1.setSubSection(generateSubsection);
@@ -93,7 +93,7 @@ class VerifyEan13OrDun14RepositoryCustomImplTest {
         productData2.setPurchasePrice(BigDecimal.valueOf(10.90));
         productData2.setSalePrice(BigDecimal.valueOf(15.90));
         productData2.setMargin(BigDecimal.valueOf(0.9999));
-        productData2.setInternalCode(BigInteger.valueOf(code2));
+        productData2.setCode(BigInteger.valueOf(code2));
         productData2.setInventory(BigDecimal.valueOf(100));
         productData2.setProviderProduct(generateProvider);
         productData2.setSubSection(generateSubsection);
@@ -105,7 +105,7 @@ class VerifyEan13OrDun14RepositoryCustomImplTest {
         productData3.setSalePrice(BigDecimal.valueOf(15.90));
         productData3.setMargin(BigDecimal.valueOf(0.9999));
         productData3.setDun14(String.valueOf(dun14Product3).concat("99999"));
-        productData3.setInternalCode(BigInteger.valueOf(code3));
+        productData3.setCode(BigInteger.valueOf(code3));
         productData3.setInventory(BigDecimal.valueOf(100));
         productData3.setProviderProduct(generateProvider);
         productData3.setSubSection(generateSubsection);
@@ -117,7 +117,7 @@ class VerifyEan13OrDun14RepositoryCustomImplTest {
         productData4.setPurchasePrice(BigDecimal.valueOf(10.90));
         productData4.setSalePrice(BigDecimal.valueOf(15.90));
         productData4.setMargin(BigDecimal.valueOf(0.9999));
-        productData4.setInternalCode(BigInteger.valueOf(code4));
+        productData4.setCode(BigInteger.valueOf(code4));
         productData4.setInventory(BigDecimal.valueOf(100));
         productData4.setProviderProduct(generateProvider);
         productData4.setSubSection(generateSubsection);
@@ -129,7 +129,7 @@ class VerifyEan13OrDun14RepositoryCustomImplTest {
         productData5.setSalePrice(BigDecimal.valueOf(15.90));
         productData5.setMargin(BigDecimal.valueOf(0.9999));
         productData5.setEan13(String.valueOf(ean13Product5).concat("9999"));
-        productData5.setInternalCode(BigInteger.valueOf(code5));
+        productData5.setCode(BigInteger.valueOf(code5));
         productData5.setInventory(BigDecimal.valueOf(100));
         productData5.setProviderProduct(generateProvider);
         productData5.setSubSection(generateSubsection);
@@ -141,7 +141,7 @@ class VerifyEan13OrDun14RepositoryCustomImplTest {
         productData6.setSalePrice(BigDecimal.valueOf(15.90));
         productData6.setMargin(BigDecimal.valueOf(0.9999));
         productData6.setDun14(String.valueOf(dun14Product6).concat("9999"));
-        productData6.setInternalCode(BigInteger.valueOf(code6));
+        productData6.setCode(BigInteger.valueOf(code6));
         productData6.setInventory(BigDecimal.valueOf(100));
         productData6.setProviderProduct(generateProvider);
         productData6.setSubSection(generateSubsection);

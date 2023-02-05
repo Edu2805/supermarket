@@ -20,7 +20,7 @@ public class GenerateInternalCodeProductRepositoryCustomImpl implements Generate
     public BigInteger generateInternalCode(ProductData productData) {
         QProductData qProductData = QProductData.productData;
         JPAQuery<ProductData> query = new JPAQuery<>(entityManager);
-        BigInteger productDataQuery = query.select(qProductData.internalCode.max())
+        BigInteger productDataQuery = query.select(qProductData.code.max())
                 .from(qProductData).fetchOne();
 
         if (productDataQuery != null) {

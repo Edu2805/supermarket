@@ -15,7 +15,7 @@ ALTER TABLE IF EXISTS main_section ADD CONSTRAINT unique_name_mainsection UNIQUE
 ALTER TABLE IF EXISTS main_section ADD CONSTRAINT unique_code_mainsection UNIQUE (code);
 ALTER TABLE IF EXISTS product_data ADD CONSTRAINT unique_EAN_13_product_data UNIQUE (EAN_13);
 ALTER TABLE IF EXISTS product_data ADD CONSTRAINT unique_DUN_14_product_data UNIQUE (DUN_14);
-ALTER TABLE IF EXISTS product_data ADD CONSTRAINT unique_internal_code_data UNIQUE (internal_code);
+ALTER TABLE IF EXISTS product_data ADD CONSTRAINT unique_code_product_data UNIQUE (code);
 ALTER TABLE IF EXISTS subsection ADD CONSTRAINT unique_name_subsection UNIQUE (name);
 ALTER TABLE IF EXISTS subsection ADD CONSTRAINT unique_code_subsection UNIQUE (code);
 ALTER TABLE IF EXISTS user_data ADD CONSTRAINT unique_columns_user_data UNIQUE (user_name);

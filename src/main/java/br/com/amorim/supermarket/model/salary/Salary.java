@@ -1,5 +1,6 @@
 package br.com.amorim.supermarket.model.salary;
 
+import br.com.amorim.supermarket.model.common.CommonIdEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,14 +8,10 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,11 +20,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "salary")
-public class Salary {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+public class Salary extends CommonIdEntity {
 
     @Column(nullable = false, length = 30)
     @NotEmpty(message = "{br.com.supermarket.SALARY_FIELD_POSITION_IS_NOT_EMPTY}")
