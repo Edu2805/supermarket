@@ -45,9 +45,9 @@ class PersonCrudServiceImplTest {
     private VerifyPersonUserData verifyPersonUserDataMock;
 
     private Person person1;
-    public static final String MESSAGE_ERROR = getString(MessagesKeyType.PERSON_DATA_NOT_FOUND.message);
-    public static final String UNKNOWN_ID = "0eb5c7e2-b35c-44fa-a8cb-b5d91447da82";
-    ArgumentCaptor<UUID> knownIdCapture;
+    private static final String MESSAGE_ERROR = getString(MessagesKeyType.PERSON_DATA_NOT_FOUND.message);
+    private static final String UNKNOWN_ID = "0eb5c7e2-b35c-44fa-a8cb-b5d91447da82";
+    private ArgumentCaptor<UUID> knownIdCapture;
 
     private void startPerson() {
         PersonTest personTest1 = new PersonTest();
