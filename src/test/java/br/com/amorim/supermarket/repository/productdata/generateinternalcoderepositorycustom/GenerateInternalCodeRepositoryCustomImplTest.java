@@ -67,7 +67,7 @@ class GenerateInternalCodeRepositoryCustomImplTest {
         productData1.setProviderProduct(generateProvider);
         productData1.setSubSection(generateSubsection);
         code1 = generateInternalCodeRepositoryCustom.generateInternalCode(productData1);
-        productData1.setInternalCode(code1);
+        productData1.setCode(code1);
         productDataRepository.save(productData1);
 
         productData2 = new ProductData();
@@ -81,7 +81,7 @@ class GenerateInternalCodeRepositoryCustomImplTest {
         productData2.setProviderProduct(generateProvider);
         productData2.setSubSection(generateSubsection);
         BigInteger code2 = generateInternalCodeRepositoryCustom.generateInternalCode(productData2);
-        productData2.setInternalCode(code2);
+        productData2.setCode(code2);
         productDataRepository.save(productData2);
 
         productData3 = new ProductData();

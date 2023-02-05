@@ -72,7 +72,7 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
 
     private void setInternalCode (ProductData productData) {
         BigInteger incrementInternalCode = generateInternalCode.generate(productData);
-        productData.setInternalCode(incrementInternalCode);
+        productData.setCode(incrementInternalCode);
     }
 
     private void validateBeforeSave(ProductData productData) {
@@ -90,7 +90,7 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
                     validateBeforeUpdate(productData);
                     BigDecimal margin = calculateMargin.calculate(productData);
                     productData.setMargin(margin);
-                    productData.setInternalCode(existingProduct.getInternalCode());
+                    productData.setCode(existingProduct.getCode());
                     productDataRepository.save(productData);
                     return existingProduct;
                 }).orElseThrow(() ->

@@ -50,7 +50,7 @@ class ValidateProductProviderProductImplTest {
         productData.setPurchasePrice(BigDecimal.valueOf(10.90));
         productData.setSalePrice(BigDecimal.valueOf(15.90));
         productData.setEan13("7891112223334");
-        productData.setInternalCode(BigInteger.valueOf(1));
+        productData.setCode(BigInteger.valueOf(1));
         productData.setInventory(BigDecimal.valueOf(100));
         productData.setProviderProduct(providerProductTest.generateProvider());
         productData.setSubSection(subSectionTest.generateSubsection());

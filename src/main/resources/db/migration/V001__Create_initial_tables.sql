@@ -2,14 +2,14 @@
 
 CREATE TABLE IF NOT EXISTS product_data (
    id UUID NOT NULL,
-   name VARCHAR(30) NOT NULL,
+   name VARCHAR(50) NOT NULL,
+   code DECIMAL NOT NULL,
    unity INTEGER NOT NULL,
    purchase_price DECIMAL(10, 2) NOT NULL,
    sale_price DECIMAL(10, 2) NOT NULL,
    margin DECIMAL(10, 4),
    ean_13 VARCHAR(13),
    dun_14 VARCHAR(14),
-   internal_code DECIMAL NOT NULL,
    inventory DECIMAL NOT NULL,
    subsection_id UUID,
    provider_product UUID,
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS product_data (
 
 CREATE TABLE IF NOT EXISTS subsection (
    id UUID NOT NULL,
-   name VARCHAR(30) NOT NULL,
+   name VARCHAR(50) NOT NULL,
    code DECIMAL NOT NULL,
    main_section UUID,
    CONSTRAINT pk_subsection PRIMARY KEY (id)
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS subsection (
 
 CREATE TABLE IF NOT EXISTS main_section (
    id UUID NOT NULL,
-   name VARCHAR(30) NOT NULL,
+   name VARCHAR(50) NOT NULL,
    code DECIMAL NOT NULL,
    department UUID,
    CONSTRAINT pk_main_section PRIMARY KEY (id)
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS main_section (
 
 CREATE TABLE IF NOT EXISTS department (
    id UUID NOT NULL,
-   name VARCHAR(30) NOT NULL,
+   name VARCHAR(50) NOT NULL,
    code DECIMAL NOT NULL,
    establishment UUID,
    CONSTRAINT pk_department PRIMARY KEY (id)
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS salary (
 
 CREATE TABLE IF NOT EXISTS job_position (
    id UUID NOT NULL,
-   name VARCHAR(30) NOT NULL,
+   name VARCHAR(50) NOT NULL,
    code DECIMAL NOT NULL,
    assignments VARCHAR(100),
    salary UUID,

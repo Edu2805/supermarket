@@ -22,7 +22,7 @@ import java.math.BigDecimal;
 public class ProductDTO {
 
     @NotBlank(message = "{br.com.supermarket.PRODUCT_DATA_DTO_FIELD_NAME_IS_NOT_EMPTY}")
-    @Size(min = 5, max = 30, message = "Nome deve ter no mínimo 5 e no máximo 30 caracteres.")
+    @Size(min = 5, max = 50, message = "{br.com.supermarket.PRODUCT_DATA_DTO_FIELD_NAME_CANNOT_BE_LESS_THAN_5_AND_GREATER_THAN_50}")
     private String name;
 
     @NotNull(message = "{br.com.supermarket.PRODUCT_DATA_DTO_FIELD_UNITY_IS_NOT_NULL}")

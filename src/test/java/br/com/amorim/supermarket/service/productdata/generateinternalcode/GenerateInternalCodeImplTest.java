@@ -84,7 +84,7 @@ class GenerateInternalCodeImplTest {
         when(productDataRepositoryCustomMock.generateInternalCode(productData3))
                 .thenReturn(BigInteger.valueOf(3));
         var newCode = generateInternalCode.generate(productData3);
-        productData3.setInternalCode(newCode);
-        assertEquals(BigInteger.valueOf(3), productData3.getInternalCode());
+        productData3.setCode(newCode);
+        assertEquals(BigInteger.valueOf(3), productData3.getCode());
     }
 }
