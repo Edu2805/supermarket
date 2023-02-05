@@ -47,10 +47,12 @@ class PersonCrudServiceImplTest {
     private Person person1;
     public static final String MESSAGE_ERROR = getString(MessagesKeyType.PERSON_DATA_NOT_FOUND.message);
     public static final String UNKNOWN_ID = "0eb5c7e2-b35c-44fa-a8cb-b5d91447da82";
+    ArgumentCaptor<UUID> knownIdCapture;
 
     private void startPerson() {
         PersonTest personTest1 = new PersonTest();
         person1 = personTest1.generatePerson();
+        knownIdCapture = ArgumentCaptor.forClass(UUID.class);
     }
 
     @BeforeEach
@@ -98,7 +100,6 @@ class PersonCrudServiceImplTest {
 
     @Test
     void shouldUpdateWithSuccess() {
-        ArgumentCaptor<UUID> knownIdCapture = ArgumentCaptor.forClass(UUID.class);
         when(personRepositoryMock.findById(knownIdCapture.capture()))
                 .thenReturn(Optional.of(person1));
         when(personRepositoryMock.save(person1)).thenReturn(person1);
@@ -143,8 +144,6 @@ class PersonCrudServiceImplTest {
 
     @Test
     void shouldBeExactlyIdPassedAsAnArgumentWhenDelete() {
-        ArgumentCaptor<UUID> knownIdCapture = ArgumentCaptor.forClass(UUID.class);
-
         when(personRepositoryMock.findById(knownIdCapture.capture()))
                 .thenReturn(Optional.of(person1));
         doNothing().when(personRepositoryMock).delete(person1);
