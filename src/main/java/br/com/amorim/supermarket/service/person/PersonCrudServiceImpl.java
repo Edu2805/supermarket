@@ -5,6 +5,7 @@ import br.com.amorim.supermarket.model.person.Person;
 import br.com.amorim.supermarket.repository.person.PersonRepository;
 import br.com.amorim.supermarket.service.person.verifycpf.VerifyPersonCpf;
 import br.com.amorim.supermarket.service.person.verifyrg.VerifyPersonRg;
+import br.com.amorim.supermarket.service.person.verifyuserdata.VerifyPersonUserData;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +27,7 @@ public class PersonCrudServiceImpl implements PersonCrudService {
     private VerifyPageSize verifyPageSize;
     private VerifyPersonCpf verifyPersonCpf;
     private VerifyPersonRg verifyPersonRg;
+    private VerifyPersonUserData verifyPersonUserData;
 
     @Override
     public Page<Person> getAll(int page, int size) {
@@ -51,6 +53,7 @@ public class PersonCrudServiceImpl implements PersonCrudService {
     public Person save (Person person) {
         verifyPersonCpf.verifyPersonCpfBeforeSave(person);
         verifyPersonRg.verifyPersonRgBeforeSave(person);
+        verifyPersonUserData.verifyPersonUserDataBeforeSave(person);
         return personRepository.save(person);
     }
 
