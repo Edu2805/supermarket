@@ -80,6 +80,7 @@ public class PersonCrudServiceImpl implements PersonCrudService {
     private void verifyFieldsBeforeUpdate(Person person) {
         verifyPersonCpf.verifyPersonCpfBeforeUpdate(person);
         verifyPersonRg.verifyPersonRgBeforeUpdate(person);
+        verifyPersonUserData.verifyPersonUserDataBeforeUpdate(person);
     }
 
     @Transactional
