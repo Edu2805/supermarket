@@ -15,6 +15,8 @@ import static br.com.amorim.supermarket.configuration.internacionalizationmessag
 @Component("validateEAN13OrDUN14")
 public class ValidateProductEan13OrDun14Impl implements ValidateProductEan13OrDun14 {
 
+    private static final int EXISTS_EAN_13 = 1;
+    private static final int EXISTS_DUN_14 = 2;
     private VerifyEan13OrDun14RepositoryCustom verifyEan13OrDun14RepositoryCustom;
     private ProductDataRepository productDataRepository;
 
@@ -26,9 +28,11 @@ public class ValidateProductEan13OrDun14Impl implements ValidateProductEan13OrDu
     @Override
     public boolean validateBeforeSave(ProductData productData) {
         if (productData.getEan13() == null && productData.getDun14() == null) {
-            throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_EAN13_OR_DUN14_EMPTY.message));
+            throw new BusinessRuleException(getString(MessagesKeyType
+                    .PRODUCT_DATA_EAN13_OR_DUN14_EMPTY.message));
         } else if (productData.getEan13() != null && productData.getDun14() != null) {
-            throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_EAN13_OR_DUN14_SAVE_TOGETHER.message));
+            throw new BusinessRuleException(getString(MessagesKeyType
+                    .PRODUCT_DATA_EAN13_OR_DUN14_SAVE_TOGETHER.message));
         } else {
             verifyIfAlreadyExistsEan13OrDun14InDatabase(productData);
         }
@@ -36,20 +40,24 @@ public class ValidateProductEan13OrDun14Impl implements ValidateProductEan13OrDu
     }
 
     private void verifyIfAlreadyExistsEan13OrDun14InDatabase(ProductData productData) {
-        if (verifyEan13OrDun14RepositoryCustom.existsByEan13OrDun14(productData) == 1) {
-            throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_EAN13_ALREADY_EXISTS.message));
+        if (verifyEan13OrDun14RepositoryCustom.existsByEan13OrDun14(productData) == EXISTS_EAN_13) {
+            throw new BusinessRuleException(getString(MessagesKeyType
+                    .PRODUCT_DATA_EAN13_ALREADY_EXISTS.message));
         }
-        if (verifyEan13OrDun14RepositoryCustom.existsByEan13OrDun14(productData) == 2) {
-            throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_DUN14_ALREADY_EXISTS.message));
+        if (verifyEan13OrDun14RepositoryCustom.existsByEan13OrDun14(productData) == EXISTS_DUN_14) {
+            throw new BusinessRuleException(getString(MessagesKeyType
+                    .PRODUCT_DATA_DUN14_ALREADY_EXISTS.message));
         }
     }
 
     @Override
     public boolean validateBeforeUpdate(ProductData productData) {
         if (productData.getEan13() == null && productData.getDun14() == null) {
-            throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_EAN13_OR_DUN14_EMPTY.message));
+            throw new BusinessRuleException(getString(MessagesKeyType
+                    .PRODUCT_DATA_EAN13_OR_DUN14_EMPTY.message));
         } else if (productData.getEan13() != null && productData.getDun14() != null) {
-            throw new BusinessRuleException(getString(MessagesKeyType.PRODUCT_DATA_EAN13_OR_DUN14_SAVE_TOGETHER.message));
+            throw new BusinessRuleException(getString(MessagesKeyType
+                    .PRODUCT_DATA_EAN13_OR_DUN14_SAVE_TOGETHER.message));
         } else {
             validateEan13(productData);
         }

@@ -16,6 +16,8 @@ public class GenerateInternalCodeProviderProductRepositoryCustomImpl implements
         GenerateInternalCodeProviderProductRepositoryCustom {
 
     private EntityManager entityManager;
+    private static final int START_CODE_ONE = 1;
+    private static final int INCREASE_CODE_ONE = 1;
 
     @Override
     public BigInteger generateInternalCode(ProviderProduct providerProduct) {
@@ -25,9 +27,9 @@ public class GenerateInternalCodeProviderProductRepositoryCustomImpl implements
                 .from(qProviderProduct).fetchOne();
 
         if (providerProductDataQuery != null) {
-            return providerProductDataQuery.add(BigInteger.valueOf(1));
+            return providerProductDataQuery.add(BigInteger.valueOf(INCREASE_CODE_ONE));
         }
 
-        return BigInteger.valueOf(1);
+        return BigInteger.valueOf(START_CODE_ONE);
     }
 }

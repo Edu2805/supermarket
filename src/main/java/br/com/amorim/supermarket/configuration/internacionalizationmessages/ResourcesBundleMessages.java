@@ -8,8 +8,9 @@ import java.util.ResourceBundle;
 @Configuration
 public class ResourcesBundleMessages {
 
+    private static final String BASE_NAME_MESSAGE = "messages";
     private static final ResourceBundle bundle = ResourceBundle
-            .getBundle("messages", Locale.getDefault());
+            .getBundle(BASE_NAME_MESSAGE, Locale.getDefault());
     private static final String DOMAIN_MESSAGE = "br.com.supermarket.";
 
     public static String getString(String chave) {

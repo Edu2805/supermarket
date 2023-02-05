@@ -15,6 +15,8 @@ import java.math.BigInteger;
 public class GenerateInternalCodeProductRepositoryCustomImpl implements GenerateInternalCodeProductRepositoryCustom {
 
     private EntityManager entityManager;
+    private static final int START_CODE_ONE = 1;
+    private static final int INCREASE_CODE_ONE = 1;
 
     @Override
     public BigInteger generateInternalCode(ProductData productData) {
@@ -24,9 +26,9 @@ public class GenerateInternalCodeProductRepositoryCustomImpl implements Generate
                 .from(qProductData).fetchOne();
 
         if (productDataQuery != null) {
-            return productDataQuery.add(BigInteger.valueOf(1));
+            return productDataQuery.add(BigInteger.valueOf(INCREASE_CODE_ONE));
         }
 
-        return BigInteger.valueOf(1);
+        return BigInteger.valueOf(START_CODE_ONE);
     }
 }

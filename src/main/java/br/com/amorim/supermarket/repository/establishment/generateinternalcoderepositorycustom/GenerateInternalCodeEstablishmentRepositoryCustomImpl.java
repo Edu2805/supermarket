@@ -16,6 +16,8 @@ public class GenerateInternalCodeEstablishmentRepositoryCustomImpl implements
         GenerateInternalCodeEstablishmentRepositoryCustom{
 
     private EntityManager entityManager;
+    private static final int START_CODE_ONE = 1;
+    private static final int INCREASE_CODE_ONE = 1;
 
     @Override
     public BigInteger generateInternalCode(Establishment establishment) {
@@ -25,9 +27,9 @@ public class GenerateInternalCodeEstablishmentRepositoryCustomImpl implements
                 .from(qEstablishment).fetchOne();
 
         if (establishmentDataQuery != null) {
-            return establishmentDataQuery.add(BigInteger.valueOf(1));
+            return establishmentDataQuery.add(BigInteger.valueOf(INCREASE_CODE_ONE));
         }
 
-        return BigInteger.valueOf(1);
+        return BigInteger.valueOf(START_CODE_ONE);
     }
 }

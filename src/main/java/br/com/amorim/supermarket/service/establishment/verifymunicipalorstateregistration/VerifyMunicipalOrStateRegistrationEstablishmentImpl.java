@@ -16,6 +16,8 @@ import static br.com.amorim.supermarket.configuration.internacionalizationmessag
 public class VerifyMunicipalOrStateRegistrationEstablishmentImpl implements
         VerifyMunicipalOrStateRegistrationEstablishment {
 
+    private static final int EXISTS_MUNICIPAL_REGISTRATION = 1;
+    private static final int EXISTS_STATE_REGISTRATION = 2;
     private VerifyMunicipalOrStateRegistrationEstablishmentRepositoryCustom verifyMunicipalOrStateRegistrationRepositoryCustom;
     private EstablishmentRepository establishmentRepository;
 
@@ -23,11 +25,11 @@ public class VerifyMunicipalOrStateRegistrationEstablishmentImpl implements
     public boolean verifyMunicipalOrStateRegistrationBeforeSave(Establishment establishment) {
 
         if (verifyMunicipalOrStateRegistrationRepositoryCustom
-                .existsByMunicipalOrStateRegistration(establishment) == 1) {
+                .existsByMunicipalOrStateRegistration(establishment) == EXISTS_MUNICIPAL_REGISTRATION) {
             throw new BusinessRuleException(
                     getString(MessagesKeyType.ESTABLISHMENT_MUNICIPAL_REGISTER_ALREADY_EXISTS.message));
         } else if (verifyMunicipalOrStateRegistrationRepositoryCustom
-                .existsByMunicipalOrStateRegistration(establishment) == 2) {
+                .existsByMunicipalOrStateRegistration(establishment) == EXISTS_STATE_REGISTRATION) {
             throw new BusinessRuleException(
                     getString(MessagesKeyType.ESTABLISHMENT_STATE_REGISTER_ALREADY_EXISTS.message));
         }

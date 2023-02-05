@@ -16,16 +16,20 @@ import static br.com.amorim.supermarket.configuration.internacionalizationmessag
 public class VerifyMunicipalOrStateRegistrationProviderProductImpl implements
         VerifyMunicipalOrStateRegistrationProviderProduct {
 
+    private static final int EXISTS_MUNICIPAL_REGISTRATION = 1;
+    private static final int EXISTS_STATE_REGISTRATION = 2;
     private VerifyMunicipalOrStateRegistrationProviderProductRepositoryCustom verifyMunicipalOrStateRegistrationCustom;
     private ProviderProductRepository providerProductRepository;
 
     @Override
     public boolean verifyMunicipalOrStateRegistrationBeforeSave(ProviderProduct providerProduct) {
-        if (verifyMunicipalOrStateRegistrationCustom.existsByMunicipalOrStateRegistration(providerProduct) == 1) {
+        if (verifyMunicipalOrStateRegistrationCustom
+                .existsByMunicipalOrStateRegistration(providerProduct) == EXISTS_MUNICIPAL_REGISTRATION) {
             throw new BusinessRuleException(
                     getString(MessagesKeyType.PROVIDER_PRODUCT_MUNICIPAL_REGISTER_ALREADY_EXISTS.message));
         }
-        if (verifyMunicipalOrStateRegistrationCustom.existsByMunicipalOrStateRegistration(providerProduct) == 2) {
+        if (verifyMunicipalOrStateRegistrationCustom
+                .existsByMunicipalOrStateRegistration(providerProduct) == EXISTS_STATE_REGISTRATION) {
             throw new BusinessRuleException(
                     getString(MessagesKeyType.PROVIDER_PRODUCT_STATE_REGISTER_ALREADY_EXISTS.message));
         }

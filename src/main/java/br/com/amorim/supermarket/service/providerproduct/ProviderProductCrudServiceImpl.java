@@ -29,6 +29,8 @@ import static br.com.amorim.supermarket.configuration.internacionalizationmessag
 @Service
 public class ProviderProductCrudServiceImpl implements ProviderProductCrudService{
 
+    private static final int DECREASE_PAGE_SIZE = 1;
+    private static final int ZERO_PAGE_SIZE = 0;
     private ProviderProductRepository providerProductRepository;
     private GenerateInternalCodeProviderProduct generateInternalCodeProviderProduct;
     private ValidateCnpjDocumentProviderProduct validateCnpjDocument;
@@ -41,8 +43,8 @@ public class ProviderProductCrudServiceImpl implements ProviderProductCrudServic
 
     @Override
     public Page<ProviderProduct> getAll(int page, int size) {
-        if (page > 0) {
-            page -= 1;
+        if (page > ZERO_PAGE_SIZE) {
+            page -= DECREASE_PAGE_SIZE;
         }
         verifyPageSize.verifyPageSizeForGetAll(page, size);
         Pageable pageableRequest = PageRequest.of(page, size);
