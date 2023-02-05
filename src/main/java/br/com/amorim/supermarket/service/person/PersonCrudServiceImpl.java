@@ -1,5 +1,7 @@
 package br.com.amorim.supermarket.service.person;
 
+import br.com.amorim.supermarket.common.enums.MessagesKeyType;
+import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.person.Person;
 import br.com.amorim.supermarket.repository.person.PersonRepository;
@@ -11,12 +13,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.UUID;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
 
 @AllArgsConstructor
 
@@ -43,8 +44,8 @@ public class PersonCrudServiceImpl implements PersonCrudService {
     public Person findById(UUID id) {
         return personRepository.findById(id)
                 .orElseThrow(() -> {
-                    throw new ResponseStatusException(NOT_FOUND,
-                            "Produto não encontrado");
+                    throw new NotFoundException(
+                            getString(MessagesKeyType.PERSON_DATA_NOT_FOUND.message));
                 });
     }
 
@@ -66,8 +67,8 @@ public class PersonCrudServiceImpl implements PersonCrudService {
                     personRepository.save(person);
                     return existingPerson;
                 }).orElseThrow(() ->
-                        new ResponseStatusException(NOT_FOUND,
-                                "Produto não encontrado"));
+                        new NotFoundException(
+                                getString(MessagesKeyType.PERSON_DATA_NOT_FOUND.message)));
 
     }
 
@@ -79,7 +80,7 @@ public class PersonCrudServiceImpl implements PersonCrudService {
                     personRepository.delete(person);
                     return person;
                 }).orElseThrow(() ->
-                        new ResponseStatusException(NOT_FOUND,
-                                "Produto não encontrado"));
+                        new NotFoundException(
+                                getString(MessagesKeyType.PERSON_DATA_NOT_FOUND.message)));
     }
 }
