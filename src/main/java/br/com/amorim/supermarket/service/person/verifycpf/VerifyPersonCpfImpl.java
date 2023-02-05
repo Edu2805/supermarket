@@ -35,7 +35,7 @@ public class VerifyPersonCpfImpl implements VerifyPersonCpf {
                     personExistent.getCpf().equals(person.getCpf()))) {
                 if (!personExistent.getId().equals(person.getId())) {
                     throw new BusinessRuleException(getString(
-                            MessagesKeyType.PERSON_CPF_ALREADY_EXISTS.message));
+                            MessagesKeyType.PERSON_CPF_ALREADY_EXISTS_WHEN_UPDATE.message));
                 }
             }
         });

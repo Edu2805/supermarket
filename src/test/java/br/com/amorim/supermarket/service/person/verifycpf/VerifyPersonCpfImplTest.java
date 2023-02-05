@@ -94,7 +94,7 @@ class VerifyPersonCpfImplTest {
 
     @Test
     void shouldReturnABusinessRuleExceptionWhenCpfPersonAlreadyExistsBeforeUpdate() {
-        String messageError = getString(MessagesKeyType.PERSON_CPF_ALREADY_EXISTS.message);
+        String messageError = getString(MessagesKeyType.PERSON_CPF_ALREADY_EXISTS_WHEN_UPDATE.message);
 
         List<Person> peopleTestList = new ArrayList<>();
         person1.setCpf(person2.getCpf());
