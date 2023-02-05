@@ -25,6 +25,8 @@ import static br.com.amorim.supermarket.configuration.internacionalizationmessag
 @Service
 public class EstablishmentCrudServiceImpl implements EstablishmentCrudService {
 
+    private static final int DECREASE_PAGE_SIZE = 1;
+    private static final int ZERO_PAGE_SIZE = 0;
     private EstablishmentRepository establishmentRepository;
     private GenerateInternalCodeEstablishment generateInternalCodeEstablishment;
     private VerifyMunicipalOrStateRegistrationEstablishment verifyMunicipalRegistration;
@@ -33,8 +35,8 @@ public class EstablishmentCrudServiceImpl implements EstablishmentCrudService {
 
     @Override
     public Page<Establishment> getAll (int page, int size) {
-        if (page > 0) {
-            page -= 1;
+        if (page > ZERO_PAGE_SIZE) {
+            page -= DECREASE_PAGE_SIZE;
         }
         verifyPageSize.verifyPageSizeForGetAll(page, size);
         Pageable pageableRequest = PageRequest.of(page, size);

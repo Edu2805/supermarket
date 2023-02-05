@@ -12,16 +12,19 @@ import javax.persistence.EntityManager;
 public class VerifyEan13OrDun14RepositoryCustomImpl implements VerifyEan13OrDun14RepositoryCustom {
 
     private EntityManager entityManager;
+    private static final int RETURN_EXISTS_EAN_13 = 1;
+    private static final int RETURN_EXISTS_DUN_14 = 2;
+    private static final int NEITHER_THE_EAN_13_OR_THE_DUN_14_IS_RETURNED = 3;
 
     @Override
     public int existsByEan13OrDun14(ProductData productData) {
         if (existsByEan13(productData.getEan13())) {
-           return 1;
+           return RETURN_EXISTS_EAN_13;
         }
         if (existsByDun14(productData.getDun14())) {
-            return 2;
+            return RETURN_EXISTS_DUN_14;
         }
-        return 3;
+        return NEITHER_THE_EAN_13_OR_THE_DUN_14_IS_RETURNED;
     }
 
     private boolean existsByDun14(String dun14) {

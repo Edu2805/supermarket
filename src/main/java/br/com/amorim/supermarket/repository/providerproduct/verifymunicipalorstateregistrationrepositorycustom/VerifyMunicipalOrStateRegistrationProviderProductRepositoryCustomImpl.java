@@ -14,18 +14,21 @@ public class VerifyMunicipalOrStateRegistrationProviderProductRepositoryCustomIm
         VerifyMunicipalOrStateRegistrationProviderProductRepositoryCustom {
 
     private EntityManager entityManager;
+    private static final int RETURN_EXISTS_MUNICIPAL_REGISTRATION = 1;
+    private static final int RETURN_EXISTS_STATE_REGISTRATION = 2;
+    private static final int NEITHER_THE_MUNICIPAL_REGISTRATION_OR_THE_STATE_REGISTRATION_IS_RETURNED = 3;
 
     @Override
     public int existsByMunicipalOrStateRegistration(ProviderProduct providerProduct) {
         if (providerProduct.getId() == null &&
                 existsMunicipalRegistration(providerProduct.getMunicipalRegistration())) {
-            return 1;
+            return RETURN_EXISTS_MUNICIPAL_REGISTRATION;
         }
         if (providerProduct.getId() == null &&
                 existsStateRegistration(providerProduct.getStateRegistration())) {
-            return 2;
+            return RETURN_EXISTS_STATE_REGISTRATION;
         }
-        return 3;
+        return NEITHER_THE_MUNICIPAL_REGISTRATION_OR_THE_STATE_REGISTRATION_IS_RETURNED;
     }
 
     private boolean existsMunicipalRegistration(String municipalRegistration) {

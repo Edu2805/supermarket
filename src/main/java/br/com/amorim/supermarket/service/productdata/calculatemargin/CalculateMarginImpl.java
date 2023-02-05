@@ -12,6 +12,8 @@ import java.math.RoundingMode;
 @Component
 public class CalculateMarginImpl implements CalculateMargin {
 
+    private static final int SCALE = 4;
+
     /**
      * ML = Margem de Lucro
      * C = Custos do produto
@@ -23,6 +25,6 @@ public class CalculateMarginImpl implements CalculateMargin {
     @Override
     public BigDecimal calculate(ProductData productData) {
         BigDecimal margin = productData.getSalePrice().subtract(productData.getPurchasePrice());
-        return margin.divide(productData.getSalePrice(), 4, RoundingMode.HALF_UP);
+        return margin.divide(productData.getSalePrice(), SCALE, RoundingMode.HALF_UP);
     }
 }
