@@ -29,8 +29,8 @@ public class VerifyPersonCpfImpl implements VerifyPersonCpf {
 
     @Override
     public boolean verifyPersonCpfBeforeUpdate(Person person) {
-        var getPersons = personRepository.findAll();
-        getPersons.forEach(personExistent -> {
+        var getPeople = personRepository.findAll();
+        getPeople.forEach(personExistent -> {
             if (personExistent.getCpf() != null && (
                     personExistent.getCpf().equals(person.getCpf()))) {
                 if (!personExistent.getId().equals(person.getId())) {

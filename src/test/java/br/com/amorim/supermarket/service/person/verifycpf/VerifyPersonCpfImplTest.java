@@ -81,27 +81,27 @@ class VerifyPersonCpfImplTest {
 
     @Test
     void shouldReturnFalseWhenCpfPersonNotExistsBeforeUpdate() {
-        List<Person> personTestList = new ArrayList<>();
-        personTestList.add(person1);
-        personTestList.add(person2);
+        List<Person> peopleTestList = new ArrayList<>();
+        peopleTestList.add(person1);
+        peopleTestList.add(person2);
 
-        when(personRepositoryMock.findAll()).thenReturn(personTestList);
+        when(personRepositoryMock.findAll()).thenReturn(peopleTestList);
 
-        var verifyCnpj = verifyPersonCpf.verifyPersonCpfBeforeUpdate(person1);
+        var verifyCpfPerson = verifyPersonCpf.verifyPersonCpfBeforeUpdate(person1);
 
-        assertFalse(verifyCnpj);
+        assertFalse(verifyCpfPerson);
     }
 
     @Test
     void shouldReturnABusinessRuleExceptionWhenCpfPersonAlreadyExistsBeforeUpdate() {
         String messageError = getString(MessagesKeyType.PERSON_CPF_ALREADY_EXISTS.message);
 
-        List<Person> personTestList = new ArrayList<>();
+        List<Person> peopleTestList = new ArrayList<>();
         person1.setCpf(person2.getCpf());
-        personTestList.add(person1);
-        personTestList.add(person2);
+        peopleTestList.add(person1);
+        peopleTestList.add(person2);
 
-        when(personRepositoryMock.findAll()).thenReturn(personTestList);
+        when(personRepositoryMock.findAll()).thenReturn(peopleTestList);
 
         String exceptionMessage = Assertions.assertThrows(
                 BusinessRuleException.class, () -> {
