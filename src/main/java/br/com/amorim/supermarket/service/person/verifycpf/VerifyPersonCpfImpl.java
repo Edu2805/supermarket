@@ -3,6 +3,7 @@ package br.com.amorim.supermarket.service.person.verifycpf;
 import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleException;
 import br.com.amorim.supermarket.model.person.Person;
+import br.com.amorim.supermarket.repository.person.PersonRepository;
 import br.com.amorim.supermarket.repository.person.verifycpfrepositorycustom.VerifyCpfRepositoryCustom;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import static br.com.amorim.supermarket.configuration.internacionalizationmessag
 public class VerifyPersonCpfImpl implements VerifyPersonCpf {
 
     private VerifyCpfRepositoryCustom verifyCpfRepositoryCustom;
+    private PersonRepository personRepository;
 
     @Override
     public boolean verifyPersonCpfBeforeSave(Person person) {
@@ -27,6 +29,16 @@ public class VerifyPersonCpfImpl implements VerifyPersonCpf {
 
     @Override
     public boolean verifyPersonCpfBeforeUpdate(Person person) {
-        return verifyCpfRepositoryCustom.isCpfAlreadyExistsInTheDatabase(person);
+        var getPersons = personRepository.findAll();
+        getPersons.forEach(personExistent -> {
+            if (personExistent.getCpf() != null && (
+                    personExistent.getCpf().equals(person.getCpf()))) {
+                if (!personExistent.getId().equals(person.getId())) {
+                    throw new BusinessRuleException(getString(
+                            MessagesKeyType.PERSON_CPF_ALREADY_EXISTS.message));
+                }
+            }
+        });
+        return false;
     }
 }

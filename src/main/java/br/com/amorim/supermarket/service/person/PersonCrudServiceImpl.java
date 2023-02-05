@@ -52,10 +52,14 @@ public class PersonCrudServiceImpl implements PersonCrudService {
     @Transactional
     @Override
     public Person save (Person person) {
+        verifyFieldsBeforeSave(person);
+        return personRepository.save(person);
+    }
+
+    private void verifyFieldsBeforeSave(Person person) {
         verifyPersonCpf.verifyPersonCpfBeforeSave(person);
         verifyPersonRg.verifyPersonRgBeforeSave(person);
         verifyPersonUserData.verifyPersonUserDataBeforeSave(person);
-        return personRepository.save(person);
     }
 
     @Transactional
@@ -64,12 +68,17 @@ public class PersonCrudServiceImpl implements PersonCrudService {
         personRepository.findById(id)
                 .map(existingPerson -> {
                     person.setId(existingPerson.getId());
+                    verifyFieldsBeforeUpdate(person);
                     personRepository.save(person);
                     return existingPerson;
                 }).orElseThrow(() ->
                         new NotFoundException(
                                 getString(MessagesKeyType.PERSON_DATA_NOT_FOUND.message)));
 
+    }
+
+    private void verifyFieldsBeforeUpdate(Person person) {
+        verifyPersonCpf.verifyPersonCpfBeforeUpdate(person);
     }
 
     @Transactional
