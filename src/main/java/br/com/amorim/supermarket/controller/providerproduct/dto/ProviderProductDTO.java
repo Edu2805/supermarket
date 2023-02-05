@@ -1,6 +1,7 @@
 package br.com.amorim.supermarket.controller.providerproduct.dto;
 
 import br.com.amorim.supermarket.common.enums.SubscriptionType;
+import br.com.amorim.supermarket.controller.common.dto.CommonDTONameMunicipalAndStateRegistration;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,11 +15,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ProviderProductDTO {
-
-    @NotBlank(message = "{br.com.supermarket.PROVIDER_PRODUCT_DTO_FIELD_NAME_IS_NOT_EMPTY}")
-    @Size(min = 5, max = 50, message = "{br.com.supermarket.PROVIDER_PRODUCT_DTO_FIELD_NAME_CANNOT_BE_LESS_THAN_5_AND_GREATER_THAN_50}")
-    private String name;
+public class ProviderProductDTO extends CommonDTONameMunicipalAndStateRegistration {
 
     @NotNull(message = "{br.com.supermarket.PROVIDER_PRODUCT_DTO_FIELD_SUBSCRIPTION_TYPE_IS_NOT_EMPTY}")
     private SubscriptionType subscriptionType;
@@ -26,13 +23,6 @@ public class ProviderProductDTO {
     @NotBlank(message = "{br.com.supermarket.PROVIDER_PRODUCT_DTO_FIELD_SUBSCRIPTION_NUMBER_IS_NOT_EMPTY}")
     @Size(min = 11, max = 14, message = "{br.com.supermarket.PROVIDER_PRODUCT_DTO_FIELD_SUBSCRIPTION_NUMBER_CANNOT_BE_LESS_THAN_11_AND_GREATER_THAN_14}")
     private String subscriptionNumber;
-
-    @NotBlank(message = "{br.com.supermarket.PROVIDER_PRODUCT_DTO_FIELD_STATE_REGISTRATION_IS_NOT_EMPTY}")
-    @Size(max = 20, message = "{br.com.supermarket.PROVIDER_PRODUCT_DTO_FIELD_STATE_REGISTRATION_CANNOT_BE_GREATER_THAN_20}")
-    private String stateRegistration;
-
-    @Size(max = 20, message = "{br.com.supermarket.PROVIDER_PRODUCT_DTO_FIELD_MUNICIPAL_REGISTRATION_CANNOT_BE_GREATER_THAN_20}")
-    private String municipalRegistration;
 
     @NotBlank(message = "{br.com.supermarket.PROVIDER_PRODUCT_DTO_FIELD_ADDRESS_IS_NOT_EMPTY}")
     @Size(max = 60, message = "{br.com.supermarket.PROVIDER_PRODUCT_DTO_FIELD_ADDRESS_CANNOT_BE_GREATER_THAN_60}")
