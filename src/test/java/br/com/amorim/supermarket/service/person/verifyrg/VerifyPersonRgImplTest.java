@@ -52,16 +52,16 @@ class VerifyPersonRgImplTest {
     }
 
     @Test
-    void shouldReturnFalseWhenPersonCpfNotExistsBeforeSave() {
+    void shouldReturnFalseWhenPersonRgNotExistsBeforeSave() {
         when(verifyRgRepositoryCustomMock.isRgAlreadyExistsInTheDatabase(person1))
                 .thenReturn(false);
-        var verifyCpf = verifyPersonRg.verifyPersonRgBeforeSave(person1);
+        var verifyRg = verifyPersonRg.verifyPersonRgBeforeSave(person1);
 
-        assertFalse(verifyCpf);
+        assertFalse(verifyRg);
     }
 
     @Test
-    void shouldBusinessRuleExceptionWhenPersonCpfAlreadyExistsBeforeSave() {
+    void shouldBusinessRuleExceptionWhenPersonRgAlreadyExistsBeforeSave() {
         String messageError = getString(MessagesKeyType
                 .PERSON_RG_ALREADY_EXISTS_WHEN_SAVE.message);
 
@@ -86,9 +86,9 @@ class VerifyPersonRgImplTest {
 
         when(personRepositoryMock.findAll()).thenReturn(peopleTestList);
 
-        var verifyCpfPerson = verifyPersonRg.verifyPersonRgBeforeUpdate(person1);
+        var verifyRgPerson = verifyPersonRg.verifyPersonRgBeforeUpdate(person1);
 
-        assertFalse(verifyCpfPerson);
+        assertFalse(verifyRgPerson);
     }
 
     @Test
