@@ -1,7 +1,7 @@
 package br.com.amorim.supermarket.testutils.generateentitiesunittests.establishment;
 
 import br.com.amorim.supermarket.model.establishment.Establishment;
-import br.com.amorim.supermarket.testutils.generatecnpj.GenerateCNPJ;
+import br.com.amorim.supermarket.testutils.generatedocument.GenerateCNPJ;
 
 import java.math.BigInteger;
 import java.util.Random;

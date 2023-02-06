@@ -1,4 +1,4 @@
-package br.com.amorim.supermarket.testutils.generatecnpj;
+package br.com.amorim.supermarket.testutils.generatedocument;
 
 public class GenerateCPF {
 

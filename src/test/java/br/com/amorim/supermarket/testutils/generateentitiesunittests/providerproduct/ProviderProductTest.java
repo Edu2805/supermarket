@@ -2,7 +2,7 @@ package br.com.amorim.supermarket.testutils.generateentitiesunittests.providerpr
 
 import br.com.amorim.supermarket.common.enums.SubscriptionType;
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
-import br.com.amorim.supermarket.testutils.generatecnpj.GenerateCNPJ;
+import br.com.amorim.supermarket.testutils.generatedocument.GenerateCNPJ;
 
 import java.math.BigInteger;
 import java.util.Random;
