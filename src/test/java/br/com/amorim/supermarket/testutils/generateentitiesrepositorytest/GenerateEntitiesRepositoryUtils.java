@@ -192,7 +192,7 @@ public class GenerateEntitiesRepositoryUtils {
         person.setLastName(String.valueOf(lastName));
         person.setCpf(generateCPF.cpf(false));
         person.setRg(String.valueOf(rg));
-        person.setBirthDate(LocalDate.of(1990, 01, 01));
+        person.setBirthDate(LocalDate.of(1990, 1, 1));
         person.setEmail(String.valueOf(email));
         person.setNaturalness("São José");
         person.setNationality("Brasileiro");
@@ -207,10 +207,10 @@ public class GenerateEntitiesRepositoryUtils {
 
     public UserData generateUserData () {
         Random randomUserName = new Random();
-        var usarName = randomUserName.nextInt(10000, 19999);
+        var userName = randomUserName.nextInt(10000, 19999);
         UserData userData = new UserData();
 
-        userData.setUserName(String.valueOf(usarName));
+        userData.setUserName(String.valueOf(userName));
         userData.setPassword("123456");
         userData.setIsEmployee(false);
         userData.setRole(RoleType.ADMIN);
