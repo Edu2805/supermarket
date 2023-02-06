@@ -5,8 +5,8 @@ import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleExcep
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
 import br.com.amorim.supermarket.repository.providerproduct.ProviderProductRepository;
 import br.com.amorim.supermarket.repository.providerproduct.verifysubscriptionnumberrepositorycustom.VerifySubscriptionNumberProviderProductRepositoryCustom;
-import br.com.amorim.supermarket.testutils.generatecnpj.GenerateCNPJ;
-import br.com.amorim.supermarket.testutils.generatecnpj.GenerateCPF;
+import br.com.amorim.supermarket.testutils.generatedocument.GenerateCNPJ;
+import br.com.amorim.supermarket.testutils.generatedocument.GenerateCPF;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.providerproduct.ProviderProductTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

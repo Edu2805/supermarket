@@ -2,7 +2,7 @@ package br.com.amorim.supermarket.testutils.generateentitiesunittests.person;
 
 import br.com.amorim.supermarket.common.enums.ScholarityType;
 import br.com.amorim.supermarket.model.person.Person;
-import br.com.amorim.supermarket.testutils.generatecnpj.GenerateCPF;
+import br.com.amorim.supermarket.testutils.generatedocument.GenerateCPF;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.userdata.UserDataTest;
 
 import java.time.LocalDate;

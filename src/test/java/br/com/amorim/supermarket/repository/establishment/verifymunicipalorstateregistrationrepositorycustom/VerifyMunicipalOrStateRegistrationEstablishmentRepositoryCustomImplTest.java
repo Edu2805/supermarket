@@ -3,7 +3,7 @@ package br.com.amorim.supermarket.repository.establishment.verifymunicipalorstat
 import br.com.amorim.supermarket.SupermarketApplication;
 import br.com.amorim.supermarket.model.establishment.Establishment;
 import br.com.amorim.supermarket.repository.establishment.EstablishmentRepository;
-import br.com.amorim.supermarket.testutils.generatecnpj.GenerateCNPJ;
+import br.com.amorim.supermarket.testutils.generatedocument.GenerateCNPJ;
 import br.com.amorim.supermarket.testutils.generateentitiesrepositorytest.GenerateEntitiesRepositoryUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

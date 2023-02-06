@@ -5,7 +5,7 @@ import br.com.amorim.supermarket.common.enums.SubscriptionType;
 import br.com.amorim.supermarket.common.exception.invaliddocument.InvalidDocumentException;
 import br.com.amorim.supermarket.common.verifydocument.cnpj.VerifyCNPJ;
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
-import br.com.amorim.supermarket.testutils.generatecnpj.GenerateCNPJ;
+import br.com.amorim.supermarket.testutils.generatedocument.GenerateCNPJ;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.providerproduct.ProviderProductTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

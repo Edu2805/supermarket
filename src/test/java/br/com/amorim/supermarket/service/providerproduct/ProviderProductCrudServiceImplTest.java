@@ -12,8 +12,8 @@ import br.com.amorim.supermarket.service.providerproduct.validatedocument.cnpj.V
 import br.com.amorim.supermarket.service.providerproduct.validatedocument.cpf.ValidateCpfDocumentProviderProduct;
 import br.com.amorim.supermarket.service.providerproduct.verifymunicipalorstateregistration.VerifyMunicipalOrStateRegistrationProviderProduct;
 import br.com.amorim.supermarket.service.providerproduct.verifysubscriptionnumber.VerifySubscriptionNumberProviderProduct;
-import br.com.amorim.supermarket.testutils.generatecnpj.GenerateCNPJ;
-import br.com.amorim.supermarket.testutils.generatecnpj.GenerateCPF;
+import br.com.amorim.supermarket.testutils.generatedocument.GenerateCNPJ;
+import br.com.amorim.supermarket.testutils.generatedocument.GenerateCPF;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.providerproduct.ProviderProductTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

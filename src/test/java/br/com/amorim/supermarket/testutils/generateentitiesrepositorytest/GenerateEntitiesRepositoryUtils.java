@@ -1,26 +1,36 @@
 package br.com.amorim.supermarket.testutils.generateentitiesrepositorytest;
 
+import br.com.amorim.supermarket.common.enums.RoleType;
+import br.com.amorim.supermarket.common.enums.ScholarityType;
 import br.com.amorim.supermarket.common.enums.SubscriptionType;
 import br.com.amorim.supermarket.common.enums.UnityType;
 import br.com.amorim.supermarket.model.department.Department;
 import br.com.amorim.supermarket.model.establishment.Establishment;
 import br.com.amorim.supermarket.model.mainsection.MainSection;
+import br.com.amorim.supermarket.model.person.Person;
 import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
 import br.com.amorim.supermarket.model.subsection.SubSection;
+import br.com.amorim.supermarket.model.userdata.UserData;
 import br.com.amorim.supermarket.repository.department.DepartmentRepository;
 import br.com.amorim.supermarket.repository.mainsection.MainSectionRepository;
 import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
 import br.com.amorim.supermarket.repository.subsection.SubSectionRepository;
 import br.com.amorim.supermarket.service.establishment.EstablishmentCrudService;
+import br.com.amorim.supermarket.service.person.PersonCrudService;
 import br.com.amorim.supermarket.service.providerproduct.ProviderProductCrudService;
-import br.com.amorim.supermarket.testutils.generatecnpj.GenerateCNPJ;
+import br.com.amorim.supermarket.service.userdata.UserDataService;
+import br.com.amorim.supermarket.testutils.generatedocument.GenerateCNPJ;
+import br.com.amorim.supermarket.testutils.generatedocument.GenerateCPF;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Random;
 import java.util.UUID;
 
@@ -43,6 +53,10 @@ public class GenerateEntitiesRepositoryUtils {
     private ProviderProductCrudService providerProductCrudService;
     @Autowired
     private EstablishmentCrudService establishmentCrudService;
+    @Autowired
+    private UserDataService userDataService;
+    @Autowired
+    private PersonCrudService personCrudService;
 
     public ProviderProduct generateProvider() {
         Random randomName = new Random();
@@ -155,5 +169,53 @@ public class GenerateEntitiesRepositoryUtils {
         productData.setSubSection(subSection);
         productDataRepository.save(productData);
         return productData;
+    }
+
+    public Person generatePerson (UserData userData) {
+        Random randomFirstName = new Random();
+        Random randomMiddleName = new Random();
+        Random randomLastName = new Random();
+        Random randomRg = new Random();
+        Random randomEmail = new Random();
+
+        var firstName = randomFirstName.nextInt(100000, 199999);
+        var middleName = randomMiddleName.nextInt(100000, 199999);
+        var lastName = randomLastName.nextInt(100000, 199999);
+        var rg = randomRg.nextInt(100000, 199999);
+        var email = randomEmail.nextInt(100000, 199999);
+
+        Person person = new Person();
+        GenerateCPF generateCPF = new GenerateCPF();
+
+        person.setFirstName(String.valueOf(firstName));
+        person.setMiddleName(String.valueOf(middleName));
+        person.setLastName(String.valueOf(lastName));
+        person.setCpf(generateCPF.cpf(false));
+        person.setRg(String.valueOf(rg));
+        person.setBirthDate(LocalDate.of(1990, 01, 01));
+        person.setEmail(String.valueOf(email));
+        person.setNaturalness("São José");
+        person.setNationality("Brasileiro");
+        person.setScholarity(ScholarityType.POSTGRADUATE);
+        person.setMotherName("Teste Mãe");
+        person.setFatherName("Teste Pai");
+        person.setDependents(false);
+        person.setUserData(userData);
+        personCrudService.save(person);
+        return person;
+    }
+
+    public UserData generateUserData () {
+        Random randomUserName = new Random();
+        var usarName = randomUserName.nextInt(10000, 19999);
+        UserData userData = new UserData();
+
+        userData.setUserName(String.valueOf(usarName));
+        userData.setPassword("123456");
+        userData.setIsEmployee(false);
+        userData.setRole(RoleType.ADMIN);
+        userData.setRegistrationDate(Timestamp.from(Instant.now()));
+        userDataService.save(userData);
+        return userData;
     }
 }

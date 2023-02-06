@@ -4,7 +4,7 @@ import br.com.amorim.supermarket.SupermarketApplication;
 import br.com.amorim.supermarket.common.enums.SubscriptionType;
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
 import br.com.amorim.supermarket.repository.providerproduct.ProviderProductRepository;
-import br.com.amorim.supermarket.testutils.generatecnpj.GenerateCNPJ;
+import br.com.amorim.supermarket.testutils.generatedocument.GenerateCNPJ;
 import br.com.amorim.supermarket.testutils.generateentitiesrepositorytest.GenerateEntitiesRepositoryUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
