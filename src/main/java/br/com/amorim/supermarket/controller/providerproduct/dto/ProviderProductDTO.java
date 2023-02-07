@@ -21,7 +21,7 @@ public class ProviderProductDTO extends CommonDTONameMunicipalAndStateRegistrati
     private SubscriptionType subscriptionType;
 
     @NotBlank(message = "{br.com.supermarket.PROVIDER_PRODUCT_DTO_FIELD_SUBSCRIPTION_NUMBER_IS_NOT_EMPTY}")
-    @Size(min = 11, max = 14, message = "{br.com.supermarket.PROVIDER_PRODUCT_DTO_FIELD_SUBSCRIPTION_NUMBER_CANNOT_BE_LESS_THAN_11_AND_GREATER_THAN_14}")
+    @Size(min = 11, max = 50, message = "{br.com.supermarket.PROVIDER_PRODUCT_DTO_FIELD_SUBSCRIPTION_NUMBER_CANNOT_BE_LESS_THAN_11_AND_GREATER_THAN_14}")
     private String subscriptionNumber;
 
     @NotBlank(message = "{br.com.supermarket.PROVIDER_PRODUCT_DTO_FIELD_ADDRESS_IS_NOT_EMPTY}")

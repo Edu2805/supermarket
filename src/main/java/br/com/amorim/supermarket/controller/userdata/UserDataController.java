@@ -1,5 +1,7 @@
 package br.com.amorim.supermarket.controller.userdata;
 
+import br.com.amorim.supermarket.controller.userdata.dto.ConverterUserDataMapper;
+import br.com.amorim.supermarket.controller.userdata.dto.UserDataDTO;
 import br.com.amorim.supermarket.model.userdata.UserData;
 import br.com.amorim.supermarket.service.userdata.UserDataService;
 import lombok.AllArgsConstructor;
@@ -27,6 +29,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 public class UserDataController {
 
     private UserDataService userDataService;
+    private ConverterUserDataMapper converterUserDataMapper;
 
     @GetMapping
     public List<UserData> findAll () {
@@ -40,14 +43,18 @@ public class UserDataController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public UserData save (@RequestBody @Valid UserData userData) {
-        return userDataService.save(userData);
+    public UserData save (@RequestBody @Valid UserDataDTO userDataDTO) {
+        var newUserData = converterUserDataMapper
+                .createOrUpdateUserDataMapper(userDataDTO);
+        return userDataService.save(newUserData);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void update (@RequestBody @Valid UserData userData, @PathVariable UUID id) {
-        userDataService.update(userData, id);
+    public void update (@RequestBody @Valid UserDataDTO userDataDTO, @PathVariable UUID id) {
+        var newUserData = converterUserDataMapper
+                .createOrUpdateUserDataMapper(userDataDTO);
+        userDataService.update(newUserData, id);
     }
 
     @DeleteMapping("/{id}")
