@@ -19,7 +19,7 @@ import br.com.amorim.supermarket.repository.subsection.SubSectionRepository;
 import br.com.amorim.supermarket.service.establishment.EstablishmentCrudService;
 import br.com.amorim.supermarket.service.person.PersonCrudService;
 import br.com.amorim.supermarket.service.providerproduct.ProviderProductCrudService;
-import br.com.amorim.supermarket.service.userdata.UserDataService;
+import br.com.amorim.supermarket.service.userdata.UserDataCrudServiceImpl;
 import br.com.amorim.supermarket.testutils.generatedocument.GenerateCNPJ;
 import br.com.amorim.supermarket.testutils.generatedocument.GenerateCPF;
 import lombok.AllArgsConstructor;
@@ -54,7 +54,7 @@ public class GenerateEntitiesRepositoryUtils {
     @Autowired
     private EstablishmentCrudService establishmentCrudService;
     @Autowired
-    private UserDataService userDataService;
+    private UserDataCrudServiceImpl userDataService;
     @Autowired
     private PersonCrudService personCrudService;
 
