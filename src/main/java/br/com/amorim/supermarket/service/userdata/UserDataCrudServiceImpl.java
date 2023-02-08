@@ -1,5 +1,7 @@
 package br.com.amorim.supermarket.service.userdata;
 
+import br.com.amorim.supermarket.common.enums.MessagesKeyType;
+import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.userdata.UserData;
 import br.com.amorim.supermarket.repository.userdata.UserDataRepository;
@@ -9,14 +11,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.UUID;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
 
 @AllArgsConstructor
 
@@ -43,8 +44,8 @@ public class UserDataCrudServiceImpl implements UserDataCrudService {
     public UserData findById (UUID id) {
         return userDataRepository.findById(id)
                 .orElseThrow(() -> {
-                    throw new ResponseStatusException(NOT_FOUND,
-                            "Usuário não encontrado");
+                    throw new NotFoundException(
+                            getString(MessagesKeyType.USER_DATA_NOT_FOUND.message));
                 });
     }
 
@@ -67,8 +68,8 @@ public class UserDataCrudServiceImpl implements UserDataCrudService {
                     userDataRepository.save(userData);
                     return existingUserData;
                 }).orElseThrow(() ->
-                        new ResponseStatusException(NOT_FOUND,
-                                "Usuário não encontrado"));
+                        new NotFoundException(
+                                getString(MessagesKeyType.USER_DATA_NOT_FOUND.message)));
     }
 
     @Transactional
@@ -79,7 +80,7 @@ public class UserDataCrudServiceImpl implements UserDataCrudService {
                     userDataRepository.delete(existingUserData);
                     return existingUserData;
                 }).orElseThrow(() ->
-                        new ResponseStatusException(NOT_FOUND,
-                                "Usuário não encontrado"));
+                        new NotFoundException(
+                                getString(MessagesKeyType.USER_DATA_NOT_FOUND.message)));
     }
 }
