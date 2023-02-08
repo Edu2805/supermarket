@@ -62,6 +62,7 @@ public class UserDataCrudServiceImpl implements UserDataCrudService {
         userDataRepository.findById(id)
                 .map(existingUserData -> {
                     userData.setId(existingUserData.getId());
+                    verifyUserName.verifyUserDataBeforeUpdate(userData);
                     userData.setRegistrationDate(Timestamp.from(Instant.now()));
                     userDataRepository.save(userData);
                     return existingUserData;
