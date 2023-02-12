@@ -56,6 +56,7 @@ CREATE TABLE IF NOT EXISTS establishment (
 CREATE TABLE IF NOT EXISTS employee (
    id UUID NOT NULL,
    register_number DECIMAL NOT NULL,
+   full_name VARCHAR(100) NOT NULL,
    person UUID,
    sub_section UUID,
    job_position UUID,

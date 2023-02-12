@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 
@@ -32,6 +33,10 @@ public class Employee extends CommonIdEntity {
     @Column(name = "register_number", nullable = false)
     @NotNull(message = "{br.com.supermarket.EMPLOYEE_FIELD_REGISTER_NUMBER_IS_NOT_EMPTY}")
     private BigInteger registerNumber;
+
+    @Column(name = "full_name", nullable = false, length = 100)
+    @NotEmpty(message = "{br.com.supermarket.EMPLOYEE_FIELD_FULL_NAME_IS_NOT_EMPTY}")
+    private String fullName;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "person")
