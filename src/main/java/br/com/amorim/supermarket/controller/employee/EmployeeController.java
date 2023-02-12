@@ -1,5 +1,7 @@
 package br.com.amorim.supermarket.controller.employee;
 
+import br.com.amorim.supermarket.controller.employee.dto.ConvertEmployeeMapper;
+import br.com.amorim.supermarket.controller.employee.dto.EmployeeDTO;
 import br.com.amorim.supermarket.model.employee.Employee;
 import br.com.amorim.supermarket.service.employee.EmployeeService;
 import lombok.AllArgsConstructor;
@@ -27,6 +29,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 public class EmployeeController {
 
     private EmployeeService employeeService;
+    private ConvertEmployeeMapper convertEmployeeMapper;
 
     @GetMapping
     public List<Employee> findAll () {
@@ -40,14 +43,18 @@ public class EmployeeController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public Employee save (@RequestBody @Valid Employee employee) {
-        return employeeService.save(employee);
+    public Employee save (@RequestBody @Valid EmployeeDTO employeeDTO) {
+        var newEmployee = convertEmployeeMapper
+                .createOrUpdateEmployeeMapper(employeeDTO);
+        return employeeService.save(newEmployee);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void update (@RequestBody @Valid Employee employee, @PathVariable UUID id) {
-        employeeService.update(employee, id);
+    public void update (@RequestBody @Valid EmployeeDTO employeeDTO, @PathVariable UUID id) {
+        var newEmployee = convertEmployeeMapper
+                .createOrUpdateEmployeeMapper(employeeDTO);
+        employeeService.update(newEmployee, id);
     }
 
     @DeleteMapping("/{id}")

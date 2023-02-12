@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS employee (
    id UUID NOT NULL,
    register_number DECIMAL NOT NULL,
    person UUID,
-   department UUID,
+   sub_section UUID,
    job_position UUID,
    CONSTRAINT pk_employee PRIMARY KEY (id)
 );

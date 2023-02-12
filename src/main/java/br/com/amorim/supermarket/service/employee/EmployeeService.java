@@ -2,6 +2,7 @@ package br.com.amorim.supermarket.service.employee;
 
 import br.com.amorim.supermarket.model.employee.Employee;
 import br.com.amorim.supermarket.repository.employee.EmployeeRepository;
+import br.com.amorim.supermarket.service.employee.generateregisternumber.GenerateRegisterNumberEmployee;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -17,7 +18,8 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @Service
 public class EmployeeService {
 
-    EmployeeRepository employeeRepository;
+    private EmployeeRepository employeeRepository;
+    private GenerateRegisterNumberEmployee generateRegisterNumberEmployee;
 
     public List<Employee> getAll () {
         return employeeRepository.findAll();
@@ -33,6 +35,8 @@ public class EmployeeService {
 
     @Transactional
     public Employee save (Employee employee) {
+        var registerNumber = generateRegisterNumberEmployee.generate(employee);
+        employee.setRegisterNumber(registerNumber);
         return employeeRepository.save(employee);
     }
 

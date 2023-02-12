@@ -4,6 +4,7 @@ import br.com.amorim.supermarket.model.common.CommonIdEntity;
 import br.com.amorim.supermarket.model.department.Department;
 import br.com.amorim.supermarket.model.jobposition.JobPosition;
 import br.com.amorim.supermarket.model.person.Person;
+import br.com.amorim.supermarket.model.subsection.SubSection;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,8 +38,8 @@ public class Employee extends CommonIdEntity {
     private Person person;
 
     @ManyToOne
-    @JoinColumn(name = "department")
-    private Department department;
+    @JoinColumn(name = "sub_section")
+    private SubSection subSection;
 
     @ManyToOne
     @JoinColumn(name = "job_position")
