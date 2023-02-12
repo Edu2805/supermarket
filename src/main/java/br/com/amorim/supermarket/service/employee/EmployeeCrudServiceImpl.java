@@ -30,6 +30,7 @@ public class EmployeeCrudServiceImpl implements EmployeeCrudService {
     private static final int DECREASE_PAGE_SIZE = 1;
     private static final int ZERO_PAGE_SIZE = 0;
 
+    @Override
     public Page<Employee> getAll (int page, int size) {
         if (page > ZERO_PAGE_SIZE) {
             page -= DECREASE_PAGE_SIZE;
@@ -39,6 +40,7 @@ public class EmployeeCrudServiceImpl implements EmployeeCrudService {
         return employeeRepository.findAll(pageableRequest);
     }
 
+    @Override
     public Employee findById (UUID id) {
         return employeeRepository.findById(id)
                 .orElseThrow(() -> {
@@ -48,6 +50,7 @@ public class EmployeeCrudServiceImpl implements EmployeeCrudService {
     }
 
     @Transactional
+    @Override
     public Employee save (Employee employee) {
         verifyEmployeePerson.verifyEmployeePerson(employee);
         var registerNumber = generateRegisterNumberEmployee.generate(employee);
@@ -56,6 +59,7 @@ public class EmployeeCrudServiceImpl implements EmployeeCrudService {
     }
 
     @Transactional
+    @Override
     public void update (Employee employee, UUID id) {
         employeeRepository.findById(id)
                 .map(existingEmployee -> {
