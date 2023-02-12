@@ -6,6 +6,7 @@ import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.person.Person;
 import br.com.amorim.supermarket.repository.person.PersonRepository;
 import br.com.amorim.supermarket.service.person.getemailuser.PersonEmailUser;
+import br.com.amorim.supermarket.service.person.updatefullnameemployee.PersonUpdateUserNameInEmployee;
 import br.com.amorim.supermarket.service.person.verifycpf.VerifyPersonCpf;
 import br.com.amorim.supermarket.service.person.verifymiddlename.VerifyMiddleName;
 import br.com.amorim.supermarket.service.person.verifyrg.VerifyPersonRg;
@@ -35,6 +36,7 @@ public class PersonCrudServiceImpl implements PersonCrudService {
     private VerifyPersonUserData verifyPersonUserData;
     private PersonEmailUser personEmailUser;
     private VerifyMiddleName verifyMiddleName;
+    private PersonUpdateUserNameInEmployee personUpdateUserNameInEmployee;
 
     @Override
     public Page<Person> getAll(int page, int size) {
@@ -87,7 +89,9 @@ public class PersonCrudServiceImpl implements PersonCrudService {
 
     private void verifyFieldsBeforeUpdate(Person person) {
         verifyPersonCpf.verifyPersonCpfBeforeUpdate(person);
+        personEmailUser.fillEmailPerson(person);
         verifyPersonRg.verifyPersonRgBeforeUpdate(person);
+        personUpdateUserNameInEmployee.updateFullNameEmployee(person);
         verifyPersonUserData.verifyPersonUserDataBeforeUpdate(person);
     }
 

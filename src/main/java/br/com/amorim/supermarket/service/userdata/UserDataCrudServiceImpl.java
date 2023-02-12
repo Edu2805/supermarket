@@ -5,6 +5,8 @@ import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.userdata.UserData;
 import br.com.amorim.supermarket.repository.userdata.UserDataRepository;
+import br.com.amorim.supermarket.service.userdata.setisemployee.UserDataUpdateIsEmployee;
+import br.com.amorim.supermarket.service.userdata.setusernameinperson.UserNameInPerson;
 import br.com.amorim.supermarket.service.userdata.verifyusername.VerifyUserName;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,6 +31,8 @@ public class UserDataCrudServiceImpl implements UserDataCrudService {
     private UserDataRepository userDataRepository;
     private VerifyPageSize verifyPageSize;
     private VerifyUserName verifyUserName;
+    private UserNameInPerson userNameInPerson;
+    private UserDataUpdateIsEmployee userDataUpdateIsEmployee;
 
     @Override
     public Page<UserData> getAll (int page, int size) {
@@ -69,12 +73,18 @@ public class UserDataCrudServiceImpl implements UserDataCrudService {
                 .map(existingUserData -> {
                     userData.setId(existingUserData.getId());
                     verifyUserName.verifyUserDataBeforeUpdate(userData);
-                    userData.setRegistrationDate(Timestamp.from(Instant.now()));
+                    updateFieldsUserData(userData);
                     userDataRepository.save(userData);
                     return existingUserData;
                 }).orElseThrow(() ->
                         new NotFoundException(
                                 getString(MessagesKeyType.USER_DATA_NOT_FOUND.message)));
+    }
+
+    void updateFieldsUserData(UserData userData) {
+        userNameInPerson.setUserNameInPerson(userData);
+        userDataUpdateIsEmployee.isUserEmployee(userData);
+        userData.setRegistrationDate(Timestamp.from(Instant.now()));
     }
 
     @Transactional
