@@ -133,7 +133,7 @@ class UserDataCrudServiceImplTest {
     }
 
     @Test
-    void delete() {
+    void shouldDeleteWithSuccess() {
         var knownId = userData.getId();
         when(userDataRepositoryMock.findById(knownId))
                 .thenReturn(Optional.of(userData));
