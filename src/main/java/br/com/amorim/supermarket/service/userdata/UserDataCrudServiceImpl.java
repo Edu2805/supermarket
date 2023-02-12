@@ -53,8 +53,13 @@ public class UserDataCrudServiceImpl implements UserDataCrudService {
     @Override
     public UserData save (UserData userData) {
         verifyUserName.verifyUserDataBeforeSave(userData);
-        userData.setRegistrationDate(Timestamp.from(Instant.now()));
+        setFields(userData);
         return userDataRepository.save(userData);
+    }
+
+    private void setFields(UserData userData) {
+        userData.setIsEmployee(false);
+        userData.setRegistrationDate(Timestamp.from(Instant.now()));
     }
 
     @Transactional

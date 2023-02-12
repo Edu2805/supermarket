@@ -27,6 +27,4 @@ public class UserDataDTO {
     @NotNull(message = "{br.com.supermarket.USER_DATA_DTO_FIELD_ROLE_CANNOT_BE_EMPTY}")
     private RoleType role;
 
-    @NotNull(message = "{br.com.supermarket.USER_DATA_DTO_FIELD_IS_EMPLOYEE_CANNOT_BE_EMPTY}")
-    private Boolean isEmployee;
 }
