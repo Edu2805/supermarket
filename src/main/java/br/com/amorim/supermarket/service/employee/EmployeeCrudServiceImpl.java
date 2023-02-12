@@ -5,6 +5,8 @@ import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.employee.Employee;
 import br.com.amorim.supermarket.repository.employee.EmployeeRepository;
+import br.com.amorim.supermarket.service.employee.admitemployee.AdmitEmployee;
+import br.com.amorim.supermarket.service.employee.employeefullname.EmployeeFullName;
 import br.com.amorim.supermarket.service.employee.generateregisternumber.GenerateRegisterNumberEmployee;
 import br.com.amorim.supermarket.service.employee.verifyemployeeperson.VerifyEmployeePerson;
 import lombok.AllArgsConstructor;
@@ -27,6 +29,8 @@ public class EmployeeCrudServiceImpl implements EmployeeCrudService {
     private GenerateRegisterNumberEmployee generateRegisterNumberEmployee;
     private VerifyEmployeePerson verifyEmployeePerson;
     private VerifyPageSize verifyPageSize;
+    private EmployeeFullName employeeFullName;
+    private AdmitEmployee admitEmployee;
     private static final int DECREASE_PAGE_SIZE = 1;
     private static final int ZERO_PAGE_SIZE = 0;
 
@@ -53,9 +57,17 @@ public class EmployeeCrudServiceImpl implements EmployeeCrudService {
     @Override
     public Employee save (Employee employee) {
         verifyEmployeePerson.verifyEmployeePerson(employee);
-        var registerNumber = generateRegisterNumberEmployee.generate(employee);
-        employee.setRegisterNumber(registerNumber);
+        setFields(employee);
         return employeeRepository.save(employee);
+    }
+
+    private void setFields(Employee employee) {
+        var registerNumber = generateRegisterNumberEmployee.generate(employee);
+        var fillFullName = employeeFullName.fillEmployeeFullName(employee);
+
+        employee.setFullName(fillFullName);
+        employee.setRegisterNumber(registerNumber);
+        admitEmployee.isEmployee(employee);
     }
 
     @Transactional
