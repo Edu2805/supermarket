@@ -39,7 +39,7 @@ class UserDataCrudServiceImplTest {
     @Mock
     private VerifyUserName verifyUserNameMock;
 
-    ArgumentCaptor<UUID> knownIdCapture = ArgumentCaptor.forClass(UUID.class);
+    private final ArgumentCaptor<UUID> knownIdCapture = ArgumentCaptor.forClass(UUID.class);
 
     private UserData userData;
 
