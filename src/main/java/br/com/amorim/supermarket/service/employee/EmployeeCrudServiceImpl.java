@@ -72,6 +72,7 @@ public class EmployeeCrudServiceImpl implements EmployeeCrudService {
     }
 
     @Transactional
+    @Override
     public void delete (UUID id) {
         employeeRepository.findById(id)
                 .map(existingEmployee -> {
