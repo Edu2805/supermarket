@@ -1,40 +1,55 @@
 package br.com.amorim.supermarket.service.employee;
 
+import br.com.amorim.supermarket.common.enums.MessagesKeyType;
+import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
+import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.employee.Employee;
 import br.com.amorim.supermarket.repository.employee.EmployeeRepository;
 import br.com.amorim.supermarket.service.employee.generateregisternumber.GenerateRegisterNumberEmployee;
+import br.com.amorim.supermarket.service.employee.verifyemployeeperson.VerifyEmployeePerson;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.UUID;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
 
 @AllArgsConstructor
 
 @Service
-public class EmployeeService {
+public class EmployeeCrudServiceImpl implements EmployeeCrudService {
 
     private EmployeeRepository employeeRepository;
     private GenerateRegisterNumberEmployee generateRegisterNumberEmployee;
+    private VerifyEmployeePerson verifyEmployeePerson;
+    private VerifyPageSize verifyPageSize;
+    private static final int DECREASE_PAGE_SIZE = 1;
+    private static final int ZERO_PAGE_SIZE = 0;
 
-    public List<Employee> getAll () {
-        return employeeRepository.findAll();
+    public Page<Employee> getAll (int page, int size) {
+        if (page > ZERO_PAGE_SIZE) {
+            page -= DECREASE_PAGE_SIZE;
+        }
+        verifyPageSize.verifyPageSizeForGetAll(page, size);
+        Pageable pageableRequest = PageRequest.of(page, size);
+        return employeeRepository.findAll(pageableRequest);
     }
 
     public Employee findById (UUID id) {
         return employeeRepository.findById(id)
                 .orElseThrow(() -> {
-                    throw new ResponseStatusException(NOT_FOUND,
-                            "Empregado não encontrado");
+                    throw new NotFoundException(
+                            getString(MessagesKeyType.EMPLOYEE_NOT_FOUND.message));
                 });
     }
 
     @Transactional
     public Employee save (Employee employee) {
+        verifyEmployeePerson.verifyEmployeePerson(employee);
         var registerNumber = generateRegisterNumberEmployee.generate(employee);
         employee.setRegisterNumber(registerNumber);
         return employeeRepository.save(employee);
@@ -48,8 +63,8 @@ public class EmployeeService {
                    employeeRepository.save(employee);
                    return existingEmployee;
                 }).orElseThrow(() ->
-                        new ResponseStatusException(NOT_FOUND,
-                                "Empregado não encontrado"));
+                        new NotFoundException(
+                                getString(MessagesKeyType.EMPLOYEE_NOT_FOUND.message)));
     }
 
     @Transactional
@@ -59,8 +74,8 @@ public class EmployeeService {
                     employeeRepository.delete(existingEmployee);
                     return existingEmployee;
                 }).orElseThrow(() ->
-                        new ResponseStatusException(NOT_FOUND,
-                                "Empregado não encontrado"));
+                        new NotFoundException(
+                                getString(MessagesKeyType.EMPLOYEE_NOT_FOUND.message)));
     }
 
 }
