@@ -1,14 +1,10 @@
 package br.com.amorim.supermarket.service.employee.admitemployee;
 
 import br.com.amorim.supermarket.model.employee.Employee;
-import br.com.amorim.supermarket.model.person.Person;
-import br.com.amorim.supermarket.model.userdata.UserData;
 import br.com.amorim.supermarket.repository.person.PersonRepository;
 import br.com.amorim.supermarket.repository.userdata.UserDataRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 @AllArgsConstructor
 
