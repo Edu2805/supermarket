@@ -5,6 +5,8 @@ import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.userdata.UserData;
 import br.com.amorim.supermarket.repository.userdata.UserDataRepository;
+import br.com.amorim.supermarket.service.userdata.setisemployee.UserDataUpdateIsEmployee;
+import br.com.amorim.supermarket.service.userdata.setusernameinperson.UserNameInPerson;
 import br.com.amorim.supermarket.service.userdata.verifyusername.VerifyUserName;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.userdata.UserDataTest;
 import org.junit.jupiter.api.Assertions;
@@ -38,6 +40,10 @@ class UserDataCrudServiceImplTest {
     private VerifyPageSize verifyPageSizeMock;
     @Mock
     private VerifyUserName verifyUserNameMock;
+    @Mock
+    private UserNameInPerson userNameInPersonMock;
+    @Mock
+    private UserDataUpdateIsEmployee userDataUpdateIsEmployeeMock;
 
     private final ArgumentCaptor<UUID> knownIdCapture = ArgumentCaptor.forClass(UUID.class);
 
