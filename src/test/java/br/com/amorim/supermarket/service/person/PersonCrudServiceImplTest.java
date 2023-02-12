@@ -6,6 +6,7 @@ import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.person.Person;
 import br.com.amorim.supermarket.repository.person.PersonRepository;
 import br.com.amorim.supermarket.service.person.getemailuser.PersonEmailUser;
+import br.com.amorim.supermarket.service.person.updatefullnameemployee.PersonUpdateUserNameInEmployee;
 import br.com.amorim.supermarket.service.person.verifycpf.VerifyPersonCpf;
 import br.com.amorim.supermarket.service.person.verifymiddlename.VerifyMiddleName;
 import br.com.amorim.supermarket.service.person.verifyrg.VerifyPersonRg;
@@ -49,6 +50,8 @@ class PersonCrudServiceImplTest {
     private PersonEmailUser personEmailUserMock;
     @Mock
     private VerifyMiddleName verifyMiddleNameMock;
+    @Mock
+    private PersonUpdateUserNameInEmployee personUpdateUserNameInEmployeeMock;
 
     private Person person1;
     private static final String MESSAGE_ERROR = getString(MessagesKeyType.PERSON_DATA_NOT_FOUND.message);
