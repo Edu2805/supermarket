@@ -58,10 +58,6 @@ public class PersonDTO {
     @Size(min = 2, max = 50, message = "{br.com.supermarket.PERSON_DTO_FIELD_MOTHER_NAME_IS_NOT_GREATER_THAN_50_AND_LESS_THEN_2}")
     private String motherName;
 
-    @NotBlank(message = "{br.com.supermarket.PERSON_DTO_FIELD_EMAIL_IS_NOT_EMPTY}")
-    @Size(min = 5, max = 50, message = "{br.com.supermarket.PERSON_DTO_FIELD_EMAIL_IS_NOT_GREATER_THAN_50_AND_LESS_THEN_5}")
-    private String email;
-
     @NotNull(message = "{br.com.supermarket.PERSON_DTO_FIELD_USER_DATA_IS_NOT_EMPTY}")
     private UserData userData;
 }

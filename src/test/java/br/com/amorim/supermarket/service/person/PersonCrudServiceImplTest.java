@@ -5,7 +5,9 @@ import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.person.Person;
 import br.com.amorim.supermarket.repository.person.PersonRepository;
+import br.com.amorim.supermarket.service.person.getemailuser.PersonEmailUser;
 import br.com.amorim.supermarket.service.person.verifycpf.VerifyPersonCpf;
+import br.com.amorim.supermarket.service.person.verifymiddlename.VerifyMiddleName;
 import br.com.amorim.supermarket.service.person.verifyrg.VerifyPersonRg;
 import br.com.amorim.supermarket.service.person.verifyuserdata.VerifyPersonUserData;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.person.PersonTest;
@@ -43,6 +45,10 @@ class PersonCrudServiceImplTest {
     private VerifyPersonRg verifyPersonRgMock;
     @Mock
     private VerifyPersonUserData verifyPersonUserDataMock;
+    @Mock
+    private PersonEmailUser personEmailUserMock;
+    @Mock
+    private VerifyMiddleName verifyMiddleNameMock;
 
     private Person person1;
     private static final String MESSAGE_ERROR = getString(MessagesKeyType.PERSON_DATA_NOT_FOUND.message);

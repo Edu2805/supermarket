@@ -5,7 +5,9 @@ import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.person.Person;
 import br.com.amorim.supermarket.repository.person.PersonRepository;
+import br.com.amorim.supermarket.service.person.getemailuser.PersonEmailUser;
 import br.com.amorim.supermarket.service.person.verifycpf.VerifyPersonCpf;
+import br.com.amorim.supermarket.service.person.verifymiddlename.VerifyMiddleName;
 import br.com.amorim.supermarket.service.person.verifyrg.VerifyPersonRg;
 import br.com.amorim.supermarket.service.person.verifyuserdata.VerifyPersonUserData;
 import lombok.AllArgsConstructor;
@@ -31,6 +33,8 @@ public class PersonCrudServiceImpl implements PersonCrudService {
     private VerifyPersonCpf verifyPersonCpf;
     private VerifyPersonRg verifyPersonRg;
     private VerifyPersonUserData verifyPersonUserData;
+    private PersonEmailUser personEmailUser;
+    private VerifyMiddleName verifyMiddleName;
 
     @Override
     public Page<Person> getAll(int page, int size) {
@@ -59,6 +63,8 @@ public class PersonCrudServiceImpl implements PersonCrudService {
     }
 
     private void verifyFieldsBeforeSave(Person person) {
+        verifyMiddleName.verifyIfMiddleNameIsNull(person);
+        personEmailUser.fillEmailPerson(person);
         verifyPersonCpf.verifyPersonCpfBeforeSave(person);
         verifyPersonRg.verifyPersonRgBeforeSave(person);
         verifyPersonUserData.verifyPersonUserDataBeforeSave(person);

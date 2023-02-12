@@ -22,7 +22,7 @@ public class EmployeeFullNameImpl implements EmployeeFullName {
         if (person.isPresent()) {
             firstName = person.get().getFirstName();
             lastName = person.get().getLastName();
-            if (person.get().getMiddleName() != null) {
+            if (!person.get().getMiddleName().isEmpty()) {
                 middleName = person.get().getMiddleName();
                 return firstName + " " + middleName + " " + lastName;
             }
