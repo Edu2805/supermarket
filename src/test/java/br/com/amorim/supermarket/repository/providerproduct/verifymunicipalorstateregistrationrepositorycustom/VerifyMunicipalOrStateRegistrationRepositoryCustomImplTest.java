@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes= SupermarketApplication.class)
-class VerifyMunicipalOrStateRegistrationCustomImplTest {
+class VerifyMunicipalOrStateRegistrationRepositoryCustomImplTest {
 
     @Autowired
     private VerifyMunicipalOrStateRegistrationProviderProductRepositoryCustomImpl verifyMunicipalOrStateRegistrationCustom;
