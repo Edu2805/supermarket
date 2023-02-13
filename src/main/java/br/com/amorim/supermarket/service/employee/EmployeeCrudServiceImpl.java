@@ -73,6 +73,8 @@ public class EmployeeCrudServiceImpl implements EmployeeCrudService {
     @Transactional
     @Override
     public void update (Employee employee, UUID id) {
+        //todo criar um DTO para atualizar somente subsection e jobposition
+        //todo não se atualiza o "employee", mas sim a person
         employeeRepository.findById(id)
                 .map(existingEmployee -> {
                    employee.setId(existingEmployee.getId());
