@@ -5,20 +5,27 @@ import br.com.amorim.supermarket.common.enums.ScholarityType;
 import br.com.amorim.supermarket.common.enums.SubscriptionType;
 import br.com.amorim.supermarket.common.enums.UnityType;
 import br.com.amorim.supermarket.model.department.Department;
+import br.com.amorim.supermarket.model.employee.Employee;
 import br.com.amorim.supermarket.model.establishment.Establishment;
+import br.com.amorim.supermarket.model.jobposition.JobPosition;
 import br.com.amorim.supermarket.model.mainsection.MainSection;
 import br.com.amorim.supermarket.model.person.Person;
 import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
+import br.com.amorim.supermarket.model.salary.Salary;
 import br.com.amorim.supermarket.model.subsection.SubSection;
 import br.com.amorim.supermarket.model.userdata.UserData;
 import br.com.amorim.supermarket.repository.department.DepartmentRepository;
+import br.com.amorim.supermarket.repository.jobposition.JobPositionRepository;
 import br.com.amorim.supermarket.repository.mainsection.MainSectionRepository;
 import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
 import br.com.amorim.supermarket.repository.subsection.SubSectionRepository;
+import br.com.amorim.supermarket.service.employee.EmployeeCrudService;
 import br.com.amorim.supermarket.service.establishment.EstablishmentCrudService;
+import br.com.amorim.supermarket.service.jobposition.JobPositionService;
 import br.com.amorim.supermarket.service.person.PersonCrudService;
 import br.com.amorim.supermarket.service.providerproduct.ProviderProductCrudService;
+import br.com.amorim.supermarket.service.salary.SalaryService;
 import br.com.amorim.supermarket.service.userdata.UserDataCrudServiceImpl;
 import br.com.amorim.supermarket.testutils.generatedocument.GenerateCNPJ;
 import br.com.amorim.supermarket.testutils.generatedocument.GenerateCPF;
@@ -57,6 +64,12 @@ public class GenerateEntitiesRepositoryUtils {
     private UserDataCrudServiceImpl userDataService;
     @Autowired
     private PersonCrudService personCrudService;
+    @Autowired
+    private EmployeeCrudService employeeCrudService;
+    @Autowired
+    private JobPositionService jobPositionService;
+    @Autowired
+    private SalaryService salaryService;
 
     public ProviderProduct generateProvider() {
         Random randomName = new Random();
@@ -217,5 +230,46 @@ public class GenerateEntitiesRepositoryUtils {
         userData.setRegistrationDate(Timestamp.from(Instant.now()));
         userDataService.save(userData);
         return userData;
+    }
+
+    public Employee generateEmployee (Person person, SubSection subSection, JobPosition jobPosition) {
+        Employee employee = new Employee();
+
+        employee.setPerson(person);
+        employee.setSubSection(subSection);
+        employee.setJobPosition(jobPosition);
+        employeeCrudService.save(employee);
+        return employee;
+    }
+
+    public JobPosition generateJobPosition (Salary salary) {
+        Random randomName = new Random();
+        Random randomCode = new Random();
+
+        var name = randomName.nextInt(10000, 19999);
+        var code = randomCode.nextInt(1, 19999);
+
+        JobPosition jobPosition = new JobPosition();
+        jobPosition.setCode(BigInteger.valueOf(code));
+        jobPosition.setName(String.valueOf(name));
+        jobPosition.setAssignments("Fazer testes");
+        jobPosition.setSalary(salary);
+        jobPositionService.save(jobPosition);
+        return jobPosition;
+    }
+
+    public Salary generateSalary () {
+        Salary salary = new Salary();
+        salary.setPosition("Gerente de testes");
+        salary.setSalaryRange("Faixa 1");
+        salary.setGrossSalary(BigDecimal.valueOf(4000.00));
+        salary.setNetSalary(BigDecimal.valueOf(3500.00));
+        salary.setInss(BigDecimal.valueOf(0.11));
+        salary.setFgts(BigDecimal.valueOf(0.07));
+        salary.setIrrf(BigDecimal.valueOf(0.15));
+        salary.setSalaryAdvance(BigDecimal.valueOf(950.00));
+        salary.setBenefits("Vale refeição");
+        salaryService.save(salary);
+        return salary;
     }
 }
