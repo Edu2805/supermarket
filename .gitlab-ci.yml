@@ -19,7 +19,8 @@ before_script:
 
 test:
   stage: test
-  script: ./mvnw test
+  script:
+    - mvn test
 
 build:
   stage: build
