@@ -101,7 +101,7 @@
 				<version>3.0.0-M8</version>
 <!--				<configuration>-->
 <!--					<excludes>-->
-<!--						<exclude>%regex[(Repository)+]</exclude>-->
+<!--						<exclude>%regex[^.*Repository.*$]</exclude>-->
 <!--					</excludes>-->
 <!--				</configuration>-->
 			</plugin>

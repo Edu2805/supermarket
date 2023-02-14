@@ -21,7 +21,7 @@ before_script:
   stage: test
   except:
     variables:
-      - $CI_COMMIT_MESSAGE =(Repository)+
+      - $CI_COMMIT_MESSAGE =~ ^.*Repository.*$
       - $SKIP_TESTS
 
 unit-tests:
