@@ -10,20 +10,15 @@ cache:
     - target/
 
 stages:          # List of stages for jobs, and their order of execution
-  - test
   - build
   - deploy
 
 before_script:
   - chmod +x mvnw
 
-test:
-  stage: test
-  script: ./mvnw test
-
 build:
   stage: build
-  script: ./mvnw package -DskipTests
+  script: ./mvnw package
   artifacts:
     paths:
       - target/supermarket-0.0.1-SNAPSHOT.jar
