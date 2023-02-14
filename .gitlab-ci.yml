@@ -21,7 +21,7 @@ test:
   stage: test
   script: ./mvnw test
   except:
-    - /^Repository*$/
+    - /^repository.*$/
 
 build:
   stage: build
