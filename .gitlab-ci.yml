@@ -18,7 +18,7 @@ before_script:
 
 build:
   stage: build
-  script: ./mvnw package -DskipIntegrationTests
+  script: ./mvnw package
   artifacts:
     paths:
       - target/supermarket-0.0.1-SNAPSHOT.jar
