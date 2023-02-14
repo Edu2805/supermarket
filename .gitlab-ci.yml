@@ -17,11 +17,15 @@ stages:          # List of stages for jobs, and their order of execution
 before_script:
   - chmod +x mvnw
 
-test:
+.test-template: &test-template
   stage: test
-  script: ./mvnw test
   except:
-    - /^repository.*$/
+    variables:
+      - $CI_COMMIT_MESSAGE =(Repository)+
+      - $SKIP_TESTS
+
+unit-tests:
+  <<: *test-template
 
 build:
   stage: build
