@@ -18,41 +18,15 @@ before_script:
   - chmod +x mvnw
 
 test:
-  variables:
-    POSTGRES_VERSION: 9.6.16
-    POSTGRES_DB: test
-    POSTGRES_USER: user
-    POSTGRES_PASSWORD: testing-password
-  services:
-    - "postgres:${POSTGRES_VERSION}"
   stage: test
-  image: gliderlabs/herokuish:latest
-  needs: []
-  script:
-    - |
-      if [ -z ${KUBERNETES_PORT+x} ]; then
-        DB_HOST=postgres
-      else
-        DB_HOST=localhost
-      fi
-    - export DATABASE_URL="postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DB_HOST}:5432/${POSTGRES_DB}"
-    - cp -R . /tmp/app
-    - /bin/herokuish buildpack test
-    - mvn test
-  rules:
-    - if: '$TEST_DISABLED'
-      when: never
-    - if: '$CI_COMMIT_TAG || $CI_COMMIT_BRANCH'
+  script: ./mvnw test
 
 build:
   stage: build
-  script:
-    - mvn clean compile verify
+  script: ./mvnw package -DskipTests
   artifacts:
-    reports:
-      junit:
-        - target/surefire-reports/TEST-*.xml
-        - target/failsafe-reports/TEST-*.xml
+    paths:
+      - target/supermarket-0.0.1-SNAPSHOT.jar
 
 deploy:
   stage: deploy
