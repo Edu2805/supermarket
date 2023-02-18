@@ -4,5 +4,6 @@ import br.com.amorim.supermarket.model.employee.Employee;
 
 public interface ConvertEmployeeMapper {
 
-    Employee createOrUpdateEmployeeMapper(EmployeeDTO employeeDTO);
+    Employee createEmployeeMapper(EmployeeSaveDTO employeeDTO);
+    Employee updateEmployeeMapper(EmployeeUpdateDTO employeeUpdateDTO);
 }

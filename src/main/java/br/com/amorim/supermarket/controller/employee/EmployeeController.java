@@ -1,7 +1,8 @@
 package br.com.amorim.supermarket.controller.employee;
 
 import br.com.amorim.supermarket.controller.employee.dto.ConvertEmployeeMapper;
-import br.com.amorim.supermarket.controller.employee.dto.EmployeeDTO;
+import br.com.amorim.supermarket.controller.employee.dto.EmployeeSaveDTO;
+import br.com.amorim.supermarket.controller.employee.dto.EmployeeUpdateDTO;
 import br.com.amorim.supermarket.model.employee.Employee;
 import br.com.amorim.supermarket.service.employee.EmployeeCrudServiceImpl;
 import lombok.AllArgsConstructor;
@@ -51,17 +52,17 @@ public class EmployeeController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public Employee save (@RequestBody @Valid EmployeeDTO employeeDTO) {
+    public Employee save (@RequestBody @Valid EmployeeSaveDTO employeeDTO) {
         var newEmployee = convertEmployeeMapper
-                .createOrUpdateEmployeeMapper(employeeDTO);
+                .createEmployeeMapper(employeeDTO);
         return employeeService.save(newEmployee);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void update (@RequestBody @Valid EmployeeDTO employeeDTO, @PathVariable UUID id) {
+    public void update (@RequestBody @Valid EmployeeUpdateDTO employeeUpdateDTO, @PathVariable UUID id) {
         var newEmployee = convertEmployeeMapper
-                .createOrUpdateEmployeeMapper(employeeDTO);
+                .updateEmployeeMapper(employeeUpdateDTO);
         employeeService.update(newEmployee, id);
     }
 
