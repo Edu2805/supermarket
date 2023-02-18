@@ -13,7 +13,12 @@ public class ConvertEmployeeMapperImpl implements ConvertEmployeeMapper {
     private ModelMapper modelMapper;
 
     @Override
-    public Employee createOrUpdateEmployeeMapper(EmployeeDTO employeeDTO) {
+    public Employee createEmployeeMapper(EmployeeSaveDTO employeeDTO) {
         return modelMapper.map(employeeDTO, Employee.class);
+    }
+
+    @Override
+    public Employee updateEmployeeMapper(EmployeeUpdateDTO employeeUpdateDTO) {
+        return modelMapper.map(employeeUpdateDTO, Employee.class);
     }
 }

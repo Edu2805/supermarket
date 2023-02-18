@@ -1,7 +1,6 @@
 package br.com.amorim.supermarket.model.employee;
 
 import br.com.amorim.supermarket.model.common.CommonIdEntity;
-import br.com.amorim.supermarket.model.department.Department;
 import br.com.amorim.supermarket.model.jobposition.JobPosition;
 import br.com.amorim.supermarket.model.person.Person;
 import br.com.amorim.supermarket.model.subsection.SubSection;
