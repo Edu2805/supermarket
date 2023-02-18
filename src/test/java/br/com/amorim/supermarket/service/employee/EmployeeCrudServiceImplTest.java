@@ -49,7 +49,7 @@ class EmployeeCrudServiceImplTest {
     private Employee employee;
     private Person person;
     private UserData userData;
-    ArgumentCaptor<UUID> knownIdCapture;
+    private ArgumentCaptor<UUID> knownIdCapture;
 
     private void startEmployee() {
         EmployeeTest employeeTest = new EmployeeTest();
