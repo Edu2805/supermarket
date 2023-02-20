@@ -69,10 +69,10 @@ CREATE TABLE IF NOT EXISTS salary (
    salary_range VARCHAR(10) NOT NULL,
    gross_salary DECIMAL(10, 2) NOT NULL,
    net_salary DECIMAL(10, 2) NOT NULL,
-   inss DECIMAL(10, 2) NOT NULL,
-   fgts DECIMAL(10, 2) NOT NULL,
-   irrf DECIMAL(10, 2) NOT NULL,
-   salary_advance DECIMAL(10, 2) NOT NULL,
+   inss DECIMAL(10, 2),
+   fgts DECIMAL(10, 2),
+   irrf DECIMAL(10, 2),
+   salary_advance DECIMAL(10, 2),
    benefits VARCHAR(100) NOT NULL,
    CONSTRAINT pk_salary PRIMARY KEY (id)
 );

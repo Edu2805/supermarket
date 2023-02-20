@@ -16,7 +16,6 @@ import br.com.amorim.supermarket.model.salary.Salary;
 import br.com.amorim.supermarket.model.subsection.SubSection;
 import br.com.amorim.supermarket.model.userdata.UserData;
 import br.com.amorim.supermarket.repository.department.DepartmentRepository;
-import br.com.amorim.supermarket.repository.jobposition.JobPositionRepository;
 import br.com.amorim.supermarket.repository.mainsection.MainSectionRepository;
 import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
 import br.com.amorim.supermarket.repository.subsection.SubSectionRepository;
@@ -25,7 +24,7 @@ import br.com.amorim.supermarket.service.establishment.EstablishmentCrudService;
 import br.com.amorim.supermarket.service.jobposition.JobPositionService;
 import br.com.amorim.supermarket.service.person.PersonCrudService;
 import br.com.amorim.supermarket.service.providerproduct.ProviderProductCrudService;
-import br.com.amorim.supermarket.service.salary.SalaryService;
+import br.com.amorim.supermarket.service.salary.SalaryCrudServiceImpl;
 import br.com.amorim.supermarket.service.userdata.UserDataCrudServiceImpl;
 import br.com.amorim.supermarket.testutils.generatedocument.GenerateCNPJ;
 import br.com.amorim.supermarket.testutils.generatedocument.GenerateCPF;
@@ -69,7 +68,7 @@ public class GenerateEntitiesRepositoryUtils {
     @Autowired
     private JobPositionService jobPositionService;
     @Autowired
-    private SalaryService salaryService;
+    private SalaryCrudServiceImpl salaryService;
 
     public ProviderProduct generateProvider() {
         Random randomName = new Random();

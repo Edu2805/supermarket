@@ -30,12 +30,12 @@ public class ProductDTO {
 
     @NotNull(message = "{br.com.supermarket.PRODUCT_DATA_DTO_FIELD_PURCHASE_PRICE_IS_NOT_NULL}")
     @Positive(message = "{br.com.supermarket.PRODUCT_DATA_DTO_FIELD_PURCHASE_PRICE_IS_NOT_NEGATIVE}")
-    @Digits(integer = 10, fraction = 2, message = "{br.com.amorim.spermarket.PRODUCT_DATA_DTO_FIELD_PURCHASE_PRICE_INCORRECT_FORMAT}")
+    @Digits(integer = 10, fraction = 2, message = "{br.com.supermarket.PRODUCT_DATA_DTO_FIELD_PURCHASE_PRICE_INCORRECT_FORMAT}")
     private BigDecimal purchasePrice;
 
     @NotNull(message = "{br.com.supermarket.PRODUCT_DATA_DTO_FIELD_SALE_PRICE_IS_NOT_NULL}")
     @Positive(message = "{br.com.supermarket.PRODUCT_DATA_DTO_FIELD_SALE_PRICE_IS_NOT_NEGATIVE}")
-    @Digits(integer = 10, fraction = 2, message = "{br.com.amorim.spermarket.PRODUCT_DATA_DTO_FIELD_SALE_PRICE_INCORRECT_FORMAT}")
+    @Digits(integer = 10, fraction = 2, message = "{br.com.supermarket.PRODUCT_DATA_DTO_FIELD_SALE_PRICE_INCORRECT_FORMAT}")
     private BigDecimal salePrice;
 
     @Size(min = 13, max = 13, message = "{br.com.supermarket.PRODUCT_DATA_DTO_FIELD_EAN13_MUST_BE_13_DIGITS}")
