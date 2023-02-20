@@ -39,19 +39,15 @@ public class Salary extends CommonIdEntity {
     private BigDecimal netSalary;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    @NotNull(message = "{br.com.supermarket.SALARY_FIELD_INSS_IS_NOT_EMPTY}")
     private BigDecimal inss;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    @NotNull(message = "{br.com.supermarket.SALARY_FIELD_FGTS_IS_NOT_EMPTY}")
     private BigDecimal fgts;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    @NotNull(message = "{br.com.supermarket.SALARY_FIELD_IRRF_IS_NOT_EMPTY}")
     private BigDecimal irrf;
 
-    @Column(name = "salary_advance", nullable = false, precision = 10, scale = 2)
-    @NotNull(message = "{br.com.supermarket.SALARY_FIELD_SALARY_ADVANCE_IS_NOT_EMPTY}")
+    @Column(name = "salary_advance", precision = 10, scale = 2)
     private BigDecimal salaryAdvance;
 
     @Column(nullable = false, length = 100)
