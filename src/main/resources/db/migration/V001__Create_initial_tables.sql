@@ -73,8 +73,32 @@ CREATE TABLE IF NOT EXISTS salary (
    fgts DECIMAL(10, 2),
    irrf DECIMAL(10, 2),
    salary_advance DECIMAL(10, 2),
-   benefits VARCHAR(100) NOT NULL,
+   benefits VARCHAR(100),
    CONSTRAINT pk_salary PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS other_discount (
+   id UUID NOT NULL,
+   discount_name VARCHAR(100) NOT NULL,
+   value DECIMAL(10, 2) NOT NULL,
+   CONSTRAINT pk_other_discount PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS other_addition (
+   id UUID NOT NULL,
+   addition_name VARCHAR(100) NOT NULL,
+   value DECIMAL(10, 2) NOT NULL,
+   CONSTRAINT pk_other_addition PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS salary_to_other_addition (
+   other_addition_id UUID NOT NULL,
+   salary_id UUID NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS salary_to_other_discount (
+   other_discount_id UUID NOT NULL,
+   salary_id UUID NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS job_position (
