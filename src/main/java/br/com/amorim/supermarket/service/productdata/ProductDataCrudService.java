@@ -1,15 +1,9 @@
 package br.com.amorim.supermarket.service.productdata;
 
 import br.com.amorim.supermarket.model.productdata.ProductData;
-import org.springframework.data.domain.Page;
+import br.com.amorim.supermarket.service.common.genericcrudservice.CrudServiceCommon;
 
 import java.util.UUID;
 
-public interface ProductDataCrudService {
-
-    Page<ProductData> getAll(int page, int size);
-    ProductData findById(UUID id);
-    ProductData save (ProductData productData);
-    void update (ProductData productData, UUID id);
-    void delete (UUID id);
+public interface ProductDataCrudService extends CrudServiceCommon<ProductData, UUID> {
 }
