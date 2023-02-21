@@ -21,7 +21,7 @@ public class CalculateSalaryAdditionImpl implements CalculateSalaryAddition {
             salary.getOtherAdditions().forEach(addition ->
                     otherAdditionRepository.findById(addition.getId())
                             .map(existentAddition-> {
-                                additions[0] = additions[0].add(existentAddition.getValue());
+                                additions[0] = additions[0].add(existentAddition.getAdditionValue());
                                 return existentAddition;
                             }));
         }

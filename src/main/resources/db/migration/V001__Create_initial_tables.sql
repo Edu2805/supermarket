@@ -82,14 +82,14 @@ CREATE TABLE salary (
 CREATE TABLE IF NOT EXISTS other_discount (
    id UUID NOT NULL,
    discount_name VARCHAR(100) NOT NULL,
-   value DECIMAL(10, 2) NOT NULL,
+   discount_value DECIMAL(10, 2) NOT NULL,
    CONSTRAINT pk_other_discount PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS other_addition (
    id UUID NOT NULL,
    addition_name VARCHAR(100) NOT NULL,
-   value DECIMAL(10, 2) NOT NULL,
+   addition_value DECIMAL(10, 2) NOT NULL,
    CONSTRAINT pk_other_addition PRIMARY KEY (id)
 );
 

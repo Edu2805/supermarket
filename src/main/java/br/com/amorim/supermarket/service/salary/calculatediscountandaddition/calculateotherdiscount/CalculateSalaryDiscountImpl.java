@@ -21,7 +21,7 @@ public class CalculateSalaryDiscountImpl implements CalculateSalaryDiscount {
             salary.getOtherDiscounts().forEach(discount ->
                     otherDiscountRepository.findById(discount.getId())
                             .map(existentDiscount-> {
-                                discounts[0] = discounts[0].add(existentDiscount.getValue());
+                                discounts[0] = discounts[0].add(existentDiscount.getDiscountValue());
                                 return existentDiscount;
                             }));
         }
