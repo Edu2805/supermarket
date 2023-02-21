@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
@@ -60,6 +61,14 @@ public class Salary extends CommonIdEntity {
     @Column(length = 100)
     @NotEmpty(message = "{br.com.supermarket.SALARY_FIELD_BENEFITS_IS_NOT_EMPTY}")
     private String benefits;
+
+    @Column(name = "competence_start", nullable = false)
+    @NotNull(message = "{br.com.supermarket.SALARY_FIELD_COMPETENCE_START_IS_NOT_EMPTY}")
+    private LocalDate competenceStart;
+
+    @Column(name = "final_competence", nullable = false)
+    @NotNull(message = "{br.com.supermarket.SALARY_FIELD_FINAL_COMPETENCE_IS_NOT_EMPTY}")
+    private LocalDate finalCompetence;
 
     @OneToMany(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
     @JoinTable(

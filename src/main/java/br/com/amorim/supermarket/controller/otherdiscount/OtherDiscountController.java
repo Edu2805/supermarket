@@ -1,5 +1,7 @@
 package br.com.amorim.supermarket.controller.otherdiscount;
 
+import br.com.amorim.supermarket.controller.otherdiscount.dto.ConverterOtherDiscountMapper;
+import br.com.amorim.supermarket.controller.otherdiscount.dto.OtherDiscountDTO;
 import br.com.amorim.supermarket.model.otherdiscount.OtherDiscount;
 import br.com.amorim.supermarket.service.otherdiscount.OtherDiscountCrudService;
 import lombok.AllArgsConstructor;
@@ -28,6 +30,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 public class OtherDiscountController {
 
     private OtherDiscountCrudService otherDiscountCrudService;
+    private ConverterOtherDiscountMapper converterOtherDiscount;
 
     @GetMapping
     public Page<OtherDiscount> findAll (@RequestParam(
@@ -48,14 +51,16 @@ public class OtherDiscountController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public OtherDiscount save (@RequestBody @Valid OtherDiscount otherDiscount) {
-        return otherDiscountCrudService.save(otherDiscount);
+    public OtherDiscount save (@RequestBody @Valid OtherDiscountDTO otherDiscountDTO) {
+        var newOtherDiscount = converterOtherDiscount.createOrUpdateOtherDiscountMapper(otherDiscountDTO);
+        return otherDiscountCrudService.save(newOtherDiscount);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void update (@RequestBody @Valid OtherDiscount otherDiscount, @PathVariable UUID id) {
-        otherDiscountCrudService.update(otherDiscount, id);
+    public void update (@RequestBody @Valid OtherDiscountDTO otherDiscountDTO, @PathVariable UUID id) {
+        var newOtherDiscount = converterOtherDiscount.createOrUpdateOtherDiscountMapper(otherDiscountDTO);
+        otherDiscountCrudService.update(newOtherDiscount, id);
     }
 
     @DeleteMapping("/{id}")
