@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS employee (
    CONSTRAINT pk_employee PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS salary (
+CREATE TABLE salary (
    id UUID NOT NULL,
    position VARCHAR(30) NOT NULL,
    salary_range VARCHAR(10) NOT NULL,
@@ -74,6 +74,8 @@ CREATE TABLE IF NOT EXISTS salary (
    irrf DECIMAL(10, 2),
    salary_advance DECIMAL(10, 2),
    benefits VARCHAR(100),
+   competence_start date NOT NULL,
+   final_competence date NOT NULL,
    CONSTRAINT pk_salary PRIMARY KEY (id)
 );
 

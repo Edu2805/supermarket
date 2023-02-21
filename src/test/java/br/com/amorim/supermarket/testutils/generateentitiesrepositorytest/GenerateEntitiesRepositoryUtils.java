@@ -21,7 +21,7 @@ import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
 import br.com.amorim.supermarket.repository.subsection.SubSectionRepository;
 import br.com.amorim.supermarket.service.employee.EmployeeCrudService;
 import br.com.amorim.supermarket.service.establishment.EstablishmentCrudService;
-import br.com.amorim.supermarket.service.jobposition.JobPositionService;
+import br.com.amorim.supermarket.service.jobposition.JobPositionCrudServiceImpl;
 import br.com.amorim.supermarket.service.person.PersonCrudService;
 import br.com.amorim.supermarket.service.providerproduct.ProviderProductCrudService;
 import br.com.amorim.supermarket.service.salary.SalaryCrudServiceImpl;
@@ -66,7 +66,7 @@ public class GenerateEntitiesRepositoryUtils {
     @Autowired
     private EmployeeCrudService employeeCrudService;
     @Autowired
-    private JobPositionService jobPositionService;
+    private JobPositionCrudServiceImpl jobPositionService;
     @Autowired
     private SalaryCrudServiceImpl salaryService;
 

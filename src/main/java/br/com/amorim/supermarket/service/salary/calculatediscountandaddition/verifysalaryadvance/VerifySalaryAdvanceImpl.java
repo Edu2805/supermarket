@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
 
@@ -18,7 +17,6 @@ public class VerifySalaryAdvanceImpl implements VerifySalaryAdvance {
 
     private static final BigDecimal MAXIMUM_SALARY_PERCENTAGE_ALLOWED_FOR_SALARY_ADVANCE = BigDecimal.valueOf(0.4000);
     public static final int ZERO = 0;
-    public static final int NEW_SCALE_FOUR = 4;
 
     @Override
     public BigDecimal verifySalaryAdvancePercentageMaximumDiscount(Salary salary) {

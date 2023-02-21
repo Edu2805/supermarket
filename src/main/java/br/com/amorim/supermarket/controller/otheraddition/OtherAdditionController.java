@@ -1,5 +1,7 @@
 package br.com.amorim.supermarket.controller.otheraddition;
 
+import br.com.amorim.supermarket.controller.otheraddition.dto.ConverterOtherAdditionMapper;
+import br.com.amorim.supermarket.controller.otheraddition.dto.OtherAdditionDTO;
 import br.com.amorim.supermarket.model.otheraddition.OtherAddition;
 import br.com.amorim.supermarket.service.otheraddition.OtherAdditionCrudService;
 import lombok.AllArgsConstructor;
@@ -28,6 +30,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 public class OtherAdditionController {
 
     private OtherAdditionCrudService otherAdditionCrudService;
+    private ConverterOtherAdditionMapper converterOtherAdditionDTO;
 
     @GetMapping
     public Page<OtherAddition> findAll (@RequestParam(
@@ -48,14 +51,16 @@ public class OtherAdditionController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public OtherAddition save (@RequestBody @Valid OtherAddition otherAddition) {
-        return otherAdditionCrudService.save(otherAddition);
+    public OtherAddition save (@RequestBody @Valid OtherAdditionDTO otherAdditionDTO) {
+        var newOtherAddition = converterOtherAdditionDTO.createOrUpdateOtherAdditionMapper(otherAdditionDTO);
+        return otherAdditionCrudService.save(newOtherAddition);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void update (@RequestBody @Valid OtherAddition otherAddition, @PathVariable UUID id) {
-        otherAdditionCrudService.update(otherAddition, id);
+    public void update (@RequestBody @Valid OtherAdditionDTO otherAdditionDTO, @PathVariable UUID id) {
+        var newOtherAddition = converterOtherAdditionDTO.createOrUpdateOtherAdditionMapper(otherAdditionDTO);
+        otherAdditionCrudService.update(newOtherAddition, id);
     }
 
     @DeleteMapping("/{id}")
