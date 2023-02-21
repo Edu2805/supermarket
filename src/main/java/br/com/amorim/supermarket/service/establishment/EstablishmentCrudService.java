@@ -1,15 +1,9 @@
 package br.com.amorim.supermarket.service.establishment;
 
 import br.com.amorim.supermarket.model.establishment.Establishment;
-import org.springframework.data.domain.Page;
+import br.com.amorim.supermarket.service.common.genericcrudservice.CrudServiceCommon;
 
 import java.util.UUID;
 
-public interface EstablishmentCrudService {
-
-    Page<Establishment> getAll(int page, int size);
-    Establishment findById(UUID id);
-    Establishment save (Establishment establishment);
-    void update (Establishment establishment, UUID id);
-    void delete (UUID id);
+public interface EstablishmentCrudService extends CrudServiceCommon<Establishment, UUID> {
 }
