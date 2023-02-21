@@ -1,5 +1,7 @@
 package br.com.amorim.supermarket.controller.salary.dto;
 
+import br.com.amorim.supermarket.model.otheraddition.OtherAddition;
+import br.com.amorim.supermarket.model.otherdiscount.OtherDiscount;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +14,7 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -39,4 +42,7 @@ public class SalaryDTO {
     @NotBlank(message = "{br.com.supermarket.SALARY_DTO_FIELD_BENEFITS_IS_NOT_EMPTY}")
     @Size(min = 2, max = 100, message = "{br.com.supermarket.SALARY_DTO_FIELD_BENEFITS_IS_NOT_GREATER_THAN_100_AND_LESS_THEN_2}")
     private String benefits;
+
+    private List<OtherDiscount> otherDiscounts;
+    private List<OtherAddition> otherAdditions;
 }
