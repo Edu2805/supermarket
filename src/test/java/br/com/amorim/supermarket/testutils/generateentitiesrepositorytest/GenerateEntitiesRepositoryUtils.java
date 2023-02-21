@@ -9,6 +9,8 @@ import br.com.amorim.supermarket.model.employee.Employee;
 import br.com.amorim.supermarket.model.establishment.Establishment;
 import br.com.amorim.supermarket.model.jobposition.JobPosition;
 import br.com.amorim.supermarket.model.mainsection.MainSection;
+import br.com.amorim.supermarket.model.otheraddition.OtherAddition;
+import br.com.amorim.supermarket.model.otherdiscount.OtherDiscount;
 import br.com.amorim.supermarket.model.person.Person;
 import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
@@ -22,6 +24,8 @@ import br.com.amorim.supermarket.repository.subsection.SubSectionRepository;
 import br.com.amorim.supermarket.service.employee.EmployeeCrudService;
 import br.com.amorim.supermarket.service.establishment.EstablishmentCrudService;
 import br.com.amorim.supermarket.service.jobposition.JobPositionCrudServiceImpl;
+import br.com.amorim.supermarket.service.otheraddition.OtherAdditionCrudService;
+import br.com.amorim.supermarket.service.otherdiscount.OtherDiscountCrudService;
 import br.com.amorim.supermarket.service.person.PersonCrudService;
 import br.com.amorim.supermarket.service.providerproduct.ProviderProductCrudService;
 import br.com.amorim.supermarket.service.salary.SalaryCrudServiceImpl;
@@ -37,6 +41,7 @@ import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -69,6 +74,10 @@ public class GenerateEntitiesRepositoryUtils {
     private JobPositionCrudServiceImpl jobPositionService;
     @Autowired
     private SalaryCrudServiceImpl salaryService;
+    @Autowired
+    private OtherAdditionCrudService otherAdditionCrudService;
+    @Autowired
+    private OtherDiscountCrudService otherDiscountCrudService;
 
     public ProviderProduct generateProvider() {
         Random randomName = new Random();
@@ -257,9 +266,33 @@ public class GenerateEntitiesRepositoryUtils {
         return jobPosition;
     }
 
-    public Salary generateSalary () {
+    public OtherAddition generateOtherAddition () {
+        Random randomName = new Random();
+        var name = randomName.nextInt(10000, 19999);
+        OtherAddition otherAddition = new OtherAddition();
+
+        otherAddition.setAdditionName(String.valueOf(name));
+        otherAddition.setAdditionValue(BigDecimal.valueOf(100.00));
+        otherAdditionCrudService.save(otherAddition);
+        return otherAddition;
+    }
+
+    public OtherDiscount generateOtherDiscount () {
+        Random randomName = new Random();
+        var name = randomName.nextInt(10000, 19999);
+        OtherDiscount otherDiscount = new OtherDiscount();
+
+        otherDiscount.setDiscountName(String.valueOf(name));
+        otherDiscount.setDiscountValue(BigDecimal.valueOf(100.00));
+        otherDiscountCrudService.save(otherDiscount);
+        return otherDiscount;
+    }
+
+    public Salary generateSalary (OtherAddition otherAddition, OtherDiscount otherDiscount) {
+        Random randomName = new Random();
+        var name = randomName.nextInt(10000, 19999);
         Salary salary = new Salary();
-        salary.setPosition("Gerente de testes");
+        salary.setPosition(String.valueOf(name));
         salary.setSalaryRange("Faixa 1");
         salary.setGrossSalary(BigDecimal.valueOf(4000.00));
         salary.setNetSalary(BigDecimal.valueOf(3500.00));
@@ -268,6 +301,10 @@ public class GenerateEntitiesRepositoryUtils {
         salary.setIrrf(BigDecimal.valueOf(0.15));
         salary.setSalaryAdvance(BigDecimal.valueOf(950.00));
         salary.setBenefits("Vale refeição");
+        salary.setCompetenceStart(LocalDate.of(2022, 1,1));
+        salary.setFinalCompetence(LocalDate.of(2022, 12, 31));
+        salary.setOtherAdditions(List.of(otherAddition));
+        salary.setOtherDiscounts(List.of(otherDiscount));
         salaryService.save(salary);
         return salary;
     }

@@ -5,6 +5,9 @@ import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.jobposition.JobPosition;
 import br.com.amorim.supermarket.repository.jobposition.JobPositionRepository;
+import br.com.amorim.supermarket.service.jobposition.filljobpositionname.fillname.FillPositionNameBySalary;
+import br.com.amorim.supermarket.service.jobposition.filljobpositionname.verifyjobpositionname.VerifyJobPositionName;
+import br.com.amorim.supermarket.service.jobposition.generateinternalcode.GenerateInternalCodeJobPosition;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +25,9 @@ import static br.com.amorim.supermarket.configuration.internacionalizationmessag
 public class JobPositionCrudServiceImpl implements JobPositionCrudService {
 
     private JobPositionRepository jobPositionRepository;
+    private GenerateInternalCodeJobPosition generateInternalCodeJobPosition;
+    private VerifyJobPositionName verifyJobPositionName;
+    private FillPositionNameBySalary fillPositionNameBySalary;
     private static final int DECREASE_PAGE_SIZE = 1;
     private static final int ZERO_PAGE_SIZE = 0;
     private VerifyPageSize verifyPageSize;
@@ -48,7 +54,15 @@ public class JobPositionCrudServiceImpl implements JobPositionCrudService {
     @Transactional
     @Override
     public JobPosition save (JobPosition jobPosition) {
+        verifyJobPositionName.isNamePositionNameAlreadyExistsInSalary(jobPosition);
+        fillPositionNameBySalary.fillPositionName(jobPosition);
+        setInternalCode(jobPosition);
         return jobPositionRepository.save(jobPosition);
+    }
+
+    private void setInternalCode (JobPosition jobPosition) {
+        var incrementInternalCode = generateInternalCodeJobPosition.generate(jobPosition);
+        jobPosition.setCode(incrementInternalCode);
     }
 
     @Transactional

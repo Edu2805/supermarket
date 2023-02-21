@@ -6,6 +6,8 @@ import br.com.amorim.supermarket.model.employee.Employee;
 import br.com.amorim.supermarket.model.establishment.Establishment;
 import br.com.amorim.supermarket.model.jobposition.JobPosition;
 import br.com.amorim.supermarket.model.mainsection.MainSection;
+import br.com.amorim.supermarket.model.otheraddition.OtherAddition;
+import br.com.amorim.supermarket.model.otherdiscount.OtherDiscount;
 import br.com.amorim.supermarket.model.person.Person;
 import br.com.amorim.supermarket.model.salary.Salary;
 import br.com.amorim.supermarket.model.subsection.SubSection;
@@ -15,6 +17,8 @@ import br.com.amorim.supermarket.repository.employee.EmployeeRepository;
 import br.com.amorim.supermarket.repository.establishment.EstablishmentRepository;
 import br.com.amorim.supermarket.repository.jobposition.JobPositionRepository;
 import br.com.amorim.supermarket.repository.mainsection.MainSectionRepository;
+import br.com.amorim.supermarket.repository.otheraddition.OtherAdditionRepository;
+import br.com.amorim.supermarket.repository.otherdiscount.OtherDiscountRepository;
 import br.com.amorim.supermarket.repository.person.PersonRepository;
 import br.com.amorim.supermarket.repository.salary.SalaryRepository;
 import br.com.amorim.supermarket.repository.subsection.SubSectionRepository;
@@ -62,6 +66,10 @@ class GenerateRegisterNumberEmployeeRepositoryCustomImplTest {
     private EntityManager entityManager;
     @Autowired
     private GenerateEntitiesRepositoryUtils generateEntitiesRepository;
+    @Autowired
+    private OtherAdditionRepository otherAdditionRepository;
+    @Autowired
+    private OtherDiscountRepository otherDiscountRepository;
 
     private Employee employee1;
     private Employee employee2;
@@ -78,6 +86,8 @@ class GenerateRegisterNumberEmployeeRepositoryCustomImplTest {
     private Department department;
     private Establishment establishment;
     private Salary salary;
+    private OtherAddition otherAddition;
+    private OtherDiscount otherDiscount;
 
 
     private void startEmployee() {
@@ -91,7 +101,9 @@ class GenerateRegisterNumberEmployeeRepositoryCustomImplTest {
         person2 = generateEntitiesRepository.generatePerson(userData2);
         person3 = generateEntitiesRepository.generatePerson(userData3);
         subSection = generateEntitiesRepository.generateSubsection(mainSection);
-        salary = generateEntitiesRepository.generateSalary();
+        otherAddition = generateEntitiesRepository.generateOtherAddition();
+        otherDiscount = generateEntitiesRepository.generateOtherDiscount();
+        salary = generateEntitiesRepository.generateSalary(otherAddition, otherDiscount);
         jobPosition = generateEntitiesRepository.generateJobPosition(salary);
         employee1 = generateEntitiesRepository.generateEmployee(person1, subSection, jobPosition);
         employee2 = generateEntitiesRepository.generateEmployee(person2, subSection, jobPosition);
@@ -109,6 +121,8 @@ class GenerateRegisterNumberEmployeeRepositoryCustomImplTest {
         personRepository.delete(person2);
         personRepository.delete(person3);
         subSectionRepository.delete(subSection);
+        otherAdditionRepository.delete(otherAddition);
+        otherDiscountRepository.delete(otherDiscount);
         salaryRepository.delete(salary);
         jobPositionRepository.delete(jobPosition);
         employeeRepository.delete(employee1);

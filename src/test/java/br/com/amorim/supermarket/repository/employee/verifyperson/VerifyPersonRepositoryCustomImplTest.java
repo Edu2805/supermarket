@@ -6,6 +6,8 @@ import br.com.amorim.supermarket.model.employee.Employee;
 import br.com.amorim.supermarket.model.establishment.Establishment;
 import br.com.amorim.supermarket.model.jobposition.JobPosition;
 import br.com.amorim.supermarket.model.mainsection.MainSection;
+import br.com.amorim.supermarket.model.otheraddition.OtherAddition;
+import br.com.amorim.supermarket.model.otherdiscount.OtherDiscount;
 import br.com.amorim.supermarket.model.person.Person;
 import br.com.amorim.supermarket.model.salary.Salary;
 import br.com.amorim.supermarket.model.subsection.SubSection;
@@ -73,6 +75,8 @@ class VerifyPersonRepositoryCustomImplTest {
     private MainSection mainSection;
     private Department department;
     private Establishment establishment;
+    private OtherAddition otherAddition;
+    private OtherDiscount otherDiscount;
     private Salary salary;
 
 
@@ -83,7 +87,9 @@ class VerifyPersonRepositoryCustomImplTest {
         mainSection = generateEntitiesRepository.generateMainsection(department);
         person1 = generateEntitiesRepository.generatePerson(userData1);
         subSection = generateEntitiesRepository.generateSubsection(mainSection);
-        salary = generateEntitiesRepository.generateSalary();
+        otherAddition = generateEntitiesRepository.generateOtherAddition();
+        otherDiscount = generateEntitiesRepository.generateOtherDiscount();
+        salary = generateEntitiesRepository.generateSalary(otherAddition, otherDiscount);
         jobPosition = generateEntitiesRepository.generateJobPosition(salary);
         employee1 = generateEntitiesRepository.generateEmployee(person1, subSection, jobPosition);
     }

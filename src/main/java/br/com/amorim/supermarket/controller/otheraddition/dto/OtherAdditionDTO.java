@@ -22,5 +22,5 @@ public class OtherAdditionDTO {
     private String additionName;
     @PositiveOrZero(message = "{br.com.supermarket.OTHER_ADDITION_DTO_FIELD_VALUE_IS_NOT_NEGATIVE}")
     @Digits(integer = 10, fraction = 2, message = "{br.com.supermarket.OTHER_ADDITION_DTO_FIELD_VALUE_INCORRECT_FORMAT}")
-    private BigDecimal value;
+    private BigDecimal additionValue;
 }
