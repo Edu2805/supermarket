@@ -228,7 +228,7 @@ public class GenerateEntitiesRepositoryUtils {
 
     public UserData generateUserData () {
         Random randomUserName = new Random();
-        var userName = randomUserName.nextInt(10000, 19999);
+        var userName = randomUserName.nextInt(100000, 199999);
         UserData userData = new UserData();
 
         userData.setUserName(String.valueOf(userName));

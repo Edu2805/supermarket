@@ -3,12 +3,9 @@ package br.com.amorim.supermarket.service.jobposition.filljobpositionname.verify
 import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleException;
 import br.com.amorim.supermarket.model.jobposition.JobPosition;
-import br.com.amorim.supermarket.model.salary.Salary;
 import br.com.amorim.supermarket.repository.salary.SalaryRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
 
@@ -19,7 +16,7 @@ public class VerifyJobPositionNameImpl implements VerifyJobPositionName {
 
     private SalaryRepository salaryRepository;
     @Override
-    public boolean isNamePositionNameAlreadyExistsInSalary(JobPosition jobPosition) {
+    public boolean isPositionNameAlreadyExistsInSalary(JobPosition jobPosition) {
         var findByPositionName = salaryRepository.findByPosition(jobPosition.getName());
         if (findByPositionName.isPresent()) {
             throw new BusinessRuleException(getString(

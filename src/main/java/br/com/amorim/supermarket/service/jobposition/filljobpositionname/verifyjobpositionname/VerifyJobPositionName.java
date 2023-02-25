@@ -4,5 +4,5 @@ import br.com.amorim.supermarket.model.jobposition.JobPosition;
 
 public interface VerifyJobPositionName {
 
-    boolean isNamePositionNameAlreadyExistsInSalary(JobPosition jobPosition);
+    boolean isPositionNameAlreadyExistsInSalary(JobPosition jobPosition);
 }

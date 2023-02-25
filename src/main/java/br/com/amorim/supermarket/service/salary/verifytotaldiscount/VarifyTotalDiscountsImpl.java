@@ -1,7 +1,7 @@
 package br.com.amorim.supermarket.service.salary.verifytotaldiscount;
 
 import br.com.amorim.supermarket.common.enums.MessagesKeyType;
-import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
+import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleException;
 import br.com.amorim.supermarket.model.salary.Salary;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,7 @@ public class VarifyTotalDiscountsImpl implements VarifyTotalDiscounts {
         var salaryAllowed = salary.getGrossSalary().multiply(MINIMUM_SALARY_PERCENTAGE_ALLOWED_WITH_DISCOUNTS);
         if (salary.getNetSalary().compareTo(salaryAllowed) < ZERO
                 || salary.getNetSalary().compareTo(salaryAllowed) == ZERO) {
-            throw new NotFoundException(getString(
+            throw new BusinessRuleException(getString(
                     MessagesKeyType.MINIMUM_SALARY_PERCENTAGE_ALLOWED_WITH_DISCOUNTS_BY_LAW.message));
         }
         return false;

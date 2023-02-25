@@ -23,9 +23,9 @@ import java.math.BigDecimal;
 public class OtherDiscount extends CommonIdEntity {
 
     @Column(name = "discount_name", nullable = false, length = 100)
-    @NotEmpty(message = "{br.com.supermarket.SALARY_FIELD_POSITION_IS_NOT_EMPTY}")
+    @NotEmpty(message = "{br.com.supermarket.OTHER_DISCOUNT_FIELD_DISCOUNT_NAME_IS_NOT_EMPTY}")
     private String discountName;
     @Column(name = "discount_value", nullable = false, precision = 10, scale = 2)
-    @NotNull(message = "{br.com.supermarket.SALARY_FIELD_NET_SALARY_IS_NOT_EMPTY}")
+    @NotNull(message = "{OTHER_DISCOUNT_FIELD_VALUE_IS_NOT_EMPTY}")
     private BigDecimal discountValue;
 }

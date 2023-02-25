@@ -5,10 +5,8 @@ import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.salary.Salary;
 import br.com.amorim.supermarket.repository.salary.SalaryRepository;
-import br.com.amorim.supermarket.service.salary.calculatediscountandaddition.CalculateDiscountsAndAdditions;
-import br.com.amorim.supermarket.service.salary.calculatetax.CalculateTax;
+import br.com.amorim.supermarket.service.salary.calculatesalary.CalculateSalary;
 import br.com.amorim.supermarket.service.salary.verifyduplicatesalary.VerifyDuplicateSalary;
-import br.com.amorim.supermarket.service.salary.verifytotaldiscount.VarifyTotalDiscounts;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,9 +28,7 @@ public class SalaryCrudServiceImpl implements SalaryCrudService {
     private static final int DECREASE_PAGE_SIZE = 1;
     private static final int ZERO_PAGE_SIZE = 0;
     private VerifyPageSize verifyPageSize;
-    private CalculateTax calculateTax;
-    private CalculateDiscountsAndAdditions calculateDiscountsAndAdditions;
-    private VarifyTotalDiscounts varifyTotalDiscounts;
+    private CalculateSalary calculateSalary;
 
     @Override
     public Page<Salary> getAll(int page, int size) {
@@ -56,12 +52,8 @@ public class SalaryCrudServiceImpl implements SalaryCrudService {
     @Transactional
     @Override
     public Salary save (Salary salary) {
-        verifyDuplicateSalary.isDuplicateSalary(salary);
-        calculateTax.calculateNetSalary(salary);
-        calculateDiscountsAndAdditions.additions(salary);
-        calculateDiscountsAndAdditions.discounts(salary);
-        calculateDiscountsAndAdditions.salaryAdvance(salary);
-        varifyTotalDiscounts.isSeventyPercentSalaryDeduction(salary);
+        verifyDuplicateSalary.isDuplicateSalaryBeforeSave(salary);
+        calculateSalary.calculate(salary);
         return salaryRepository.save(salary);
     }
 
@@ -71,6 +63,8 @@ public class SalaryCrudServiceImpl implements SalaryCrudService {
         salaryRepository.findById(id)
                 .map(existingSalary -> {
                     salary.setId(existingSalary.getId());
+                    verifyDuplicateSalary.isDuplicateSalaryBeforeUpdate(salary);
+                    calculateSalary.calculate(salary);
                     salaryRepository.save(salary);
                     return existingSalary;
                 }).orElseThrow(() ->

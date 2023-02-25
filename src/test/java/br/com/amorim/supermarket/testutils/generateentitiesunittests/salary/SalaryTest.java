@@ -19,7 +19,7 @@ public class SalaryTest {
         salary.setPosition("Cargo de testes");
         salary.setNetSalary(BigDecimal.valueOf(0.01));
         salary.setSalaryAdvance(BigDecimal.valueOf(0.01));
-        salary.setGrossSalary(BigDecimal.valueOf(0.01));
+        salary.setGrossSalary(BigDecimal.valueOf(1000.00));
         salary.setSalaryRange("Teste Range");
         salary.setInss(BigDecimal.valueOf(0.01));
         salary.setFgts(BigDecimal.valueOf(0.01));

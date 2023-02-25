@@ -54,7 +54,7 @@ public class JobPositionCrudServiceImpl implements JobPositionCrudService {
     @Transactional
     @Override
     public JobPosition save (JobPosition jobPosition) {
-        verifyJobPositionName.isNamePositionNameAlreadyExistsInSalary(jobPosition);
+        verifyJobPositionName.isPositionNameAlreadyExistsInSalary(jobPosition);
         fillPositionNameBySalary.fillPositionName(jobPosition);
         setInternalCode(jobPosition);
         return jobPositionRepository.save(jobPosition);
