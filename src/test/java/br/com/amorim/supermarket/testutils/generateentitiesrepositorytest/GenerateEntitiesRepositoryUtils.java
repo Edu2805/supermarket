@@ -18,7 +18,6 @@ import br.com.amorim.supermarket.model.salary.Salary;
 import br.com.amorim.supermarket.model.subsection.SubSection;
 import br.com.amorim.supermarket.model.userdata.UserData;
 import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
-import br.com.amorim.supermarket.repository.subsection.SubSectionRepository;
 import br.com.amorim.supermarket.service.department.DepartmentCrudService;
 import br.com.amorim.supermarket.service.employee.EmployeeCrudService;
 import br.com.amorim.supermarket.service.establishment.EstablishmentCrudService;
@@ -29,6 +28,7 @@ import br.com.amorim.supermarket.service.otherdiscount.OtherDiscountCrudService;
 import br.com.amorim.supermarket.service.person.PersonCrudService;
 import br.com.amorim.supermarket.service.providerproduct.ProviderProductCrudService;
 import br.com.amorim.supermarket.service.salary.SalaryCrudServiceImpl;
+import br.com.amorim.supermarket.service.subsection.SubSectionCrudService;
 import br.com.amorim.supermarket.service.userdata.UserDataCrudServiceImpl;
 import br.com.amorim.supermarket.testutils.generatedocument.GenerateCNPJ;
 import br.com.amorim.supermarket.testutils.generatedocument.GenerateCPF;
@@ -57,7 +57,7 @@ public class GenerateEntitiesRepositoryUtils {
     @Autowired
     private MainSectionCrudService mainSectionCrudService;
     @Autowired
-    private SubSectionRepository subSectionRepository;
+    private SubSectionCrudService subSectionCrudService;
     @Autowired
     private ProviderProductCrudService providerProductCrudService;
     @Autowired
@@ -148,15 +148,12 @@ public class GenerateEntitiesRepositoryUtils {
 
     public SubSection generateSubsection (MainSection mainSection) {
         Random randomName = new Random();
-        Random randomCode = new Random();
         var name = randomName.nextInt(10000, 19999);
-        var code = randomCode.nextInt(1, 19999);
 
         SubSection subSection = new SubSection();
         subSection.setName(String.valueOf(name));
-        subSection.setCode(BigInteger.valueOf(code));
         subSection.setMainSection(mainSection);
-        subSectionRepository.save(subSection);
+        subSectionCrudService.save(subSection);
         return subSection;
     }
 
