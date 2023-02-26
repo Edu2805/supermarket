@@ -5,5 +5,5 @@ import br.com.amorim.supermarket.service.common.genericcrudservice.CrudServiceCo
 
 import java.util.UUID;
 
-public interface MainSectionCrudService extends CrudServiceCommon<MainSection, UUID>  {
+public interface MainSectionCrudService extends CrudServiceCommon<MainSection, UUID> {
 }
