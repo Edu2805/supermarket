@@ -17,13 +17,13 @@ import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
 import br.com.amorim.supermarket.model.salary.Salary;
 import br.com.amorim.supermarket.model.subsection.SubSection;
 import br.com.amorim.supermarket.model.userdata.UserData;
-import br.com.amorim.supermarket.repository.mainsection.MainSectionRepository;
 import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
 import br.com.amorim.supermarket.repository.subsection.SubSectionRepository;
 import br.com.amorim.supermarket.service.department.DepartmentCrudService;
 import br.com.amorim.supermarket.service.employee.EmployeeCrudService;
 import br.com.amorim.supermarket.service.establishment.EstablishmentCrudService;
 import br.com.amorim.supermarket.service.jobposition.JobPositionCrudServiceImpl;
+import br.com.amorim.supermarket.service.mainsection.MainSectionCrudService;
 import br.com.amorim.supermarket.service.otheraddition.OtherAdditionCrudService;
 import br.com.amorim.supermarket.service.otherdiscount.OtherDiscountCrudService;
 import br.com.amorim.supermarket.service.person.PersonCrudService;
@@ -55,7 +55,7 @@ public class GenerateEntitiesRepositoryUtils {
     @Autowired
     private ProductDataRepository productDataRepository;
     @Autowired
-    private MainSectionRepository mainSectionRepository;
+    private MainSectionCrudService mainSectionCrudService;
     @Autowired
     private SubSectionRepository subSectionRepository;
     @Autowired
@@ -137,15 +137,12 @@ public class GenerateEntitiesRepositoryUtils {
 
     public MainSection generateMainsection (Department department) {
         Random randomName = new Random();
-        Random randomCode = new Random();
         var name = randomName.nextInt(10000, 19999);
-        var code = randomCode.nextInt(1, 19999);
 
         MainSection mainSection = new MainSection();
         mainSection.setName(String.valueOf(name));
-        mainSection.setCode(BigInteger.valueOf(code));
         mainSection.setDepartment(department);
-        mainSectionRepository.save(mainSection);
+        mainSectionCrudService.save(mainSection);
         return mainSection;
     }
 
