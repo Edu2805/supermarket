@@ -6,6 +6,7 @@ import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.mainsection.MainSection;
 import br.com.amorim.supermarket.repository.mainsection.MainSectionRepository;
 import br.com.amorim.supermarket.service.mainsection.generateinternalcode.GenerateInternalCodeMainSection;
+import br.com.amorim.supermarket.service.mainsection.verifymainsectionname.VerifyMainSectionName;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,6 +28,7 @@ public class MainSectionCrudServiceImpl implements MainSectionCrudService {
     private MainSectionRepository mainSectionRepository;
     private VerifyPageSize verifyPageSize;
     private GenerateInternalCodeMainSection generateInternalCodeMainSection;
+    private VerifyMainSectionName verifyMainSectionName;
 
     @Override
     public Page<MainSection> getAll (int page, int size) {
@@ -50,6 +52,7 @@ public class MainSectionCrudServiceImpl implements MainSectionCrudService {
     @Transactional
     @Override
     public MainSection save (MainSection mainSection) {
+        verifyMainSectionName.existsByMainSectionNameBeforeSave(mainSection);
         var internalCode = generateInternalCodeMainSection.generate(mainSection);
         mainSection.setCode(internalCode);
         return mainSectionRepository.save(mainSection);
@@ -61,6 +64,7 @@ public class MainSectionCrudServiceImpl implements MainSectionCrudService {
         mainSectionRepository.findById(id)
                 .map(existingMainSection -> {
                     mainSection.setId(existingMainSection.getId());
+                    verifyMainSectionName.existsByMainSectionNameBeforeUpdate(mainSection);
                     mainSection.setCode(existingMainSection.getCode());
                     mainSectionRepository.save(mainSection);
                     return existingMainSection;

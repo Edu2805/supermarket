@@ -5,6 +5,7 @@ import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.model.mainsection.MainSection;
 import br.com.amorim.supermarket.repository.mainsection.MainSectionRepository;
 import br.com.amorim.supermarket.service.mainsection.generateinternalcode.GenerateInternalCodeMainSection;
+import br.com.amorim.supermarket.service.mainsection.verifymainsectionname.VerifyMainSectionName;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.mainsection.MainSectionTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,6 +36,8 @@ class MainSectionCrudServiceImplTest {
     private MainSectionRepository mainSectionRepository;
     @Mock
     private GenerateInternalCodeMainSection generateInternalCodeMainSection;
+    @Mock
+    private VerifyMainSectionName verifyMainSectionName;
 
     private static final String MESSAGE_ERROR = getString(MessagesKeyType.MAIN_SECTION_NOT_FOUND.message);
     private static final String UNKNOWN_ID = "0eb5c7e2-b35c-44fa-a8cb-b5d91447da82";
@@ -80,6 +83,8 @@ class MainSectionCrudServiceImplTest {
 
     @Test
     void shouldSaveWithSuccess() {
+        when(verifyMainSectionName.existsByMainSectionNameBeforeSave(mainSection))
+                .thenReturn(false);
         when(generateInternalCodeMainSection.generate(mainSection))
                 .thenReturn(BigInteger.ONE);
         when(mainSectionRepository.save(mainSection)).thenReturn(mainSection);
@@ -93,6 +98,8 @@ class MainSectionCrudServiceImplTest {
         ArgumentCaptor<UUID> knownIdCapture = ArgumentCaptor.forClass(UUID.class);
         when(mainSectionRepository.findById(knownIdCapture.capture()))
                 .thenReturn(Optional.of(mainSection));
+        when(verifyMainSectionName.existsByMainSectionNameBeforeUpdate(mainSection))
+                .thenReturn(false);
         when(mainSectionRepository.save(mainSection)).thenReturn(mainSection);
 
         mainSectionCrudService.update(mainSection, mainSection.getId());
