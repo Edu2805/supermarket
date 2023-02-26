@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
@@ -22,5 +23,6 @@ public class OtherAdditionDTO {
     private String additionName;
     @PositiveOrZero(message = "{br.com.supermarket.OTHER_ADDITION_DTO_FIELD_VALUE_IS_NOT_NEGATIVE}")
     @Digits(integer = 10, fraction = 2, message = "{br.com.supermarket.OTHER_ADDITION_DTO_FIELD_VALUE_INCORRECT_FORMAT}")
+    @NotNull(message = "{br.com.supermarket.OTHER_ADDITION_DTO_FIELD_ADDITION_VALUE_IS_NOT_NULL}")
     private BigDecimal additionValue;
 }

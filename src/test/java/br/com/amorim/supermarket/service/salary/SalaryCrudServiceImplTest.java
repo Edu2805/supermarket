@@ -99,7 +99,7 @@ class SalaryCrudServiceImplTest {
 
         when(salaryRepository.findById(knownIdCapture.capture()))
                 .thenReturn(Optional.of(salary));
-        when(verifyDuplicateSalary.isDuplicateSalaryBeforeSave(salary))
+        when(verifyDuplicateSalary.isDuplicateSalaryBeforeUpdate(salary))
                 .thenReturn(false);
         doNothing().when(calculateSalary).calculate(salary);
         when(salaryRepository.save(salary)).thenReturn(salary);
@@ -114,11 +114,10 @@ class SalaryCrudServiceImplTest {
     @Test
     void shouldNotUpdateWhenSalaryIsDuplicatedIsIncorrect() {
         String messageError = getString(MessagesKeyType.SALARY_IS_DUPLICATED.message);
-        var unknownId = "0eb5c7e2-b35c-44fa-a8cb-b5d91447da82";
 
-        when(salaryRepository.findById(UUID.fromString(unknownId)))
+        when(salaryRepository.findById(salary.getId()))
                 .thenReturn(Optional.of(salary));
-        when(verifyDuplicateSalary.isDuplicateSalaryBeforeSave(salary))
+        when(verifyDuplicateSalary.isDuplicateSalaryBeforeUpdate(salary))
                 .thenThrow(new BusinessRuleException(getString(MessagesKeyType
                         .SALARY_IS_DUPLICATED.message)));
 
@@ -129,7 +128,7 @@ class SalaryCrudServiceImplTest {
         ).getMessage();
 
         assertEquals(messageError, exceptionMessage);
-        assertThrows(NotFoundException.class, () ->
+        assertThrows(BusinessRuleException.class, () ->
                 salaryCrudService.update(salary, salary.getId()));
     }
 

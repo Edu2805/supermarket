@@ -15,6 +15,7 @@ import static br.com.amorim.supermarket.configuration.internacionalizationmessag
 public class VerifyDuplicateSalaryImpl implements VerifyDuplicateSalary {
 
     private SalaryRepository salaryRepository;
+
     @Override
     public boolean isDuplicateSalaryBeforeSave(Salary salary) {
         var findPositionAndSalaryRange = salaryRepository
