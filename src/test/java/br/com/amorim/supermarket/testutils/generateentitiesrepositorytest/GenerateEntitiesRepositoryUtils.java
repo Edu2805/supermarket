@@ -17,10 +17,10 @@ import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
 import br.com.amorim.supermarket.model.salary.Salary;
 import br.com.amorim.supermarket.model.subsection.SubSection;
 import br.com.amorim.supermarket.model.userdata.UserData;
-import br.com.amorim.supermarket.repository.department.DepartmentRepository;
 import br.com.amorim.supermarket.repository.mainsection.MainSectionRepository;
 import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
 import br.com.amorim.supermarket.repository.subsection.SubSectionRepository;
+import br.com.amorim.supermarket.service.department.DepartmentCrudService;
 import br.com.amorim.supermarket.service.employee.EmployeeCrudService;
 import br.com.amorim.supermarket.service.establishment.EstablishmentCrudService;
 import br.com.amorim.supermarket.service.jobposition.JobPositionCrudServiceImpl;
@@ -55,8 +55,6 @@ public class GenerateEntitiesRepositoryUtils {
     @Autowired
     private ProductDataRepository productDataRepository;
     @Autowired
-    private DepartmentRepository departmentRepository;
-    @Autowired
     private MainSectionRepository mainSectionRepository;
     @Autowired
     private SubSectionRepository subSectionRepository;
@@ -78,6 +76,8 @@ public class GenerateEntitiesRepositoryUtils {
     private OtherAdditionCrudService otherAdditionCrudService;
     @Autowired
     private OtherDiscountCrudService otherDiscountCrudService;
+    @Autowired
+    private DepartmentCrudService departmentCrudService;
 
     public ProviderProduct generateProvider() {
         Random randomName = new Random();
@@ -126,15 +126,12 @@ public class GenerateEntitiesRepositoryUtils {
 
     public Department generateDepartment (Establishment establishment) {
         Random randomName = new Random();
-        Random randomCode = new Random();
         var name = randomName.nextInt(10000, 19999);
-        var code = randomCode.nextInt(1, 19999);
 
         Department department = new Department();
         department.setName(String.valueOf(name));
-        department.setCode(BigInteger.valueOf(code));
         department.setEstablishment(establishment);
-        departmentRepository.save(department);
+        departmentCrudService.save(department);
         return department;
     }
 
