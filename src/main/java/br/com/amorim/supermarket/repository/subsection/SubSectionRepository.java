@@ -8,4 +8,6 @@ import java.util.UUID;
 
 @Repository
 public interface SubSectionRepository extends JpaRepository<SubSection, UUID> {
+
+    boolean existsByName(String name);
 }

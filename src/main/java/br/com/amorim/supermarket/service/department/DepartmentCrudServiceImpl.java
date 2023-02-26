@@ -6,6 +6,7 @@ import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.department.Department;
 import br.com.amorim.supermarket.repository.department.DepartmentRepository;
 import br.com.amorim.supermarket.service.department.generateinternalcode.GenerateInternalCodeDepartment;
+import br.com.amorim.supermarket.service.department.verifydepartmentname.VerifyDepartmentName;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,6 +28,7 @@ public class DepartmentCrudServiceImpl implements DepartmentCrudService {
     private DepartmentRepository departmentRepository;
     private VerifyPageSize verifyPageSize;
     private GenerateInternalCodeDepartment generateInternalCodeDepartment;
+    private VerifyDepartmentName verifyDepartmentName;
 
     @Override
     public Page<Department> getAll(int page, int size) {
@@ -50,6 +52,7 @@ public class DepartmentCrudServiceImpl implements DepartmentCrudService {
     @Transactional
     @Override
     public Department save (Department department) {
+        verifyDepartmentName.existsByDepartmentNameBeforeSave(department);
         var internalCode = generateInternalCodeDepartment.generate(department);
         department.setCode(internalCode);
         return departmentRepository.save(department);
@@ -61,6 +64,7 @@ public class DepartmentCrudServiceImpl implements DepartmentCrudService {
         departmentRepository.findById(id)
                 .map(existingDepartment -> {
                    department.setId(existingDepartment.getId());
+                   verifyDepartmentName.existsByDepartmentNameBeforeUpdate(department);
                    department.setCode(existingDepartment.getCode());
                    departmentRepository.save(department);
                    return existingDepartment;

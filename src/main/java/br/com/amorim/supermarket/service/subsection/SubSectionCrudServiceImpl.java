@@ -6,6 +6,7 @@ import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.subsection.SubSection;
 import br.com.amorim.supermarket.repository.subsection.SubSectionRepository;
 import br.com.amorim.supermarket.service.subsection.generateinternalcode.GenerateInternalCodeSubSection;
+import br.com.amorim.supermarket.service.subsection.verifysubsectionname.VerifySubSectionName;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,6 +28,7 @@ public class SubSectionCrudServiceImpl implements SubSectionCrudService {
     private SubSectionRepository subSectionRepository;
     private VerifyPageSize verifyPageSize;
     private GenerateInternalCodeSubSection generateInternalCodeSubSection;
+    private VerifySubSectionName verifySubSectionName;
 
     @Override
     public Page<SubSection> getAll (int page, int size) {
@@ -50,6 +52,7 @@ public class SubSectionCrudServiceImpl implements SubSectionCrudService {
     @Transactional
     @Override
     public SubSection save (SubSection subSection) {
+        verifySubSectionName.existsBySubSectionNameBeforeSave(subSection);
         var internalCode = generateInternalCodeSubSection.generate(subSection);
         subSection.setCode(internalCode);
         return subSectionRepository.save(subSection);
@@ -61,6 +64,7 @@ public class SubSectionCrudServiceImpl implements SubSectionCrudService {
         subSectionRepository.findById(id)
                 .map(existingSubSection -> {
                     subSection.setId(existingSubSection.getId());
+                    verifySubSectionName.existsBySubSectionNameBeforeUpdate(subSection);
                     subSection.setCode(existingSubSection.getCode());
                     subSectionRepository.save(subSection);
                     return existingSubSection;

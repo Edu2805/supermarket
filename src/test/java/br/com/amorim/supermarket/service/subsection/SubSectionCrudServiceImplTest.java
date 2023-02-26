@@ -5,6 +5,7 @@ import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.model.subsection.SubSection;
 import br.com.amorim.supermarket.repository.subsection.SubSectionRepository;
 import br.com.amorim.supermarket.service.subsection.generateinternalcode.GenerateInternalCodeSubSection;
+import br.com.amorim.supermarket.service.subsection.verifysubsectionname.VerifySubSectionName;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.subsection.SubSectionTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,6 +37,8 @@ class SubSectionCrudServiceImplTest {
     private SubSectionRepository subSectionRepository;
     @Mock
     private GenerateInternalCodeSubSection generateInternalCodeSubSection;
+    @Mock
+    private VerifySubSectionName verifySubSectionName;
 
     private static final String MESSAGE_ERROR = getString(MessagesKeyType.SUB_SECTION_NOT_FOUND.message);
     private static final String UNKNOWN_ID = "0eb5c7e2-b35c-44fa-a8cb-b5d91447da82";
@@ -82,6 +85,8 @@ class SubSectionCrudServiceImplTest {
 
     @Test
     void shouldSaveWithSuccess() {
+        when(verifySubSectionName.existsBySubSectionNameBeforeSave(subSection1))
+                .thenReturn(false);
         when(generateInternalCodeSubSection.generate(subSection1))
                 .thenReturn(BigInteger.ONE);
         when(subSectionRepository.save(subSection1)).thenReturn(subSection1);
@@ -95,6 +100,8 @@ class SubSectionCrudServiceImplTest {
         ArgumentCaptor<UUID> knownIdCapture = ArgumentCaptor.forClass(UUID.class);
         when(subSectionRepository.findById(knownIdCapture.capture()))
                 .thenReturn(Optional.of(subSection1));
+        when(verifySubSectionName.existsBySubSectionNameBeforeUpdate(subSection1))
+                .thenReturn(false);
         when(subSectionRepository.save(subSection1)).thenReturn(subSection1);
 
         subSectionCrudService.update(subSection1, subSection1.getId());
