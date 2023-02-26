@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS employee (
    CONSTRAINT pk_employee PRIMARY KEY (id)
 );
 
-CREATE TABLE salary (
+CREATE TABLE IF NOT EXISTS salary (
    id UUID NOT NULL,
    position VARCHAR(30) NOT NULL,
    salary_range VARCHAR(10) NOT NULL,
@@ -94,13 +94,13 @@ CREATE TABLE IF NOT EXISTS other_addition (
 );
 
 CREATE TABLE IF NOT EXISTS salary_to_other_addition (
-   other_addition_id UUID NOT NULL,
-   salary_id UUID NOT NULL
+   other_addition_id UUID,
+   salary_id UUID
 );
 
 CREATE TABLE IF NOT EXISTS salary_to_other_discount (
-   other_discount_id UUID NOT NULL,
-   salary_id UUID NOT NULL
+   other_discount_id UUID,
+   salary_id UUID
 );
 
 CREATE TABLE IF NOT EXISTS job_position (
@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS job_position (
    CONSTRAINT pk_job_position PRIMARY KEY (id)
 );
 
-CREATE TABLE user_data (
+CREATE TABLE IF NOT EXISTS user_data (
   id UUID NOT NULL,
    user_name VARCHAR(50) NOT NULL,
    password VARCHAR(8) NOT NULL,

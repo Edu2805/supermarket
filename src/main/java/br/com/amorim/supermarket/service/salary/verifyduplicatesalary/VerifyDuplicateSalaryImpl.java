@@ -15,13 +15,29 @@ import static br.com.amorim.supermarket.configuration.internacionalizationmessag
 public class VerifyDuplicateSalaryImpl implements VerifyDuplicateSalary {
 
     private SalaryRepository salaryRepository;
+
     @Override
-    public boolean isDuplicateSalary(Salary salary) {
+    public boolean isDuplicateSalaryBeforeSave(Salary salary) {
         var findPositionAndSalaryRange = salaryRepository
                 .findByPositionAndSalaryRange(salary.getPosition(), salary.getSalaryRange());
         if (findPositionAndSalaryRange.isPresent()) {
             throw new BusinessRuleException(getString(MessagesKeyType.SALARY_IS_DUPLICATED.message));
         }
+        return false;
+    }
+
+    @Override
+    public boolean isDuplicateSalaryBeforeUpdate(Salary salary) {
+        salaryRepository.findAll()
+                .forEach(existingSalary -> {
+                    if((existingSalary.getPosition().equals(salary.getPosition()) &&
+                            existingSalary.getSalaryRange().equals(salary.getSalaryRange()))) {
+                        if (!existingSalary.getId().equals(salary.getId())) {
+                            throw new BusinessRuleException(getString(MessagesKeyType.SALARY_IS_DUPLICATED.message));
+                        }
+                    }
+                });
+
         return false;
     }
 }
