@@ -30,6 +30,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.persistence.EntityManager;
@@ -38,6 +39,7 @@ import java.math.BigInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@TestPropertySource("classpath:application.properties")
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes= SupermarketApplication.class)
 class GenerateRegisterNumberEmployeeRepositoryCustomImplTest {
@@ -132,6 +134,7 @@ class GenerateRegisterNumberEmployeeRepositoryCustomImplTest {
 
     @BeforeEach
     void setUp() {
+        employeeRepository.deleteAll();
         startEmployee();
     }
 

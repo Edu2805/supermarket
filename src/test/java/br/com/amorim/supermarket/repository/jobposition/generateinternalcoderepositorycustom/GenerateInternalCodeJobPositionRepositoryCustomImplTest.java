@@ -5,6 +5,7 @@ import br.com.amorim.supermarket.model.jobposition.JobPosition;
 import br.com.amorim.supermarket.model.otheraddition.OtherAddition;
 import br.com.amorim.supermarket.model.otherdiscount.OtherDiscount;
 import br.com.amorim.supermarket.model.salary.Salary;
+import br.com.amorim.supermarket.repository.employee.EmployeeRepository;
 import br.com.amorim.supermarket.repository.jobposition.JobPositionRepository;
 import br.com.amorim.supermarket.repository.otheraddition.OtherAdditionRepository;
 import br.com.amorim.supermarket.repository.otherdiscount.OtherDiscountRepository;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.persistence.EntityManager;
@@ -24,6 +26,7 @@ import java.math.BigInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@TestPropertySource("classpath:application.properties")
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes= SupermarketApplication.class)
 class GenerateInternalCodeJobPositionRepositoryCustomImplTest {
@@ -42,6 +45,8 @@ class GenerateInternalCodeJobPositionRepositoryCustomImplTest {
     private OtherDiscountRepository otherDiscountRepository;
     @Autowired
     private SalaryRepository salaryRepository;
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     private OtherAddition otherAddition1;
     private OtherAddition otherAddition2;
@@ -73,6 +78,8 @@ class GenerateInternalCodeJobPositionRepositoryCustomImplTest {
 
     @BeforeEach
     void setUp() {
+        employeeRepository.deleteAll();
+        jobPositionRepository.deleteAll();
         startJobPosition();
     }
 

@@ -3,6 +3,7 @@ package br.com.amorim.supermarket.repository.establishment.verifymunicipalorstat
 import br.com.amorim.supermarket.SupermarketApplication;
 import br.com.amorim.supermarket.model.establishment.Establishment;
 import br.com.amorim.supermarket.repository.establishment.EstablishmentRepository;
+import br.com.amorim.supermarket.service.establishment.EstablishmentCrudService;
 import br.com.amorim.supermarket.testutils.generatedocument.GenerateCNPJ;
 import br.com.amorim.supermarket.testutils.generateentitiesrepositorytest.GenerateEntitiesRepositoryUtils;
 import org.junit.jupiter.api.AfterEach;
@@ -11,13 +12,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.transaction.Transactional;
-import java.math.BigInteger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestPropertySource("classpath:application.properties")
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes= SupermarketApplication.class)
 class VerifyMunicipalOrStateRegistrationEstablishmentRepositoryCustomImplTest {
@@ -28,6 +30,8 @@ class VerifyMunicipalOrStateRegistrationEstablishmentRepositoryCustomImplTest {
     private EstablishmentRepository establishmentRepository;
     @Autowired
     private GenerateEntitiesRepositoryUtils generateEntitiesRepository;
+    @Autowired
+    private EstablishmentCrudService establishmentCrudService;
     private GenerateCNPJ generateCNPJ1;
 
     private Establishment establishment1;
@@ -37,18 +41,16 @@ class VerifyMunicipalOrStateRegistrationEstablishmentRepositoryCustomImplTest {
         generateCNPJ1 = new GenerateCNPJ();
         establishment1 = new Establishment();
         establishment1.setName("Loja Teste 1");
-        establishment1.setCode(BigInteger.valueOf(1));
         establishment1.setCnpj(generateCNPJ1.cnpj(false));
         establishment1.setStateRegistration("1234-AB");
         establishment1.setMunicipalRegistration("4321-BA");
         establishment1.setAddress("Rua Teste, 666");
         establishment1.setPhone("48999999999");
         establishment1.setManager("Senhor dos Testes");
-        establishmentRepository.save(establishment1);
+        establishmentCrudService.save(establishment1);
 
         establishment2 = new Establishment();
         establishment2.setName("Loja Teste 2");
-        establishment2.setCode(BigInteger.valueOf(2));
         establishment2.setCnpj(generateCNPJ1.cnpj(false));
         establishment2.setStateRegistration("1234-CD");
         establishment2.setMunicipalRegistration("4321-DC");
