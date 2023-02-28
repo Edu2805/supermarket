@@ -26,7 +26,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 @AllArgsConstructor
 
 @RestController
-@RequestMapping("jobposition")
+@RequestMapping("api/jobposition")
 public class JobPositionController {
 
     private JobPositionCrudServiceImpl jobPositionService;

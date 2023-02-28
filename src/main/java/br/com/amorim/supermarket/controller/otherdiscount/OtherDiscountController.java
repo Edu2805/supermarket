@@ -26,7 +26,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 @AllArgsConstructor
 
 @RestController
-@RequestMapping("otherdiscount")
+@RequestMapping("api/otherdiscount")
 public class OtherDiscountController {
 
     private OtherDiscountCrudService otherDiscountCrudService;

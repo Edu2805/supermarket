@@ -1,6 +1,6 @@
 package br.com.amorim.supermarket.testutils.generateentitiesrepositorytest;
 
-import br.com.amorim.supermarket.common.enums.RoleType;
+import br.com.amorim.supermarket.configuration.security.roles.RoleType;
 import br.com.amorim.supermarket.common.enums.ScholarityType;
 import br.com.amorim.supermarket.common.enums.SubscriptionType;
 import br.com.amorim.supermarket.common.enums.UnityType;

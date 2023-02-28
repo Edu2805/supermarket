@@ -26,7 +26,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 @AllArgsConstructor
 
 @RestController
-@RequestMapping("person")
+@RequestMapping("api/person")
 public class PersonController {
 
     private PersonCrudServiceImpl personService;

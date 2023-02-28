@@ -26,7 +26,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 @AllArgsConstructor
 
 @RestController
-@RequestMapping("otheraddition")
+@RequestMapping("api/otheraddition")
 public class OtherAdditionController {
 
     private OtherAdditionCrudService otherAdditionCrudService;

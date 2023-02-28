@@ -26,7 +26,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 @AllArgsConstructor
 
 @RestController
-@RequestMapping("department")
+@RequestMapping("api/department")
 public class DepartmentController {
 
     private DepartmentCrudServiceImpl departmentService;

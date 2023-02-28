@@ -26,7 +26,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 @AllArgsConstructor
 
 @RestController
-@RequestMapping("salary")
+@RequestMapping("api/salary")
 public class SalaryController {
 
     private SalaryCrudServiceImpl salaryService;

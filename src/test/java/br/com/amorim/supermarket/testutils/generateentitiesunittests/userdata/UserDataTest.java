@@ -1,6 +1,6 @@
 package br.com.amorim.supermarket.testutils.generateentitiesunittests.userdata;
 
-import br.com.amorim.supermarket.common.enums.RoleType;
+import br.com.amorim.supermarket.configuration.security.roles.RoleType;
 import br.com.amorim.supermarket.model.userdata.UserData;
 
 import java.sql.Timestamp;

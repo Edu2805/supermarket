@@ -1,11 +1,8 @@
 package br.com.amorim.supermarket.model.userdata;
 
-import br.com.amorim.supermarket.common.enums.RoleType;
+import br.com.amorim.supermarket.configuration.security.roles.RoleType;
 import br.com.amorim.supermarket.model.common.CommonIdEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +17,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 
 @Entity
 @Table(name = "user_data")
@@ -29,12 +27,12 @@ public class UserData extends CommonIdEntity {
     @NotEmpty(message = "{br.com.supermarket.USER_DATA_FIELD_USER_NAME_IS_NOT_EMPTY}")
     private String userName;
 
-    @Column(name = "password", nullable = false, length = 8)
+    @Column(name = "password", nullable = false, length = 100)
     @NotEmpty(message = "{br.com.supermarket.USER_DATA_FIELD_PASSWORD_IS_NOT_EMPTY}")
     private String password;
 
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false, length = 50)
     @NotNull(message = "{br.com.supermarket.USER_DATA_FIELD_ROLE_IS_NOT_EMPTY}")
     private RoleType role;
 

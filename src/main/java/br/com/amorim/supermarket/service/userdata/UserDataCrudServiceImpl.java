@@ -7,6 +7,7 @@ import br.com.amorim.supermarket.model.userdata.UserData;
 import br.com.amorim.supermarket.repository.userdata.UserDataRepository;
 import br.com.amorim.supermarket.service.userdata.setisemployee.UserDataUpdateIsEmployee;
 import br.com.amorim.supermarket.service.userdata.setusernameinperson.UserNameInPerson;
+import br.com.amorim.supermarket.service.userdata.userdetail.encryptpassword.EncryptedPassword;
 import br.com.amorim.supermarket.service.userdata.verifyusername.VerifyUserName;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -33,6 +34,7 @@ public class UserDataCrudServiceImpl implements UserDataCrudService {
     private VerifyUserName verifyUserName;
     private UserNameInPerson userNameInPerson;
     private UserDataUpdateIsEmployee userDataUpdateIsEmployee;
+    private EncryptedPassword encryptedPassword;
 
     @Override
     public Page<UserData> getAll (int page, int size) {
@@ -62,6 +64,7 @@ public class UserDataCrudServiceImpl implements UserDataCrudService {
     }
 
     private void setFields(UserData userData) {
+        encryptedPassword.encrypt(userData);
         userData.setIsEmployee(false);
         userData.setRegistrationDate(Timestamp.from(Instant.now()));
     }

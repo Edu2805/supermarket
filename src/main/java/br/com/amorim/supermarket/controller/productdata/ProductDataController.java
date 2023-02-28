@@ -26,7 +26,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 @AllArgsConstructor
 
 @RestController
-@RequestMapping("product")
+@RequestMapping("api/product")
 public class ProductDataController {
 
     private ProductDataCrudService productDataService;
