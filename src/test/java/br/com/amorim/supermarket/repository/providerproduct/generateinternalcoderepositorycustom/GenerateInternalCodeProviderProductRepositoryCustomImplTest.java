@@ -2,6 +2,7 @@ package br.com.amorim.supermarket.repository.providerproduct.generateinternalcod
 
 import br.com.amorim.supermarket.SupermarketApplication;
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
+import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
 import br.com.amorim.supermarket.repository.providerproduct.ProviderProductRepository;
 import br.com.amorim.supermarket.testutils.generateentitiesrepositorytest.GenerateEntitiesRepositoryUtils;
 import org.junit.jupiter.api.AfterEach;
@@ -11,11 +12,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.transaction.Transactional;
 import java.math.BigInteger;
 
+@TestPropertySource("classpath:application.properties")
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes= SupermarketApplication.class)
 class GenerateInternalCodeProviderProductRepositoryCustomImplTest {
@@ -26,6 +29,8 @@ class GenerateInternalCodeProviderProductRepositoryCustomImplTest {
     private ProviderProductRepository providerProductRepository;
     @Autowired
     private GenerateEntitiesRepositoryUtils generateEntities;
+    @Autowired
+    private ProductDataRepository productDataRepository;
 
     private ProviderProduct providerProduct1;
     private ProviderProduct providerProduct2;
@@ -45,6 +50,8 @@ class GenerateInternalCodeProviderProductRepositoryCustomImplTest {
 
     @BeforeEach
     void setUp() {
+        productDataRepository.deleteAll();
+        providerProductRepository.deleteAll();
         startProvide();
     }
 

@@ -3,24 +3,26 @@ package br.com.amorim.supermarket.repository.providerproduct.verifysubscriptionn
 import br.com.amorim.supermarket.SupermarketApplication;
 import br.com.amorim.supermarket.common.enums.SubscriptionType;
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
+import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
 import br.com.amorim.supermarket.repository.providerproduct.ProviderProductRepository;
+import br.com.amorim.supermarket.service.providerproduct.ProviderProductCrudService;
 import br.com.amorim.supermarket.testutils.generatedocument.GenerateCNPJ;
-import br.com.amorim.supermarket.testutils.generateentitiesrepositorytest.GenerateEntitiesRepositoryUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.transaction.Transactional;
-import java.math.BigInteger;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@TestPropertySource("classpath:application.properties")
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes= SupermarketApplication.class)
 class VerifySubscriptionNumberProviderProductRepositoryCustomImplTest {
@@ -30,18 +32,20 @@ class VerifySubscriptionNumberProviderProductRepositoryCustomImplTest {
     @Autowired
     private ProviderProductRepository providerProductRepository;
     @Autowired
-    private GenerateEntitiesRepositoryUtils generateEntities;
+    private ProviderProductCrudService providerProductCrudService;
+    @Autowired
+    private ProductDataRepository productDataRepository;
 
     private GenerateCNPJ generateCNPJ;
     private ProviderProduct providerProduct1;
     private ProviderProduct providerProduct2;
 
     private void startProvide () {
+        providerProductRepository.deleteAll();
         generateCNPJ = new GenerateCNPJ();
 
         providerProduct1 = new ProviderProduct();
         providerProduct1.setName("Fornecedor teste 1");
-        providerProduct1.setCode(BigInteger.valueOf(1));
         providerProduct1.setPhone("48999999999");
         providerProduct1.setAddress("Avenida dos Testes, 666, Cidade dos Testes");
         providerProduct1.setMunicipalRegistration("2425-AB");
@@ -49,11 +53,10 @@ class VerifySubscriptionNumberProviderProductRepositoryCustomImplTest {
         providerProduct1.setResponsible("Senhor Teste");
         providerProduct1.setSubscriptionType(SubscriptionType.CNPJ);
         providerProduct1.setSubscriptionNumber(generateCNPJ.cnpj(false));
-        providerProductRepository.save(providerProduct1);
+        providerProductCrudService.save(providerProduct1);
 
         providerProduct2 = new ProviderProduct();
         providerProduct2.setName("Fornecedor teste 1");
-        providerProduct2.setCode(BigInteger.valueOf(1));
         providerProduct2.setPhone("48999999999");
         providerProduct2.setAddress("Avenida dos Testes, 666, Cidade dos Testes");
         providerProduct2.setMunicipalRegistration("2425-CD");
@@ -65,11 +68,11 @@ class VerifySubscriptionNumberProviderProductRepositoryCustomImplTest {
 
     private void deleteProvide () {
         providerProductRepository.delete(providerProduct1);
-        providerProductRepository.delete(providerProduct2);
     }
 
     @BeforeEach
     void setUp() {
+        productDataRepository.deleteAll();
         startProvide();
     }
 
@@ -83,8 +86,9 @@ class VerifySubscriptionNumberProviderProductRepositoryCustomImplTest {
     void shouldReturnTrueWhenIdIsNullAndSubscriptionNumberAlreadyExistsInDatabase() {
         providerProduct2.setId(null);
         providerProduct2.setSubscriptionNumber(providerProduct1.getSubscriptionNumber());
-        assertTrue(verifySubscriptionNumberProviderProductRepositoryCustom
-                .existsBySubscriptionNumber(providerProduct2));
+        var verify = verifySubscriptionNumberProviderProductRepositoryCustom
+                .existsBySubscriptionNumber(providerProduct2);
+        assertTrue(verify);
     }
 
     @Transactional

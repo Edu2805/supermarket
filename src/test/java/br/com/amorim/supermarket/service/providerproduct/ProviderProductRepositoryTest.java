@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.transaction.Transactional;
@@ -29,6 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * pacote Service, classe ProviderProductCrudServiceImplTest
  */
 
+@TestPropertySource("classpath:application.properties")
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes= SupermarketApplication.class)
 public class ProviderProductRepositoryTest {
