@@ -26,7 +26,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 @AllArgsConstructor
 
 @RestController
-@RequestMapping("provider")
+@RequestMapping("api/provider")
 public class ProviderProductController {
 
     private ProviderProductCrudServiceImpl providerProductService;

@@ -26,7 +26,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 @AllArgsConstructor
 
 @RestController
-@RequestMapping("establishment")
+@RequestMapping("api/establishment")
 public class EstablishmentController {
 
     private EstablishmentCrudServiceImpl establishmentService;

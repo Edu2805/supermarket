@@ -113,10 +113,10 @@ CREATE TABLE IF NOT EXISTS job_position (
 );
 
 CREATE TABLE IF NOT EXISTS user_data (
-  id UUID NOT NULL,
+   id UUID NOT NULL,
    user_name VARCHAR(50) NOT NULL,
-   password VARCHAR(8) NOT NULL,
-   role INTEGER NOT NULL,
+   password VARCHAR(100) NOT NULL,
+   role VARCHAR(50) NOT NULL,
    registration_date TIMESTAMP WITHOUT TIME ZONE NOT NULL,
    is_employee BOOLEAN NOT NULL,
    CONSTRAINT pk_user_data PRIMARY KEY (id)

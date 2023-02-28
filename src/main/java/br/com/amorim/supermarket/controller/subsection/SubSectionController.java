@@ -26,7 +26,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 @AllArgsConstructor
 
 @RestController
-@RequestMapping("subsection")
+@RequestMapping("api/subsection")
 public class SubSectionController {
 
     private SubSectionCrudServiceImpl subSectionService;

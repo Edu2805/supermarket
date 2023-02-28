@@ -26,7 +26,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 @AllArgsConstructor
 
 @RestController
-@RequestMapping("mainsection")
+@RequestMapping("api/mainsection")
 public class MainSectionController {
 
     private MainSectionCrudServiceImpl mainSectionService;

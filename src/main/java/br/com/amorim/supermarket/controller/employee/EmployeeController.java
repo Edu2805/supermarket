@@ -27,7 +27,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 @AllArgsConstructor
 
 @RestController
-@RequestMapping("employee")
+@RequestMapping("api/employee")
 public class EmployeeController {
 
     private EmployeeCrudServiceImpl employeeService;
