@@ -19,7 +19,7 @@ public class UserDataTest {
         userData.setUserName(String.valueOf(name));
         userData.setPassword("123456");
         userData.setRole(RoleType.ADMIN);
-        userData.setIsEmployee(true);
+        userData.setIsEmployee(false);
         userData.setRegistrationDate(Timestamp.from(Instant.now()));
         return userData;
     }
