@@ -17,7 +17,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import static br.com.amorim.supermarket.configuration.security.roles.RoleType.*;
+import static br.com.amorim.supermarket.configuration.security.roles.RoleType.ADMIN;
+import static br.com.amorim.supermarket.configuration.security.roles.RoleType.BUYER;
+import static br.com.amorim.supermarket.configuration.security.roles.RoleType.DEPARTMENT_MANAGER;
+import static br.com.amorim.supermarket.configuration.security.roles.RoleType.EMPLOYEE;
+import static br.com.amorim.supermarket.configuration.security.roles.RoleType.HEAD;
+import static br.com.amorim.supermarket.configuration.security.roles.RoleType.HR;
+import static br.com.amorim.supermarket.configuration.security.roles.RoleType.MANAGER;
+import static br.com.amorim.supermarket.configuration.security.roles.RoleType.SECTION_MANAGER;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
