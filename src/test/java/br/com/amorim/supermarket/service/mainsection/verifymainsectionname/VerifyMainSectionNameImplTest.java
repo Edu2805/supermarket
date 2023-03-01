@@ -55,7 +55,7 @@ class VerifyMainSectionNameImplTest {
     }
 
     @Test
-    void shouldReturnAExceptionMessageWhenDepartmentNameAlreadyExistsBeforeSave() {
+    void shouldReturnAExceptionMessageWhenMainSectionNameAlreadyExistsBeforeSave() {
         when(mainSectionRepository.existsByName(mainSection1.getName()))
                 .thenReturn(true);
 
@@ -67,7 +67,7 @@ class VerifyMainSectionNameImplTest {
     }
 
     @Test
-    void shouldReturnFalseWhenDepartmentNameNotExistsBeforeUpdate() {
+    void shouldReturnFalseWhenMainSectionNameNotExistsBeforeUpdate() {
         List<MainSection> mainSectionList = new ArrayList<>();
         mainSectionList.add(mainSection1);
         when(mainSectionRepository.findAll()).thenReturn(mainSectionList);
