@@ -8,7 +8,8 @@ public enum RoleType {
     DEPARTMENT_MANAGER("DEPARTMENT_MANAGER"),
     MANAGER("MANAGER"),
     BUYER("BUYER"),
-    HEAD("HEAD");
+    HEAD("HEAD"),
+    HR("HR");
 
     public final String role;
 
