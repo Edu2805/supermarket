@@ -1,4 +1,4 @@
-package br.com.amorim.supermarket.controller.exception;
+package br.com.amorim.supermarket.controller.common.exception;
 
 import br.com.amorim.supermarket.common.exception.ApiErros;
 import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleException;
