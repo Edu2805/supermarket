@@ -1,52 +1,30 @@
 package br.com.amorim.supermarket.repository.jobposition.generateinternalcoderepositorycustom;
 
-import br.com.amorim.supermarket.SupermarketApplication;
 import br.com.amorim.supermarket.model.jobposition.JobPosition;
 import br.com.amorim.supermarket.model.otheraddition.OtherAddition;
 import br.com.amorim.supermarket.model.otherdiscount.OtherDiscount;
 import br.com.amorim.supermarket.model.salary.Salary;
-import br.com.amorim.supermarket.repository.employee.EmployeeRepository;
-import br.com.amorim.supermarket.repository.jobposition.JobPositionRepository;
-import br.com.amorim.supermarket.repository.otheraddition.OtherAdditionRepository;
-import br.com.amorim.supermarket.repository.otherdiscount.OtherDiscountRepository;
-import br.com.amorim.supermarket.repository.salary.SalaryRepository;
 import br.com.amorim.supermarket.testutils.generateentitiesrepositorytest.GenerateEntitiesRepositoryUtils;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.math.BigInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@TestPropertySource("classpath:application.properties")
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes= SupermarketApplication.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureTestDatabase
 class GenerateInternalCodeJobPositionRepositoryCustomImplTest {
 
     @Autowired
-    private GenerateInternalCodeJobPositionRepositoryCustomImpl generateInternalCodeJobPositionRepositoryCustom;
-    @Autowired
-    private EntityManager entityManager;
-    @Autowired
     private GenerateEntitiesRepositoryUtils generateEntitiesRepository;
-    @Autowired
-    private JobPositionRepository jobPositionRepository;
-    @Autowired
-    private OtherAdditionRepository otherAdditionRepository;
-    @Autowired
-    private OtherDiscountRepository otherDiscountRepository;
-    @Autowired
-    private SalaryRepository salaryRepository;
-    @Autowired
-    private EmployeeRepository employeeRepository;
 
     private OtherAddition otherAddition1;
     private OtherAddition otherAddition2;
@@ -78,29 +56,7 @@ class GenerateInternalCodeJobPositionRepositoryCustomImplTest {
 
     @BeforeEach
     void setUp() {
-        employeeRepository.deleteAll();
-        jobPositionRepository.deleteAll();
         startJobPosition();
-    }
-
-    private void deleteJobPosition() {
-        otherAdditionRepository.delete(otherAddition1);
-        otherAdditionRepository.delete(otherAddition2);
-        otherAdditionRepository.delete(otherAddition3);
-        otherDiscountRepository.delete(otherDiscount1);
-        otherDiscountRepository.delete(otherDiscount2);
-        otherDiscountRepository.delete(otherDiscount3);
-        salaryRepository.delete(salary1);
-        salaryRepository.delete(salary2);
-        salaryRepository.delete(salary3);
-        jobPositionRepository.delete(jobPosition1);
-        jobPositionRepository.delete(jobPosition2);
-        jobPositionRepository.delete(jobPosition3);
-    }
-
-    @AfterEach
-    void cleanUp() {
-        deleteJobPosition();
     }
 
     @Transactional

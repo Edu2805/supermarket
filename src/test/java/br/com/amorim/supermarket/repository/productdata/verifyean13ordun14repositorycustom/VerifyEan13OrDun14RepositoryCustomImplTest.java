@@ -1,20 +1,18 @@
 package br.com.amorim.supermarket.repository.productdata.verifyean13ordun14repositorycustom;
 
-import br.com.amorim.supermarket.SupermarketApplication;
 import br.com.amorim.supermarket.common.enums.UnityType;
 import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
 
 import br.com.amorim.supermarket.testutils.generateentitiesrepositorytest.GenerateEntitiesRepositoryUtils;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.ExtendWith;
 
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
@@ -23,9 +21,9 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@TestPropertySource("classpath:application.properties")
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes= SupermarketApplication.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureTestDatabase
 class VerifyEan13OrDun14RepositoryCustomImplTest {
 
     @Autowired
@@ -149,23 +147,9 @@ class VerifyEan13OrDun14RepositoryCustomImplTest {
         productData6.setSubSection(generateSubsection);
     }
 
-    private void deleteProduct() {
-        productDataRepository.delete(productData1);
-        productDataRepository.delete(productData2);
-        productDataRepository.delete(productData3);
-        productDataRepository.delete(productData4);
-        productDataRepository.delete(productData5);
-        productDataRepository.delete(productData6);
-    }
-
     @BeforeEach
     public void setUp() {
         this.startProduct();
-    }
-
-    @AfterEach
-    public void cleanUp() {
-        this.deleteProduct();
     }
 
     @Transactional

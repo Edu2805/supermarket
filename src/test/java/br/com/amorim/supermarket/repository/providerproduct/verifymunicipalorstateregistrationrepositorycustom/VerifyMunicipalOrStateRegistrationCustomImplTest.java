@@ -1,34 +1,29 @@
 package br.com.amorim.supermarket.repository.providerproduct.verifymunicipalorstateregistrationrepositorycustom;
 
-import br.com.amorim.supermarket.SupermarketApplication;
 import br.com.amorim.supermarket.common.enums.SubscriptionType;
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
-import br.com.amorim.supermarket.repository.providerproduct.ProviderProductRepository;
 import br.com.amorim.supermarket.testutils.generatedocument.GenerateCNPJ;
 import br.com.amorim.supermarket.testutils.generateentitiesrepositorytest.GenerateEntitiesRepositoryUtils;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@TestPropertySource("classpath:application.properties")
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes= SupermarketApplication.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureTestDatabase
 class VerifyMunicipalOrStateRegistrationCustomImplTest {
 
     @Autowired
     private VerifyMunicipalOrStateRegistrationProviderProductRepositoryCustomImpl verifyMunicipalOrStateRegistrationCustom;
-    @Autowired
-    private ProviderProductRepository providerProductRepository;
     @Autowired
     private GenerateEntitiesRepositoryUtils generateEntities;
 
@@ -63,19 +58,9 @@ class VerifyMunicipalOrStateRegistrationCustomImplTest {
         providerProduct2.setSubscriptionNumber(generateCNPJ.cnpj(false));
     }
 
-    private void deleteProvide () {
-        providerProductRepository.delete(providerProduct1);
-        providerProductRepository.delete(providerProduct2);
-    }
-
     @BeforeEach
     void setUp() {
         startProvide();
-    }
-
-    @AfterEach
-    void cleanUp() {
-        deleteProvide();
     }
 
     @Transactional

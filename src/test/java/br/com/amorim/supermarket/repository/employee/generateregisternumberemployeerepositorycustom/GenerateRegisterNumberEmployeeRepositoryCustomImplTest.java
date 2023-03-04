@@ -1,6 +1,5 @@
 package br.com.amorim.supermarket.repository.employee.generateregisternumberemployeerepositorycustom;
 
-import br.com.amorim.supermarket.SupermarketApplication;
 import br.com.amorim.supermarket.model.department.Department;
 import br.com.amorim.supermarket.model.employee.Employee;
 import br.com.amorim.supermarket.model.establishment.Establishment;
@@ -12,66 +11,27 @@ import br.com.amorim.supermarket.model.person.Person;
 import br.com.amorim.supermarket.model.salary.Salary;
 import br.com.amorim.supermarket.model.subsection.SubSection;
 import br.com.amorim.supermarket.model.userdata.UserData;
-import br.com.amorim.supermarket.repository.department.DepartmentRepository;
-import br.com.amorim.supermarket.repository.employee.EmployeeRepository;
-import br.com.amorim.supermarket.repository.establishment.EstablishmentRepository;
-import br.com.amorim.supermarket.repository.jobposition.JobPositionRepository;
-import br.com.amorim.supermarket.repository.mainsection.MainSectionRepository;
-import br.com.amorim.supermarket.repository.otheraddition.OtherAdditionRepository;
-import br.com.amorim.supermarket.repository.otherdiscount.OtherDiscountRepository;
-import br.com.amorim.supermarket.repository.person.PersonRepository;
-import br.com.amorim.supermarket.repository.salary.SalaryRepository;
-import br.com.amorim.supermarket.repository.subsection.SubSectionRepository;
-import br.com.amorim.supermarket.repository.userdata.UserDataRepository;
 import br.com.amorim.supermarket.testutils.generateentitiesrepositorytest.GenerateEntitiesRepositoryUtils;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.math.BigInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@TestPropertySource("classpath:application.properties")
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes= SupermarketApplication.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureTestDatabase
 class GenerateRegisterNumberEmployeeRepositoryCustomImplTest {
 
     @Autowired
-    private GenerateRegisterNumberEmployeeRepositoryCustomImpl generateRegisterNumberEmployeeRepositoryCustom;
-    @Autowired
-    private EstablishmentRepository establishmentRepository;
-    @Autowired
-    private DepartmentRepository departmentRepository;
-    @Autowired
-    private UserDataRepository userDataRepository;
-    @Autowired
-    private MainSectionRepository mainSectionRepository;
-    @Autowired
-    private PersonRepository personRepository;
-    @Autowired
-    private SubSectionRepository subSectionRepository;
-    @Autowired
-    private SalaryRepository salaryRepository;
-    @Autowired
-    private JobPositionRepository jobPositionRepository;
-    @Autowired
-    private EmployeeRepository employeeRepository;
-    @Autowired
-    private EntityManager entityManager;
-    @Autowired
     private GenerateEntitiesRepositoryUtils generateEntitiesRepository;
-    @Autowired
-    private OtherAdditionRepository otherAdditionRepository;
-    @Autowired
-    private OtherDiscountRepository otherDiscountRepository;
 
     private Employee employee1;
     private Employee employee2;
@@ -112,35 +72,9 @@ class GenerateRegisterNumberEmployeeRepositoryCustomImplTest {
         employee3 = generateEntitiesRepository.generateEmployee(person3, subSection, jobPosition);
     }
 
-    private void deleteEmployee() {
-        establishmentRepository.delete(establishment);
-        departmentRepository.delete(department);
-        userDataRepository.delete(userData1);
-        userDataRepository.delete(userData2);
-        userDataRepository.delete(userData3);
-        mainSectionRepository.delete(mainSection);
-        personRepository.delete(person1);
-        personRepository.delete(person2);
-        personRepository.delete(person3);
-        subSectionRepository.delete(subSection);
-        otherAdditionRepository.delete(otherAddition);
-        otherDiscountRepository.delete(otherDiscount);
-        salaryRepository.delete(salary);
-        jobPositionRepository.delete(jobPosition);
-        employeeRepository.delete(employee1);
-        employeeRepository.delete(employee2);
-        employeeRepository.delete(employee3);
-    }
-
     @BeforeEach
     void setUp() {
-        employeeRepository.deleteAll();
         startEmployee();
-    }
-
-    @AfterEach
-    void cleanUp() {
-        deleteEmployee();
     }
 
     @Transactional

@@ -1,47 +1,27 @@
 package br.com.amorim.supermarket.repository.establishment.verifycnpjrepositorycustom;
 
-import br.com.amorim.supermarket.SupermarketApplication;
 import br.com.amorim.supermarket.model.establishment.Establishment;
-import br.com.amorim.supermarket.repository.department.DepartmentRepository;
-import br.com.amorim.supermarket.repository.employee.EmployeeRepository;
-import br.com.amorim.supermarket.repository.establishment.EstablishmentRepository;
-import br.com.amorim.supermarket.repository.mainsection.MainSectionRepository;
-import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
-import br.com.amorim.supermarket.repository.subsection.SubSectionRepository;
 import br.com.amorim.supermarket.testutils.generateentitiesrepositorytest.GenerateEntitiesRepositoryUtils;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@TestPropertySource("classpath:application.properties")
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes= SupermarketApplication.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureTestDatabase
 class VerifyCnpjEstablishmentRepositoryCustomImplTest {
 
     @Autowired
     private VerifyCnpjEstablishmentRepositoryCustomImpl verifyCnpjEstablishmentRepositoryCustom;
-    @Autowired
-    private EstablishmentRepository establishmentRepository;
-    @Autowired
-    private DepartmentRepository departmentRepository;
-    @Autowired
-    private MainSectionRepository mainSectionRepository;
-    @Autowired
-    private SubSectionRepository subSectionRepository;
-    @Autowired
-    private ProductDataRepository productDataRepository;
-    @Autowired
-    EmployeeRepository employeeRepository;
     @Autowired
     private GenerateEntitiesRepositoryUtils generateEntitiesRepository;
 
@@ -59,25 +39,9 @@ class VerifyCnpjEstablishmentRepositoryCustomImplTest {
         establishment2.setManager("Senhor dos Testes");
     }
 
-    private void deleteEstablishment() {
-        establishmentRepository.delete(establishment1);
-        establishmentRepository.delete(establishment2);
-    }
-
     @BeforeEach
     void setUp() {
-        employeeRepository.deleteAll();
-        establishmentRepository.deleteAll();
-        departmentRepository.deleteAll();
-        mainSectionRepository.deleteAll();
-        subSectionRepository.deleteAll();
-        productDataRepository.deleteAll();
         startEstablishment();
-    }
-
-    @AfterEach
-    void cleanUp() {
-        deleteEstablishment();
     }
 
     @Transactional

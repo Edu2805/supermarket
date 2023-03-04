@@ -1,36 +1,26 @@
 package br.com.amorim.supermarket.repository.providerproduct.generateinternalcoderepositorycustom;
 
-import br.com.amorim.supermarket.SupermarketApplication;
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
-import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
-import br.com.amorim.supermarket.repository.providerproduct.ProviderProductRepository;
 import br.com.amorim.supermarket.testutils.generateentitiesrepositorytest.GenerateEntitiesRepositoryUtils;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 import java.math.BigInteger;
 
-@TestPropertySource("classpath:application.properties")
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes= SupermarketApplication.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureTestDatabase
 class GenerateInternalCodeProviderProductRepositoryCustomImplTest {
 
     @Autowired
-    private GenerateInternalCodeProviderProductRepositoryCustomImpl generateInternalCodeProviderProductRepositoryCustom;
-    @Autowired
-    private ProviderProductRepository providerProductRepository;
-    @Autowired
     private GenerateEntitiesRepositoryUtils generateEntities;
-    @Autowired
-    private ProductDataRepository productDataRepository;
 
     private ProviderProduct providerProduct1;
     private ProviderProduct providerProduct2;
@@ -42,22 +32,9 @@ class GenerateInternalCodeProviderProductRepositoryCustomImplTest {
         providerProduct3 = generateEntities.generateProvider();
     }
 
-    private void deleteProvide () {
-        providerProductRepository.delete(providerProduct1);
-        providerProductRepository.delete(providerProduct2);
-        providerProductRepository.delete(providerProduct3);
-    }
-
     @BeforeEach
     void setUp() {
-        productDataRepository.deleteAll();
-        providerProductRepository.deleteAll();
         startProvide();
-    }
-
-    @AfterEach
-    void cleanUp() {
-        deleteProvide();
     }
 
     @Transactional

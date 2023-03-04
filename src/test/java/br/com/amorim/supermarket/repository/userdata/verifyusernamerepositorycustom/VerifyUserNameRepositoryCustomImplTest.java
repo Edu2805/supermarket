@@ -1,30 +1,25 @@
 package br.com.amorim.supermarket.repository.userdata.verifyusernamerepositorycustom;
 
-import br.com.amorim.supermarket.SupermarketApplication;
 import br.com.amorim.supermarket.model.userdata.UserData;
-import br.com.amorim.supermarket.repository.userdata.UserDataRepository;
 import br.com.amorim.supermarket.testutils.generateentitiesrepositorytest.GenerateEntitiesRepositoryUtils;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@TestPropertySource("classpath:application.properties")
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes= SupermarketApplication.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureTestDatabase
 class VerifyUserNameRepositoryCustomImplTest {
 
     @Autowired
     private VerifyUserNameRepositoryCustomImpl verifyUserNameRepositoryCustom;
-    @Autowired
-    private UserDataRepository userDataRepository;
     @Autowired
     private GenerateEntitiesRepositoryUtils generateEntitiesRepositoryUtils;
 
@@ -39,19 +34,9 @@ class VerifyUserNameRepositoryCustomImplTest {
         userData2 = generateEntitiesRepositoryUtils.generateUserData();
     }
 
-    private void deleteUserData() {
-        userDataRepository.delete(userData1);
-        userDataRepository.delete(userData2);
-    }
-
     @BeforeEach
     void setUp() {
         startUserData();
-    }
-
-    @AfterEach
-    void cleanUp() {
-        deleteUserData();
     }
 
     @Test

@@ -13,8 +13,8 @@ ALTER TABLE IF EXISTS job_position ADD CONSTRAINT unique_name_job_position UNIQU
 ALTER TABLE IF EXISTS job_position ADD CONSTRAINT unique_code_job_position UNIQUE (code);
 ALTER TABLE IF EXISTS main_section ADD CONSTRAINT unique_name_mainsection UNIQUE (name);
 ALTER TABLE IF EXISTS main_section ADD CONSTRAINT unique_code_mainsection UNIQUE (code);
-ALTER TABLE IF EXISTS product_data ADD CONSTRAINT unique_EAN_13_product_data UNIQUE (EAN_13);
-ALTER TABLE IF EXISTS product_data ADD CONSTRAINT unique_DUN_14_product_data UNIQUE (DUN_14);
+ALTER TABLE IF EXISTS product_data ADD CONSTRAINT unique_ean13_product_data UNIQUE (ean_13);
+ALTER TABLE IF EXISTS product_data ADD CONSTRAINT unique_dun14_product_data UNIQUE (dun_14);
 ALTER TABLE IF EXISTS product_data ADD CONSTRAINT unique_code_product_data UNIQUE (code);
 ALTER TABLE IF EXISTS subsection ADD CONSTRAINT unique_name_subsection UNIQUE (name);
 ALTER TABLE IF EXISTS subsection ADD CONSTRAINT unique_code_subsection UNIQUE (code);
