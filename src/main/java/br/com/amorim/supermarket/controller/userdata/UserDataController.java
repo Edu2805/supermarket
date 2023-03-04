@@ -64,6 +64,11 @@ public class UserDataController {
         throw new ResponseStatusException(UNAUTHORIZED);
     }
 
+    @GetMapping("/hr/{id}")
+    public UserData getUser (@PathVariable UUID id) {
+        return userDataService.findById(id);
+    }
+
     @PostMapping
     @ResponseStatus(CREATED)
     public UserData save (@RequestBody @Valid UserDataDTO userDataDTO) {
