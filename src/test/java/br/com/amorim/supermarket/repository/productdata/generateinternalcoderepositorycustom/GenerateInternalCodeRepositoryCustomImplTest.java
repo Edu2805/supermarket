@@ -1,31 +1,28 @@
 package br.com.amorim.supermarket.repository.productdata.generateinternalcoderepositorycustom;
 
-import br.com.amorim.supermarket.SupermarketApplication;
 import br.com.amorim.supermarket.common.enums.UnityType;
 import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
 import br.com.amorim.supermarket.testutils.generateentitiesrepositorytest.GenerateEntitiesRepositoryUtils;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Random;
 
-import static java.util.UUID.randomUUID;
 
-@TestPropertySource("classpath:application.properties")
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes= SupermarketApplication.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureTestDatabase
 class GenerateInternalCodeRepositoryCustomImplTest {
 
     @Autowired
@@ -38,7 +35,6 @@ class GenerateInternalCodeRepositoryCustomImplTest {
     private ProductData productData1;
     private ProductData productData2;
     private ProductData productData3;
-    public static final java.util.UUID UUID_1 = randomUUID();
     public static final String NAME_1 = "Produto teste 1";
     public static final String NAME_2 = "Produto teste 2";
     public static final String NAME_3 = "Produto teste 3";
@@ -98,21 +94,10 @@ class GenerateInternalCodeRepositoryCustomImplTest {
         productData3.setSubSection(generateSubsection);
     }
 
-    private void deleteProduct() {
-        productDataRepository.delete(productData1);
-        productDataRepository.delete(productData2);
-        productDataRepository.delete(productData3);
-    }
-
     @BeforeEach
     void setUp() {
         productDataRepository.deleteAll();
         startProduct();
-    }
-
-    @AfterEach
-    void cleanUp() {
-        deleteProduct();
     }
 
     @Transactional

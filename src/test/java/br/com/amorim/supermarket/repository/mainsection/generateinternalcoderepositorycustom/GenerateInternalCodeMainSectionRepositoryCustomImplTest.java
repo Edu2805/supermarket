@@ -1,52 +1,29 @@
 package br.com.amorim.supermarket.repository.mainsection.generateinternalcoderepositorycustom;
 
-import br.com.amorim.supermarket.SupermarketApplication;
 import br.com.amorim.supermarket.model.department.Department;
 import br.com.amorim.supermarket.model.establishment.Establishment;
 import br.com.amorim.supermarket.model.mainsection.MainSection;
-import br.com.amorim.supermarket.repository.department.DepartmentRepository;
-import br.com.amorim.supermarket.repository.employee.EmployeeRepository;
-import br.com.amorim.supermarket.repository.establishment.EstablishmentRepository;
-import br.com.amorim.supermarket.repository.mainsection.MainSectionRepository;
-import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
-import br.com.amorim.supermarket.repository.subsection.SubSectionRepository;
 import br.com.amorim.supermarket.testutils.generateentitiesrepositorytest.GenerateEntitiesRepositoryUtils;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 import java.math.BigInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@TestPropertySource("classpath:application.properties")
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes= SupermarketApplication.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureTestDatabase
 class GenerateInternalCodeMainSectionRepositoryCustomImplTest {
 
     @Autowired
-    private GenerateInternalCodeMainSectionRepositoryCustomImpl generateInternalCodeMainSectionRepositoryCustom;
-    @Autowired
-    private MainSectionRepository mainSectionRepository;
-    @Autowired
-    private DepartmentRepository departmentRepository;
-    @Autowired
-    private EstablishmentRepository establishmentRepository;
-    @Autowired
     private GenerateEntitiesRepositoryUtils generateEntitiesRepositoryUtils;
-    @Autowired
-    private SubSectionRepository subSectionRepository;
-    @Autowired
-    private EmployeeRepository employeeRepository;
-    @Autowired
-    private ProductDataRepository productDataRepository;
-
     private MainSection mainSection1;
     private MainSection mainSection2;
     private MainSection mainSection3;
@@ -61,26 +38,9 @@ class GenerateInternalCodeMainSectionRepositoryCustomImplTest {
         mainSection3 = generateEntitiesRepositoryUtils.generateMainsection(department);
     }
 
-    private void deleteMainSection() {
-        mainSectionRepository.delete(mainSection1);
-        mainSectionRepository.delete(mainSection2);
-        mainSectionRepository.delete(mainSection3);
-        departmentRepository.delete(department);
-        establishmentRepository.delete(establishment);
-    }
-
     @BeforeEach
     void setUp() {
-        employeeRepository.deleteAll();
-        productDataRepository.deleteAll();
-        subSectionRepository.deleteAll();
-        mainSectionRepository.deleteAll();
         startMainSection();
-    }
-
-    @AfterEach
-    void cleanUp() {
-        deleteMainSection();
     }
 
     @Transactional

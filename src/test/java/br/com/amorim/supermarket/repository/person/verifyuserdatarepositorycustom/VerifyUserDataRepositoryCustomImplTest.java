@@ -1,35 +1,30 @@
 package br.com.amorim.supermarket.repository.person.verifyuserdatarepositorycustom;
 
-import br.com.amorim.supermarket.SupermarketApplication;
 import br.com.amorim.supermarket.model.person.Person;
 import br.com.amorim.supermarket.model.userdata.UserData;
-import br.com.amorim.supermarket.repository.person.PersonRepository;
 import br.com.amorim.supermarket.testutils.generateentitiesrepositorytest.GenerateEntitiesRepositoryUtils;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@TestPropertySource("classpath:application.properties")
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes= SupermarketApplication.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureTestDatabase
 class VerifyUserDataRepositoryCustomImplTest {
 
     @Autowired
     private VerifyUserDataRepositoryCustomImpl verifyUserDataRepositoryCustom;
     @Autowired
     private GenerateEntitiesRepositoryUtils generateEntitiesRepositoryUtils;
-    @Autowired
-    private PersonRepository personRepository;
     private Person person1;
     private Person person2;
     private UserData userData1;
@@ -47,18 +42,9 @@ class VerifyUserDataRepositoryCustomImplTest {
         person2 = generateEntitiesRepositoryUtils.generatePerson(userData2);
     }
 
-    private void deletePerson () {
-        personRepository.delete(person1);
-    }
-
     @BeforeEach
     void setUp() {
         startPerson();
-    }
-
-    @AfterEach
-    void cleanUp() {
-        deletePerson();
     }
 
     @Test
