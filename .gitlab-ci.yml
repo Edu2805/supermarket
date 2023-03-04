@@ -23,7 +23,7 @@ test:
 
 build:
   stage: build
-  script: ./mvnw package -DskipTests
+  script: ./mvnw package
   artifacts:
     paths:
       - target/supermarket-0.0.1-SNAPSHOT.jar
