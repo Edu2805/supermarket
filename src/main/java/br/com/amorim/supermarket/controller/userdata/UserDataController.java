@@ -2,17 +2,18 @@ package br.com.amorim.supermarket.controller.userdata;
 
 import br.com.amorim.supermarket.common.exception.invalidpasswordexception.InvalidPasswordException;
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
-import br.com.amorim.supermarket.controller.userdata.dto.ConverterUserDataMapper;
-import br.com.amorim.supermarket.controller.userdata.dto.CredentialsDTO;
-import br.com.amorim.supermarket.controller.userdata.dto.TokenDTO;
-import br.com.amorim.supermarket.controller.userdata.dto.UserDataDTO;
+import br.com.amorim.supermarket.controller.common.accessrestriction.AccessRestriction;
+import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.ConverterUserDataRequestMapper;
+import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.CredentialsDTO;
+import br.com.amorim.supermarket.controller.userdata.dto.responseconfigurationdto.ConverterUserDataResponseMapper;
+import br.com.amorim.supermarket.controller.userdata.dto.responseconfigurationdto.TokenDTO;
+import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.UserDataDTO;
+import br.com.amorim.supermarket.controller.userdata.dto.responseconfigurationdto.UserDataResponseDTO;
 import br.com.amorim.supermarket.model.userdata.UserData;
 import br.com.amorim.supermarket.service.jwt.JwtService;
 import br.com.amorim.supermarket.service.userdata.UserDataCrudServiceImpl;
-import br.com.amorim.supermarket.service.userdata.userdetail.UserLoginServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,9 +38,10 @@ import static org.springframework.http.HttpStatus.*;
 public class UserDataController {
 
     private UserDataCrudServiceImpl userDataService;
-    private UserLoginServiceImpl userLoginService;
     private JwtService jwtService;
-    private ConverterUserDataMapper converterUserDataMapper;
+    private ConverterUserDataRequestMapper converterUserDataMapper;
+    private AccessRestriction accessRestriction;
+    private ConverterUserDataResponseMapper converterUserDataResponseMapper;
 
     @GetMapping
     public Page<UserData> findAll (@RequestParam(
@@ -54,8 +56,12 @@ public class UserDataController {
     }
 
     @GetMapping("/{id}")
-    public UserData getById (@PathVariable UUID id) {
-        return userDataService.findById(id);
+    public UserDataResponseDTO getById (@PathVariable UUID id) {
+        if(accessRestriction.isAuthorized(id)) {
+            var findUser = userDataService.findById(id);
+            return converterUserDataResponseMapper.getUserDataMapper(findUser);
+        }
+        throw new ResponseStatusException(UNAUTHORIZED);
     }
 
     @PostMapping
@@ -67,13 +73,12 @@ public class UserDataController {
     }
 
     @PostMapping("auth")
-    public TokenDTO authenticate(@RequestBody CredentialsDTO credentialsDTO) {
+    public TokenDTO authenticate(@RequestBody @Valid CredentialsDTO credentialsDTO) {
         try {
             UserData userData = UserData.builder()
                     .userName(credentialsDTO.getLogin())
                     .password(credentialsDTO.getPassword())
                     .build();
-            UserDetails userAuth = userLoginService.authenticate(userData);
             var token = jwtService.generateToken(userData);
             return new TokenDTO(userData.getUserName(), token);
         } catch (NotFoundException | InvalidPasswordException e) {

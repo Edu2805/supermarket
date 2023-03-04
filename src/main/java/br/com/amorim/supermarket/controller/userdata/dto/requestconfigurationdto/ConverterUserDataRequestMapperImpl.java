@@ -1,4 +1,4 @@
-package br.com.amorim.supermarket.controller.userdata.dto;
+package br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto;
 
 import br.com.amorim.supermarket.model.userdata.UserData;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 
 @Component
-public class ConverterUserDataMapperImpl implements ConverterUserDataMapper {
+public class ConverterUserDataRequestMapperImpl implements ConverterUserDataRequestMapper {
 
     private ModelMapper modelMapper;
 
