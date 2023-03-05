@@ -1,5 +1,6 @@
 package br.com.amorim.supermarket.controller.department;
 
+import br.com.amorim.supermarket.configuration.security.roles.RoleType;
 import br.com.amorim.supermarket.controller.department.dto.ConvertDepartmentMapper;
 import br.com.amorim.supermarket.controller.department.dto.DepartmentDTO;
 import br.com.amorim.supermarket.model.department.Department;
