@@ -28,7 +28,7 @@ public class UserLoginServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         var userData = userDataRepository.findByUserName(username)
                 .orElseThrow(() ->
-                        new NotFoundException(USER_DATA_NOT_FOUND.message));
+                        new NotFoundException(getString(MessagesKeyType.USER_DATA_NOT_FOUND.message)));
         return User
                 .builder()
                 .username(userData.getUserName())
