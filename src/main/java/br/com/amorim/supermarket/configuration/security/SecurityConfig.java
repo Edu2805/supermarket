@@ -17,14 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import static br.com.amorim.supermarket.configuration.security.roles.RoleType.ADMIN;
-import static br.com.amorim.supermarket.configuration.security.roles.RoleType.BUYER;
-import static br.com.amorim.supermarket.configuration.security.roles.RoleType.DEPARTMENT_MANAGER;
-import static br.com.amorim.supermarket.configuration.security.roles.RoleType.EMPLOYEE;
-import static br.com.amorim.supermarket.configuration.security.roles.RoleType.HEAD;
-import static br.com.amorim.supermarket.configuration.security.roles.RoleType.HR;
-import static br.com.amorim.supermarket.configuration.security.roles.RoleType.MANAGER;
-import static br.com.amorim.supermarket.configuration.security.roles.RoleType.SECTION_MANAGER;
+import static br.com.amorim.supermarket.configuration.security.roles.RoleType.*;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -98,6 +91,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAnyRole(ADMIN.role, HEAD.role, DEPARTMENT_MANAGER.role, MANAGER.role, HR.role)
                     .antMatchers(HttpMethod.GET,"/api/user/**")
                     .hasAnyRole(ADMIN.role, HEAD.role, DEPARTMENT_MANAGER.role, MANAGER.role, HR.role)
+                .antMatchers(HttpMethod.GET,"/api/financial-statement/**")
+                .hasAnyRole(ADMIN.role, DEPARTMENT_MANAGER.role, MANAGER.role, FINANCE.role, SECTION_MANAGER.role, BUYER.role)
+                    .antMatchers(HttpMethod.GET,"/api/goods-issue/**")
+                    .hasAnyRole(ADMIN.role, DEPARTMENT_MANAGER.role, MANAGER.role, FINANCE.role, SECTION_MANAGER.role, BUYER.role)
+                .antMatchers(HttpMethod.GET,"/api/goods-receipt/**")
+                .hasAnyRole(ADMIN.role, DEPARTMENT_MANAGER.role, MANAGER.role, FINANCE.role, SECTION_MANAGER.role, BUYER.role)
+                    .antMatchers("/api/financial-statement/**")
+                    .hasAnyRole(FINANCE.role, HEAD.role)
+                .antMatchers("/api/goods-issue/**")
+                .hasAnyRole(FINANCE.role, HEAD.role)
+                    .antMatchers("/api/goods-receipt/**")
+                    .hasAnyRole(FINANCE.role, HEAD.role)
                 .antMatchers(HttpMethod.POST, "/api/user/**")
                 .permitAll()
                 .anyRequest().authenticated()

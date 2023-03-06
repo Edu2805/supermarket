@@ -44,10 +44,10 @@ public class ProductData extends CommonIdNameAndCodeEntity {
     @Column(precision = 10, scale = 2)
     private BigDecimal margin;
 
-    @Column(name = "EAN_13", length = 13)
+    @Column(name = "ean_13", length = 13)
     private String ean13;
 
-    @Column(name = "DUN_14", length = 14)
+    @Column(name = "dun_14", length = 14)
     private String dun14;
 
     @Column(nullable = false)

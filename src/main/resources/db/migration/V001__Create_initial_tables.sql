@@ -154,3 +154,48 @@ CREATE TABLE IF NOT EXISTS provider (
    responsible VARCHAR(60) NOT NULL,
    CONSTRAINT pk_provider PRIMARY KEY (id)
 );
+
+CREATE TABLE IF NOT EXISTS goods_issue (
+   id UUID NOT NULL,
+   sale_number DECIMAL NOT NULL,
+   product_description VARCHAR(50) NOT NULL,
+   bar_code VARCHAR(14) NOT NULL,
+   unity_value DECIMAL(10, 2) NOT NULL,
+   product_total DECIMAL(10, 2) NOT NULL,
+   subtotal DECIMAL(10, 2) NOT NULL,
+   total_received DECIMAL(10, 2) NOT NULL,
+   change DECIMAL(10, 2) NOT NULL,
+   CONSTRAINT pk_goods_issue PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS product_list (
+   goods_issue_id UUID NOT NULL,
+   product_list VARCHAR(255)
+);
+
+CREATE TABLE goods_receipt (
+   id UUID NOT NULL,
+   control_number DECIMAL NOT NULL,
+   invoice VARCHAR(50) NOT NULL,
+   CONSTRAINT pk_goods_receipt PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS goods_receipt_to_product_data (
+   goods_receipt_id UUID NOT NULL,
+   product_data_id UUID NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS financial_statement (
+   id UUID NOT NULL,
+   revenues DECIMAL(10, 2) NOT NULL,
+   revenue_by_department DECIMAL(10, 2) NOT NULL,
+   revenue_by_main_section DECIMAL(10, 2) NOT NULL,
+   revenue_by_subsection DECIMAL(10, 2) NOT NULL,
+   expenses DECIMAL(10, 2) NOT NULL,
+   expenses_by_department DECIMAL(10, 2) NOT NULL,
+   expenses_by_mainsection DECIMAL(10, 2) NOT NULL,
+   expenses_by_subsection DECIMAL(10, 2) NOT NULL,
+   competence_start date NOT NULL,
+   end_competence date NOT NULL,
+   CONSTRAINT pk_financial_statement PRIMARY KEY (id)
+);

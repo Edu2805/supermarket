@@ -1,0 +1,77 @@
+package br.com.amorim.supermarket.service.goodsreceipt;
+
+import br.com.amorim.supermarket.common.enums.MessagesKeyType;
+import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
+import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
+import br.com.amorim.supermarket.model.goodsreceipt.GoodsReceipt;
+import br.com.amorim.supermarket.repository.goodsreceipt.GoodsReceiptRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.UUID;
+
+import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
+
+@AllArgsConstructor
+
+@Service
+public class GoodsReceiptCrudServiceImpl implements GoodsReceiptCrudService {
+
+    private static final int DECREASE_PAGE_SIZE = 1;
+    private static final int ZERO_PAGE_SIZE = 0;
+    private GoodsReceiptRepository goodsReceiptRepository;
+    private VerifyPageSize verifyPageSize;
+
+    @Override
+    public Page<GoodsReceipt> getAll (int page, int size) {
+        if (page > ZERO_PAGE_SIZE) {
+            page -= DECREASE_PAGE_SIZE;
+        }
+        verifyPageSize.verifyPageSizeForGetAll(page, size);
+        Pageable pageableRequest = PageRequest.of(page, size);
+        return goodsReceiptRepository.findAll(pageableRequest);
+    }
+
+    @Override
+    public GoodsReceipt findById (UUID id) {
+        return goodsReceiptRepository.findById(id)
+                .orElseThrow(() -> {
+                    throw new NotFoundException(
+                            getString(MessagesKeyType.GOODS_RECEIPT_NOT_FOUND.message));
+                });
+    }
+    @Transactional
+    @Override
+    public GoodsReceipt save (GoodsReceipt goodsReceipt) {
+        return goodsReceiptRepository.save(goodsReceipt);
+    }
+
+    @Transactional
+    @Override
+    public void update (GoodsReceipt goodsReceipt, UUID id) {
+        goodsReceiptRepository.findById(id)
+                .map(existingGoodsReceipt -> {
+                    goodsReceipt.setId(existingGoodsReceipt.getId());
+                    goodsReceiptRepository.save(goodsReceipt);
+                    return existingGoodsReceipt;
+                }).orElseThrow(() ->
+                        new NotFoundException(
+                                getString(MessagesKeyType.GOODS_RECEIPT_NOT_FOUND.message)));
+    }
+
+    @Transactional
+    @Override
+    public void delete (UUID id) {
+        goodsReceiptRepository.findById(id)
+                .map(existingGoodsReceipt -> {
+                    goodsReceiptRepository.delete(existingGoodsReceipt);
+                    return existingGoodsReceipt;
+                }).orElseThrow(() ->
+                        new NotFoundException(
+                                getString(MessagesKeyType.GOODS_RECEIPT_NOT_FOUND.message)));
+    }
+}
