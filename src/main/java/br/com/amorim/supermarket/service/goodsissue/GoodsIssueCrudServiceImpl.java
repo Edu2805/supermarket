@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
@@ -47,6 +49,7 @@ public class GoodsIssueCrudServiceImpl implements GoodsIssueCrudService {
     @Transactional
     @Override
     public GoodsIssue save (GoodsIssue goodsIssue) {
+        goodsIssue.setRegistrationDate(Timestamp.valueOf(LocalDateTime.now()));
         return goodsIssueRepository.save(goodsIssue);
     }
 

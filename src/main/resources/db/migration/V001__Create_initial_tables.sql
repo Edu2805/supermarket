@@ -165,6 +165,7 @@ CREATE TABLE IF NOT EXISTS goods_issue (
    subtotal DECIMAL(10, 2) NOT NULL,
    total_received DECIMAL(10, 2) NOT NULL,
    change DECIMAL(10, 2) NOT NULL,
+   registration_date TIMESTAMP WITHOUT TIME ZONE NOT NULL,
    CONSTRAINT pk_goods_issue PRIMARY KEY (id)
 );
 
@@ -173,16 +174,22 @@ CREATE TABLE IF NOT EXISTS product_list (
    product_list VARCHAR(255)
 );
 
-CREATE TABLE goods_receipt (
+CREATE TABLE IF NOT EXISTS goods_receipt (
    id UUID NOT NULL,
    control_number DECIMAL NOT NULL,
    invoice VARCHAR(50) NOT NULL,
+   registration_date TIMESTAMP WITHOUT TIME ZONE NOT NULL,
    CONSTRAINT pk_goods_receipt PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS goods_receipt_to_product_data (
    goods_receipt_id UUID NOT NULL,
    product_data_id UUID NOT NULL
+);
+
+CREATE TABLE product_receipt_list (
+   goods_receipt_id UUID NOT NULL,
+   produc_receipt_list VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS financial_statement (
