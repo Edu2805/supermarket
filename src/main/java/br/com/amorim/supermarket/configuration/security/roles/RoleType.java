@@ -10,7 +10,8 @@ public enum RoleType {
     BUYER("BUYER"),
     HEAD("HEAD"),
     HR("HR"),
-    FINANCE("FINANCE");
+    FINANCE("FINANCE"),
+    RECEIPT("RECEIPT");
 
     public final String role;
 

@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.List;
 
 @AllArgsConstructor
@@ -49,6 +50,8 @@ public class GoodsIssue extends CommonIdEntity {
     @Column(name = "change", precision = 10, scale = 2)
     @NotNull(message = "{br.com.supermarket.GOODS_ISSUE_FIELD_CHANGE_IS_NOT_EMPTY}")
     private BigDecimal change;
+    @Column(name = "registration_date", nullable = false)
+    private Timestamp registrationDate;
     @ElementCollection
     @CollectionTable(name = "product_list")
     private List<String> productList;

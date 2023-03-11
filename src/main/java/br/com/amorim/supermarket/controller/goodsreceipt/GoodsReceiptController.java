@@ -1,5 +1,7 @@
 package br.com.amorim.supermarket.controller.goodsreceipt;
 
+import br.com.amorim.supermarket.controller.goodsreceipt.dto.ConvertGoodsReceiptMapper;
+import br.com.amorim.supermarket.controller.goodsreceipt.dto.GoodsReceiptDTO;
 import br.com.amorim.supermarket.model.goodsreceipt.GoodsReceipt;
 import br.com.amorim.supermarket.service.goodsreceipt.GoodsReceiptCrudService;
 import lombok.AllArgsConstructor;
@@ -28,6 +30,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 public class GoodsReceiptController {
 
     private GoodsReceiptCrudService goodsReceiptCrudService;
+    private ConvertGoodsReceiptMapper convertGoodsReceiptMapper;
 
     @GetMapping
     public Page<GoodsReceipt> findAll (@RequestParam(
@@ -48,14 +51,16 @@ public class GoodsReceiptController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public GoodsReceipt save (@RequestBody @Valid GoodsReceipt goodsReceipt) {
-        return goodsReceiptCrudService.save(goodsReceipt);
+    public GoodsReceipt save (@RequestBody @Valid GoodsReceiptDTO goodsReceiptDTO) {
+        var newGoodsReceipt = convertGoodsReceiptMapper.createOrUpdateGoodsReceiptMapper(goodsReceiptDTO);
+        return goodsReceiptCrudService.save(newGoodsReceipt);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void update (@RequestBody @Valid GoodsReceipt goodsReceipt, @PathVariable UUID id) {
-        goodsReceiptCrudService.update(goodsReceipt, id);
+    public void update (@RequestBody @Valid GoodsReceiptDTO goodsReceiptDTO, @PathVariable UUID id) {
+        var newGoodsReceipt = convertGoodsReceiptMapper.createOrUpdateGoodsReceiptMapper(goodsReceiptDTO);
+        goodsReceiptCrudService.update(newGoodsReceipt, id);
     }
 
     @DeleteMapping("/{id}")

@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -17,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.List;
 
 @AllArgsConstructor
@@ -34,6 +37,8 @@ public class GoodsReceipt extends CommonIdEntity {
     @Column(name = "invoice", length = 50)
     @NotNull(message = "{br.com.supermarket.GOODS_RECEIPT_FIELD_INVOICE_IS_NOT_EMPTY}")
     private String invoice;
+    @Column(name = "registration_date", nullable = false)
+    private Timestamp registrationDate;
     @OneToMany(cascade= CascadeType.MERGE, fetch=FetchType.LAZY)
     @JoinTable(
             name = "goods_receipt_to_product_data",
@@ -41,4 +46,7 @@ public class GoodsReceipt extends CommonIdEntity {
             inverseJoinColumns = @JoinColumn(name = "product_data_id")
     )
     private List<ProductData> productDataList;
+    @ElementCollection
+    @CollectionTable(name = "product_receipt_list")
+    private List<String> producReceiptList;
 }

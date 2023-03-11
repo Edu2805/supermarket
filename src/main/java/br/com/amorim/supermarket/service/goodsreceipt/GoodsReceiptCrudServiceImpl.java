@@ -5,6 +5,10 @@ import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.goodsreceipt.GoodsReceipt;
 import br.com.amorim.supermarket.repository.goodsreceipt.GoodsReceiptRepository;
+import br.com.amorim.supermarket.service.goodsreceipt.changepurchaseamount.ChangeProductPurchaseAmount;
+import br.com.amorim.supermarket.service.goodsreceipt.generatecontrolnumber.GenerateControlNumberGoodsReceipt;
+import br.com.amorim.supermarket.service.goodsreceipt.productreceiptlist.SetProductList;
+import br.com.amorim.supermarket.service.goodsreceipt.verifyinvoice.VerifyInvoice;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +16,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
@@ -25,6 +31,10 @@ public class GoodsReceiptCrudServiceImpl implements GoodsReceiptCrudService {
     private static final int ZERO_PAGE_SIZE = 0;
     private GoodsReceiptRepository goodsReceiptRepository;
     private VerifyPageSize verifyPageSize;
+    private GenerateControlNumberGoodsReceipt generateControlNumberGoodsReceipt;
+    private ChangeProductPurchaseAmount changeProductPurchaseAmount;
+    private SetProductList setProductList;
+    private VerifyInvoice verifyInvoice;
 
     @Override
     public Page<GoodsReceipt> getAll (int page, int size) {
@@ -47,7 +57,17 @@ public class GoodsReceiptCrudServiceImpl implements GoodsReceiptCrudService {
     @Transactional
     @Override
     public GoodsReceipt save (GoodsReceipt goodsReceipt) {
+        verifyInvoice.verifyInvoiceInDatabase(goodsReceipt);
+        setFields(goodsReceipt);
         return goodsReceiptRepository.save(goodsReceipt);
+    }
+
+    private void setFields(GoodsReceipt goodsReceipt) {
+        var generateRegisterNumber = generateControlNumberGoodsReceipt.generate(goodsReceipt);
+        goodsReceipt.setControlNumber(generateRegisterNumber);
+        goodsReceipt.setRegistrationDate(Timestamp.valueOf(LocalDateTime.now()));
+        setProductList.setProduct(goodsReceipt);
+        changeProductPurchaseAmount.changePurchasePrice(goodsReceipt);
     }
 
     @Transactional
