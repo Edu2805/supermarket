@@ -13,7 +13,9 @@ ALTER TABLE IF EXISTS salary_to_other_discount ADD CONSTRAINT fk_saltoothdis_on_
 ALTER TABLE IF EXISTS salary_to_other_addition ADD CONSTRAINT uc_salary_to_other_addition_other_addition UNIQUE (other_addition_id);
 ALTER TABLE IF EXISTS salary_to_other_addition ADD CONSTRAINT fk_saltoothadd_on_other_addition FOREIGN KEY (other_addition_id) REFERENCES other_addition (id);
 ALTER TABLE IF EXISTS salary_to_other_addition ADD CONSTRAINT fk_saltoothadd_on_salary FOREIGN KEY (salary_id) REFERENCES salary (id);
-ALTER TABLE IF EXISTS product_list ADD CONSTRAINT fk_product_list_on_goods_issue FOREIGN KEY (goods_issue_id) REFERENCES goods_issue (id);
+ALTER TABLE IF EXISTS product_issue_list ADD CONSTRAINT fk_product_list_on_goods_issue FOREIGN KEY (goods_issue_id) REFERENCES goods_issue (id);
 ALTER TABLE IF EXISTS product_receipt_list ADD CONSTRAINT fk_product_receipt_list_on_goods_receipt FOREIGN KEY (goods_receipt_id) REFERENCES goods_receipt (id);
 ALTER TABLE IF EXISTS goods_receipt_to_product_data ADD CONSTRAINT fk_goorectoprodat_on_goods_receipt FOREIGN KEY (goods_receipt_id) REFERENCES goods_receipt (id);
 ALTER TABLE IF EXISTS goods_receipt_to_product_data ADD CONSTRAINT fk_goorectoprodat_on_product_data FOREIGN KEY (product_data_id) REFERENCES product_data (id);
+ALTER TABLE IF EXISTS goods_issue_to_product_data ADD CONSTRAINT fk_gooisstoprodat_on_goods_issue FOREIGN KEY (goods_issue_id) REFERENCES goods_issue (id);
+ALTER TABLE IF EXISTS goods_issue_to_product_data ADD CONSTRAINT fk_gooisstoprodat_on_product_data FOREIGN KEY (product_data_id) REFERENCES product_data (id);

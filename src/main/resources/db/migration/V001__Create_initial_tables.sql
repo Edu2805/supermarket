@@ -169,7 +169,7 @@ CREATE TABLE IF NOT EXISTS goods_issue (
    CONSTRAINT pk_goods_issue PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS product_list (
+CREATE TABLE IF NOT EXISTS product_issue_list (
    goods_issue_id UUID NOT NULL,
    product_list VARCHAR(255)
 );
@@ -187,9 +187,14 @@ CREATE TABLE IF NOT EXISTS goods_receipt_to_product_data (
    product_data_id UUID NOT NULL
 );
 
-CREATE TABLE product_receipt_list (
+CREATE TABLE IF NOT EXISTS product_receipt_list (
    goods_receipt_id UUID NOT NULL,
    produc_receipt_list VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS goods_issue_to_product_data (
+   goods_issue_id UUID NOT NULL,
+   product_data_id UUID NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS financial_statement (

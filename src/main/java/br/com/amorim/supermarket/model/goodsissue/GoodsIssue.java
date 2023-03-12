@@ -1,15 +1,21 @@
 package br.com.amorim.supermarket.model.goodsissue;
 
 import br.com.amorim.supermarket.model.common.CommonIdEntity;
+import br.com.amorim.supermarket.model.productdata.ProductData;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -52,7 +58,14 @@ public class GoodsIssue extends CommonIdEntity {
     private BigDecimal change;
     @Column(name = "registration_date", nullable = false)
     private Timestamp registrationDate;
+    @OneToMany(cascade= CascadeType.MERGE, fetch=FetchType.LAZY)
+    @JoinTable(
+            name = "goods_issue_to_product_data",
+            joinColumns = @JoinColumn(name = "goods_issue_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_data_id")
+    )
+    private List<ProductData> productDataList;
     @ElementCollection
-    @CollectionTable(name = "product_list")
+    @CollectionTable(name = "product_issue_list")
     private List<String> productList;
 }
