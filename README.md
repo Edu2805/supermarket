@@ -7,6 +7,6 @@ Link GitLab Repository backend: https://gitlab.com/Edu2805/supermarket
 Link GitLab Repository frontend: https://gitlab.com/Edu2805/supermarket-frontend
 
 ### New features
-* Initial commits
+* Initial commits 
 
 ### 🚧 Project under construction 🚧
