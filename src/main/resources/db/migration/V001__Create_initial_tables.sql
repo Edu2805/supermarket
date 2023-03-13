@@ -158,18 +158,17 @@ CREATE TABLE IF NOT EXISTS provider (
 CREATE TABLE IF NOT EXISTS goods_issue (
    id UUID NOT NULL,
    sale_number DECIMAL NOT NULL,
-   product_description VARCHAR(50) NOT NULL,
-   bar_code VARCHAR(14) NOT NULL,
-   unity_value DECIMAL(10, 2) NOT NULL,
-   product_total DECIMAL(10, 2) NOT NULL,
+   products_total DECIMAL(10, 2) NOT NULL,
    subtotal DECIMAL(10, 2) NOT NULL,
    total_received DECIMAL(10, 2) NOT NULL,
    change DECIMAL(10, 2) NOT NULL,
+   is_effective_sale BOOLEAN NOT NULL,
+   payment_options_type VARCHAR NOT NULL,
    registration_date TIMESTAMP WITHOUT TIME ZONE NOT NULL,
    CONSTRAINT pk_goods_issue PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS product_list (
+CREATE TABLE IF NOT EXISTS product_issue_list (
    goods_issue_id UUID NOT NULL,
    product_list VARCHAR(255)
 );
@@ -179,6 +178,7 @@ CREATE TABLE IF NOT EXISTS goods_receipt (
    control_number DECIMAL NOT NULL,
    invoice VARCHAR(50) NOT NULL,
    registration_date TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+   is_received BOOLEAN NOT NULL,
    CONSTRAINT pk_goods_receipt PRIMARY KEY (id)
 );
 
@@ -187,9 +187,14 @@ CREATE TABLE IF NOT EXISTS goods_receipt_to_product_data (
    product_data_id UUID NOT NULL
 );
 
-CREATE TABLE product_receipt_list (
+CREATE TABLE IF NOT EXISTS product_receipt_list (
    goods_receipt_id UUID NOT NULL,
    produc_receipt_list VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS goods_issue_to_product_data (
+   goods_issue_id UUID NOT NULL,
+   product_data_id UUID NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS financial_statement (

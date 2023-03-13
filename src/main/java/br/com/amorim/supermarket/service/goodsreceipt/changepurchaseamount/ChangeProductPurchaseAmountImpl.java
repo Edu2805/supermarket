@@ -24,7 +24,7 @@ public class ChangeProductPurchaseAmountImpl implements ChangeProductPurchaseAmo
                 var calculateMargim = calculateMargin.calculate(receiptProduct);
                 productData.setMargin(calculateMargim);
                 productDataRepository.save(productData);
-               return receiptProduct;
+                return receiptProduct;
             });
         });
     }

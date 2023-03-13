@@ -1,5 +1,7 @@
 package br.com.amorim.supermarket.controller.goodsissue;
 
+import br.com.amorim.supermarket.controller.goodsissue.dto.ConvertGoodsIssueMapper;
+import br.com.amorim.supermarket.controller.goodsissue.dto.GoodsIssueDTO;
 import br.com.amorim.supermarket.model.goodsissue.GoodsIssue;
 import br.com.amorim.supermarket.service.goodsissue.GoodsIssueCrudService;
 import lombok.AllArgsConstructor;
@@ -28,6 +30,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 public class GoodsIssueController {
 
     private GoodsIssueCrudService goodsIssueCrudService;
+    private ConvertGoodsIssueMapper convertGoodsIssueMapper;
 
     @GetMapping
     public Page<GoodsIssue> findAll (@RequestParam(
@@ -48,14 +51,16 @@ public class GoodsIssueController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public GoodsIssue save (@RequestBody @Valid GoodsIssue goodsIssue) {
-        return goodsIssueCrudService.save(goodsIssue);
+    public GoodsIssue save (@RequestBody @Valid GoodsIssueDTO goodsIssueDTO) {
+        var newGoodsIssue = convertGoodsIssueMapper.createOrUpdateGoodsIssueMapper(goodsIssueDTO);
+        return goodsIssueCrudService.save(newGoodsIssue);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void update (@RequestBody @Valid GoodsIssue goodsIssue, @PathVariable UUID id) {
-        goodsIssueCrudService.update(goodsIssue, id);
+    public void update (@RequestBody @Valid GoodsIssueDTO goodsIssueDTO, @PathVariable UUID id) {
+        var updateGoodsIssue = convertGoodsIssueMapper.createOrUpdateGoodsIssueMapper(goodsIssueDTO);
+        goodsIssueCrudService.update(updateGoodsIssue, id);
     }
 
     @DeleteMapping("/{id}")
