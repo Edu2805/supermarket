@@ -155,7 +155,7 @@ CREATE TABLE IF NOT EXISTS provider (
    CONSTRAINT pk_provider PRIMARY KEY (id)
 );
 
-CREATE TABLE goods_issue (
+CREATE TABLE IF NOT EXISTS goods_issue (
    id UUID NOT NULL,
    sale_number DECIMAL NOT NULL,
    products_total DECIMAL(10, 2) NOT NULL,
