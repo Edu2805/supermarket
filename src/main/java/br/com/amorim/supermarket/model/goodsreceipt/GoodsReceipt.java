@@ -39,6 +39,9 @@ public class GoodsReceipt extends CommonIdEntity {
     private String invoice;
     @Column(name = "registration_date", nullable = false)
     private Timestamp registrationDate;
+    @Column(name = "is_received", nullable = false)
+    @NotNull(message = "{br.com.supermarket.GOODS_RECEIPT_FIELD_IS_RECEIVED_IS_NOT_EMPTY}")
+    private boolean isReceived;
     @OneToMany(cascade= CascadeType.MERGE, fetch=FetchType.LAZY)
     @JoinTable(
             name = "goods_receipt_to_product_data",

@@ -155,16 +155,15 @@ CREATE TABLE IF NOT EXISTS provider (
    CONSTRAINT pk_provider PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS goods_issue (
+CREATE TABLE goods_issue (
    id UUID NOT NULL,
    sale_number DECIMAL NOT NULL,
-   product_description VARCHAR(50) NOT NULL,
-   bar_code VARCHAR(14) NOT NULL,
-   unity_value DECIMAL(10, 2) NOT NULL,
-   product_total DECIMAL(10, 2) NOT NULL,
+   products_total DECIMAL(10, 2) NOT NULL,
    subtotal DECIMAL(10, 2) NOT NULL,
    total_received DECIMAL(10, 2) NOT NULL,
    change DECIMAL(10, 2) NOT NULL,
+   is_effective_sale BOOLEAN NOT NULL,
+   payment_options_type VARCHAR NOT NULL,
    registration_date TIMESTAMP WITHOUT TIME ZONE NOT NULL,
    CONSTRAINT pk_goods_issue PRIMARY KEY (id)
 );
@@ -179,6 +178,7 @@ CREATE TABLE IF NOT EXISTS goods_receipt (
    control_number DECIMAL NOT NULL,
    invoice VARCHAR(50) NOT NULL,
    registration_date TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+   is_received BOOLEAN NOT NULL,
    CONSTRAINT pk_goods_receipt PRIMARY KEY (id)
 );
 

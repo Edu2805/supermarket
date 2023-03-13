@@ -8,6 +8,7 @@ import br.com.amorim.supermarket.repository.goodsissue.GoodsIssueRepository;
 import br.com.amorim.supermarket.service.goodsissue.generatesalenumber.GenerateSaleNumber;
 import br.com.amorim.supermarket.service.goodsissue.productissuelist.SetProductListForSale;
 import br.com.amorim.supermarket.service.goodsissue.registerproduct.RegisterProduct;
+import br.com.amorim.supermarket.service.goodsissue.setfieldssalesummary.SetFieldsSaleSummary;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,6 +34,7 @@ public class GoodsIssueCrudServiceImpl implements GoodsIssueCrudService {
     private GenerateSaleNumber generateSaleNumber;
     private RegisterProduct registerProduct;
     private SetProductListForSale setProductListForSale;
+    private SetFieldsSaleSummary setFieldsSaleSummary;
 
     @Override
     public Page<GoodsIssue> getAll (int page, int size) {
@@ -64,6 +66,7 @@ public class GoodsIssueCrudServiceImpl implements GoodsIssueCrudService {
         var generate = this.generateSaleNumber.generate(goodsIssue);
         goodsIssue.setSaleNumber(generate);
         setProductListForSale.fillProducts(goodsIssue);
+        setFieldsSaleSummary.setFieldsSummary(goodsIssue);
         goodsIssue.setRegistrationDate(Timestamp.valueOf(LocalDateTime.now()));
     }
 
