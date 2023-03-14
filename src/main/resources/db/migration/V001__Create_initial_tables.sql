@@ -177,6 +177,7 @@ CREATE TABLE IF NOT EXISTS goods_receipt (
    id UUID NOT NULL,
    control_number DECIMAL NOT NULL,
    invoice VARCHAR(50) NOT NULL,
+   products_total DECIMAL(10, 2) NOT NULL,
    registration_date TIMESTAMP WITHOUT TIME ZONE NOT NULL,
    is_received BOOLEAN NOT NULL,
    CONSTRAINT pk_goods_receipt PRIMARY KEY (id)

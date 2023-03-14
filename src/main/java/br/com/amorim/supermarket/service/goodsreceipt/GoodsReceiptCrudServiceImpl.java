@@ -8,6 +8,7 @@ import br.com.amorim.supermarket.repository.goodsreceipt.GoodsReceiptRepository;
 import br.com.amorim.supermarket.service.goodsreceipt.changepurchaseamount.ChangeProductPurchaseAmount;
 import br.com.amorim.supermarket.service.goodsreceipt.generatecontrolnumber.GenerateControlNumberGoodsReceipt;
 import br.com.amorim.supermarket.service.goodsreceipt.productreceiptlist.SetProductList;
+import br.com.amorim.supermarket.service.goodsreceipt.totalproduct.SetFieldPurchaseSummary;
 import br.com.amorim.supermarket.service.goodsreceipt.verifyinvoice.VerifyInvoice;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -35,6 +36,7 @@ public class GoodsReceiptCrudServiceImpl implements GoodsReceiptCrudService {
     private ChangeProductPurchaseAmount changeProductPurchaseAmount;
     private SetProductList setProductList;
     private VerifyInvoice verifyInvoice;
+    private SetFieldPurchaseSummary setFieldPurchaseSummary;
 
     @Override
     public Page<GoodsReceipt> getAll (int page, int size) {
@@ -68,6 +70,7 @@ public class GoodsReceiptCrudServiceImpl implements GoodsReceiptCrudService {
         goodsReceipt.setRegistrationDate(Timestamp.valueOf(LocalDateTime.now()));
         setProductList.setProduct(goodsReceipt);
         changeProductPurchaseAmount.changePurchasePrice(goodsReceipt);
+        setFieldPurchaseSummary.setFieldsSummary(goodsReceipt);
     }
 
     @Transactional
