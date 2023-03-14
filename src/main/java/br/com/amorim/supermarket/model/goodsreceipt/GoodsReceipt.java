@@ -39,7 +39,7 @@ public class GoodsReceipt extends CommonIdEntity {
     @NotNull(message = "{br.com.supermarket.GOODS_RECEIPT_FIELD_INVOICE_IS_NOT_EMPTY}")
     private String invoice;
     @Column(name = "products_total", precision = 10, scale = 2)
-    @NotNull(message = "{br.com.supermarket.GOODS_ISSUE_FIELD_PRODUCT_TOTAL_IS_NOT_EMPTY}")
+    @NotNull(message = "{br.com.supermarket.GOODS_RECEIPT_FIELD_PRODUCT_TOTAL_IS_NOT_EMPTY}")
     private BigDecimal productsTotal;
     @Column(name = "registration_date", nullable = false)
     private Timestamp registrationDate;
