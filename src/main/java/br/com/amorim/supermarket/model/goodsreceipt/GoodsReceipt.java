@@ -18,6 +18,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.List;
@@ -37,6 +38,9 @@ public class GoodsReceipt extends CommonIdEntity {
     @Column(name = "invoice", length = 50)
     @NotNull(message = "{br.com.supermarket.GOODS_RECEIPT_FIELD_INVOICE_IS_NOT_EMPTY}")
     private String invoice;
+    @Column(name = "products_total", precision = 10, scale = 2)
+    @NotNull(message = "{br.com.supermarket.GOODS_ISSUE_FIELD_PRODUCT_TOTAL_IS_NOT_EMPTY}")
+    private BigDecimal productsTotal;
     @Column(name = "registration_date", nullable = false)
     private Timestamp registrationDate;
     @Column(name = "is_received", nullable = false)
