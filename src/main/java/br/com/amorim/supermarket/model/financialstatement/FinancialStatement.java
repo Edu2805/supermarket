@@ -9,7 +9,6 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -22,35 +21,25 @@ import java.time.LocalDate;
 @Table(name = "financial_statement")
 public class FinancialStatement extends CommonIdEntity {
 
-    @Column(name = "revenues", nullable = false, precision = 10, scale = 2)
-    @NotNull(message = "{br.com.supermarket.FINANCIAL_STATEMENT_FIELD_REVENUES_IS_NOT_EMPTY}")
+    @Column(name = "revenues", precision = 10, scale = 2)
     private BigDecimal revenues;
-    @Column(name = "revenue_by_department", nullable = false, precision = 10, scale = 2)
-    @NotNull(message = "{br.com.supermarket.FINANCIAL_STATEMENT_FIELD_REVENUE_BY_DEPARTMENT_IS_NOT_EMPTY}")
+    @Column(name = "revenue_by_department", precision = 10, scale = 2)
     private BigDecimal revenueByDepartment;
-    @Column(name = "revenue_by_mainSection", nullable = false, precision = 10, scale = 2)
-    @NotNull(message = "{br.com.supermarket.FINANCIAL_STATEMENT_FIELD_REVENUE_BY_MAIN_SECTION_IS_NOT_EMPTY}")
+    @Column(name = "revenue_by_mainSection", precision = 10, scale = 2)
     private BigDecimal revenueByMainSection;
-    @Column(name = "revenue_by_subsection", nullable = false, precision = 10, scale = 2)
-    @NotNull(message = "{br.com.supermarket.FINANCIAL_STATEMENT_FIELD_REVENUE_BY_SUB_SECTION_IS_NOT_EMPTY}")
+    @Column(name = "revenue_by_subsection", precision = 10, scale = 2)
     private BigDecimal revenueBySubSection;
-    @Column(name = "expenses", nullable = false, precision = 10, scale = 2)
-    @NotNull(message = "{br.com.supermarket.FINANCIAL_STATEMENT_FIELD_EXPENSES_IS_NOT_EMPTY}")
+    @Column(name = "expenses", precision = 10, scale = 2)
     private BigDecimal expenses;
-    @Column(name = "expenses_by_department", nullable = false, precision = 10, scale = 2)
-    @NotNull(message = "{br.com.supermarket.FINANCIAL_STATEMENT_FIELD_EXPENSES_BY_DEPARTMENT_IS_NOT_EMPTY}")
+    @Column(name = "expenses_by_department", precision = 10, scale = 2)
     private BigDecimal expensesByDepartment;
-    @Column(name = "expenses_by_mainsection", nullable = false, precision = 10, scale = 2)
-    @NotNull(message = "{br.com.supermarket.FINANCIAL_STATEMENT_FIELD_EXPENSES_BY_MAIN_SECTION_IS_NOT_EMPTY}")
+    @Column(name = "expenses_by_mainsection", precision = 10, scale = 2)
     private BigDecimal expensesByMainSection;
-    @Column(name = "expenses_by_subsection", nullable = false, precision = 10, scale = 2)
-    @NotNull(message = "{br.com.supermarket.FINANCIAL_STATEMENT_FIELD_EXPENSES_BY_SUB_SECTION_IS_NOT_EMPTY}")
+    @Column(name = "expenses_by_subsection", precision = 10, scale = 2)
     private BigDecimal expensesBySubSection;
     @Column(name = "competence_start")
-    @NotNull(message = "{br.com.supermarket.FINANCIAL_STATEMENT_FIELD_COMPETENCE_START_IS_NOT_EMPTY}")
     private LocalDate competenceStart;
     @Column(name = "end_competence")
-    @NotNull(message = "{br.com.supermarket.FINANCIAL_STATEMENT_FIELD_END_COMPETENCE_IS_NOT_EMPTY}")
     private LocalDate endCompetence;
 
 }
