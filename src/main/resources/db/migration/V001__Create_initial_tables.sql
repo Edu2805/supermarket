@@ -198,17 +198,17 @@ CREATE TABLE IF NOT EXISTS goods_issue_to_product_data (
    product_data_id UUID NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS financial_statement (
+CREATE TABLE financial_statement (
    id UUID NOT NULL,
-   revenues DECIMAL(10, 2) NOT NULL,
-   revenue_by_department DECIMAL(10, 2) NOT NULL,
-   revenue_by_main_section DECIMAL(10, 2) NOT NULL,
-   revenue_by_subsection DECIMAL(10, 2) NOT NULL,
-   expenses DECIMAL(10, 2) NOT NULL,
-   expenses_by_department DECIMAL(10, 2) NOT NULL,
-   expenses_by_mainsection DECIMAL(10, 2) NOT NULL,
-   expenses_by_subsection DECIMAL(10, 2) NOT NULL,
-   competence_start date NOT NULL,
-   end_competence date NOT NULL,
+   revenues DECIMAL(10, 2),
+   revenue_by_department DECIMAL(10, 2),
+   revenue_by_main_section DECIMAL(10, 2),
+   revenue_by_subsection DECIMAL(10, 2),
+   expenses DECIMAL(10, 2),
+   expenses_by_department DECIMAL(10, 2),
+   expenses_by_mainsection DECIMAL(10, 2),
+   expenses_by_subsection DECIMAL(10, 2),
+   competence_start date,
+   end_competence date,
    CONSTRAINT pk_financial_statement PRIMARY KEY (id)
 );
