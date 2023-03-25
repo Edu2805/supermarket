@@ -4,6 +4,6 @@ import br.com.amorim.supermarket.model.goodsreceipt.GoodsReceipt;
 
 public interface SetFieldPurchaseSummary {
 
-    void setFieldsSummary(GoodsReceipt goodsReceipt);
-    void setFieldsFinancialStatement(GoodsReceipt goodsReceipt);
+    void calculateTotalProducts(GoodsReceipt goodsReceipt);
+    void setFieldsHistoricalGoodsReceipt(GoodsReceipt goodsReceipt);
 }

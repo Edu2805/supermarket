@@ -70,8 +70,8 @@ public class GoodsReceiptCrudServiceImpl implements GoodsReceiptCrudService {
         goodsReceipt.setRegistrationDate(Timestamp.valueOf(LocalDateTime.now()));
         setProductList.setProduct(goodsReceipt);
         changeProductPurchaseAmount.changePurchasePrice(goodsReceipt);
-        setFieldPurchaseSummary.setFieldsSummary(goodsReceipt);
-        setFieldPurchaseSummary.setFieldsFinancialStatement(goodsReceipt);
+        setFieldPurchaseSummary.calculateTotalProducts(goodsReceipt);
+        setFieldPurchaseSummary.setFieldsHistoricalGoodsReceipt(goodsReceipt);
     }
 
     @Transactional

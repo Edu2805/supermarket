@@ -1,14 +1,12 @@
 package br.com.amorim.supermarket.service.goodsreceipt.totalproduct;
 
-import br.com.amorim.supermarket.model.financialstatement.FinancialStatement;
 import br.com.amorim.supermarket.model.goodsreceipt.GoodsReceipt;
-import br.com.amorim.supermarket.repository.financialstatement.FinancialStatementRepository;
+import br.com.amorim.supermarket.model.historicalgoodsreceipt.HistoricalGoodsReceipt;
+import br.com.amorim.supermarket.repository.historicalgoodsreceipt.HistoricalGoodsReceiptRepository;
 import br.com.amorim.supermarket.service.goodsreceipt.totalproduct.fieldsummary.PurchaseSummary;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
 
 @AllArgsConstructor
 
@@ -16,27 +14,34 @@ import java.time.ZoneId;
 public class SetFieldPurchaseSummaryImpl implements SetFieldPurchaseSummary {
 
     private PurchaseSummary purchaseSummary;
-    private FinancialStatementRepository financialStatementRepository;
+    private HistoricalGoodsReceiptRepository historicalGoodsReceiptRepository;
 
     @Override
-    public void setFieldsSummary(GoodsReceipt goodsReceipt) {
+    public void calculateTotalProducts(GoodsReceipt goodsReceipt) {
         var totalProducts = purchaseSummary.calculateTotalProducts(goodsReceipt);
         goodsReceipt.setProductsTotal(totalProducts);
     }
 
     @Override
-    public void setFieldsFinancialStatement(GoodsReceipt goodsReceipt) {
-        FinancialStatement financialStatement = new FinancialStatement();
-        var totalPurchases = purchaseSummary.calculateTotalProducts(goodsReceipt);
-        var totalByDepartment = purchaseSummary.calculateTotalByDepartment(goodsReceipt);
-        var totalByMainsection = purchaseSummary.calculateTotalByMainsection(goodsReceipt);
-        var totalBySubsection = purchaseSummary.calculateTotalBySubsection(goodsReceipt);
-        financialStatement.setExpenses(totalPurchases);
-        financialStatement.setExpensesByDepartment(totalByDepartment);
-        financialStatement.setExpensesByMainSection(totalByMainsection);
-        financialStatement.setExpensesBySubSection(totalBySubsection);
-        financialStatement.setCompetenceStart(LocalDate.ofInstant(goodsReceipt.getRegistrationDate().toInstant(), ZoneId.systemDefault()));
-        financialStatement.setEndCompetence(LocalDate.ofInstant(goodsReceipt.getRegistrationDate().toInstant(), ZoneId.systemDefault()));
-        financialStatementRepository.save(financialStatement);
+    public void setFieldsHistoricalGoodsReceipt(GoodsReceipt goodsReceipt) {
+        goodsReceipt.getProductDataList().forEach(product -> {
+            HistoricalGoodsReceipt historicalGoodsReceipt = new HistoricalGoodsReceipt();
+            historicalGoodsReceipt.setName(product.getName());
+            historicalGoodsReceipt.setProductCode(product.getCode());
+            historicalGoodsReceipt.setPurchasePrice(product.getPurchasePrice());
+            historicalGoodsReceipt.setInventory(product.getInventory());
+            historicalGoodsReceipt.setProviderProductName(product.getProviderProduct().getName());
+            historicalGoodsReceipt.setDepartmentName(product.getSubSection().getMainSection().getDepartment().getName());
+            historicalGoodsReceipt.setMainsectionName(product.getSubSection().getMainSection().getName());
+            historicalGoodsReceipt.setSubsectionName(product.getSubSection().getName());
+            historicalGoodsReceipt.setInvoice(goodsReceipt.getInvoice());
+            historicalGoodsReceipt.setTotalInvoice(goodsReceipt.getProductsTotal());
+            historicalGoodsReceipt.setRegistrationDate(goodsReceipt.getRegistrationDate());
+            historicalGoodsReceipt.setReceived(goodsReceipt.isReceived());
+            saveHistoricalGoodsReceipt(historicalGoodsReceipt);
+        });
+    }
+    private void saveHistoricalGoodsReceipt(HistoricalGoodsReceipt historicalGoodsReceipt) {
+        historicalGoodsReceiptRepository.save(historicalGoodsReceipt);
     }
 }
