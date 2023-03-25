@@ -198,7 +198,7 @@ CREATE TABLE IF NOT EXISTS goods_issue_to_product_data (
    product_data_id UUID NOT NULL
 );
 
-CREATE TABLE financial_statement (
+CREATE TABLE IF NOT EXISTS financial_statement (
    id UUID NOT NULL,
    revenues DECIMAL(10, 2),
    revenue_by_department DECIMAL(10, 2),
@@ -211,4 +211,21 @@ CREATE TABLE financial_statement (
    competence_start date,
    end_competence date,
    CONSTRAINT pk_financial_statement PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS historical_goods_receipt (
+   id UUID NOT NULL,
+   name VARCHAR(50) NOT NULL,
+   code DECIMAL NOT NULL,
+   product_code DECIMAL,
+   purchase_price DECIMAL,
+   inventory DECIMAL,
+   departmente_name VARCHAR(255),
+   mainsection_name VARCHAR(255),
+   subsection_name VARCHAR(255),
+   invoice VARCHAR(255),
+   total_invoice VARCHAR(255),
+   registration_date TIMESTAMP WITHOUT TIME ZONE,
+   is_received BOOLEAN NOT NULL,
+   CONSTRAINT pk_historical_goods_receipt PRIMARY KEY (id)
 );
