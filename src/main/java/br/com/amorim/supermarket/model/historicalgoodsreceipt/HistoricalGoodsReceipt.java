@@ -1,6 +1,6 @@
 package br.com.amorim.supermarket.model.historicalgoodsreceipt;
 
-import br.com.amorim.supermarket.model.common.CommonIdNameAndCodeEntity;
+import br.com.amorim.supermarket.model.common.CommonIdAndNameEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +20,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "historical_goods_receipt")
-public class HistoricalGoodsReceipt extends CommonIdNameAndCodeEntity {
+public class HistoricalGoodsReceipt extends CommonIdAndNameEntity {
 
     @Column(name = "product_code")
     private BigInteger productCode;
@@ -28,6 +28,8 @@ public class HistoricalGoodsReceipt extends CommonIdNameAndCodeEntity {
     private BigDecimal purchasePrice;
     @Column(name = "inventory")
     private BigDecimal inventory;
+    @Column(name = "provider_product_name")
+    private String providerProductName;
     @Column(name = "departmente_name")
     private String departmentName;
     @Column(name = "mainsection_name")
@@ -37,7 +39,7 @@ public class HistoricalGoodsReceipt extends CommonIdNameAndCodeEntity {
     @Column(name = "invoice")
     private String invoice;
     @Column(name = "total_invoice")
-    private String totalInvoice;
+    private BigDecimal totalInvoice;
     @Column(name = "registration_date")
     private Timestamp registrationDate;
     @Column(name = "is_received")

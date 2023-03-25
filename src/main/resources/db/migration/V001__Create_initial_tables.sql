@@ -216,15 +216,15 @@ CREATE TABLE IF NOT EXISTS financial_statement (
 CREATE TABLE IF NOT EXISTS historical_goods_receipt (
    id UUID NOT NULL,
    name VARCHAR(50) NOT NULL,
-   code DECIMAL NOT NULL,
    product_code DECIMAL,
    purchase_price DECIMAL,
    inventory DECIMAL,
+   provider_product_name VARCHAR(255),
    departmente_name VARCHAR(255),
    mainsection_name VARCHAR(255),
    subsection_name VARCHAR(255),
    invoice VARCHAR(255),
-   total_invoice VARCHAR(255),
+   total_invoice DECIMAL,
    registration_date TIMESTAMP WITHOUT TIME ZONE,
    is_received BOOLEAN NOT NULL,
    CONSTRAINT pk_historical_goods_receipt PRIMARY KEY (id)

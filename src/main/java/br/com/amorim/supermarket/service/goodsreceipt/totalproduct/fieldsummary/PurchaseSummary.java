@@ -7,7 +7,4 @@ import java.math.BigDecimal;
 public interface PurchaseSummary {
 
     BigDecimal calculateTotalProducts(GoodsReceipt goodsReceipt);
-    BigDecimal calculateTotalBySubsection(GoodsReceipt goodsReceipt);
-    BigDecimal calculateTotalByMainsection(GoodsReceipt goodsReceipt);
-    BigDecimal calculateTotalByDepartment(GoodsReceipt goodsReceipt);
 }
