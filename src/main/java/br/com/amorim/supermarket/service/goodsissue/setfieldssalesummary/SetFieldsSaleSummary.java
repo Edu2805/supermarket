@@ -5,4 +5,5 @@ import br.com.amorim.supermarket.model.goodsissue.GoodsIssue;
 public interface SetFieldsSaleSummary {
 
     void setFieldsSummary(GoodsIssue goodsIssue);
+    void setFieldsHistoricalGoodsReceipt(GoodsIssue goodsIssue);
 }

@@ -1,6 +1,6 @@
-package br.com.amorim.supermarket.repository.financialstatementreport;
+package br.com.amorim.supermarket.repository.financialstatementreport.expensies;
 
-import br.com.amorim.supermarket.controller.financialstatementreport.dto.receipt.FinancialReportInput;
+import br.com.amorim.supermarket.controller.financialstatementreport.dto.receipt.FinancialExpensiesReportInput;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -14,12 +14,12 @@ import java.time.Instant;
 @AllArgsConstructor
 
 @Repository
-public class FinancialStatementReportRepositoryCustomImpl implements FinancialStatementReportRepositoryCustom{
+public class FinancialExpensiesStatementReportRepositoryCustomImpl implements FinancialExpensiesStatementReportRepositoryCustom {
 
     private EntityManager entityManager;
 
     @Override
-    public BigDecimal expensiesReportQuery(FinancialReportInput financialReportInput) {
+    public BigDecimal expensiesReportQuery(FinancialExpensiesReportInput financialReportInput) {
         Timestamp from;
         Timestamp to;
 
