@@ -30,7 +30,7 @@ public class HistoricalGoodsReceipt extends CommonIdAndNameEntity {
     private BigDecimal inventory;
     @Column(name = "provider_product_name")
     private String providerProductName;
-    @Column(name = "departmente_name")
+    @Column(name = "department_name")
     private String departmentName;
     @Column(name = "mainsection_name")
     private String mainsectionName;
