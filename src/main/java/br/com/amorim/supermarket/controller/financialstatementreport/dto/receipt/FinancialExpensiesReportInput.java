@@ -1,5 +1,6 @@
 package br.com.amorim.supermarket.controller.financialstatementreport.dto.receipt;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,5 +23,6 @@ public class FinancialExpensiesReportInput {
     private String invoice;
     private LocalDate from;
     private LocalDate to;
+    @JsonProperty
     private boolean isReceived;
 }

@@ -45,7 +45,7 @@ public class HistoricalGoodsIssue extends CommonIdAndNameEntity {
     @Column(name = "products_total")
     private BigDecimal productsTotal;
     @Column(name = "is_effective_sale")
-    private boolean isEffectiveSale = false;
+    private boolean isEffectiveSale;
     @Column(name = "registration_date")
     private Timestamp registrationDate;
 }

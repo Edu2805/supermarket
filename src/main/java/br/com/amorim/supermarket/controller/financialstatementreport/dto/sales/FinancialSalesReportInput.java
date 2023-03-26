@@ -1,5 +1,6 @@
 package br.com.amorim.supermarket.controller.financialstatementreport.dto.sales;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,5 +25,6 @@ public class FinancialSalesReportInput {
     private BigInteger saleNumber;
     private LocalDate from;
     private LocalDate to;
+    @JsonProperty
     private boolean isEffectiveSale;
 }
