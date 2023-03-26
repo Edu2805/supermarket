@@ -1,10 +1,9 @@
 package br.com.amorim.supermarket.service.historicalgoodsreceipt;
 
 import br.com.amorim.supermarket.model.historicalgoodsreceipt.HistoricalGoodsReceipt;
-
-import java.math.BigDecimal;
+import org.springframework.data.domain.Page;
 
 public interface HistoricalGoodsReceiptCrudService {
 
-    BigDecimal getTotalResultsQuery(HistoricalGoodsReceipt historicalGoodsReceipt);
+    Page<HistoricalGoodsReceipt> getAll(int page, int size);
 }
