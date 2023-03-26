@@ -24,6 +24,6 @@ public class FinancialStatementReportServiceImpl implements FinancialStatementRe
 
     @Override
     public BigDecimal salesReport(FinancialSalesReportInput financialSalesReportInput) {
-        return financialSalesStatementReportRepositoryCustom.expensiesReportQuery(financialSalesReportInput);
+        return financialSalesStatementReportRepositoryCustom.salesReportQuery(financialSalesReportInput);
     }
 }

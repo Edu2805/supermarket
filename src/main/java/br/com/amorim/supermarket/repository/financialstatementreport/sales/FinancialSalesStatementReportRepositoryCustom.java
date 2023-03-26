@@ -6,5 +6,5 @@ import java.math.BigDecimal;
 
 public interface FinancialSalesStatementReportRepositoryCustom {
 
-    BigDecimal expensiesReportQuery(FinancialSalesReportInput financialSalesReportInput);
+    BigDecimal salesReportQuery(FinancialSalesReportInput financialSalesReportInput);
 }
