@@ -4,6 +4,11 @@ import br.com.amorim.supermarket.controller.establishment.dto.ConvertEstablishme
 import br.com.amorim.supermarket.controller.establishment.dto.EstablishmentDTO;
 import br.com.amorim.supermarket.model.establishment.Establishment;
 import br.com.amorim.supermarket.service.establishment.EstablishmentCrudServiceImpl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,31 +32,47 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @RestController
 @RequestMapping("api/establishment")
+@Api("Establishment")
 public class EstablishmentController {
 
     private EstablishmentCrudServiceImpl establishmentService;
     private ConvertEstablishmentMapper convertEstablishmentMapper;
 
     @GetMapping
+    @ApiOperation("Get all establishments")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Establishments returned successfully"),
+            @ApiResponse(code = 404, message = "An error occurred while fetching the establishments")
+    })
     public Page<Establishment> findAll (@RequestParam(
             value = "page",
             required = false,
-            defaultValue = "0") int page,
-                                      @RequestParam(
-                                              value = "size",
-                                              required = false,
-                                              defaultValue = "20") int size) {
+            defaultValue = "0") @ApiParam("Establishment list page") int page,
+                                        @RequestParam(
+                                                value = "size",
+                                                required = false,
+                                                defaultValue = "20") @ApiParam("Number of records on each page") int size) {
         return establishmentService.getAll(page, size);
     }
 
     @GetMapping("/{id}")
-    public Establishment getById (@PathVariable UUID id) {
+    @ApiOperation("Get a specific establishment")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Establishment returned successfully"),
+            @ApiResponse(code = 404, message = "Establishment not found for given id")
+    })
+    public Establishment getById (@PathVariable @ApiParam("Establishment id") UUID id) {
         return establishmentService.findById(id);
     }
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public Establishment save (@RequestBody @Valid EstablishmentDTO establishmentDTO) {
+    @ApiOperation("Save a establishment")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Establishment successfully saved"),
+            @ApiResponse(code = 400, message = "An error occurred while saving the establishment")
+    })
+    public Establishment save (@RequestBody @Valid @ApiParam("Parameters for saving the establishment") EstablishmentDTO establishmentDTO) {
         var newEstablishment = convertEstablishmentMapper
                 .createOrUpdateEstablishmentMapper(establishmentDTO);
         return establishmentService.save(newEstablishment);
@@ -59,7 +80,13 @@ public class EstablishmentController {
 
     @PutMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void update (@RequestBody @Valid EstablishmentDTO establishmentDTO, @PathVariable UUID id) {
+    @ApiOperation("Update a establishment")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Establishment successfully updated"),
+            @ApiResponse(code = 400, message = "An error occurred while updating the establishment")
+    })
+    public void update (@RequestBody @Valid @ApiParam("Parameters for updating the establishment")
+                            EstablishmentDTO establishmentDTO, @PathVariable @ApiParam("Establishment id") UUID id) {
         var newEstablishment = convertEstablishmentMapper
                 .createOrUpdateEstablishmentMapper(establishmentDTO);
         establishmentService.update(newEstablishment, id);
@@ -67,7 +94,12 @@ public class EstablishmentController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void delete (@PathVariable UUID id) {
+    @ApiOperation("Delete a specific establishment")
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "Establishment deleted successfully"),
+            @ApiResponse(code = 404, message = "Establishment not found for given id")
+    })
+    public void delete (@PathVariable @ApiParam("Establishment id") UUID id) {
         establishmentService.delete(id);
     }
 }

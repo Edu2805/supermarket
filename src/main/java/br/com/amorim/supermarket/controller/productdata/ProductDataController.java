@@ -4,6 +4,11 @@ import br.com.amorim.supermarket.controller.productdata.dto.ConvertProductMapper
 import br.com.amorim.supermarket.controller.productdata.dto.ProductDTO;
 import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.service.productdata.ProductDataCrudService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,45 +32,72 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @RestController
 @RequestMapping("api/product")
+@Api("Product Data")
 public class ProductDataController {
 
     private ProductDataCrudService productDataService;
     private ConvertProductMapper convertProductMapper;
 
     @GetMapping
+    @ApiOperation("Get all products")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Products returned successfully"),
+            @ApiResponse(code = 404, message = "An error occurred while fetching the products")
+    })
     public Page<ProductData> findAll (@RequestParam(
             value = "page",
             required = false,
-            defaultValue = "0") int page,
+            defaultValue = "0") @ApiParam("Products list page") int page,
                                       @RequestParam(
                                               value = "size",
                                               required = false,
-                                              defaultValue = "20") int size) {
+                                              defaultValue = "20") @ApiParam("Number of records on each page") int size) {
         return productDataService.getAll(page, size);
     }
 
     @GetMapping("/{id}")
-    public ProductData getById (@PathVariable UUID id) {
+    @ApiOperation("Get a specific product")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Product returned successfully"),
+            @ApiResponse(code = 404, message = "Product not found for given id")
+    })
+    public ProductData getById (@PathVariable @ApiParam("Product id") UUID id) {
         return productDataService.findById(id);
     }
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public ProductData save (@RequestBody @Valid ProductDTO productDTO) {
+    @ApiOperation("Save a product")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Product successfully saved"),
+            @ApiResponse(code = 400, message = "An error occurred while saving the product")
+    })
+    public ProductData save (@RequestBody @Valid @ApiParam("Parameters for saving the product") ProductDTO productDTO) {
         var newProduct = convertProductMapper.createOrUpdateProductMapper(productDTO);
         return productDataService.save(newProduct);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void update (@RequestBody @Valid ProductDTO productDTO, @PathVariable UUID id) {
+    @ApiOperation("Update a product")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Product successfully updated"),
+            @ApiResponse(code = 400, message = "An error occurred while updating the product")
+    })
+    public void update (@RequestBody @Valid @ApiParam("Parameters for updating the product")
+                            ProductDTO productDTO, @PathVariable @ApiParam("Product id") UUID id) {
         var newProduct = convertProductMapper.createOrUpdateProductMapper(productDTO);
         productDataService.update(newProduct, id);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void delete (@PathVariable UUID id) {
+    @ApiOperation("Delete a specific product")
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "Product deleted successfully"),
+            @ApiResponse(code = 404, message = "Product not found for given id")
+    })
+    public void delete (@PathVariable @ApiParam("Product id") UUID id) {
         productDataService.delete(id);
     }
 }

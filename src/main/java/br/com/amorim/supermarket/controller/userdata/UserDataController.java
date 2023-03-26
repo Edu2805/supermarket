@@ -12,6 +12,11 @@ import br.com.amorim.supermarket.controller.userdata.dto.responseconfigurationdt
 import br.com.amorim.supermarket.model.userdata.UserData;
 import br.com.amorim.supermarket.service.jwt.JwtService;
 import br.com.amorim.supermarket.service.userdata.UserDataCrudServiceImpl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,6 +40,7 @@ import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("api/user")
+@Api("User Data")
 public class UserDataController {
 
     private UserDataCrudServiceImpl userDataService;
@@ -44,19 +50,29 @@ public class UserDataController {
     private ConverterUserDataResponseMapper converterUserDataResponseMapper;
 
     @GetMapping
+    @ApiOperation("Get all users")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Users returned successfully"),
+            @ApiResponse(code = 404, message = "An error occurred while fetching the users")
+    })
     public Page<UserData> findAll (@RequestParam(
             value = "page",
             required = false,
-            defaultValue = "0") int page,
+            defaultValue = "0") @ApiParam("Users list page") int page,
                                    @RequestParam(
                                            value = "size",
                                            required = false,
-                                           defaultValue = "20") int size) {
+                                           defaultValue = "20") @ApiParam("Number of records on each page") int size) {
         return userDataService.getAll(page, size);
     }
 
     @GetMapping("/{id}")
-    public UserDataResponseDTO getById (@PathVariable UUID id) {
+    @ApiOperation("Get a specific user")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "User returned successfully"),
+            @ApiResponse(code = 404, message = "User not found for given id")
+    })
+    public UserDataResponseDTO getById (@PathVariable @ApiParam("User id") UUID id) {
         if(accessRestriction.isAuthorized(id)) {
             var findUser = userDataService.findById(id);
             return converterUserDataResponseMapper.getUserDataMapper(findUser);
@@ -65,20 +81,35 @@ public class UserDataController {
     }
 
     @GetMapping("/hr/{id}")
-    public UserData getUser (@PathVariable UUID id) {
+    @ApiOperation("Get a specific user for role rh")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "User returned successfully"),
+            @ApiResponse(code = 404, message = "User not found for given id")
+    })
+    public UserData getUser (@PathVariable @ApiParam("User id") UUID id) {
         return userDataService.findById(id);
     }
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public UserData save (@RequestBody @Valid UserDataDTO userDataDTO) {
+    @ApiOperation("Save a user")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "User successfully saved"),
+            @ApiResponse(code = 400, message = "An error occurred while saving the user")
+    })
+    public UserData save (@RequestBody @Valid @ApiParam("Parameters for saving the user") UserDataDTO userDataDTO) {
         var newUserData = converterUserDataMapper
                 .createOrUpdateUserDataMapper(userDataDTO);
         return userDataService.save(newUserData);
     }
 
     @PostMapping("auth")
-    public TokenDTO authenticate(@RequestBody @Valid CredentialsDTO credentialsDTO) {
+    @ApiOperation("Authenticate a user")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "User successfully autenticated"),
+            @ApiResponse(code = 400, message = "An error occurred while autenticate the user")
+    })
+    public TokenDTO authenticate(@RequestBody @Valid @ApiParam("User Credentials") CredentialsDTO credentialsDTO) {
         try {
             UserData userData = UserData.builder()
                     .userName(credentialsDTO.getLogin())
@@ -93,7 +124,13 @@ public class UserDataController {
 
     @PutMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void update (@RequestBody @Valid UserDataDTO userDataDTO, @PathVariable UUID id) {
+    @ApiOperation("Update a user")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "User successfully updated"),
+            @ApiResponse(code = 400, message = "An error occurred while updating the user")
+    })
+    public void update (@RequestBody @Valid @ApiParam("Parameters for updating the user")
+                            UserDataDTO userDataDTO, @PathVariable @ApiParam("User id") UUID id) {
         var newUserData = converterUserDataMapper
                 .createOrUpdateUserDataMapper(userDataDTO);
         userDataService.update(newUserData, id);
@@ -101,7 +138,12 @@ public class UserDataController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void delete (@PathVariable UUID id) {
+    @ApiOperation("Delete a specific user")
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "User deleted successfully"),
+            @ApiResponse(code = 404, message = "User not found for given id")
+    })
+    public void delete (@PathVariable @ApiParam("User id") UUID id) {
         userDataService.delete(id);
     }
 }
