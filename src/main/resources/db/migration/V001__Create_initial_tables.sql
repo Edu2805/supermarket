@@ -198,21 +198,6 @@ CREATE TABLE IF NOT EXISTS goods_issue_to_product_data (
    product_data_id UUID NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS financial_statement (
-   id UUID NOT NULL,
-   revenues DECIMAL(10, 2),
-   revenue_by_department DECIMAL(10, 2),
-   revenue_by_main_section DECIMAL(10, 2),
-   revenue_by_subsection DECIMAL(10, 2),
-   expenses DECIMAL(10, 2),
-   expenses_by_department DECIMAL(10, 2),
-   expenses_by_mainsection DECIMAL(10, 2),
-   expenses_by_subsection DECIMAL(10, 2),
-   competence_start date,
-   end_competence date,
-   CONSTRAINT pk_financial_statement PRIMARY KEY (id)
-);
-
 CREATE TABLE IF NOT EXISTS historical_goods_receipt (
    id UUID NOT NULL,
    name VARCHAR(50) NOT NULL,
@@ -220,7 +205,7 @@ CREATE TABLE IF NOT EXISTS historical_goods_receipt (
    purchase_price DECIMAL,
    inventory DECIMAL,
    provider_product_name VARCHAR(255),
-   departmente_name VARCHAR(255),
+   department_name VARCHAR(255),
    mainsection_name VARCHAR(255),
    subsection_name VARCHAR(255),
    invoice VARCHAR(255),
