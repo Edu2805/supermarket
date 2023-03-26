@@ -22,10 +22,14 @@ before_script:
 generate sources:
   stage: generate souces
   script: ./mvnw clean generate-sources
+  except:
+    - master
 
 compile:
   stage: compile
   script: ./mvnw clean compile
+  except:
+    - master
 
 test:
   stage: test
