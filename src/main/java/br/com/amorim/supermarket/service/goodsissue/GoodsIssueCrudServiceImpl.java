@@ -68,6 +68,7 @@ public class GoodsIssueCrudServiceImpl implements GoodsIssueCrudService {
         setProductListForSale.fillProducts(goodsIssue);
         setFieldsSaleSummary.setFieldsSummary(goodsIssue);
         goodsIssue.setRegistrationDate(Timestamp.valueOf(LocalDateTime.now()));
+        setFieldsSaleSummary.setFieldsHistoricalGoodsReceipt(goodsIssue);
     }
 
     @Transactional
