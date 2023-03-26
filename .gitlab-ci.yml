@@ -10,12 +10,22 @@ cache:
     - target/
 
 stages:          # List of stages for jobs, and their order of execution
+  - generate souces
+  - compile
   - test
   - build
   - deploy
 
 before_script:
   - chmod +x mvnw
+
+generate sources:
+  stage: generate souces
+  script: ./mvnw clean generate-sources
+
+compile:
+  stage: compile
+  script: ./mvnw clean compile
 
 test:
   stage: test
