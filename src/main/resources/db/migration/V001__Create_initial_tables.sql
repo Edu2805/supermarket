@@ -214,3 +214,22 @@ CREATE TABLE IF NOT EXISTS historical_goods_receipt (
    is_received BOOLEAN NOT NULL,
    CONSTRAINT pk_historical_goods_receipt PRIMARY KEY (id)
 );
+
+CREATE TABLE IF NOT EXISTS historical_goods_issue (
+   id UUID NOT NULL,
+   name VARCHAR(50) NOT NULL,
+   product_code DECIMAL,
+   ean13 VARCHAR(255),
+   dun14 VARCHAR(255),
+   sale_price DECIMAL,
+   inventory DECIMAL,
+   provider_product_name VARCHAR(255),
+   department_name VARCHAR(255),
+   mainsection_name VARCHAR(255),
+   subsection_name VARCHAR(255),
+   sale_number DECIMAL,
+   products_total DECIMAL,
+   is_effective_sale BOOLEAN NOT NULL,
+   registration_date TIMESTAMP WITHOUT TIME ZONE,
+   CONSTRAINT pk_historical_goods_issue PRIMARY KEY (id)
+);
