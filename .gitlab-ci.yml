@@ -15,7 +15,7 @@ stages:          # List of stages for jobs, and their order of execution
   - deploy
 
 before_script:
-  - chmod +x mvnw clean
+  - chmod +x mvnw
 
 test:
   stage: test
