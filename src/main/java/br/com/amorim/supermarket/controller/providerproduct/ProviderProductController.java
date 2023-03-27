@@ -4,6 +4,11 @@ import br.com.amorim.supermarket.controller.providerproduct.dto.ConvertProviderM
 import br.com.amorim.supermarket.controller.providerproduct.dto.ProviderProductDTO;
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
 import br.com.amorim.supermarket.service.providerproduct.ProviderProductCrudServiceImpl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,31 +32,48 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @RestController
 @RequestMapping("api/provider")
+@Api("Provider Product")
 public class ProviderProductController {
 
     private ProviderProductCrudServiceImpl providerProductService;
     private ConvertProviderMapper convertProviderMapper;
 
     @GetMapping
+    @ApiOperation("Get all provider products")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Provider products returned successfully"),
+            @ApiResponse(code = 404, message = "An error occurred while fetching the provider products")
+    })
     public Page<ProviderProduct> findAll (@RequestParam(
             value = "page",
             required = false,
-            defaultValue = "0") int page,
+            defaultValue = "0") @ApiParam("Provider products list page") int page,
                                           @RequestParam(
                                                   value = "size",
                                                   required = false,
-                                                  defaultValue = "20") int size) {
+                                                  defaultValue = "20") @ApiParam("Number of records on each page") int size) {
         return providerProductService.getAll(page, size);
     }
 
     @GetMapping("/{id}")
-    public ProviderProduct getById (@PathVariable UUID id) {
+    @ApiOperation("Get a specific provider product")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Provider product returned successfully"),
+            @ApiResponse(code = 404, message = "Provider product not found for given id")
+    })
+    public ProviderProduct getById (@PathVariable @ApiParam("Provider product id") UUID id) {
         return providerProductService.findById(id);
     }
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public ProviderProduct save (@RequestBody @Valid ProviderProductDTO providerProductDTO) {
+    @ApiOperation("Save a provider product")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Provider product successfully saved"),
+            @ApiResponse(code = 400, message = "An error occurred while saving the provider product")
+    })
+    public ProviderProduct save (@RequestBody @Valid @ApiParam("Parameters for saving the provider product")
+                                     ProviderProductDTO providerProductDTO) {
         var newProviderProduct = convertProviderMapper
                 .createOrUpdateProviderProductMapper(providerProductDTO);
         return providerProductService.save(newProviderProduct);
@@ -59,7 +81,13 @@ public class ProviderProductController {
 
     @PutMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void update (@RequestBody @Valid ProviderProductDTO providerProductDTO, @PathVariable UUID id) {
+    @ApiOperation("Update a provider product")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Provider product successfully updated"),
+            @ApiResponse(code = 400, message = "An error occurred while updating the provider product")
+    })
+    public void update (@RequestBody @Valid @ApiParam("Parameters for updating the provider product")
+                            ProviderProductDTO providerProductDTO, @PathVariable @ApiParam("Provider product id") UUID id) {
         var newProviderProduct = convertProviderMapper
                 .createOrUpdateProviderProductMapper(providerProductDTO);
         providerProductService.update(newProviderProduct, id);
@@ -67,7 +95,12 @@ public class ProviderProductController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void delete (@PathVariable UUID id) {
+    @ApiOperation("Delete a specific provider product")
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "Provider product deleted successfully"),
+            @ApiResponse(code = 404, message = "Provider product not found for given id")
+    })
+    public void delete (@PathVariable @ApiParam("Provider product id") UUID id) {
         providerProductService.delete(id);
     }
 }
