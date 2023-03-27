@@ -16,14 +16,23 @@ public class FinancialStatementReportServiceImpl implements FinancialStatementRe
 
     private FinancialExpensiesStatementReportRepositoryCustom financialStatementReportRepositoryCustom;
     private FinancialSalesStatementReportRepositoryCustom financialSalesStatementReportRepositoryCustom;
+    private static final int VALUE_ZERO = 0;
 
     @Override
     public BigDecimal expensiesReport(FinancialExpensiesReportInput financialExpensiesReportInput) {
-        return financialStatementReportRepositoryCustom.expensiesReportQuery(financialExpensiesReportInput);
+        var result = financialStatementReportRepositoryCustom.expensiesReportQuery(financialExpensiesReportInput);
+        if (result == null) {
+            return BigDecimal.valueOf(VALUE_ZERO);
+        }
+        return result;
     }
 
     @Override
     public BigDecimal salesReport(FinancialSalesReportInput financialSalesReportInput) {
-        return financialSalesStatementReportRepositoryCustom.salesReportQuery(financialSalesReportInput);
+        var result = financialSalesStatementReportRepositoryCustom.salesReportQuery(financialSalesReportInput);
+        if (result == null) {
+            return BigDecimal.valueOf(VALUE_ZERO);
+        }
+        return result;
     }
 }
