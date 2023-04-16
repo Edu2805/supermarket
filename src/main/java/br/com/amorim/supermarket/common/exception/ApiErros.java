@@ -8,13 +8,13 @@ import java.util.List;
 public class ApiErros {
 
     @Getter
-    private List<String> erros;
+    private List<String> errors;
 
     public ApiErros(String messageError) {
-        this.erros = Arrays.asList(messageError);
+        this.errors = Arrays.asList(messageError);
     }
 
-    public ApiErros(List<String> erros) {
-        this.erros = erros;
+    public ApiErros(List<String> errors) {
+        this.errors = errors;
     }
 }

@@ -6,6 +6,7 @@ import br.com.amorim.supermarket.controller.common.accessrestriction.AccessRestr
 import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.ConverterUserDataRequestMapper;
 import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.CredentialsDTO;
 import br.com.amorim.supermarket.controller.userdata.dto.responseconfigurationdto.ConverterUserDataResponseMapper;
+import br.com.amorim.supermarket.controller.userdata.dto.responseconfigurationdto.RegisterUserResponseOutput;
 import br.com.amorim.supermarket.controller.userdata.dto.responseconfigurationdto.TokenDTO;
 import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.UserDataDTO;
 import br.com.amorim.supermarket.controller.userdata.dto.responseconfigurationdto.UserDataResponseDTO;
@@ -34,7 +35,9 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import java.util.UUID;
 
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @AllArgsConstructor
 
@@ -97,10 +100,11 @@ public class UserDataController {
             @ApiResponse(code = 201, message = "User successfully saved"),
             @ApiResponse(code = 400, message = "An error occurred while saving the user")
     })
-    public UserData save (@RequestBody @Valid @ApiParam("Parameters for saving the user") UserDataDTO userDataDTO) {
+    public RegisterUserResponseOutput save (@RequestBody @Valid @ApiParam("Parameters for saving the user") UserDataDTO userDataDTO) {
         var newUserData = converterUserDataMapper
                 .createOrUpdateUserDataMapper(userDataDTO);
-        return userDataService.save(newUserData);
+        var save = userDataService.save(newUserData);
+        return new RegisterUserResponseOutput(save.getUserName());
     }
 
     @PostMapping("auth")

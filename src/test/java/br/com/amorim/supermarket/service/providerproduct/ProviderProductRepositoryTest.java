@@ -1,6 +1,5 @@
 package br.com.amorim.supermarket.service.providerproduct;
 
-import br.com.amorim.supermarket.SupermarketApplication;
 import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.exception.invalidactionexception.InvalidActionException;
 import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
@@ -10,13 +9,13 @@ import br.com.amorim.supermarket.testutils.generateentitiesrepositorytest.Genera
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 
@@ -30,10 +29,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * pacote Service, classe ProviderProductCrudServiceImplTest
  */
 
-@TestPropertySource("classpath:application.properties")
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes= SupermarketApplication.class)
-public class ProviderProductRepositoryTest {
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureTestDatabase
+class ProviderProductRepositoryTest {
 
     @Autowired
     private ProviderProductCrudServiceImpl providerProductCrudService;
