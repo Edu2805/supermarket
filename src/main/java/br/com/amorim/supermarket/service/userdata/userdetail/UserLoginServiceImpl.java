@@ -48,7 +48,7 @@ public class UserLoginServiceImpl implements UserDetailsService {
     }
 
     public void existsUserName(String userName) {
-        if(!userDataRepository.findByUserName(userName).isPresent()) {
+        if(userDataRepository.findByUserName(userName).isEmpty()) {
             throw new InvalidPasswordException(
                     getString(MessagesKeyType.USER_DATA_NOT_FOUND.message));
         }
