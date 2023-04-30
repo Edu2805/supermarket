@@ -13,6 +13,7 @@ import br.com.amorim.supermarket.controller.userdata.dto.responseconfigurationdt
 import br.com.amorim.supermarket.model.userdata.UserData;
 import br.com.amorim.supermarket.service.jwt.JwtService;
 import br.com.amorim.supermarket.service.userdata.UserDataCrudServiceImpl;
+import br.com.amorim.supermarket.service.userdata.userdetail.UserLoginServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -47,6 +48,7 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 public class UserDataController {
 
     private UserDataCrudServiceImpl userDataService;
+    private UserLoginServiceImpl userDetailsService;
     private JwtService jwtService;
     private ConverterUserDataRequestMapper converterUserDataMapper;
     private AccessRestriction accessRestriction;
@@ -114,6 +116,7 @@ public class UserDataController {
             @ApiResponse(code = 400, message = "An error occurred while autenticate the user")
     })
     public TokenDTO authenticate(@RequestBody @Valid @ApiParam("User Credentials") CredentialsDTO credentialsDTO) {
+        userDetailsService.existsUserName(credentialsDTO.getLogin());
         try {
             UserData userData = UserData.builder()
                     .userName(credentialsDTO.getLogin())

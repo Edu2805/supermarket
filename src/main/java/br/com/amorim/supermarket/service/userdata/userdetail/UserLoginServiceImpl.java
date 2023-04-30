@@ -46,4 +46,11 @@ public class UserLoginServiceImpl implements UserDetailsService {
         throw new InvalidPasswordException(
                 getString(MessagesKeyType.AUTH_INVALID_PASSWORD.message));
     }
+
+    public void existsUserName(String userName) {
+        if(!userDataRepository.findByUserName(userName).isPresent()) {
+            throw new InvalidPasswordException(
+                    getString(MessagesKeyType.USER_DATA_NOT_FOUND.message));
+        }
+    }
 }
