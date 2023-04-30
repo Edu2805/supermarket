@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import static br.com.amorim.supermarket.common.enums.MessagesKeyType.USER_DATA_NOT_FOUND;
 import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
 
 @Service
@@ -48,7 +47,7 @@ public class UserLoginServiceImpl implements UserDetailsService {
     }
 
     public void existsUserName(String userName) {
-        if(!userDataRepository.findByUserName(userName).isPresent()) {
+        if(userDataRepository.findByUserName(userName).isEmpty()) {
             throw new InvalidPasswordException(
                     getString(MessagesKeyType.USER_DATA_NOT_FOUND.message));
         }
