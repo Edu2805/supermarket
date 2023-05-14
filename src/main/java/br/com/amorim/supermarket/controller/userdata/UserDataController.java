@@ -5,11 +5,13 @@ import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.controller.common.accessrestriction.AccessRestriction;
 import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.ConverterUserDataRequestMapper;
 import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.CredentialsDTO;
+import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.GetUserByUserNameDTO;
+import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.UserDataDTO;
 import br.com.amorim.supermarket.controller.userdata.dto.responseconfigurationdto.ConverterUserDataResponseMapper;
 import br.com.amorim.supermarket.controller.userdata.dto.responseconfigurationdto.RegisterUserResponseOutput;
 import br.com.amorim.supermarket.controller.userdata.dto.responseconfigurationdto.TokenDTO;
-import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.UserDataDTO;
 import br.com.amorim.supermarket.controller.userdata.dto.responseconfigurationdto.UserDataResponseDTO;
+import br.com.amorim.supermarket.controller.userdata.dto.responseconfigurationdto.UserNameOutput;
 import br.com.amorim.supermarket.model.userdata.UserData;
 import br.com.amorim.supermarket.service.jwt.JwtService;
 import br.com.amorim.supermarket.service.userdata.UserDataCrudServiceImpl;
@@ -93,6 +95,18 @@ public class UserDataController {
     })
     public UserData getUser (@PathVariable @ApiParam("User id") UUID id) {
         return userDataService.findById(id);
+    }
+
+    @GetMapping("/username")
+    @ApiOperation("Get a specific user for user name")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "User returned successfully"),
+            @ApiResponse(code = 404, message = "User not found for given id")
+    })
+    public UserNameOutput findByUserName (@RequestBody @Valid @ApiParam("User name") GetUserByUserNameDTO getUserByUserNameDTO) {
+        var userDataMapper = converterUserDataMapper.getByUserNameMapper(getUserByUserNameDTO);
+        var user = userDataService.findByUserName(userDataMapper);
+        return new UserNameOutput(user.getRole());
     }
 
     @PostMapping

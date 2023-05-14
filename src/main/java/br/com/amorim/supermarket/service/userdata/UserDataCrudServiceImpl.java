@@ -101,4 +101,13 @@ public class UserDataCrudServiceImpl implements UserDataCrudService {
                         new NotFoundException(
                                 getString(MessagesKeyType.USER_DATA_NOT_FOUND.message)));
     }
+
+    @Override
+    public UserData findByUserName(UserData userData) {
+        return userDataRepository.findByUserName(userData.getUserName())
+                .orElseThrow(() -> {
+                    throw new NotFoundException(
+                            getString(MessagesKeyType.USER_DATA_NOT_FOUND.message));
+        });
+    }
 }
