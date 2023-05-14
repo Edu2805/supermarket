@@ -16,4 +16,9 @@ public class ConverterUserDataRequestMapperImpl implements ConverterUserDataRequ
     public UserData createOrUpdateUserDataMapper(UserDataDTO userDataDTO) {
         return modelMapper.map(userDataDTO, UserData.class);
     }
+
+    @Override
+    public UserData getByUserNameMapper(GetUserByUserNameDTO getUserByUserNameDTO) {
+        return modelMapper.map(getUserByUserNameDTO, UserData.class);
+    }
 }

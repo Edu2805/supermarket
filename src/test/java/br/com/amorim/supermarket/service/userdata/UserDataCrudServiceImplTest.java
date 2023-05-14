@@ -174,4 +174,34 @@ class UserDataCrudServiceImplTest {
         verify(userDataRepositoryMock,
                 times(0)).delete(userData);
     }
+
+    @Test
+    void shouldFindByUserNameWithSuccess() {
+        var userName = userData.getUserName();
+
+        when(userDataRepositoryMock.findByUserName(userName)).thenReturn(Optional.of(userData));
+
+        var existentUser = userDataCrudService.findByUserName(userData);
+
+        assertEquals(userName, existentUser.getUserName());
+        assertNotNull(existentUser);
+    }
+
+    @Test
+    void shouldNotFindByUserNameWhenUserDataNotExists() {
+        String messageError = getString(MessagesKeyType.USER_DATA_NOT_FOUND.message);
+        var unknownName = "xxxxx@xxxx.xxx";
+        when(userDataRepositoryMock.findByUserName(unknownName))
+                .thenReturn(Optional.empty());
+
+        String exceptionMessage = Assertions.assertThrows(
+                NotFoundException.class, () -> {
+                    userDataCrudService.findByUserName(userData);
+                }
+        ).getMessage();
+
+        assertEquals(messageError, exceptionMessage);
+        assertThrows(NotFoundException.class, () ->
+                userDataCrudService.findByUserName(userData));
+    }
 }

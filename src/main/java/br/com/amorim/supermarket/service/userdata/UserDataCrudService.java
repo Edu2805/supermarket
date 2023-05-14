@@ -6,4 +6,6 @@ import br.com.amorim.supermarket.service.common.genericcrudservice.CrudServiceCo
 import java.util.UUID;
 
 public interface UserDataCrudService extends CrudServiceCommon<UserData, UUID> {
+
+    UserData findByUserName (UserData userData);
 }
