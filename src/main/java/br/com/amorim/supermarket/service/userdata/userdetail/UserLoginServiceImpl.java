@@ -3,8 +3,10 @@ package br.com.amorim.supermarket.service.userdata.userdetail;
 import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.exception.invalidpasswordexception.InvalidPasswordException;
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
+import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.CredentialsDTO;
 import br.com.amorim.supermarket.model.userdata.UserData;
 import br.com.amorim.supermarket.repository.userdata.UserDataRepository;
+import br.com.amorim.supermarket.service.userdata.userdetail.validaterole.ValidateRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +14,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
 
@@ -22,6 +26,8 @@ public class UserLoginServiceImpl implements UserDetailsService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private UserDataRepository userDataRepository;
+    @Autowired
+    private ValidateRole validateRole;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -51,5 +57,9 @@ public class UserLoginServiceImpl implements UserDetailsService {
             throw new InvalidPasswordException(
                     getString(MessagesKeyType.USER_DATA_NOT_FOUND.message));
         }
+    }
+
+    public void validateRole(CredentialsDTO credentialsDTO) {
+        validateRole.validateUserRole(credentialsDTO);
     }
 }

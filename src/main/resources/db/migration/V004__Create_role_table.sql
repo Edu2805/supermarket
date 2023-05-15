@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS role (
+   id UUID NOT NULL,
+   name VARCHAR(50) NOT NULL
+);

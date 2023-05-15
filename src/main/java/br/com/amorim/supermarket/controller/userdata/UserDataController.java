@@ -97,7 +97,7 @@ public class UserDataController {
         return userDataService.findById(id);
     }
 
-    @GetMapping("/username")
+    @PostMapping("/username")
     @ApiOperation("Get a specific user for user name")
     @ApiResponses({
             @ApiResponse(code = 200, message = "User returned successfully"),
@@ -130,14 +130,16 @@ public class UserDataController {
             @ApiResponse(code = 400, message = "An error occurred while autenticate the user")
     })
     public TokenDTO authenticate(@RequestBody @Valid @ApiParam("User Credentials") CredentialsDTO credentialsDTO) {
+        userDetailsService.validateRole(credentialsDTO);
         userDetailsService.existsUserName(credentialsDTO.getLogin());
         try {
             UserData userData = UserData.builder()
                     .userName(credentialsDTO.getLogin())
                     .password(credentialsDTO.getPassword())
+                    .role(credentialsDTO.getRole())
                     .build();
             var token = jwtService.generateToken(userData);
-            return new TokenDTO(userData.getUserName(), token);
+            return new TokenDTO(userData.getUserName(), userData.getRole(), token);
         } catch (NotFoundException | InvalidPasswordException e) {
             throw new ResponseStatusException(UNAUTHORIZED, e.getMessage());
         }
