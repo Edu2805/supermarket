@@ -138,12 +138,29 @@ public class UserDataController {
                     .password(credentialsDTO.getPassword())
                     .role(credentialsDTO.getRole())
                     .build();
+            userDetailsService.authenticate(userData);
             var token = jwtService.generateToken(userData);
             return new TokenDTO(userData.getUserName(), userData.getRole(), token);
         } catch (NotFoundException | InvalidPasswordException e) {
             throw new ResponseStatusException(UNAUTHORIZED, e.getMessage());
         }
     }
+
+    /*
+    try{
+            var userBuild = UserData.builder()
+                    .login(credencialDTO.getLogin())
+                    .password(credencialDTO.getPassword())
+                    .build();
+            UserDetails userAuthenticated = userService.authenticate(userBuild);
+            var token = jwtService.generateToken(userBuild);
+
+            return new TokenDTO(userBuild.getLogin(), token);
+
+        } catch (UsernameNotFoundException | InvalidPasswordException e){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+     */
 
     @PutMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
