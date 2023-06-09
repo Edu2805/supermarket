@@ -18,7 +18,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import static br.com.amorim.supermarket.configuration.security.roles.RoleType.*;
+import static br.com.amorim.supermarket.configuration.security.roles.RoleType.ADMIN;
+import static br.com.amorim.supermarket.configuration.security.roles.RoleType.BUYER;
+import static br.com.amorim.supermarket.configuration.security.roles.RoleType.DEPARTMENT_MANAGER;
+import static br.com.amorim.supermarket.configuration.security.roles.RoleType.EMPLOYEE;
+import static br.com.amorim.supermarket.configuration.security.roles.RoleType.FINANCE;
+import static br.com.amorim.supermarket.configuration.security.roles.RoleType.HEAD;
+import static br.com.amorim.supermarket.configuration.security.roles.RoleType.HR;
+import static br.com.amorim.supermarket.configuration.security.roles.RoleType.MANAGER;
+import static br.com.amorim.supermarket.configuration.security.roles.RoleType.RECEIPT;
+import static br.com.amorim.supermarket.configuration.security.roles.RoleType.SECTION_MANAGER;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -50,73 +59,135 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST,"/api/user/username/**")
                 .hasAnyRole(ADMIN.role, DEPARTMENT_MANAGER.role, MANAGER.role, FINANCE.role, SECTION_MANAGER.role, BUYER.role, EMPLOYEE.role, HEAD.role, HR.role, RECEIPT.role)
-                    .antMatchers(HttpMethod.GET, "/api/salary/{id}")
-                    .hasAnyRole(EMPLOYEE.role)
-                .antMatchers(HttpMethod.GET, "/api/person/{id}")
-                .hasAnyRole(EMPLOYEE.role)
-                    .antMatchers(HttpMethod.GET, "/api/employee/{id}")
-                    .hasAnyRole(EMPLOYEE.role)
-                .antMatchers(HttpMethod.GET, "/api/subsection/{id}")
-                .hasAnyRole(EMPLOYEE.role)
-                    .antMatchers(HttpMethod.GET, "/api/mainsection/{id}")
-                    .hasAnyRole(EMPLOYEE.role)
-                .antMatchers(HttpMethod.GET, "/api/department/{id}")
-                .hasAnyRole(EMPLOYEE.role)
-                    .antMatchers(HttpMethod.GET, "/api/establishment/{id}")
-                    .hasAnyRole(EMPLOYEE.role)
 
-                    .antMatchers("/api/user/hr/**")
-                    .hasAnyRole(ADMIN.role, HEAD.role, DEPARTMENT_MANAGER.role, MANAGER.role, HR.role)
-                .antMatchers(HttpMethod.GET, "/api/user/{id}")
-                .hasAnyRole(EMPLOYEE.role)
-                    .antMatchers("/api/employee/**")
-                    .hasAnyRole(ADMIN.role, HEAD.role, HR.role)
-                .antMatchers("/api/jobposition/**")
-                .hasAnyRole(ADMIN.role, HEAD.role, HR.role)
-                    .antMatchers("/api/salary/**")
-                    .hasAnyRole(ADMIN.role, HEAD.role, HR.role)
-                .antMatchers("/api/otheraddition/**")
-                .hasAnyRole(ADMIN.role, HEAD.role, HR.role)
-                    .antMatchers("/api/otherdiscount/**")
-                    .hasAnyRole(ADMIN.role, HEAD.role, HR.role)
-                .antMatchers("/api/person/**")
-                .hasAnyRole(ADMIN.role, HEAD.role, HR.role)
-                    .antMatchers("/api/goods-issue/**")
-                    .hasAnyRole(ADMIN.role, BUYER.role, RECEIPT.role)
-                .antMatchers("/api/goods-receipt/**")
-                .hasAnyRole(ADMIN.role, BUYER.role, RECEIPT.role)
-                    .antMatchers("/api/establishment/**")
-                    .hasAnyRole(ADMIN.role, HEAD.role, MANAGER.role, HR.role)
-                .antMatchers("/api/provider/**")
-                .hasAnyRole(ADMIN.role, HEAD.role, MANAGER.role, DEPARTMENT_MANAGER.role, BUYER.role)
-                    .antMatchers("/api/product/**")
-                    .hasAnyRole(ADMIN.role, HEAD.role, MANAGER.role, DEPARTMENT_MANAGER.role, SECTION_MANAGER.role, BUYER.role)
-                .antMatchers("/api/subsection/**")
-                .hasAnyRole(ADMIN.role, HEAD.role, MANAGER.role, DEPARTMENT_MANAGER.role, SECTION_MANAGER.role, BUYER.role, HR.role)
-                    .antMatchers("/api/mainsection/**")
-                    .hasAnyRole(ADMIN.role, HEAD.role, MANAGER.role, DEPARTMENT_MANAGER.role, SECTION_MANAGER.role, BUYER.role, HR.role)
+                //Establishment
+                .antMatchers("/api/establishment/**")
+                .hasAnyRole(ADMIN.role, HEAD.role, MANAGER.role, HR.role)
+
+                //Department
                 .antMatchers("/api/department/**")
                 .hasAnyRole(ADMIN.role, HEAD.role, DEPARTMENT_MANAGER.role, MANAGER.role, BUYER.role, HR.role)
-                    .antMatchers(HttpMethod.GET,"/api/historical-goods-issue/**")
-                    .hasAnyRole(ADMIN.role, DEPARTMENT_MANAGER.role, MANAGER.role, FINANCE.role, SECTION_MANAGER.role, BUYER.role)
+
+                //Mainsection
+                .antMatchers("/api/mainsection/**")
+                .hasAnyRole(ADMIN.role, HEAD.role, MANAGER.role, DEPARTMENT_MANAGER.role, SECTION_MANAGER.role, BUYER.role, HR.role)
+
+                //Subsection
+                .antMatchers("/api/subsection/**")
+                .hasAnyRole(ADMIN.role, HEAD.role, MANAGER.role, DEPARTMENT_MANAGER.role, SECTION_MANAGER.role, BUYER.role, HR.role)
+
+                //Provider
+                .antMatchers("/api/provider/**")
+                .hasAnyRole(ADMIN.role, HEAD.role, MANAGER.role, DEPARTMENT_MANAGER.role, BUYER.role)
+
+                //Product
+                .antMatchers("/api/product/**")
+                .hasAnyRole(ADMIN.role, HEAD.role, MANAGER.role, DEPARTMENT_MANAGER.role, SECTION_MANAGER.role, BUYER.role)
+
+                //Person
+                .antMatchers("/api/person/**")
+                .hasAnyRole(ADMIN.role, HEAD.role, HR.role)
+
+                //Jobposition
+                .antMatchers("/api/jobposition/**")
+                .hasAnyRole(ADMIN.role, HEAD.role, HR.role)
+
+                //Salary
+                .antMatchers("/api/salary/**")
+                .hasAnyRole(ADMIN.role, HEAD.role, HR.role)
+
+                //Employee
+                .antMatchers("/api/employee/**")
+                .hasAnyRole(ADMIN.role, HEAD.role, HR.role)
+
+                //User (hr)
+                .antMatchers("/api/user/hr/**")
+                .hasAnyRole(ADMIN.role, HEAD.role, DEPARTMENT_MANAGER.role, MANAGER.role, HR.role)
+
+                //Otheraddition
+                .antMatchers("/api/otheraddition/**")
+                .hasAnyRole(ADMIN.role, HEAD.role, HR.role)
+
+                //Otherdiscount
+                .antMatchers("/api/otherdiscount/**")
+                .hasAnyRole(ADMIN.role, HEAD.role, HR.role)
+
+                //Goods issue
+                .antMatchers("/api/goods-issue/**")
+                .hasAnyRole(ADMIN.role, BUYER.role, RECEIPT.role)
+
+                //Goods receipt
+                .antMatchers("/api/goods-receipt/**")
+                .hasAnyRole(ADMIN.role, BUYER.role, RECEIPT.role)
+
+                //Historical goods issue
+                .antMatchers(HttpMethod.GET,"/api/historical-goods-issue/**")
+                .hasAnyRole(ADMIN.role, DEPARTMENT_MANAGER.role, MANAGER.role, FINANCE.role, SECTION_MANAGER.role, BUYER.role)
+
+                //Historical goods receipt
                 .antMatchers(HttpMethod.GET,"/api/historical-goods-receipt/**")
                 .hasAnyRole(ADMIN.role, DEPARTMENT_MANAGER.role, MANAGER.role, FINANCE.role, SECTION_MANAGER.role, BUYER.role)
-                    .antMatchers(HttpMethod.GET,"/api/user/**")
-                    .hasAnyRole(ADMIN.role, HEAD.role, DEPARTMENT_MANAGER.role, MANAGER.role, HR.role)
+
+                //User (GET)
+                .antMatchers(HttpMethod.GET,"/api/user/**")
+                .hasAnyRole(ADMIN.role, HEAD.role, DEPARTMENT_MANAGER.role, MANAGER.role, HR.role)
+
+                //Goods issue(GET)
                 .antMatchers(HttpMethod.GET,"/api/goods-issue/**")
                 .hasAnyRole(ADMIN.role, DEPARTMENT_MANAGER.role, MANAGER.role, FINANCE.role, SECTION_MANAGER.role, BUYER.role)
-                    .antMatchers(HttpMethod.GET,"/api/goods-receipt/**")
-                    .hasAnyRole(ADMIN.role, DEPARTMENT_MANAGER.role, MANAGER.role, FINANCE.role, SECTION_MANAGER.role, BUYER.role)
+
+                //Goods receipt(GET)
+                .antMatchers(HttpMethod.GET,"/api/goods-receipt/**")
+                .hasAnyRole(ADMIN.role, DEPARTMENT_MANAGER.role, MANAGER.role, FINANCE.role, SECTION_MANAGER.role, BUYER.role)
+
+                //Financial report(GET)
                 .antMatchers(HttpMethod.GET,"/api/financial-report/**")
                 .hasAnyRole(ADMIN.role, DEPARTMENT_MANAGER.role, MANAGER.role, FINANCE.role, SECTION_MANAGER.role, BUYER.role)
-                    .antMatchers(HttpMethod.POST, "/api/user/**")
-                    .permitAll()
+
+                //Establishment(GET)
+                .antMatchers(HttpMethod.GET, "/api/establishment/{id}")
+                .hasAnyRole(EMPLOYEE.role)
+
+                //Salary(GET)
+                .antMatchers(HttpMethod.GET, "/api/salary/{id}")
+                .hasAnyRole(EMPLOYEE.role)
+
+                //Person(GET)
+                .antMatchers(HttpMethod.GET, "/api/person/{id}")
+                .hasAnyRole(EMPLOYEE.role)
+
+                //Employee(GET)
+                .antMatchers(HttpMethod.GET, "/api/employee/{id}")
+                .hasAnyRole(EMPLOYEE.role)
+
+                //Subsection(GET)
+                .antMatchers(HttpMethod.GET, "/api/subsection/{id}")
+                .hasAnyRole(EMPLOYEE.role)
+
+                //Main section(GET)
+                .antMatchers(HttpMethod.GET, "/api/mainsection/{id}")
+                .hasAnyRole(EMPLOYEE.role)
+
+                //Department(GET)
+                .antMatchers(HttpMethod.GET, "/api/department/{id}")
+                .hasAnyRole(EMPLOYEE.role)
+
+                //User(GET)
+                .antMatchers(HttpMethod.GET, "/api/user/{id}")
+                .hasAnyRole(EMPLOYEE.role)
+
+                //User(POST)
+                .antMatchers(HttpMethod.POST, "/api/user/**")
+                .permitAll()
+
+                //Role(GET)
                 .antMatchers(HttpMethod.GET, "/api/role/**")
                 .permitAll()
-                    .anyRequest().authenticated()
+                .anyRequest().authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
+
     }
 
     @Override
