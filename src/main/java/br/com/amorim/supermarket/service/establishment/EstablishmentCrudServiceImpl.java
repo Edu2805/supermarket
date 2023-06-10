@@ -7,6 +7,7 @@ import br.com.amorim.supermarket.model.establishment.Establishment;
 import br.com.amorim.supermarket.repository.establishment.EstablishmentRepository;
 import br.com.amorim.supermarket.service.establishment.generateinternalcode.GenerateInternalCodeEstablishment;
 import br.com.amorim.supermarket.service.establishment.verifycnpjestablishment.VerifyCnpjEstablishment;
+import br.com.amorim.supermarket.service.establishment.verifydepartment.VerifyDepartment;
 import br.com.amorim.supermarket.service.establishment.verifymunicipalorstateregistration.VerifyMunicipalOrStateRegistrationEstablishment;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -32,6 +33,7 @@ public class EstablishmentCrudServiceImpl implements EstablishmentCrudService {
     private VerifyMunicipalOrStateRegistrationEstablishment verifyMunicipalRegistration;
     private VerifyCnpjEstablishment verifyCnpjEstablishment;
     private VerifyPageSize verifyPageSize;
+    private VerifyDepartment verifyDepartment;
 
     @Override
     public Page<Establishment> getAll (int page, int size) {
@@ -94,6 +96,7 @@ public class EstablishmentCrudServiceImpl implements EstablishmentCrudService {
     public void delete (UUID id) {
         establishmentRepository.findById(id)
                 .map(existingEstablishment -> {
+                    verifyDepartment.verifyEstablishmentDepartment(existingEstablishment);
                     establishmentRepository.delete(existingEstablishment);
                     return existingEstablishment;
                 }).orElseThrow(() ->
