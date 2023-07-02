@@ -7,6 +7,7 @@ import br.com.amorim.supermarket.model.mainsection.MainSection;
 import br.com.amorim.supermarket.repository.mainsection.MainSectionRepository;
 import br.com.amorim.supermarket.service.mainsection.generateinternalcode.GenerateInternalCodeMainSection;
 import br.com.amorim.supermarket.service.mainsection.verifymainsectionname.VerifyMainSectionName;
+import br.com.amorim.supermarket.service.mainsection.verifysubsectionbeforedelete.VerifySubSectionBeforeSelete;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +30,7 @@ public class MainSectionCrudServiceImpl implements MainSectionCrudService {
     private VerifyPageSize verifyPageSize;
     private GenerateInternalCodeMainSection generateInternalCodeMainSection;
     private VerifyMainSectionName verifyMainSectionName;
+    private VerifySubSectionBeforeSelete verifySubSectionBeforeSelete;
 
     @Override
     public Page<MainSection> getAll (int page, int size) {
@@ -78,6 +80,7 @@ public class MainSectionCrudServiceImpl implements MainSectionCrudService {
     public void delete (UUID id) {
         mainSectionRepository.findById(id)
                 .map(existingMainSection -> {
+                    verifySubSectionBeforeSelete.verifyMainSectionSubSection(existingMainSection);
                     mainSectionRepository.delete(existingMainSection);
                     return existingMainSection;
                 }).orElseThrow(() ->

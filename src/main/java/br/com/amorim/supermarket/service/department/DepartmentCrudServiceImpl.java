@@ -7,6 +7,7 @@ import br.com.amorim.supermarket.model.department.Department;
 import br.com.amorim.supermarket.repository.department.DepartmentRepository;
 import br.com.amorim.supermarket.service.department.generateinternalcode.GenerateInternalCodeDepartment;
 import br.com.amorim.supermarket.service.department.verifydepartmentname.VerifyDepartmentName;
+import br.com.amorim.supermarket.service.department.verifymainsectionbeforedelete.VerifyMainSectionBeforeDelete;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +30,7 @@ public class DepartmentCrudServiceImpl implements DepartmentCrudService {
     private VerifyPageSize verifyPageSize;
     private GenerateInternalCodeDepartment generateInternalCodeDepartment;
     private VerifyDepartmentName verifyDepartmentName;
+    private VerifyMainSectionBeforeDelete verifyMainSectionBeforeDelete;
 
     @Override
     public Page<Department> getAll(int page, int size) {
@@ -78,8 +80,9 @@ public class DepartmentCrudServiceImpl implements DepartmentCrudService {
     public void delete (UUID id) {
         departmentRepository.findById(id)
                 .map(existingDepartment -> {
-                   departmentRepository.delete(existingDepartment);
-                   return existingDepartment;
+                    verifyMainSectionBeforeDelete.verifyDepartmentMainSection(existingDepartment);
+                    departmentRepository.delete(existingDepartment);
+                    return existingDepartment;
                 }).orElseThrow(() ->
                         new NotFoundException(
                                 getString(MessagesKeyType.DEPARTMENT_NOT_FOUND.message)));
