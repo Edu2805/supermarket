@@ -6,6 +6,7 @@ import br.com.amorim.supermarket.model.department.Department;
 import br.com.amorim.supermarket.repository.department.DepartmentRepository;
 import br.com.amorim.supermarket.service.department.generateinternalcode.GenerateInternalCodeDepartment;
 import br.com.amorim.supermarket.service.department.verifydepartmentname.VerifyDepartmentName;
+import br.com.amorim.supermarket.service.department.verifymainsectionbeforedelete.VerifyMainSectionBeforeDelete;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.department.DepartmentTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,6 +39,8 @@ class DepartmentCrudServiceImplTest {
     private GenerateInternalCodeDepartment generateInternalCodeDepartment;
     @Mock
     private VerifyDepartmentName verifyDepartmentName;
+    @Mock
+    private VerifyMainSectionBeforeDelete verifyMainSectionBeforeDelete;
 
     private Department department;
     public static final String MESSAGE_ERROR = getString(MessagesKeyType.DEPARTMENT_NOT_FOUND.message);
@@ -133,6 +136,7 @@ class DepartmentCrudServiceImplTest {
         when(departmentRepository.findById(department.getId()))
                 .thenReturn(Optional.of(department));
         doNothing().when(departmentRepository).delete(department);
+        doNothing().when(verifyMainSectionBeforeDelete).verifyDepartmentMainSection(department);
 
         departmentCrudService.delete(department.getId());
 
@@ -147,6 +151,7 @@ class DepartmentCrudServiceImplTest {
         when(departmentRepository.findById(knownIdCapture.capture()))
                 .thenReturn(Optional.of(department));
         doNothing().when(departmentRepository).delete(department);
+        doNothing().when(verifyMainSectionBeforeDelete).verifyDepartmentMainSection(department);
 
         departmentCrudService.delete(department.getId());
 

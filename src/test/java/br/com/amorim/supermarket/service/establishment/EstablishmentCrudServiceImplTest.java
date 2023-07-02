@@ -6,6 +6,7 @@ import br.com.amorim.supermarket.model.establishment.Establishment;
 import br.com.amorim.supermarket.repository.establishment.EstablishmentRepository;
 import br.com.amorim.supermarket.service.establishment.generateinternalcode.GenerateInternalCodeEstablishment;
 import br.com.amorim.supermarket.service.establishment.verifycnpjestablishment.VerifyCnpjEstablishment;
+import br.com.amorim.supermarket.service.establishment.verifydepartment.VerifyDepartment;
 import br.com.amorim.supermarket.service.establishment.verifymunicipalorstateregistration.VerifyMunicipalOrStateRegistrationEstablishment;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.establishment.EstablishmentTest;
 import org.junit.jupiter.api.Assertions;
@@ -42,6 +43,8 @@ class EstablishmentCrudServiceImplTest {
     private VerifyMunicipalOrStateRegistrationEstablishment verifyMunicipalRegistrationMock;
     @Mock
     private VerifyCnpjEstablishment verifyCnpjEstablishmentMock;
+    @Mock
+    private VerifyDepartment verifyDepartment;
 
     private Establishment establishment1;
     public static final String MESSAGE_ERROR = getString(MessagesKeyType.ESTABLISHMENT_NOT_FOUND.message);
@@ -134,6 +137,7 @@ class EstablishmentCrudServiceImplTest {
         when(establishmentRepositoryMock.findById(establishment1.getId()))
                 .thenReturn(Optional.of(establishment1));
         doNothing().when(establishmentRepositoryMock).delete(establishment1);
+        doNothing().when(verifyDepartment).verifyEstablishmentDepartment(establishment1);
 
         establishmentCrudService.delete(establishment1.getId());
 
@@ -148,6 +152,7 @@ class EstablishmentCrudServiceImplTest {
         when(establishmentRepositoryMock.findById(knownIdCapture.capture()))
                 .thenReturn(Optional.of(establishment1));
         doNothing().when(establishmentRepositoryMock).delete(establishment1);
+        doNothing().when(verifyDepartment).verifyEstablishmentDepartment(establishment1);
 
         establishmentCrudService.delete(establishment1.getId());
 

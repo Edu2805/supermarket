@@ -1,5 +1,6 @@
 package br.com.amorim.supermarket.repository.mainsection;
 
+import br.com.amorim.supermarket.model.department.Department;
 import br.com.amorim.supermarket.model.mainsection.MainSection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -10,4 +11,5 @@ import java.util.UUID;
 public interface MainSectionRepository extends JpaRepository<MainSection, UUID> {
 
     boolean existsByName(String name);
+    boolean existsByDepartment(Department department);
 }

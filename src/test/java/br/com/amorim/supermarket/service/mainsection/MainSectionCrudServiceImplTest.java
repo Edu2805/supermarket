@@ -6,6 +6,7 @@ import br.com.amorim.supermarket.model.mainsection.MainSection;
 import br.com.amorim.supermarket.repository.mainsection.MainSectionRepository;
 import br.com.amorim.supermarket.service.mainsection.generateinternalcode.GenerateInternalCodeMainSection;
 import br.com.amorim.supermarket.service.mainsection.verifymainsectionname.VerifyMainSectionName;
+import br.com.amorim.supermarket.service.mainsection.verifysubsectionbeforedelete.VerifySubSectionBeforeSelete;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.mainsection.MainSectionTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,6 +39,8 @@ class MainSectionCrudServiceImplTest {
     private GenerateInternalCodeMainSection generateInternalCodeMainSection;
     @Mock
     private VerifyMainSectionName verifyMainSectionName;
+    @Mock
+    private VerifySubSectionBeforeSelete verifySubSectionBeforeSelete;
 
     private static final String MESSAGE_ERROR = getString(MessagesKeyType.MAIN_SECTION_NOT_FOUND.message);
     private static final String UNKNOWN_ID = "0eb5c7e2-b35c-44fa-a8cb-b5d91447da82";
@@ -133,6 +136,7 @@ class MainSectionCrudServiceImplTest {
         when(mainSectionRepository.findById(mainSection.getId()))
                 .thenReturn(Optional.of(mainSection));
         doNothing().when(mainSectionRepository).delete(mainSection);
+        doNothing().when(verifySubSectionBeforeSelete).verifyMainSectionSubSection(mainSection);
 
         mainSectionCrudService.delete(mainSection.getId());
 
@@ -147,6 +151,7 @@ class MainSectionCrudServiceImplTest {
         when(mainSectionRepository.findById(knownIdCapture.capture()))
                 .thenReturn(Optional.of(mainSection));
         doNothing().when(mainSectionRepository).delete(mainSection);
+        doNothing().when(verifySubSectionBeforeSelete).verifyMainSectionSubSection(mainSection);
 
         mainSectionCrudService.delete(mainSection.getId());
 
