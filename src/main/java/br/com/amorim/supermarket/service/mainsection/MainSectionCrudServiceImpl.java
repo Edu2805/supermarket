@@ -7,7 +7,7 @@ import br.com.amorim.supermarket.model.mainsection.MainSection;
 import br.com.amorim.supermarket.repository.mainsection.MainSectionRepository;
 import br.com.amorim.supermarket.service.mainsection.generateinternalcode.GenerateInternalCodeMainSection;
 import br.com.amorim.supermarket.service.mainsection.verifymainsectionname.VerifyMainSectionName;
-import br.com.amorim.supermarket.service.mainsection.verifysubsectionbeforedelete.VerifySubSectionBeforeSelete;
+import br.com.amorim.supermarket.service.mainsection.verifysubsectionbeforedelete.VerifySubSectionBeforeDelete;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,7 +30,7 @@ public class MainSectionCrudServiceImpl implements MainSectionCrudService {
     private VerifyPageSize verifyPageSize;
     private GenerateInternalCodeMainSection generateInternalCodeMainSection;
     private VerifyMainSectionName verifyMainSectionName;
-    private VerifySubSectionBeforeSelete verifySubSectionBeforeSelete;
+    private VerifySubSectionBeforeDelete verifySubSectionBeforeSelete;
 
     @Override
     public Page<MainSection> getAll (int page, int size) {

@@ -12,7 +12,7 @@ import static br.com.amorim.supermarket.configuration.internacionalizationmessag
 @AllArgsConstructor
 
 @Component
-public class VerifySubSectionBeforeSeleteImpl implements VerifySubSectionBeforeSelete {
+public class VerifySubSectionBeforeDeleteImpl implements VerifySubSectionBeforeDelete {
 
     private SubSectionRepository subSectionRepository;
     @Override
