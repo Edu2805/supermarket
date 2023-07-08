@@ -2,7 +2,7 @@ package br.com.amorim.supermarket.service.mainsection.verifysubsectionbeforedele
 
 import br.com.amorim.supermarket.model.mainsection.MainSection;
 
-public interface VerifySubSectionBeforeSelete {
+public interface VerifySubSectionBeforeDelete {
 
     void verifyMainSectionSubSection(MainSection mainSection);
 }

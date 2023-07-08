@@ -6,6 +6,7 @@ import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.subsection.SubSection;
 import br.com.amorim.supermarket.repository.subsection.SubSectionRepository;
 import br.com.amorim.supermarket.service.subsection.generateinternalcode.GenerateInternalCodeSubSection;
+import br.com.amorim.supermarket.service.subsection.verifydependenciesbeforedelete.VerifyDependenciesBeforeDelete;
 import br.com.amorim.supermarket.service.subsection.verifysubsectionname.VerifySubSectionName;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,6 +30,7 @@ public class SubSectionCrudServiceImpl implements SubSectionCrudService {
     private VerifyPageSize verifyPageSize;
     private GenerateInternalCodeSubSection generateInternalCodeSubSection;
     private VerifySubSectionName verifySubSectionName;
+    private VerifyDependenciesBeforeDelete verifyDependenciesBeforeDelete;
 
     @Override
     public Page<SubSection> getAll (int page, int size) {
@@ -78,6 +80,8 @@ public class SubSectionCrudServiceImpl implements SubSectionCrudService {
     public void delete (UUID id) {
         subSectionRepository.findById(id)
                 .map(existingSubSection -> {
+                    verifyDependenciesBeforeDelete.existsEmployeeInSubSection(existingSubSection);
+                    verifyDependenciesBeforeDelete.existsProductInSubSection(existingSubSection);
                     subSectionRepository.delete(existingSubSection);
                     return existingSubSection;
                 }).orElseThrow(() ->

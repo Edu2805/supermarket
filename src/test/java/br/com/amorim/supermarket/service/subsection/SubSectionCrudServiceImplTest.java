@@ -5,6 +5,7 @@ import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.model.subsection.SubSection;
 import br.com.amorim.supermarket.repository.subsection.SubSectionRepository;
 import br.com.amorim.supermarket.service.subsection.generateinternalcode.GenerateInternalCodeSubSection;
+import br.com.amorim.supermarket.service.subsection.verifydependenciesbeforedelete.VerifyDependenciesBeforeDelete;
 import br.com.amorim.supermarket.service.subsection.verifysubsectionname.VerifySubSectionName;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.subsection.SubSectionTest;
 import org.junit.jupiter.api.Assertions;
@@ -39,6 +40,8 @@ class SubSectionCrudServiceImplTest {
     private GenerateInternalCodeSubSection generateInternalCodeSubSection;
     @Mock
     private VerifySubSectionName verifySubSectionName;
+    @Mock
+    private VerifyDependenciesBeforeDelete verifyDependenciesBeforeDelete;
 
     private static final String MESSAGE_ERROR = getString(MessagesKeyType.SUB_SECTION_NOT_FOUND.message);
     private static final String UNKNOWN_ID = "0eb5c7e2-b35c-44fa-a8cb-b5d91447da82";
@@ -135,6 +138,8 @@ class SubSectionCrudServiceImplTest {
         when(subSectionRepository.findById(subSection1.getId()))
                 .thenReturn(Optional.of(subSection1));
         doNothing().when(subSectionRepository).delete(subSection1);
+        doNothing().when(verifyDependenciesBeforeDelete).existsProductInSubSection(subSection1);
+        doNothing().when(verifyDependenciesBeforeDelete).existsEmployeeInSubSection(subSection1);
 
         subSectionCrudService.delete(subSection1.getId());
 
@@ -149,6 +154,8 @@ class SubSectionCrudServiceImplTest {
         when(subSectionRepository.findById(knownIdCapture.capture()))
                 .thenReturn(Optional.of(subSection1));
         doNothing().when(subSectionRepository).delete(subSection1);
+        doNothing().when(verifyDependenciesBeforeDelete).existsProductInSubSection(subSection1);
+        doNothing().when(verifyDependenciesBeforeDelete).existsEmployeeInSubSection(subSection1);
 
         subSectionCrudService.delete(subSection1.getId());
 
