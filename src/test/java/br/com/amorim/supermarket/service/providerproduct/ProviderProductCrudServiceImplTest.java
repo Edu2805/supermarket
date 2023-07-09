@@ -11,6 +11,7 @@ import br.com.amorim.supermarket.service.providerproduct.validatedocument.cei.Va
 import br.com.amorim.supermarket.service.providerproduct.validatedocument.cnpj.ValidateCnpjDocumentProviderProduct;
 import br.com.amorim.supermarket.service.providerproduct.validatedocument.cpf.ValidateCpfDocumentProviderProduct;
 import br.com.amorim.supermarket.service.providerproduct.verifymunicipalorstateregistration.VerifyMunicipalOrStateRegistrationProviderProduct;
+import br.com.amorim.supermarket.service.providerproduct.verifyproductdependencies.VerifyProductDependencies;
 import br.com.amorim.supermarket.service.providerproduct.verifysubscriptionnumber.VerifySubscriptionNumberProviderProduct;
 import br.com.amorim.supermarket.testutils.generatedocument.GenerateCNPJ;
 import br.com.amorim.supermarket.testutils.generatedocument.GenerateCPF;
@@ -57,6 +58,8 @@ class ProviderProductCrudServiceImplTest {
     private VerifySubscriptionNumberProviderProduct verifySubscriptionNumberMock;
     @Mock
     private VerifyPageSize verifyPageSizeMock;
+    @Mock
+    private VerifyProductDependencies verifyProductDependencies;
 
     private GenerateCPF generateCPF;
     private GenerateCNPJ generateCNPJ;
@@ -253,6 +256,7 @@ class ProviderProductCrudServiceImplTest {
         when(providerProductRepositoryMock.findById(knownId))
                 .thenReturn(Optional.of(providerProduct));
         doNothing().when(providerProductRepositoryMock).delete(providerProduct);
+        doNothing().when(verifyProductDependencies).existsByProductsInProvider(providerProduct);
 
         providerProductCrudService.delete(knownId);
 
@@ -268,6 +272,7 @@ class ProviderProductCrudServiceImplTest {
         when(providerProductRepositoryMock.findById(knownIdCapture.capture()))
                 .thenReturn(Optional.of(providerProduct));
         doNothing().when(providerProductRepositoryMock).delete(providerProduct);
+        doNothing().when(verifyProductDependencies).existsByProductsInProvider(providerProduct);
 
         providerProductCrudService.delete(knownId);
 
