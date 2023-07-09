@@ -11,6 +11,7 @@ import br.com.amorim.supermarket.service.providerproduct.validatedocument.cnpj.V
 import br.com.amorim.supermarket.service.providerproduct.validatedocument.cpf.ValidateCpfDocumentProviderProduct;
 import br.com.amorim.supermarket.service.providerproduct.verifymunicipalorstateregistration.VerifyMunicipalOrStateRegistrationProviderProduct;
 import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
+import br.com.amorim.supermarket.service.providerproduct.verifyproductdependencies.VerifyProductDependencies;
 import br.com.amorim.supermarket.service.providerproduct.verifysubscriptionnumber.VerifySubscriptionNumberProviderProduct;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -39,6 +40,7 @@ public class ProviderProductCrudServiceImpl implements ProviderProductCrudServic
     private VerifyMunicipalOrStateRegistrationProviderProduct verifyMunicipalRegistration;
     private VerifySubscriptionNumberProviderProduct verifySubscriptionNumber;
     private VerifyPageSize verifyPageSize;
+    private VerifyProductDependencies verifyProductDependencies;
 
 
     @Override
@@ -126,6 +128,7 @@ public class ProviderProductCrudServiceImpl implements ProviderProductCrudServic
     public void delete (UUID id) {
         providerProductRepository.findById(id)
                 .map(provider -> {
+                    verifyProductDependencies.existsByProductsInProvider(provider);
                     providerProductRepository.delete(provider);
                     return provider;
                 }).orElseThrow(() ->
