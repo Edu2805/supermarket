@@ -8,7 +8,7 @@ import java.util.UUID;
 public interface AttachmentCrudService {
 
     String uploadFile(MultipartFile file) throws IOException;
-    byte[] downloadFile(String fileName) throws IOException;
+    byte[] downloadFileById(UUID uuid) throws IOException;
 
     void deleteFile(UUID uuid);
 }

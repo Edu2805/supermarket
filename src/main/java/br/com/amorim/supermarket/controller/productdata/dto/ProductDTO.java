@@ -1,6 +1,7 @@
 package br.com.amorim.supermarket.controller.productdata.dto;
 
 import br.com.amorim.supermarket.common.enums.UnityType;
+import br.com.amorim.supermarket.model.attatchment.Attachment;
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
 import br.com.amorim.supermarket.model.subsection.SubSection;
 import lombok.AllArgsConstructor;
@@ -54,4 +55,6 @@ public class ProductDTO {
 
     @NotNull(message = "{br.com.supermarket.PRODUCT_DATA_DTO_FIELD_PROVIDER_PRODUCT_IS_NOT_NULL}")
     private ProviderProduct providerProduct;
+
+    private Attachment productPhoto;
 }
