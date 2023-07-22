@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
@@ -46,14 +47,14 @@ public class AttachmentController {
         return ResponseEntity.status(OK).body(uploadFile);
     }
 
-    @GetMapping("/{fileName}")
+    @GetMapping("/{id}")
     @ApiOperation("Get a specific attachment")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Attachment returned successfully"),
             @ApiResponse(code = 404, message = "Attachment not found for given file name")
     })
-    public ResponseEntity<?> downloadFile (@PathVariable @ApiParam("Attachment name") String fileName) throws IOException {
-        byte[] images = attachmentCrudService.downloadFile(fileName);
+    public ResponseEntity<?> downloadFile (@PathVariable @ApiParam("Attachment id") UUID id) throws IOException {
+        byte[] images = attachmentCrudService.downloadFileById(id);
         return ResponseEntity.status(OK).contentType(MediaType.valueOf("image/jpeg")).body(images);
     }
 }

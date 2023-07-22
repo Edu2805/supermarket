@@ -1,6 +1,7 @@
 package br.com.amorim.supermarket.model.productdata;
 
 import br.com.amorim.supermarket.common.enums.UnityType;
+import br.com.amorim.supermarket.model.attatchment.Attachment;
 import br.com.amorim.supermarket.model.common.CommonIdNameAndCodeEntity;
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
 import br.com.amorim.supermarket.model.subsection.SubSection;
@@ -9,12 +10,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -63,4 +67,8 @@ public class ProductData extends CommonIdNameAndCodeEntity {
     @JoinColumn(name = "provider_product")
     @NotNull(message = "{br.com.supermarket.PRODUCT_DATA_FIELD_PROVIDER_PRODUCT_IS_NOT_NULL}")
     private ProviderProduct providerProduct;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_photo")
+    private Attachment productPhoto;
 }

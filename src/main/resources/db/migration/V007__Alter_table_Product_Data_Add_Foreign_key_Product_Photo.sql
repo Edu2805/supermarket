@@ -1,0 +1,1 @@
+ALTER TABLE IF EXISTS product_data ADD CONSTRAINT foreign_key_product_data_to_product_photo FOREIGN KEY (product_photo) REFERENCES attachment (id);

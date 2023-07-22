@@ -28,9 +28,9 @@ public class AttachmentCrudServiceImpl implements AttachmentCrudService {
     }
 
     @Override
-    public byte[] downloadFile(String fileName) {
+    public byte[] downloadFileById(UUID uuid) throws IOException {
         byte[] images = new byte[0];
-        var dbImageData = attachmentRepository.findByName(fileName);
+        var dbImageData = attachmentRepository.findById(uuid);
         if (dbImageData.isPresent()) {
             images = ImageUtil.decompressImage(dbImageData.get().getImageData());
         }
