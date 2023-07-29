@@ -4,7 +4,9 @@ import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.productdata.ProductData;
+import br.com.amorim.supermarket.repository.attachment.AttachmentRepository;
 import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
+import br.com.amorim.supermarket.service.common.utils.ImageUtil;
 import br.com.amorim.supermarket.service.productdata.calculatemargin.CalculateMargin;
 import br.com.amorim.supermarket.service.productdata.generateinternalcode.GenerateInternalCodeProduct;
 import br.com.amorim.supermarket.service.productdata.validateean13anddun14.ValidateProductEan13OrDun14;
@@ -31,6 +33,7 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
     private static final int DECREASE_PAGE_SIZE = 1;
     private static final int ZERO_PAGE_SIZE = 0;
     private ProductDataRepository productDataRepository;
+    private AttachmentRepository attachmentRepository;
     private ValidateProductEan13OrDun14 validateEan13OrDun14;
     private ValidateProductSubSection validateProductSubSection;
     private ValidateProductProviderProduct validateProductProviderProduct;
@@ -64,7 +67,16 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
         validateBeforeSave(productData);
         setMargin(productData);
         setInternalCode(productData);
+        setPhoto(productData);
         return productDataRepository.save(productData);
+    }
+
+    private void setPhoto(ProductData productData) {
+        if (productData.getProductPhoto() != null) {
+            var imageData = productData.getProductPhoto().getImageData();
+            productData.getProductPhoto().setImageData(ImageUtil.compressFile(imageData));
+            attachmentRepository.save(productData.getProductPhoto());
+        }
     }
 
     private void setMargin (ProductData productData) {
