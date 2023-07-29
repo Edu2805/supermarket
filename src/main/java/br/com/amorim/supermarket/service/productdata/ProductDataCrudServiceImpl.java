@@ -105,6 +105,7 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
                     BigDecimal margin = calculateMargin.calculate(productData);
                     productData.setMargin(margin);
                     productData.setCode(existingProduct.getCode());
+                    setPhoto(productData);
                     productDataRepository.save(productData);
                     return existingProduct;
                 }).orElseThrow(() ->
