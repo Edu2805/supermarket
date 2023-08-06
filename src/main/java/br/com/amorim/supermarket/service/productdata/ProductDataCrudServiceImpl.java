@@ -3,6 +3,7 @@ package br.com.amorim.supermarket.service.productdata;
 import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
+import br.com.amorim.supermarket.model.attatchment.Attachment;
 import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.repository.attachment.AttachmentRepository;
 import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
@@ -67,11 +68,11 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
         validateBeforeSave(productData);
         setMargin(productData);
         setInternalCode(productData);
-        setPhoto(productData);
+        setPhotoAndInsert(productData);
         return productDataRepository.save(productData);
     }
 
-    private void setPhoto(ProductData productData) {
+    private void setPhotoAndInsert(ProductData productData) {
         if (productData.getProductPhoto() != null) {
             var imageData = productData.getProductPhoto().getImageData();
             productData.getProductPhoto().setImageData(ImageUtil.compressFile(imageData));
@@ -105,12 +106,27 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
                     BigDecimal margin = calculateMargin.calculate(productData);
                     productData.setMargin(margin);
                     productData.setCode(existingProduct.getCode());
-                    setPhoto(productData);
+                    setPhotoAndUpdate(productData, existingProduct);
                     productDataRepository.save(productData);
                     return existingProduct;
                 }).orElseThrow(() ->
                                 new NotFoundException(
                                         getString(MessagesKeyType.PRODUCT_DATA_NOT_FOUND.message)));
+    }
+
+    private void setPhotoAndUpdate(ProductData productDataUpdatePhoto, ProductData productDataExistentPhoto) {
+        if (productDataUpdatePhoto.getProductPhoto() != null) {
+            changeProduct(productDataExistentPhoto.getProductPhoto());
+            var imageData = productDataUpdatePhoto.getProductPhoto().getImageData();
+            productDataUpdatePhoto.getProductPhoto().setImageData(ImageUtil.compressFile(imageData));
+            attachmentRepository.save(productDataUpdatePhoto.getProductPhoto());
+        }
+    }
+
+    private void changeProduct(Attachment attachment) {
+        if (attachment != null) {
+            attachmentRepository.delete(attachment);
+        }
     }
 
     private void validateBeforeUpdate(ProductData productData) {

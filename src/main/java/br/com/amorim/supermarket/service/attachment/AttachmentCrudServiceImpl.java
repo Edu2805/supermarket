@@ -10,6 +10,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.UUID;
 
+import static br.com.amorim.supermarket.common.enums.MessagesKeyType.FILE_UPLOADED_SUCCESSFULLY;
+import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
+
 @AllArgsConstructor
 
 @Service
@@ -23,8 +26,7 @@ public class AttachmentCrudServiceImpl implements AttachmentCrudService {
                 .name(file.getOriginalFilename())
                 .type(file.getContentType())
                 .imageData(ImageUtil.compressFile(file.getBytes())).build());
-
-        return "File uploaded successfully : " + file.getOriginalFilename();
+        return getString(FILE_UPLOADED_SUCCESSFULLY.message) + file.getOriginalFilename();
     }
 
     @Override
