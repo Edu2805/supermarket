@@ -3,8 +3,11 @@ package br.com.amorim.supermarket.service.person;
 import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
+import br.com.amorim.supermarket.model.attatchment.Attachment;
 import br.com.amorim.supermarket.model.person.Person;
+import br.com.amorim.supermarket.repository.attachment.AttachmentRepository;
 import br.com.amorim.supermarket.repository.person.PersonRepository;
+import br.com.amorim.supermarket.service.common.utils.ImageUtil;
 import br.com.amorim.supermarket.service.person.getemailuser.PersonEmailUser;
 import br.com.amorim.supermarket.service.person.updatefullnameemployee.PersonUpdateUserNameInEmployee;
 import br.com.amorim.supermarket.service.person.verifycpf.VerifyPersonCpf;
@@ -30,6 +33,7 @@ public class PersonCrudServiceImpl implements PersonCrudService {
     private static final int DECREASE_PAGE_SIZE = 1;
     private static final int ZERO_PAGE_SIZE = 0;
     private PersonRepository personRepository;
+    private AttachmentRepository attachmentRepository;
     private VerifyPageSize verifyPageSize;
     private VerifyPersonCpf verifyPersonCpf;
     private VerifyPersonRg verifyPersonRg;
@@ -61,7 +65,16 @@ public class PersonCrudServiceImpl implements PersonCrudService {
     @Override
     public Person save (Person person) {
         verifyFieldsBeforeSave(person);
+        setPhotoAndInsert(person);
         return personRepository.save(person);
+    }
+
+    private void setPhotoAndInsert(Person person) {
+        if (person.getPersonPhoto() != null) {
+            var imageData = person.getPersonPhoto().getImageData();
+            person.getPersonPhoto().setImageData(ImageUtil.compressFile(imageData));
+            attachmentRepository.save(person.getPersonPhoto());
+        }
     }
 
     private void verifyFieldsBeforeSave(Person person) {
@@ -79,12 +92,28 @@ public class PersonCrudServiceImpl implements PersonCrudService {
                 .map(existingPerson -> {
                     person.setId(existingPerson.getId());
                     verifyFieldsBeforeUpdate(person);
+                    setPhotoAndUpdate(person, existingPerson);
                     personRepository.save(person);
                     return existingPerson;
                 }).orElseThrow(() ->
                         new NotFoundException(
                                 getString(MessagesKeyType.PERSON_DATA_NOT_FOUND.message)));
 
+    }
+
+    private void setPhotoAndUpdate(Person personUpdatePhoto, Person personExistentPhoto) {
+        if (personUpdatePhoto.getPersonPhoto() != null) {
+            changePerson(personExistentPhoto.getPersonPhoto());
+            var imageData = personUpdatePhoto.getPersonPhoto().getImageData();
+            personUpdatePhoto.getPersonPhoto().setImageData(ImageUtil.compressFile(imageData));
+            attachmentRepository.save(personUpdatePhoto.getPersonPhoto());
+        }
+    }
+
+    private void changePerson(Attachment attachment) {
+        if (attachment != null) {
+            attachmentRepository.delete(attachment);
+        }
     }
 
     private void verifyFieldsBeforeUpdate(Person person) {

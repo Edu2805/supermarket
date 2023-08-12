@@ -1,0 +1,1 @@
+ALTER TABLE IF EXISTS person ADD CONSTRAINT foreign_key_person_to_person_photo FOREIGN KEY (person_photo) REFERENCES attachment (id);

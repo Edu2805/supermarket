@@ -1,6 +1,7 @@
 package br.com.amorim.supermarket.controller.person.dto;
 
 import br.com.amorim.supermarket.common.enums.ScholarityType;
+import br.com.amorim.supermarket.model.attatchment.Attachment;
 import br.com.amorim.supermarket.model.userdata.UserData;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -60,4 +61,6 @@ public class PersonDTO {
 
     @NotNull(message = "{br.com.supermarket.PERSON_DTO_FIELD_USER_DATA_IS_NOT_EMPTY}")
     private UserData userData;
+
+    private Attachment personPhoto;
 }
