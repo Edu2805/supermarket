@@ -1,6 +1,7 @@
 package br.com.amorim.supermarket.model.person;
 
 import br.com.amorim.supermarket.common.enums.ScholarityType;
+import br.com.amorim.supermarket.model.attatchment.Attachment;
 import br.com.amorim.supermarket.model.common.CommonIdEntity;
 import br.com.amorim.supermarket.model.userdata.UserData;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -80,5 +82,9 @@ public class Person extends CommonIdEntity {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_data")
     private UserData userData;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "person_photo")
+    private Attachment personPhoto;
 
 }
