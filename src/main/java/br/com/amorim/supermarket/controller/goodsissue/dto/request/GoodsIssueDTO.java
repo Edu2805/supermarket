@@ -1,4 +1,4 @@
-package br.com.amorim.supermarket.controller.goodsissue.dto;
+package br.com.amorim.supermarket.controller.goodsissue.dto.request;
 
 import br.com.amorim.supermarket.common.enums.PaymentOptionsType;
 import br.com.amorim.supermarket.model.productdata.ProductData;

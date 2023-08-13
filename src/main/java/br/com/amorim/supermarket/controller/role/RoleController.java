@@ -11,6 +11,8 @@ import springfox.documentation.annotations.ApiIgnore;
 import java.util.ArrayList;
 import java.util.List;
 
+import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
+
 @AllArgsConstructor
 
 @RestController
@@ -23,7 +25,7 @@ public class RoleController {
     @ApiIgnore
     public RoleOutput findAll () {
         List<String> roleName = new ArrayList<>();
-        roleCrudService.findAllRoles().forEach(role -> roleName.add(role.getName()));
+        roleCrudService.findAllRoles().forEach(role -> roleName.add(getString(role.getName())));
         return new RoleOutput(roleName);
     }
 }

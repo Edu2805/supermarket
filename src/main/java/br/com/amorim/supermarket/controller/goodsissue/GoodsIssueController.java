@@ -1,7 +1,9 @@
 package br.com.amorim.supermarket.controller.goodsissue;
 
-import br.com.amorim.supermarket.controller.goodsissue.dto.ConvertGoodsIssueMapper;
-import br.com.amorim.supermarket.controller.goodsissue.dto.GoodsIssueDTO;
+import br.com.amorim.supermarket.controller.goodsissue.dto.request.ConvertGoodsIssueMapper;
+import br.com.amorim.supermarket.controller.goodsissue.dto.request.GoodsIssueDTO;
+import br.com.amorim.supermarket.controller.goodsissue.dto.response.ConvertGoodsIssuePaymentTypeStringDTO;
+import br.com.amorim.supermarket.controller.goodsissue.dto.response.GoodsIssuePaymentTypeStringDTO;
 import br.com.amorim.supermarket.model.goodsissue.GoodsIssue;
 import br.com.amorim.supermarket.service.goodsissue.GoodsIssueCrudService;
 import io.swagger.annotations.Api;
@@ -37,6 +39,7 @@ public class GoodsIssueController {
 
     private GoodsIssueCrudService goodsIssueCrudService;
     private ConvertGoodsIssueMapper convertGoodsIssueMapper;
+    private ConvertGoodsIssuePaymentTypeStringDTO convertGoodsIssuePaymentTypeStringDTO;
 
     @GetMapping
     @ApiOperation("Get all goods issue")
@@ -61,8 +64,9 @@ public class GoodsIssueController {
             @ApiResponse(code = 200, message = "Goods issue returned successfully"),
             @ApiResponse(code = 404, message = "Goods issue not found for given id")
     })
-    public GoodsIssue getById (@PathVariable @ApiParam("Goods issue id") UUID id) {
-        return goodsIssueCrudService.findById(id);
+    public GoodsIssuePaymentTypeStringDTO getById (@PathVariable @ApiParam("Goods issue id") UUID id) {
+        var goodsIssue = goodsIssueCrudService.findById(id);
+        return convertGoodsIssuePaymentTypeStringDTO.mapper(goodsIssue);
     }
 
     @PostMapping

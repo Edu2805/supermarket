@@ -1,4 +1,4 @@
-package br.com.amorim.supermarket.controller.productdata.dto;
+package br.com.amorim.supermarket.controller.productdata.dto.request;
 
 import br.com.amorim.supermarket.common.enums.UnityType;
 import br.com.amorim.supermarket.model.attatchment.Attachment;
