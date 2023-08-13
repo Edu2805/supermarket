@@ -1,7 +1,9 @@
 package br.com.amorim.supermarket.controller.providerproduct;
 
-import br.com.amorim.supermarket.controller.providerproduct.dto.ConvertProviderMapper;
-import br.com.amorim.supermarket.controller.providerproduct.dto.ProviderProductDTO;
+import br.com.amorim.supermarket.controller.providerproduct.dto.request.ConvertProviderMapper;
+import br.com.amorim.supermarket.controller.providerproduct.dto.request.ProviderProductDTO;
+import br.com.amorim.supermarket.controller.providerproduct.dto.response.ConvertProviderSubscriptionTypeString;
+import br.com.amorim.supermarket.controller.providerproduct.dto.response.ProviderProductSubscriptionTypeStringDTO;
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
 import br.com.amorim.supermarket.service.providerproduct.ProviderProductCrudServiceImpl;
 import io.swagger.annotations.Api;
@@ -37,6 +39,7 @@ public class ProviderProductController {
 
     private ProviderProductCrudServiceImpl providerProductService;
     private ConvertProviderMapper convertProviderMapper;
+    private ConvertProviderSubscriptionTypeString convertProviderSubscriptionTypeString;
 
     @GetMapping
     @ApiOperation("Get all provider products")
@@ -61,8 +64,9 @@ public class ProviderProductController {
             @ApiResponse(code = 200, message = "Provider product returned successfully"),
             @ApiResponse(code = 404, message = "Provider product not found for given id")
     })
-    public ProviderProduct getById (@PathVariable @ApiParam("Provider product id") UUID id) {
-        return providerProductService.findById(id);
+    public ProviderProductSubscriptionTypeStringDTO getById (@PathVariable @ApiParam("Provider product id") UUID id) {
+        var providerProduct = providerProductService.findById(id);
+        return convertProviderSubscriptionTypeString.mapper(providerProduct);
     }
 
     @PostMapping

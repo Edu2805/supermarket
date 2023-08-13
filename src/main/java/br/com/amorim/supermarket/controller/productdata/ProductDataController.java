@@ -1,7 +1,9 @@
 package br.com.amorim.supermarket.controller.productdata;
 
-import br.com.amorim.supermarket.controller.productdata.dto.ConvertProductMapper;
-import br.com.amorim.supermarket.controller.productdata.dto.ProductDTO;
+import br.com.amorim.supermarket.controller.productdata.dto.request.ConvertProductMapper;
+import br.com.amorim.supermarket.controller.productdata.dto.request.ProductDTO;
+import br.com.amorim.supermarket.controller.productdata.dto.response.ConvertProductUnitTypeStringDTO;
+import br.com.amorim.supermarket.controller.productdata.dto.response.ProductUnitTypeStringDTO;
 import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.service.productdata.ProductDataCrudService;
 import io.swagger.annotations.Api;
@@ -37,6 +39,7 @@ public class ProductDataController {
 
     private ProductDataCrudService productDataService;
     private ConvertProductMapper convertProductMapper;
+    private ConvertProductUnitTypeStringDTO convertProductUnitTypeStringDTO;
 
     @GetMapping
     @ApiOperation("Get all products")
@@ -61,8 +64,9 @@ public class ProductDataController {
             @ApiResponse(code = 200, message = "Product returned successfully"),
             @ApiResponse(code = 404, message = "Product not found for given id")
     })
-    public ProductData getById (@PathVariable @ApiParam("Product id") UUID id) {
-        return productDataService.findById(id);
+    public ProductUnitTypeStringDTO getById (@PathVariable @ApiParam("Product id") UUID id) {
+        var productData = productDataService.findById(id);
+        return convertProductUnitTypeStringDTO.mapper(productData);
     }
 
     @PostMapping

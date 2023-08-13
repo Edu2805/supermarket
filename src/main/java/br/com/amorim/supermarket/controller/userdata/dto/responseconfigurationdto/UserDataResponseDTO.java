@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 public class UserDataResponseDTO {
 
     private String userName;
-    private RoleType role;
+    private String role;
     private Timestamp registrationDate;
     private boolean isEmployee;
 }

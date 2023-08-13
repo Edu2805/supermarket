@@ -4,7 +4,7 @@ import br.com.amorim.supermarket.common.exception.invalidpasswordexception.Inval
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.controller.common.accessrestriction.AccessRestriction;
 import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.ConverterUserDataRequestMapper;
-import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.CredentialsDTO;
+import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.CredentialsDTORoleString;
 import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.GetUserByUserNameDTO;
 import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.UserDataDTO;
 import br.com.amorim.supermarket.controller.userdata.dto.responseconfigurationdto.ConverterUserDataResponseMapper;
@@ -129,7 +129,8 @@ public class UserDataController {
             @ApiResponse(code = 201, message = "User successfully autenticated"),
             @ApiResponse(code = 400, message = "An error occurred while autenticate the user")
     })
-    public TokenDTO authenticate(@RequestBody @Valid @ApiParam("User Credentials") CredentialsDTO credentialsDTO) {
+    public TokenDTO authenticate(@RequestBody @Valid @ApiParam("User Credentials") CredentialsDTORoleString credentialsDTORoleString) {
+        var credentialsDTO = userDetailsService.credentialMapper(credentialsDTORoleString);
         userDetailsService.validateRole(credentialsDTO);
         userDetailsService.existsUserName(credentialsDTO.getLogin());
         try {

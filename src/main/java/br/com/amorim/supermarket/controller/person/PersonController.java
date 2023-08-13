@@ -1,7 +1,9 @@
 package br.com.amorim.supermarket.controller.person;
 
-import br.com.amorim.supermarket.controller.person.dto.ConverterPersonMapperImpl;
-import br.com.amorim.supermarket.controller.person.dto.PersonDTO;
+import br.com.amorim.supermarket.controller.person.dto.request.ConverterPersonMapperImpl;
+import br.com.amorim.supermarket.controller.person.dto.request.PersonDTO;
+import br.com.amorim.supermarket.controller.person.dto.response.ConvertPersonScholarityTypeStringDTO;
+import br.com.amorim.supermarket.controller.person.dto.response.PersonScholarityTypeStringDTO;
 import br.com.amorim.supermarket.model.person.Person;
 import br.com.amorim.supermarket.service.person.PersonCrudServiceImpl;
 import io.swagger.annotations.Api;
@@ -37,6 +39,7 @@ public class PersonController {
 
     private PersonCrudServiceImpl personService;
     private ConverterPersonMapperImpl converterPersonMapper;
+    private ConvertPersonScholarityTypeStringDTO personScholarityTypeStringDTO;
 
     @GetMapping
     @ApiOperation("Get all people")
@@ -61,8 +64,9 @@ public class PersonController {
             @ApiResponse(code = 200, message = "Person returned successfully"),
             @ApiResponse(code = 404, message = "Person not found for given id")
     })
-    public Person getById (@PathVariable @ApiParam("Person id") UUID id) {
-        return personService.findById(id);
+    public PersonScholarityTypeStringDTO getById (@PathVariable @ApiParam("Person id") UUID id) {
+        var person = personService.findById(id);
+        return personScholarityTypeStringDTO.mapper(person);
     }
 
     @PostMapping

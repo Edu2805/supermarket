@@ -1,4 +1,4 @@
-package br.com.amorim.supermarket.controller.person.dto;
+package br.com.amorim.supermarket.controller.person.dto.request;
 
 import br.com.amorim.supermarket.common.enums.ScholarityType;
 import br.com.amorim.supermarket.model.attatchment.Attachment;
