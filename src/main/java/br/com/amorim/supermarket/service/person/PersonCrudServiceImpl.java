@@ -14,6 +14,7 @@ import br.com.amorim.supermarket.service.person.getemailuser.PersonEmailUser;
 import br.com.amorim.supermarket.service.person.updatefullnameemployee.PersonUpdateUserNameInEmployee;
 import br.com.amorim.supermarket.service.person.verifycpf.VerifyPersonCpf;
 import br.com.amorim.supermarket.service.person.verifymiddlename.VerifyMiddleName;
+import br.com.amorim.supermarket.service.person.verifypersonemployee.VerifyPersonEmployee;
 import br.com.amorim.supermarket.service.person.verifyrg.VerifyPersonRg;
 import br.com.amorim.supermarket.service.person.verifyuserdata.VerifyPersonUserData;
 import lombok.AllArgsConstructor;
@@ -42,6 +43,7 @@ public class PersonCrudServiceImpl implements PersonCrudService {
     private VerifyPersonUserData verifyPersonUserData;
     private PersonEmailUser personEmailUser;
     private VerifyMiddleName verifyMiddleName;
+    private VerifyPersonEmployee verifyPersonEmployee;
     private PersonUpdateUserNameInEmployee personUpdateUserNameInEmployee;
     private ConvertPersonScholarityTypeStringDTO convertPersonScholarityTypeStringDTO;
 
@@ -155,6 +157,8 @@ public class PersonCrudServiceImpl implements PersonCrudService {
     public void delete (UUID id) {
         personRepository.findById(id)
                 .map(person -> {
+                    verifyPersonUserData.verifyPersonUserDataBeforeDelete(person);
+                    verifyPersonEmployee.verifyPersonEmployeeBeforeDelete(person);
                     personRepository.delete(person);
                     return person;
                 }).orElseThrow(() ->

@@ -6,4 +6,5 @@ public interface VerifyPersonUserData {
 
     boolean verifyPersonUserDataBeforeSave(Person person);
     boolean verifyPersonUserDataBeforeUpdate(Person person);
+    void verifyPersonUserDataBeforeDelete(Person person);
 }
