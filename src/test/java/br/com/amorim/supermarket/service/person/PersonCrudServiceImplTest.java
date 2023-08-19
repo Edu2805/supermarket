@@ -9,6 +9,7 @@ import br.com.amorim.supermarket.service.person.getemailuser.PersonEmailUser;
 import br.com.amorim.supermarket.service.person.updatefullnameemployee.PersonUpdateUserNameInEmployee;
 import br.com.amorim.supermarket.service.person.verifycpf.VerifyPersonCpf;
 import br.com.amorim.supermarket.service.person.verifymiddlename.VerifyMiddleName;
+import br.com.amorim.supermarket.service.person.verifypersonemployee.VerifyPersonEmployee;
 import br.com.amorim.supermarket.service.person.verifyrg.VerifyPersonRg;
 import br.com.amorim.supermarket.service.person.verifyuserdata.VerifyPersonUserData;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.person.PersonTest;
@@ -50,6 +51,8 @@ class PersonCrudServiceImplTest {
     private PersonEmailUser personEmailUserMock;
     @Mock
     private VerifyMiddleName verifyMiddleNameMock;
+    @Mock
+    private VerifyPersonEmployee verifyPersonEmployee;
     @Mock
     private PersonUpdateUserNameInEmployee personUpdateUserNameInEmployeeMock;
 
