@@ -3,6 +3,8 @@ package br.com.amorim.supermarket.service.person;
 import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
+import br.com.amorim.supermarket.controller.person.dto.response.ConvertPersonScholarityTypeStringDTO;
+import br.com.amorim.supermarket.controller.person.dto.response.PersonScholarityTypeStringDTO;
 import br.com.amorim.supermarket.model.attatchment.Attachment;
 import br.com.amorim.supermarket.model.person.Person;
 import br.com.amorim.supermarket.repository.attachment.AttachmentRepository;
@@ -41,7 +43,14 @@ public class PersonCrudServiceImpl implements PersonCrudService {
     private PersonEmailUser personEmailUser;
     private VerifyMiddleName verifyMiddleName;
     private PersonUpdateUserNameInEmployee personUpdateUserNameInEmployee;
+    private ConvertPersonScholarityTypeStringDTO convertPersonScholarityTypeStringDTO;
 
+    /**
+     * É usado para listar as pessoas cadastradas no sistema sem realizar a tradução da enumeração de escolaridade
+     * @param page pagin a lista
+     * @param size quantidade de elementos da lista
+     * @return Person sem a escolaridade traduzida
+     */
     @Override
     public Page<Person> getAll(int page, int size) {
         if (page > ZERO_PAGE_SIZE) {
@@ -50,6 +59,23 @@ public class PersonCrudServiceImpl implements PersonCrudService {
         verifyPageSize.verifyPageSizeForGetAll(page, size);
         Pageable pageableRequest = PageRequest.of(page, size);
         return personRepository.findAll(pageableRequest);
+    }
+
+    /**
+     * É usado para listar as pessoas cadastradas no sistema realizando a tradução da enumeração de escolaridade
+     * @param page pagin a lista
+     * @param size quantidade de elementos da lista
+     * @return DTO com a escolaridade traduzida
+     */
+    public Page<PersonScholarityTypeStringDTO> getAllWithScholarityParsed(int page, int size) {
+        if (page > ZERO_PAGE_SIZE) {
+            page -= DECREASE_PAGE_SIZE;
+        }
+        verifyPageSize.verifyPageSizeForGetAll(page, size);
+        Pageable pageableRequest = PageRequest.of(page, size);
+        Page<Person> people = personRepository.findAll(pageableRequest);
+
+        return people.map(person -> convertPersonScholarityTypeStringDTO.mapper(person));
     }
 
     @Override

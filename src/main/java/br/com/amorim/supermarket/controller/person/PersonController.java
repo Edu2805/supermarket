@@ -47,7 +47,7 @@ public class PersonController {
             @ApiResponse(code = 200, message = "People returned successfully"),
             @ApiResponse(code = 404, message = "An error occurred while fetching the people")
     })
-    public Page<Person> findAll (@RequestParam(
+    public Page<PersonScholarityTypeStringDTO> findAll (@RequestParam(
             value = "page",
             required = false,
             defaultValue = "0") @ApiParam("People list page") int page,
@@ -55,7 +55,7 @@ public class PersonController {
                                          value = "size",
                                          required = false,
                                          defaultValue = "20") @ApiParam("Number of records on each page") int size) {
-        return personService.getAll(page, size);
+        return personService.getAllWithScholarityParsed(page, size);
     }
 
     @GetMapping("/{id}")
