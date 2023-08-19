@@ -41,4 +41,12 @@ public class VerifyPersonUserDataImpl implements VerifyPersonUserData {
         });
         return false;
     }
+
+    @Override
+    public void verifyPersonUserDataBeforeDelete(Person person) {
+        if (person.getUserData() != null) {
+            throw new BusinessRuleException(getString(
+                    MessagesKeyType.PERSON_USER_DELETE_EXISTS.message));
+        }
+    }
 }

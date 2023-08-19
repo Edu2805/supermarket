@@ -155,6 +155,7 @@ public class PersonCrudServiceImpl implements PersonCrudService {
     public void delete (UUID id) {
         personRepository.findById(id)
                 .map(person -> {
+                    verifyPersonUserData.verifyPersonUserDataBeforeDelete(person);
                     personRepository.delete(person);
                     return person;
                 }).orElseThrow(() ->
