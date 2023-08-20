@@ -3,7 +3,9 @@ package br.com.amorim.supermarket.service.userdata;
 import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
+import br.com.amorim.supermarket.model.person.Person;
 import br.com.amorim.supermarket.model.userdata.UserData;
+import br.com.amorim.supermarket.repository.person.PersonRepository;
 import br.com.amorim.supermarket.repository.userdata.UserDataRepository;
 import br.com.amorim.supermarket.service.userdata.setisemployee.UserDataUpdateIsEmployee;
 import br.com.amorim.supermarket.service.userdata.setusernameinperson.UserNameInPerson;
@@ -18,10 +20,13 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
+import static org.apache.logging.log4j.ThreadContext.isEmpty;
 
 @AllArgsConstructor
 
@@ -31,6 +36,7 @@ public class UserDataCrudServiceImpl implements UserDataCrudService {
     private static final int DECREASE_PAGE_SIZE = 1;
     private static final int ZERO_PAGE_SIZE = 0;
     private UserDataRepository userDataRepository;
+    private PersonRepository personRepository;
     private VerifyPageSize verifyPageSize;
     private VerifyUserName verifyUserName;
     private UserNameInPerson userNameInPerson;
@@ -114,6 +120,14 @@ public class UserDataCrudServiceImpl implements UserDataCrudService {
 
     @Override
     public List<UserData> findAllUsersIsEmployee() {
-        return userDataRepository.findByIsEmployee(false);
+        List<UserData> usersAvailable = new ArrayList<>();
+        var usersAreNotEmployee = userDataRepository.findByIsEmployee(false);
+        usersAreNotEmployee.forEach(userData -> {
+            var newUsers = personRepository.findByUserData(userData);
+            if(newUsers.isEmpty()) {
+                usersAvailable.add(userData);
+            }
+        });
+        return usersAvailable;
     }
 }

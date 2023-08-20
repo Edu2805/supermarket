@@ -19,6 +19,8 @@ public class VerifyRgRepositoryCustomImpl implements VerifyRgRepositoryCustom {
     public boolean isRgAlreadyExistsInTheDatabase(Person person) {
         QPerson qPerson = QPerson.person;
         JPAQuery<Person> query = new JPAQuery<>(entityManager);
+        if (person.getRg() == null) return false;
+
         return !query.select(qPerson)
                 .from(qPerson)
                 .where(qPerson.rg.eq(person.getRg()))

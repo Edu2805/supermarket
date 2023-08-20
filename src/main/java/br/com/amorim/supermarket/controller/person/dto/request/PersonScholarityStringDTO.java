@@ -23,7 +23,7 @@ public class PersonScholarityStringDTO {
     @Size(min = 2, max = 30, message = "{br.com.supermarket.PERSON_DTO_FIELD_NAME_IS_NOT_GREATER_THAN_30_AND_LESS_THEN_2}")
     private String firstName;
 
-    @Size(min = 2, max = 30, message = "{br.com.supermarket.PERSON_DTO_FIELD_MIDDLE_NAME_IS_NOT_GREATER_THAN_30_AND_LESS_THEN_2}")
+    @Size(max = 30, message = "{br.com.supermarket.PERSON_DTO_FIELD_MIDDLE_NAME_IS_NOT_GREATER_THAN_30}")
     private String middleName;
 
     @NotBlank(message = "{br.com.supermarket.PERSON_DTO_FIELD_LAST_NAME_IS_NOT_EMPTY}")
@@ -35,13 +35,13 @@ public class PersonScholarityStringDTO {
     @CPF(message = "{br.com.supermarket.PERSON_DTO_FIELD_INVALID_CPF}")
     private String cpf;
 
-    @Size(min = 4, max = 15, message = "{br.com.supermarket.PERSON_DTO_FIELD_RG_IS_NOT_GREATER_THAN_15_AND_LESS_THEN_4}")
+    @Size(max = 15, message = "{br.com.supermarket.PERSON_DTO_FIELD_RG_IS_NOT_GREATER_THAN_15}")
     private String rg;
 
-    @Size(min = 3, max = 20, message = "{br.com.supermarket.PERSON_DTO_FIELD_NATIONALITY_IS_NOT_GREATER_THAN_20_AND_LESS_THEN_3}")
+    @Size(max = 20, message = "{br.com.supermarket.PERSON_DTO_FIELD_NATIONALITY_IS_NOT_GREATER_THAN_20}")
     private String nationality;
 
-    @Size(min = 3, max = 20, message = "{br.com.supermarket.PERSON_DTO_FIELD_NATURALNESS_IS_NOT_GREATER_THAN_20_AND_LESS_THEN_3}")
+    @Size(max = 20, message = "{br.com.supermarket.PERSON_DTO_FIELD_NATURALNESS_IS_NOT_GREATER_THAN_20}")
     private String naturalness;
 
     @NotNull(message = "{br.com.supermarket.PERSON_DTO_FIELD_BIRTH_DATE_CANNOT_BE_EMPTY}")
@@ -51,7 +51,7 @@ public class PersonScholarityStringDTO {
 
     private Boolean dependents;
 
-    @Size(min = 2, max = 50, message = "{br.com.supermarket.PERSON_DTO_FIELD_FATHER_NAME_IS_NOT_GREATER_THAN_50_AND_LESS_THEN_2}")
+    @Size(max = 50, message = "{br.com.supermarket.PERSON_DTO_FIELD_FATHER_NAME_IS_NOT_GREATER_THAN_50}")
     private String fatherName;
 
     @NotBlank(message = "{br.com.supermarket.PERSON_DTO_FIELD_MOTHER_NAME_IS_NOT_EMPTY}")
