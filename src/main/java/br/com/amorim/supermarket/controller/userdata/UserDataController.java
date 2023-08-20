@@ -10,6 +10,7 @@ import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto
 import br.com.amorim.supermarket.controller.userdata.dto.responseconfigurationdto.ConverterUserDataResponseMapper;
 import br.com.amorim.supermarket.controller.userdata.dto.responseconfigurationdto.RegisterUserResponseOutput;
 import br.com.amorim.supermarket.controller.userdata.dto.responseconfigurationdto.TokenDTO;
+import br.com.amorim.supermarket.controller.userdata.dto.responseconfigurationdto.UserDataForPersonFormOutput;
 import br.com.amorim.supermarket.controller.userdata.dto.responseconfigurationdto.UserDataResponseDTO;
 import br.com.amorim.supermarket.controller.userdata.dto.responseconfigurationdto.UserNameOutput;
 import br.com.amorim.supermarket.model.userdata.UserData;
@@ -36,6 +37,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.CREATED;
@@ -71,6 +74,18 @@ public class UserDataController {
                                            required = false,
                                            defaultValue = "20") @ApiParam("Number of records on each page") int size) {
         return userDataService.getAll(page, size);
+    }
+
+    @GetMapping("/user-is-not-employee")
+    public List<UserDataForPersonFormOutput> getAllUsersIsNotEmployee() {
+        List<UserDataForPersonFormOutput> outputs = new ArrayList<>();
+        userDataService.findAllUsersIsEmployee().forEach(userData -> {
+            var output = new UserDataForPersonFormOutput();
+            output.setId(userData.getId());
+            output.setUserName(userData.getUserName());
+            outputs.add(output);
+        });
+        return outputs;
     }
 
     @GetMapping("/{id}")

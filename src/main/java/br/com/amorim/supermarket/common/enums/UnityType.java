@@ -8,7 +8,8 @@ public enum UnityType {
     MILLIGRAMS("{br.com.supermarket.MILLIGRAMS}"),
     GRAMS("{br.com.supermarket.GRAMS}"),
     KILOS("{br.com.supermarket.KILOS}"),
-    TONS("{br.com.supermarket.TONS}");
+    TONS("{br.com.supermarket.TONS}"),
+    UNINFORMED("{br.com.supermarket.UNINFORMED}");
 
     public final String unity;
 
