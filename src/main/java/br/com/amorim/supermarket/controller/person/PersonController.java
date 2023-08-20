@@ -1,7 +1,8 @@
 package br.com.amorim.supermarket.controller.person;
 
+import br.com.amorim.supermarket.controller.person.dto.mapper.ScholarityForPersonMapper;
 import br.com.amorim.supermarket.controller.person.dto.request.ConverterPersonMapperImpl;
-import br.com.amorim.supermarket.controller.person.dto.request.PersonDTO;
+import br.com.amorim.supermarket.controller.person.dto.request.PersonScholarityStringDTO;
 import br.com.amorim.supermarket.controller.person.dto.response.ConvertPersonScholarityTypeStringDTO;
 import br.com.amorim.supermarket.controller.person.dto.response.PersonScholarityTypeStringDTO;
 import br.com.amorim.supermarket.model.person.Person;
@@ -40,6 +41,7 @@ public class PersonController {
     private PersonCrudServiceImpl personService;
     private ConverterPersonMapperImpl converterPersonMapper;
     private ConvertPersonScholarityTypeStringDTO personScholarityTypeStringDTO;
+    private ScholarityForPersonMapper scholarityForPersonMapper;
 
     @GetMapping
     @ApiOperation("Get all people")
@@ -76,7 +78,8 @@ public class PersonController {
             @ApiResponse(code = 201, message = "Person successfully saved"),
             @ApiResponse(code = 400, message = "An error occurred while saving the person")
     })
-    public Person save (@RequestBody @Valid @ApiParam("Parameters for saving the person") PersonDTO personDTO) {
+    public Person save (@RequestBody @Valid @ApiParam("Parameters for saving the person") PersonScholarityStringDTO personScholarityStringDTO) {
+        var personDTO = scholarityForPersonMapper.personMapper(personScholarityStringDTO);
         var newPerson = converterPersonMapper.createOrUpdatePersonMapper(personDTO);
         return personService.save(newPerson);
     }
@@ -89,7 +92,8 @@ public class PersonController {
             @ApiResponse(code = 400, message = "An error occurred while updating the person")
     })
     public void update (@RequestBody @Valid @ApiParam("Parameters for updating the person")
-                            PersonDTO personDTO, @PathVariable @ApiParam("Person id") UUID id) {
+                            PersonScholarityStringDTO personScholarityStringDTO, @PathVariable @ApiParam("Person id") UUID id) {
+        var personDTO = scholarityForPersonMapper.personMapper(personScholarityStringDTO);
         var newPerson = converterPersonMapper.createOrUpdatePersonMapper(personDTO);
         personService.update(newPerson, id);
     }

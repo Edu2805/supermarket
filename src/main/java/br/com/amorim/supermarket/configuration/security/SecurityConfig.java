@@ -88,6 +88,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/person/**")
                 .hasAnyRole(ADMIN.role, HEAD.role, HR.role)
 
+                //Scholarity
+                .antMatchers("/api/scholarity/**")
+                .hasAnyRole(ADMIN.role, HEAD.role, HR.role)
+
                 //Jobposition
                 .antMatchers("/api/jobposition/**")
                 .hasAnyRole(ADMIN.role, HEAD.role, HR.role)

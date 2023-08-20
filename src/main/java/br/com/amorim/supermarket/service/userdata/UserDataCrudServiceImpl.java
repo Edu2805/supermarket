@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
@@ -109,5 +110,10 @@ public class UserDataCrudServiceImpl implements UserDataCrudService {
                     throw new NotFoundException(
                             getString(MessagesKeyType.USER_DATA_NOT_FOUND.message));
         });
+    }
+
+    @Override
+    public List<UserData> findAllUsersIsEmployee() {
+        return userDataRepository.findByIsEmployee(false);
     }
 }
