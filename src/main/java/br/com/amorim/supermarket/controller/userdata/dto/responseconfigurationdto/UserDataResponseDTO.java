@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,6 +15,7 @@ import java.sql.Timestamp;
 @Setter
 public class UserDataResponseDTO {
 
+    private UUID id;
     private String userName;
     private String role;
     private Timestamp registrationDate;

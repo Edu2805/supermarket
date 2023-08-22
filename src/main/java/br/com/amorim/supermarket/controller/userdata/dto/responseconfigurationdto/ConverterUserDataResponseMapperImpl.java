@@ -19,6 +19,7 @@ public class ConverterUserDataResponseMapperImpl implements ConverterUserDataRes
     private UserDataResponseDTO mapperUserDataRoleString(UserData userData) {
         var userDataResponseDTO = new UserDataResponseDTO();
         if (userData != null) {
+            userDataResponseDTO.setId(userData.getId());
             userDataResponseDTO.setUserName(userData.getUserName());
             userDataResponseDTO.setRole(getString(userData.getRole().name()));
             userDataResponseDTO.setRegistrationDate(userData.getRegistrationDate());
