@@ -1,9 +1,9 @@
 package br.com.amorim.supermarket.controller.person.dto.mapper;
 
-import br.com.amorim.supermarket.controller.person.dto.request.PersonDTO;
 import br.com.amorim.supermarket.controller.person.dto.request.PersonScholarityStringDTO;
+import br.com.amorim.supermarket.model.person.Person;
 
 public interface ScholarityForPersonMapper {
 
-    PersonDTO personMapper(PersonScholarityStringDTO personScholarityStringDTO);
+    Person personMapper(PersonScholarityStringDTO personScholarityStringDTO);
 }

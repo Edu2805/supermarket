@@ -1,7 +1,6 @@
 package br.com.amorim.supermarket.controller.person;
 
 import br.com.amorim.supermarket.controller.person.dto.mapper.ScholarityForPersonMapper;
-import br.com.amorim.supermarket.controller.person.dto.request.ConverterPersonMapperImpl;
 import br.com.amorim.supermarket.controller.person.dto.request.PersonScholarityStringDTO;
 import br.com.amorim.supermarket.controller.person.dto.response.ConvertPersonScholarityTypeStringDTO;
 import br.com.amorim.supermarket.controller.person.dto.response.PersonScholarityTypeStringDTO;
@@ -39,7 +38,6 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 public class PersonController {
 
     private PersonCrudServiceImpl personService;
-    private ConverterPersonMapperImpl converterPersonMapper;
     private ConvertPersonScholarityTypeStringDTO personScholarityTypeStringDTO;
     private ScholarityForPersonMapper scholarityForPersonMapper;
 
@@ -79,9 +77,8 @@ public class PersonController {
             @ApiResponse(code = 400, message = "An error occurred while saving the person")
     })
     public Person save (@RequestBody @Valid @ApiParam("Parameters for saving the person") PersonScholarityStringDTO personScholarityStringDTO) {
-        var personDTO = scholarityForPersonMapper.personMapper(personScholarityStringDTO);
-        var newPerson = converterPersonMapper.createOrUpdatePersonMapper(personDTO);
-        return personService.save(newPerson);
+        var person = scholarityForPersonMapper.personMapper(personScholarityStringDTO);
+        return personService.save(person);
     }
 
     @PutMapping("/{id}")
@@ -93,9 +90,8 @@ public class PersonController {
     })
     public void update (@RequestBody @Valid @ApiParam("Parameters for updating the person")
                             PersonScholarityStringDTO personScholarityStringDTO, @PathVariable @ApiParam("Person id") UUID id) {
-        var personDTO = scholarityForPersonMapper.personMapper(personScholarityStringDTO);
-        var newPerson = converterPersonMapper.createOrUpdatePersonMapper(personDTO);
-        personService.update(newPerson, id);
+        var person = scholarityForPersonMapper.personMapper(personScholarityStringDTO);
+        personService.update(person, id);
     }
 
     @DeleteMapping("/{id}")

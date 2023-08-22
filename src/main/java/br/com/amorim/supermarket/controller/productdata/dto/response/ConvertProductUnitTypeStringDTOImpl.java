@@ -34,6 +34,7 @@ public class ConvertProductUnitTypeStringDTOImpl implements ConvertProductUnitTy
         productUnitTypeStringDTO.setSubSection(productData.getSubSection());
         var mapperProviderProduct = convertProviderSubscriptionTypeString.mapper(productData.getProviderProduct());
         productUnitTypeStringDTO.setProviderProduct(mapperProviderProduct);
+        productUnitTypeStringDTO.setProductPhoto(productData.getProductPhoto());
         return productUnitTypeStringDTO;
     }
 }
