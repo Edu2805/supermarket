@@ -3,6 +3,7 @@ package br.com.amorim.supermarket.testutils.generateentitiesunittests.person;
 import br.com.amorim.supermarket.common.enums.ScholarityType;
 import br.com.amorim.supermarket.model.person.Person;
 import br.com.amorim.supermarket.testutils.generatedocument.GenerateCPF;
+import br.com.amorim.supermarket.testutils.generateentitiesunittests.attachment.AttachmentTest;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.userdata.UserDataTest;
 
 import java.time.LocalDate;
@@ -17,9 +18,10 @@ public class PersonTest {
         Random lastNameRandom = new Random();
         Random rgRandom = new Random();
         Random emailRandom = new Random();
-        UserDataTest userDataTest = new UserDataTest();
-        GenerateCPF generateCPF = new GenerateCPF();
-        Person person = new Person();
+        var attachment = new AttachmentTest();
+        var userDataTest = new UserDataTest();
+        var generateCPF = new GenerateCPF();
+        var person = new Person();
 
         var firstName = firstNameRandom.nextInt(100000, 199999);
         var middleName = middleNameRandom.nextInt(100000, 199999);
@@ -42,6 +44,7 @@ public class PersonTest {
         person.setNationality("Brasileiro");
         person.setScholarity(ScholarityType.ELEMENTARY_SCHOOL);
         person.setUserData(userDataTest.generateUserData());
+        person.setPersonPhoto(attachment.generateAttachment());
         return person;
     }
 }

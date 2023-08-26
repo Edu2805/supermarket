@@ -3,6 +3,7 @@ package br.com.amorim.supermarket.service.productdata;
 import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.enums.UnityType;
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
+import br.com.amorim.supermarket.model.attatchment.Attachment;
 import br.com.amorim.supermarket.model.productdata.ProductData;
 import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
 import br.com.amorim.supermarket.service.productdata.calculatemargin.CalculateMargin;
@@ -62,6 +63,12 @@ class ProductDataCrudServiceImplTest {
     SubSectionTest subSectionTest = new SubSectionTest();
 
     private void startProduct () {
+        var attachment = new Attachment();
+        attachment.setId(UUID_1);
+        attachment.setName("Name");
+        attachment.setType("Type");
+        attachment.setImageData(new byte[0]);
+
         productData = new ProductData();
         productData.setId(UUID_1);
         productData.setName(NAME);
@@ -74,6 +81,7 @@ class ProductDataCrudServiceImplTest {
         productData.setProviderProduct(providerProductTest.generateProvider());
         productData.setSubSection(subSectionTest.generateSubsection());
         productData.setSubSection(subSectionTest.generateSubsection());
+        productData.setProductPhoto(attachment);
     }
 
     @BeforeEach

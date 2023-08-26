@@ -115,15 +115,21 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
     }
 
     private void setPhotoAndUpdate(ProductData productDataUpdatePhoto, ProductData productDataExistentPhoto) {
-        if (productDataUpdatePhoto.getProductPhoto() != null) {
-            changeProduct(productDataExistentPhoto.getProductPhoto());
+        if (productDataExistentPhoto.getProductPhoto() == null) {
             var imageData = productDataUpdatePhoto.getProductPhoto().getImageData();
             productDataUpdatePhoto.getProductPhoto().setImageData(ImageUtil.compressFile(imageData));
             attachmentRepository.save(productDataUpdatePhoto.getProductPhoto());
+        } else {
+            if (!productDataExistentPhoto.getProductPhoto().getId().equals(productDataUpdatePhoto.getProductPhoto().getId())) {
+                deletePhoto(productDataExistentPhoto.getProductPhoto());
+                var imageData = productDataUpdatePhoto.getProductPhoto().getImageData();
+                productDataUpdatePhoto.getProductPhoto().setImageData(ImageUtil.compressFile(imageData));
+                attachmentRepository.save(productDataUpdatePhoto.getProductPhoto());
+            }
         }
     }
 
-    private void changeProduct(Attachment attachment) {
+    private void deletePhoto(Attachment attachment) {
         if (attachment != null) {
             attachmentRepository.delete(attachment);
         }
