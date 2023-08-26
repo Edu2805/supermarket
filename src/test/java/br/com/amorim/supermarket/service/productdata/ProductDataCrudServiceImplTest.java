@@ -5,6 +5,7 @@ import br.com.amorim.supermarket.common.enums.UnityType;
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.model.attatchment.Attachment;
 import br.com.amorim.supermarket.model.productdata.ProductData;
+import br.com.amorim.supermarket.repository.attachment.AttachmentRepository;
 import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
 import br.com.amorim.supermarket.service.productdata.calculatemargin.CalculateMargin;
 import br.com.amorim.supermarket.service.productdata.generateinternalcode.GenerateInternalCodeProduct;
@@ -54,6 +55,8 @@ class ProductDataCrudServiceImplTest {
     private CalculateMargin calculateMarginMock;
     @Mock
     private GenerateInternalCodeProduct generateInternalCodeMock;
+    @Mock
+    private AttachmentRepository attachmentRepository;
 
     public static final java.util.UUID UUID_1 = randomUUID();
     public static final String NAME = "Produto teste";
@@ -68,6 +71,7 @@ class ProductDataCrudServiceImplTest {
         attachment.setName("Name");
         attachment.setType("Type");
         attachment.setImageData(new byte[0]);
+        when(attachmentRepository.save(attachment)).thenReturn(attachment);
 
         productData = new ProductData();
         productData.setId(UUID_1);

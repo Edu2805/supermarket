@@ -5,6 +5,7 @@ import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.attatchment.Attachment;
 import br.com.amorim.supermarket.model.person.Person;
+import br.com.amorim.supermarket.repository.attachment.AttachmentRepository;
 import br.com.amorim.supermarket.repository.person.PersonRepository;
 import br.com.amorim.supermarket.service.person.getemailuser.PersonEmailUser;
 import br.com.amorim.supermarket.service.person.updatefullnameemployee.PersonUpdateUserNameInEmployee;
@@ -56,6 +57,8 @@ class PersonCrudServiceImplTest {
     private VerifyPersonEmployee verifyPersonEmployee;
     @Mock
     private PersonUpdateUserNameInEmployee personUpdateUserNameInEmployeeMock;
+    @Mock
+    private AttachmentRepository attachmentRepository;
 
     private Person person1;
     private static final String MESSAGE_ERROR = getString(MessagesKeyType.PERSON_DATA_NOT_FOUND.message);
@@ -104,6 +107,7 @@ class PersonCrudServiceImplTest {
 
     @Test
     void shouldSaveWithSuccess() {
+        when(attachmentRepository.save(person1.getPersonPhoto())).thenReturn(person1.getPersonPhoto());
         when(personRepositoryMock.save(person1))
                 .thenReturn(person1);
         var savePerson = personCrudService.save(person1);

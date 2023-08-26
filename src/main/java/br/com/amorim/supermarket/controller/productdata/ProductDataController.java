@@ -1,7 +1,7 @@
 package br.com.amorim.supermarket.controller.productdata;
 
-import br.com.amorim.supermarket.controller.productdata.dto.request.ConvertProductMapper;
-import br.com.amorim.supermarket.controller.productdata.dto.request.ProductDTO;
+import br.com.amorim.supermarket.controller.productdata.dto.mapper.UnityForProductMapper;
+import br.com.amorim.supermarket.controller.productdata.dto.request.ProductUnityStringDTO;
 import br.com.amorim.supermarket.controller.productdata.dto.response.ConvertProductUnitTypeStringDTO;
 import br.com.amorim.supermarket.controller.productdata.dto.response.ProductUnitTypeStringDTO;
 import br.com.amorim.supermarket.model.productdata.ProductData;
@@ -38,7 +38,7 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 public class ProductDataController {
 
     private ProductDataCrudService productDataService;
-    private ConvertProductMapper convertProductMapper;
+    private UnityForProductMapper unityForProductMapper;
     private ConvertProductUnitTypeStringDTO convertProductUnitTypeStringDTO;
 
     @GetMapping
@@ -76,8 +76,8 @@ public class ProductDataController {
             @ApiResponse(code = 201, message = "Product successfully saved"),
             @ApiResponse(code = 400, message = "An error occurred while saving the product")
     })
-    public ProductData save (@RequestBody @Valid @ApiParam("Parameters for saving the product") ProductDTO productDTO) {
-        var newProduct = convertProductMapper.createOrUpdateProductMapper(productDTO);
+    public ProductData save (@RequestBody @Valid @ApiParam("Parameters for saving the product") ProductUnityStringDTO productDTO) {
+        var newProduct = unityForProductMapper.productMapper(productDTO);
         return productDataService.save(newProduct);
     }
 
@@ -89,8 +89,8 @@ public class ProductDataController {
             @ApiResponse(code = 400, message = "An error occurred while updating the product")
     })
     public void update (@RequestBody @Valid @ApiParam("Parameters for updating the product")
-                            ProductDTO productDTO, @PathVariable @ApiParam("Product id") UUID id) {
-        var newProduct = convertProductMapper.createOrUpdateProductMapper(productDTO);
+                        ProductUnityStringDTO productDTO, @PathVariable @ApiParam("Product id") UUID id) {
+        var newProduct = unityForProductMapper.productMapper(productDTO);
         productDataService.update(newProduct, id);
     }
 

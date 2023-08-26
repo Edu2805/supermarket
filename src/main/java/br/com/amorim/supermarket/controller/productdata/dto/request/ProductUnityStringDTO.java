@@ -1,6 +1,5 @@
 package br.com.amorim.supermarket.controller.productdata.dto.request;
 
-import br.com.amorim.supermarket.common.enums.UnityType;
 import br.com.amorim.supermarket.model.attatchment.Attachment;
 import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
 import br.com.amorim.supermarket.model.subsection.SubSection;
@@ -20,14 +19,14 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ProductDTO {
+public class ProductUnityStringDTO {
 
     @NotBlank(message = "{br.com.supermarket.PRODUCT_DATA_DTO_FIELD_NAME_IS_NOT_EMPTY}")
     @Size(min = 5, max = 50, message = "{br.com.supermarket.PRODUCT_DATA_DTO_FIELD_NAME_CANNOT_BE_LESS_THAN_5_AND_GREATER_THAN_50}")
     private String name;
 
     @NotNull(message = "{br.com.supermarket.PRODUCT_DATA_DTO_FIELD_UNITY_IS_NOT_NULL}")
-    private UnityType unity;
+    private String unity;
 
     @NotNull(message = "{br.com.supermarket.PRODUCT_DATA_DTO_FIELD_PURCHASE_PRICE_IS_NOT_NULL}")
     @Positive(message = "{br.com.supermarket.PRODUCT_DATA_DTO_FIELD_PURCHASE_PRICE_IS_NOT_NEGATIVE}")

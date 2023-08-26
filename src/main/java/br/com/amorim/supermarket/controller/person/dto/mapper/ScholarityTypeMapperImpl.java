@@ -3,7 +3,14 @@ package br.com.amorim.supermarket.controller.person.dto.mapper;
 import br.com.amorim.supermarket.common.enums.ScholarityType;
 import org.springframework.stereotype.Component;
 
-import static br.com.amorim.supermarket.common.enums.ScholarityType.*;
+import static br.com.amorim.supermarket.common.enums.ScholarityType.DOCTORATE_DEGREE;
+import static br.com.amorim.supermarket.common.enums.ScholarityType.ELEMENTARY_SCHOOL;
+import static br.com.amorim.supermarket.common.enums.ScholarityType.HIGH_SCHOOL;
+import static br.com.amorim.supermarket.common.enums.ScholarityType.ILLITERATE;
+import static br.com.amorim.supermarket.common.enums.ScholarityType.MASTER_DEGREE;
+import static br.com.amorim.supermarket.common.enums.ScholarityType.POSTGRADUATE;
+import static br.com.amorim.supermarket.common.enums.ScholarityType.UNINFORMED;
+import static br.com.amorim.supermarket.common.enums.ScholarityType.UNIVERSITY_EDUCATION;
 import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
 
 @Component
