@@ -130,15 +130,21 @@ public class PersonCrudServiceImpl implements PersonCrudService {
     }
 
     private void setPhotoAndUpdate(Person personUpdatePhoto, Person personExistentPhoto) {
-        if (personUpdatePhoto.getPersonPhoto() != null) {
-            changePerson(personExistentPhoto.getPersonPhoto());
+        if (personExistentPhoto.getPersonPhoto() == null) {
             var imageData = personUpdatePhoto.getPersonPhoto().getImageData();
             personUpdatePhoto.getPersonPhoto().setImageData(ImageUtil.compressFile(imageData));
             attachmentRepository.save(personUpdatePhoto.getPersonPhoto());
+        } else {
+            if (!personExistentPhoto.getPersonPhoto().getId().equals(personUpdatePhoto.getPersonPhoto().getId())) {
+                deletePhoto(personExistentPhoto.getPersonPhoto());
+                var imageData = personUpdatePhoto.getPersonPhoto().getImageData();
+                personUpdatePhoto.getPersonPhoto().setImageData(ImageUtil.compressFile(imageData));
+                attachmentRepository.save(personUpdatePhoto.getPersonPhoto());
+            }
         }
     }
 
-    private void changePerson(Attachment attachment) {
+    private void deletePhoto(Attachment attachment) {
         if (attachment != null) {
             attachmentRepository.delete(attachment);
         }
