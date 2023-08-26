@@ -3,3 +3,11 @@ CREATE TABLE IF NOT EXISTS scholarity (
    name VARCHAR(50) NOT NULL,
    CONSTRAINT pk_scholarity PRIMARY KEY (id)
 );
+
+INSERT INTO scholarity (id, name) VALUES('63efd2f0-6a62-45aa-bec5-d2b6151fbc9f', 'ILLITERATE');
+INSERT INTO scholarity (id, name) VALUES('613d01d5-1aa4-4d96-90a9-8944873e9266', 'ELEMENTARY_SCHOOL');
+INSERT INTO scholarity (id, name) VALUES('3f96f481-a6f8-4360-9a77-327052d063ae', 'HIGH_SCHOOL');
+INSERT INTO scholarity (id, name) VALUES('798fe751-8956-48f0-ae7b-c8fcd038ccfc', 'UNIVERSITY_EDUCATION');
+INSERT INTO scholarity (id, name) VALUES('ee9790c7-c3dd-43bb-a4cf-94b1607e77b2', 'POSTGRADUATE');
+INSERT INTO scholarity (id, name) VALUES('27018e74-9e20-4405-a915-c5755254160d', 'MASTER_DEGREE');
+INSERT INTO scholarity (id, name) VALUES('a87094aa-50c8-4d6e-81a7-e2c055198c44', 'DOCTORATE_DEGREE');
