@@ -95,16 +95,6 @@ CREATE TABLE IF NOT EXISTS other_addition (
    CONSTRAINT pk_other_addition PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS salary_to_other_addition (
-   other_addition_id UUID,
-   salary_id UUID
-);
-
-CREATE TABLE IF NOT EXISTS salary_to_other_discount (
-   other_discount_id UUID,
-   salary_id UUID
-);
-
 CREATE TABLE IF NOT EXISTS job_position (
    id UUID NOT NULL,
    name VARCHAR(50) NOT NULL,
