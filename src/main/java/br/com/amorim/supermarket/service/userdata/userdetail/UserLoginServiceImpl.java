@@ -6,6 +6,7 @@ import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.controller.userdata.dto.mapper.RoleTypeMapper;
 import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.CredentialsDTO;
 import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.CredentialsDTORoleString;
+import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.UserDataDTO;
 import br.com.amorim.supermarket.model.userdata.UserData;
 import br.com.amorim.supermarket.repository.userdata.UserDataRepository;
 import br.com.amorim.supermarket.service.userdata.userdetail.validaterole.ValidateRole;
@@ -73,5 +74,15 @@ public class UserLoginServiceImpl implements UserDetailsService {
             credentialsDTO.setRole(roleTypeMapper.mapperRoleType(credentialsDTORoleString.getRole()));
         }
         return credentialsDTO;
+    }
+
+    public UserDataDTO registerMapper(CredentialsDTORoleString credentialsDTORoleString) {
+        UserDataDTO userDataDTO = new UserDataDTO();
+        if (credentialsDTORoleString != null) {
+            userDataDTO.setUserName(credentialsDTORoleString.getLogin());
+            userDataDTO.setPassword(credentialsDTORoleString.getPassword());
+            userDataDTO.setRole(roleTypeMapper.mapperRoleType(credentialsDTORoleString.getRole()));
+        }
+        return userDataDTO;
     }
 }
