@@ -131,11 +131,12 @@ public class UserDataController {
             @ApiResponse(code = 201, message = "User successfully saved"),
             @ApiResponse(code = 400, message = "An error occurred while saving the user")
     })
-    public RegisterUserResponseOutput save (@RequestBody @Valid @ApiParam("Parameters for saving the user") UserDataDTO userDataDTO) {
+    public RegisterUserResponseOutput save (@RequestBody @Valid @ApiParam("Parameters for saving the user") CredentialsDTORoleString credentialsDTORoleString) {
+        var userDataDTO = userDetailsService.registerMapper(credentialsDTORoleString);
         var newUserData = converterUserDataMapper
                 .createOrUpdateUserDataMapper(userDataDTO);
         var save = userDataService.save(newUserData);
-        return new RegisterUserResponseOutput(save.getUserName());
+        return new RegisterUserResponseOutput(save.getUserName(), save.getRole());
     }
 
     @PostMapping("auth")
