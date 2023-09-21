@@ -1,6 +1,8 @@
 package br.com.amorim.supermarket.model.otheraddition;
 
 import br.com.amorim.supermarket.model.common.CommonIdEntity;
+import br.com.amorim.supermarket.model.salary.Salary;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,6 +10,8 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -28,4 +32,8 @@ public class OtherAddition extends CommonIdEntity {
     @Column(name = "addition_value", nullable = false, precision = 10, scale = 2)
     @NotNull(message = "{br.com.supermarket.OTHER_ADDITION_FIELD_VALUE_IS_NOT_EMPTY}")
     private BigDecimal additionValue;
+    @ManyToOne
+    @JoinColumn(name = "salary_id")
+    @JsonIgnore
+    private Salary salary;
 }

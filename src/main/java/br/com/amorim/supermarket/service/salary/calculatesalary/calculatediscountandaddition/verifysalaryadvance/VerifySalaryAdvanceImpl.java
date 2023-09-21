@@ -23,13 +23,16 @@ public class VerifySalaryAdvanceImpl implements VerifySalaryAdvance {
     public BigDecimal verifySalaryAdvancePercentageMaximumDiscount(Salary salary) {
         var salaryAdvance = salary.getSalaryAdvance();
         var grossSalary = salary.getGrossSalary();
-        var verifyMaximumSalaryAdvance = salaryAdvance.divide(grossSalary, 2, RoundingMode.HALF_UP)
-                .compareTo(MAXIMUM_SALARY_PERCENTAGE_ALLOWED_FOR_SALARY_ADVANCE) > ZERO;
+        if (salaryAdvance != null) {
+            var verifyMaximumSalaryAdvance = salaryAdvance.divide(grossSalary, 2, RoundingMode.HALF_UP)
+                    .compareTo(MAXIMUM_SALARY_PERCENTAGE_ALLOWED_FOR_SALARY_ADVANCE) > ZERO;
 
-        if (verifyMaximumSalaryAdvance) {
-            throw new BusinessRuleException(getString(
-                    MessagesKeyType.MINIMUM_SALARY_PERCENTAGE_ALLOWED_FOR_SALARY_ADVANCE.message));
+            if (verifyMaximumSalaryAdvance) {
+                throw new BusinessRuleException(getString(
+                        MessagesKeyType.MINIMUM_SALARY_PERCENTAGE_ALLOWED_FOR_SALARY_ADVANCE.message));
+            }
         }
+
         return salaryAdvance;
     }
 }

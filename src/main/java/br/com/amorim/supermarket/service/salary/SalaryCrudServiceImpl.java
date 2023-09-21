@@ -4,6 +4,8 @@ import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.salary.Salary;
+import br.com.amorim.supermarket.repository.otheraddition.OtherAdditionRepository;
+import br.com.amorim.supermarket.repository.otherdiscount.OtherDiscountRepository;
 import br.com.amorim.supermarket.repository.salary.SalaryRepository;
 import br.com.amorim.supermarket.service.salary.calculatesalary.CalculateSalary;
 import br.com.amorim.supermarket.service.salary.verifyduplicatesalary.VerifyDuplicateSalary;
@@ -24,6 +26,8 @@ import static br.com.amorim.supermarket.configuration.internacionalizationmessag
 public class SalaryCrudServiceImpl implements SalaryCrudService {
 
     private SalaryRepository salaryRepository;
+    private OtherAdditionRepository otherAdditionRepository;
+    private OtherDiscountRepository otherDiscountRepository;
     private VerifyDuplicateSalary verifyDuplicateSalary;
     private static final int DECREASE_PAGE_SIZE = 1;
     private static final int ZERO_PAGE_SIZE = 0;
@@ -54,6 +58,8 @@ public class SalaryCrudServiceImpl implements SalaryCrudService {
     public Salary save (Salary salary) {
         verifyDuplicateSalary.isDuplicateSalaryBeforeSave(salary);
         calculateSalary.calculate(salary);
+        salary.getOtherAdditions().forEach(otherAddition -> otherAddition.setSalary(salary));
+        salary.getOtherDiscounts().forEach(otherDiscount -> otherDiscount.setSalary(salary));
         return salaryRepository.save(salary);
     }
 

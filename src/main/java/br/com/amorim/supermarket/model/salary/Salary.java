@@ -11,15 +11,13 @@ import lombok.Setter;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -70,19 +68,9 @@ public class Salary extends CommonIdEntity {
     @NotNull(message = "{br.com.supermarket.SALARY_FIELD_FINAL_COMPETENCE_IS_NOT_EMPTY}")
     private LocalDate finalCompetence;
 
-    @OneToMany(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
-    @JoinTable(
-            name = "salary_to_other_discount",
-            joinColumns = @JoinColumn(name = "salary_id"),
-            inverseJoinColumns = @JoinColumn(name = "other_discount_id")
-    )
-    private List<OtherDiscount> otherDiscounts;
+    @OneToMany(mappedBy = "salary", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OtherAddition> otherAdditions = new ArrayList<>();
 
-    @OneToMany(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
-    @JoinTable(
-            name = "salary_to_other_addition",
-            joinColumns = @JoinColumn(name = "salary_id"),
-            inverseJoinColumns = @JoinColumn(name = "other_addition_id")
-    )
-    private List<OtherAddition> otherAdditions;
+    @OneToMany(mappedBy = "salary", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OtherDiscount> otherDiscounts = new ArrayList<>();
 }

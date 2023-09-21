@@ -7,11 +7,7 @@ ALTER TABLE IF EXISTS main_section ADD CONSTRAINT foreign_key_department_to_main
 ALTER TABLE IF EXISTS product_data ADD CONSTRAINT foreign_key_subsection_to_product_data FOREIGN KEY (subsection_id) REFERENCES subsection (id);
 ALTER TABLE IF EXISTS subsection ADD CONSTRAINT foreign_key_main_section_to_sub_section FOREIGN KEY (main_section) REFERENCES main_section (id);
 ALTER TABLE IF EXISTS product_data ADD CONSTRAINT foreign_key_provider_product_to_product_data FOREIGN KEY (provider_product) REFERENCES provider (id);
-ALTER TABLE IF EXISTS salary_to_other_discount ADD CONSTRAINT uc_salary_to_other_discount_other_discount UNIQUE (other_discount_id);
-ALTER TABLE IF EXISTS salary_to_other_discount ADD CONSTRAINT fk_saltoothdis_on_other_discount FOREIGN KEY (other_discount_id) REFERENCES other_discount (id);
-ALTER TABLE IF EXISTS salary_to_other_discount ADD CONSTRAINT fk_saltoothdis_on_salary FOREIGN KEY (salary_id) REFERENCES salary (id);
-ALTER TABLE IF EXISTS salary_to_other_addition ADD CONSTRAINT uc_salary_to_other_addition_other_addition UNIQUE (other_addition_id);
-ALTER TABLE IF EXISTS salary_to_other_addition ADD CONSTRAINT fk_saltoothadd_on_other_addition FOREIGN KEY (other_addition_id) REFERENCES other_addition (id);
-ALTER TABLE IF EXISTS salary_to_other_addition ADD CONSTRAINT fk_saltoothadd_on_salary FOREIGN KEY (salary_id) REFERENCES salary (id);
+ALTER TABLE IF EXISTS other_discount ADD CONSTRAINT FK_OTHER_DISCOUNT_ON_SALARY FOREIGN KEY (salary_id) REFERENCES salary (id);
+ALTER TABLE IF EXISTS other_addition ADD CONSTRAINT FK_OTHER_ADDITION_ON_SALARY FOREIGN KEY (salary_id) REFERENCES salary (id);
 ALTER TABLE IF EXISTS product_issue_list ADD CONSTRAINT fk_product_list_on_goods_issue FOREIGN KEY (goods_issue_id) REFERENCES goods_issue (id);
 ALTER TABLE IF EXISTS product_receipt_list ADD CONSTRAINT fk_product_receipt_list_on_goods_receipt FOREIGN KEY (goods_receipt_id) REFERENCES goods_receipt (id);

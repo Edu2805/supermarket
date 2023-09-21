@@ -35,7 +35,9 @@ public class CalculateDiscountsAndAdditionsImpl implements CalculateDiscountsAnd
     @Override
     public void salaryAdvance(Salary salary) {
         var discountSalaryAdvance = verifySalaryAdvance.verifySalaryAdvancePercentageMaximumDiscount(salary);
-        var subtractSalaryAdvance = salary.getNetSalary().subtract(discountSalaryAdvance);
-        salary.setNetSalary(subtractSalaryAdvance.setScale(2, RoundingMode.HALF_EVEN));
+        if (discountSalaryAdvance != null) {
+            var subtractSalaryAdvance = salary.getNetSalary().subtract(discountSalaryAdvance);
+            salary.setNetSalary(subtractSalaryAdvance.setScale(2, RoundingMode.HALF_EVEN));
+        }
     }
 }
