@@ -15,6 +15,7 @@ import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -50,6 +51,7 @@ public class SalaryDTO {
     @NotNull(message = "{br.com.supermarket.SALARY_DTO_FIELD_FINAL_COMPETENCE_IS_NOT_EMPTY}")
     private LocalDate finalCompetence;
 
-    private List<OtherDiscount> otherDiscounts;
-    private List<OtherAddition> otherAdditions;
+    private List<OtherAddition> otherAdditions = new ArrayList<>();
+
+    private List<OtherDiscount> otherDiscounts = new ArrayList<>();
 }
