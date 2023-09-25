@@ -69,6 +69,8 @@ public class SalaryCrudServiceImpl implements SalaryCrudService {
         salaryRepository.findById(id)
                 .map(existingSalary -> {
                     salary.setId(existingSalary.getId());
+                    salary.getOtherAdditions().forEach(otherAddition -> otherAddition.setSalary(salary));
+                    salary.getOtherDiscounts().forEach(otherDiscount -> otherDiscount.setSalary(salary));
                     verifyDuplicateSalary.isDuplicateSalaryBeforeUpdate(salary);
                     calculateSalary.calculate(salary);
                     salaryRepository.save(salary);
