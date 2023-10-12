@@ -11,5 +11,4 @@ import java.util.UUID;
 public interface SalaryRepository extends JpaRepository<Salary, UUID> {
 
     Optional<Salary> findByPositionAndSalaryRange(String position, String salaryRange);
-    Optional<Salary> findByPosition(String position);
 }
