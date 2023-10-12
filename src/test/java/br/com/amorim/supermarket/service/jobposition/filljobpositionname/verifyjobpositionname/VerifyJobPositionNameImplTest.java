@@ -3,10 +3,8 @@ package br.com.amorim.supermarket.service.jobposition.filljobpositionname.verify
 import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleException;
 import br.com.amorim.supermarket.model.jobposition.JobPosition;
-import br.com.amorim.supermarket.model.salary.Salary;
-import br.com.amorim.supermarket.repository.salary.SalaryRepository;
+import br.com.amorim.supermarket.repository.jobposition.JobPositionRepository;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.jobposition.JobPositionTest;
-import br.com.amorim.supermarket.testutils.generateentitiesunittests.salary.SalaryTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -26,14 +24,11 @@ class VerifyJobPositionNameImplTest {
     @InjectMocks
     private VerifyJobPositionNameImpl verifyJobPositionName;
     @Mock
-    private SalaryRepository salaryRepository;
+    private JobPositionRepository jobPositionRepository;
     private JobPosition jobPosition;
-    private Salary salary;
 
     private void startJobPosition() {
         var jobPositionTest = new JobPositionTest();
-        var salaryTest = new SalaryTest();
-        salary = salaryTest.generateSalary();
         jobPosition = jobPositionTest.generateJobPosition();
     }
 
@@ -45,7 +40,7 @@ class VerifyJobPositionNameImplTest {
 
     @Test
     void shouldReturnFalseWhenPositionNameNotExists() {
-        when(salaryRepository.findByPosition(jobPosition.getName()))
+        when(jobPositionRepository.findByName(jobPosition.getName()))
                 .thenReturn(Optional.empty());
         boolean existsInSalary = verifyJobPositionName
                 .isPositionNameAlreadyExistsInSalary(jobPosition);
@@ -55,8 +50,8 @@ class VerifyJobPositionNameImplTest {
     @Test
     void shouldReturnExceptionWhenPositionNameAlreadyExists() {
         var messageExpected = getString(MessagesKeyType.JOB_POSITION_NAME_ALREADY_EXISTS.message);
-        when(salaryRepository.findByPosition(jobPosition.getName()))
-                .thenReturn(Optional.of(salary));
+        when(jobPositionRepository.findByName(jobPosition.getName()))
+                .thenReturn(Optional.of(jobPosition));
         var messageException = assertThrows(BusinessRuleException.class, () ->
                 verifyJobPositionName.isPositionNameAlreadyExistsInSalary(jobPosition)
         ).getMessage();
