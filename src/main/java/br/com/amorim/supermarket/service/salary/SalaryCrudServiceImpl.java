@@ -4,9 +4,8 @@ import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.salary.Salary;
-import br.com.amorim.supermarket.repository.otheraddition.OtherAdditionRepository;
-import br.com.amorim.supermarket.repository.otherdiscount.OtherDiscountRepository;
 import br.com.amorim.supermarket.repository.salary.SalaryRepository;
+import br.com.amorim.supermarket.repository.salary.salaryrepositorycustom.SalaryRepositoryCustom;
 import br.com.amorim.supermarket.service.salary.calculatesalary.CalculateSalary;
 import br.com.amorim.supermarket.service.salary.verifyduplicatesalary.VerifyDuplicateSalary;
 import lombok.AllArgsConstructor;
@@ -16,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.UUID;
 
 import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
@@ -26,8 +26,7 @@ import static br.com.amorim.supermarket.configuration.internacionalizationmessag
 public class SalaryCrudServiceImpl implements SalaryCrudService {
 
     private SalaryRepository salaryRepository;
-    private OtherAdditionRepository otherAdditionRepository;
-    private OtherDiscountRepository otherDiscountRepository;
+    private SalaryRepositoryCustom salaryRepositoryCustom;
     private VerifyDuplicateSalary verifyDuplicateSalary;
     private static final int DECREASE_PAGE_SIZE = 1;
     private static final int ZERO_PAGE_SIZE = 0;
@@ -90,5 +89,10 @@ public class SalaryCrudServiceImpl implements SalaryCrudService {
                 }).orElseThrow(() ->
                         new NotFoundException(
                                 getString(MessagesKeyType.SALARY_NOT_FOUND.message)));
+    }
+
+    @Override
+    public List<Salary> isThereASalaryAlreadyRegisteredForTheJobPosition() {
+        return salaryRepositoryCustom.existsSalaryInJobPosition();
     }
 }

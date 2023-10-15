@@ -1,7 +1,8 @@
 package br.com.amorim.supermarket.controller.salary;
 
 import br.com.amorim.supermarket.controller.salary.dto.ConverterSalaryMapper;
-import br.com.amorim.supermarket.controller.salary.dto.SalaryDTO;
+import br.com.amorim.supermarket.controller.salary.dto.request.SalaryDTO;
+import br.com.amorim.supermarket.controller.salary.dto.response.SalaryListOutPutDTO;
 import br.com.amorim.supermarket.model.salary.Salary;
 import br.com.amorim.supermarket.service.salary.SalaryCrudServiceImpl;
 import io.swagger.annotations.Api;
@@ -21,8 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.CREATED;
@@ -99,5 +102,12 @@ public class SalaryController {
     })
     public void delete (@PathVariable @ApiParam("Salary id") UUID id) {
         salaryService.delete(id);
+    }
+
+    @GetMapping("/salariesavailable")
+    @ApiIgnore
+    public List<SalaryListOutPutDTO> salariesAvailableForTheJobPosition() {
+        var salaries = salaryService.isThereASalaryAlreadyRegisteredForTheJobPosition();
+        return converterSalaryMapper.salariesAvailable(salaries);
     }
 }
