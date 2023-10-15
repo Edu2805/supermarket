@@ -1,4 +1,4 @@
-package br.com.amorim.supermarket.controller.salary.dto;
+package br.com.amorim.supermarket.controller.salary.dto.request;
 
 import br.com.amorim.supermarket.model.otheraddition.OtherAddition;
 import br.com.amorim.supermarket.model.otherdiscount.OtherDiscount;
