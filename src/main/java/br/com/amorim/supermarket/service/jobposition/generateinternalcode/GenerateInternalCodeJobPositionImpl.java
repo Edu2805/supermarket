@@ -1,7 +1,7 @@
 package br.com.amorim.supermarket.service.jobposition.generateinternalcode;
 
 import br.com.amorim.supermarket.model.jobposition.JobPosition;
-import br.com.amorim.supermarket.repository.jobposition.generateinternalcoderepositorycustom.GenerateInternalCodeJobPositionRepositoryCustom;
+import br.com.amorim.supermarket.repository.jobposition.jobpositionrepositorycustom.JobPositionRepositoryCustom;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +12,7 @@ import java.math.BigInteger;
 @Component
 public class GenerateInternalCodeJobPositionImpl implements GenerateInternalCodeJobPosition {
 
-    private GenerateInternalCodeJobPositionRepositoryCustom generateInternalCodeJobPositionRepositoryCustom;
+    private JobPositionRepositoryCustom generateInternalCodeJobPositionRepositoryCustom;
 
     @Override
     public BigInteger generate(JobPosition jobPosition) {

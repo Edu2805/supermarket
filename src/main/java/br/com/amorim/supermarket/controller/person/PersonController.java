@@ -1,8 +1,10 @@
 package br.com.amorim.supermarket.controller.person;
 
+import br.com.amorim.supermarket.controller.person.dto.ConvertPersonMapper;
 import br.com.amorim.supermarket.controller.person.dto.mapper.ScholarityForPersonMapper;
 import br.com.amorim.supermarket.controller.person.dto.request.PersonScholarityStringDTO;
 import br.com.amorim.supermarket.controller.person.dto.response.ConvertPersonScholarityTypeStringDTO;
+import br.com.amorim.supermarket.controller.person.dto.response.PersonListOutputDTO;
 import br.com.amorim.supermarket.controller.person.dto.response.PersonScholarityTypeStringDTO;
 import br.com.amorim.supermarket.model.person.Person;
 import br.com.amorim.supermarket.service.person.PersonCrudServiceImpl;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.CREATED;
@@ -40,6 +43,7 @@ public class PersonController {
     private PersonCrudServiceImpl personService;
     private ConvertPersonScholarityTypeStringDTO personScholarityTypeStringDTO;
     private ScholarityForPersonMapper scholarityForPersonMapper;
+    private ConvertPersonMapper convertPersonMapper;
 
     @GetMapping
     @ApiOperation("Get all people")
@@ -99,9 +103,19 @@ public class PersonController {
     @ApiOperation("Delete a specific person")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Person deleted successfully"),
-            @ApiResponse(code = 404, message = "Person not found for given id")
     })
     public void delete (@PathVariable @ApiParam("Person id") UUID id) {
         personService.delete(id);
+    }
+
+    @GetMapping("/peopleavailable")
+    @ApiOperation("Get a list of people avaiable")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "People returned successfully"),
+            @ApiResponse(code = 404, message = "People not found for given id")
+    })
+    public List<PersonListOutputDTO> peopleAvailableForTheEmployee() {
+        var people = personService.isThereAJPersonAlreadyRegisteredForTheEmployee();
+        return convertPersonMapper.peopleAvailable(people);
     }
 }

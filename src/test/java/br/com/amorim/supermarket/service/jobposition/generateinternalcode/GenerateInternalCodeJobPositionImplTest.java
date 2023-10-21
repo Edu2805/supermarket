@@ -1,10 +1,8 @@
 package br.com.amorim.supermarket.service.jobposition.generateinternalcode;
 
 import br.com.amorim.supermarket.model.jobposition.JobPosition;
-import br.com.amorim.supermarket.model.salary.Salary;
-import br.com.amorim.supermarket.repository.jobposition.generateinternalcoderepositorycustom.GenerateInternalCodeJobPositionRepositoryCustom;
+import br.com.amorim.supermarket.repository.jobposition.jobpositionrepositorycustom.JobPositionRepositoryCustom;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.jobposition.JobPositionTest;
-import br.com.amorim.supermarket.testutils.generateentitiesunittests.salary.SalaryTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -21,7 +19,7 @@ class GenerateInternalCodeJobPositionImplTest {
     @InjectMocks
     private GenerateInternalCodeJobPositionImpl generateInternalCodeJobPosition;
     @Mock
-    private GenerateInternalCodeJobPositionRepositoryCustom generateInternalCodeJobPositionRepositoryCustom;
+    private JobPositionRepositoryCustom generateInternalCodeJobPositionRepositoryCustom;
 
     private JobPosition jobPosition1;
     private JobPosition jobPosition2;

@@ -1,4 +1,4 @@
-package br.com.amorim.supermarket.repository.jobposition.generateinternalcoderepositorycustom;
+package br.com.amorim.supermarket.repository.jobposition.jobpositionrepositorycustom;
 
 import br.com.amorim.supermarket.model.jobposition.JobPosition;
 import br.com.amorim.supermarket.model.otheraddition.OtherAddition;
