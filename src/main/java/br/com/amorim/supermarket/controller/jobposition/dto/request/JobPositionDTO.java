@@ -1,4 +1,4 @@
-package br.com.amorim.supermarket.controller.jobposition.dto;
+package br.com.amorim.supermarket.controller.jobposition.dto.request;
 
 import br.com.amorim.supermarket.model.salary.Salary;
 import lombok.AllArgsConstructor;

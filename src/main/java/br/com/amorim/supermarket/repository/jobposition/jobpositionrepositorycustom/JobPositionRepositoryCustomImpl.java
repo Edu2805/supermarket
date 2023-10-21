@@ -1,5 +1,7 @@
-package br.com.amorim.supermarket.repository.jobposition.generateinternalcoderepositorycustom;
+package br.com.amorim.supermarket.repository.jobposition.jobpositionrepositorycustom;
 
+import br.com.amorim.supermarket.model.employee.Employee;
+import br.com.amorim.supermarket.model.employee.QEmployee;
 import br.com.amorim.supermarket.model.jobposition.JobPosition;
 import br.com.amorim.supermarket.model.jobposition.QJobPosition;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -8,12 +10,13 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.math.BigInteger;
+import java.util.List;
 
 @AllArgsConstructor
 
 @Repository
-public class GenerateInternalCodeJobPositionRepositoryCustomImpl implements
-        GenerateInternalCodeJobPositionRepositoryCustom {
+public class JobPositionRepositoryCustomImpl implements
+        JobPositionRepositoryCustom {
 
     private EntityManager entityManager;
     private static final int START_CODE_ONE = 1;
@@ -31,5 +34,18 @@ public class GenerateInternalCodeJobPositionRepositoryCustomImpl implements
         }
 
         return BigInteger.valueOf(START_CODE_ONE);
+    }
+
+    @Override
+    public List<JobPosition> existsJobPositionInEmployee() {
+        QJobPosition qJobPosition = QJobPosition.jobPosition;
+        QEmployee qEmployee = QEmployee.employee;
+
+        JPAQuery<JobPosition> queryJobPosition = new JPAQuery<>(entityManager);
+        JPAQuery<Employee> queryEmployee = new JPAQuery<>(entityManager);
+        return queryJobPosition.select(qJobPosition).from(qJobPosition).where(qJobPosition.id.notIn(
+                queryEmployee.select(qEmployee.jobPosition.id).from(qEmployee).fetchAll()
+        )).stream().toList();
+
     }
 }

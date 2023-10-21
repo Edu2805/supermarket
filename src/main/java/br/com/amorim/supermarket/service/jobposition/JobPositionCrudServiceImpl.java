@@ -5,6 +5,7 @@ import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.model.jobposition.JobPosition;
 import br.com.amorim.supermarket.repository.jobposition.JobPositionRepository;
+import br.com.amorim.supermarket.repository.jobposition.jobpositionrepositorycustom.JobPositionRepositoryCustom;
 import br.com.amorim.supermarket.service.jobposition.filljobpositionname.fillname.FillPositionNameBySalary;
 import br.com.amorim.supermarket.service.jobposition.filljobpositionname.verifyjobpositionname.VerifyJobPositionName;
 import br.com.amorim.supermarket.service.jobposition.generateinternalcode.GenerateInternalCodeJobPosition;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.UUID;
 
 import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
@@ -26,6 +28,7 @@ public class JobPositionCrudServiceImpl implements JobPositionCrudService {
 
     private JobPositionRepository jobPositionRepository;
     private GenerateInternalCodeJobPosition generateInternalCodeJobPosition;
+    private JobPositionRepositoryCustom jobPositionRepositoryCustom;
     private VerifyJobPositionName verifyJobPositionName;
     private FillPositionNameBySalary fillPositionNameBySalary;
     private static final int DECREASE_PAGE_SIZE = 1;
@@ -92,5 +95,10 @@ public class JobPositionCrudServiceImpl implements JobPositionCrudService {
                 }).orElseThrow(() ->
                         new NotFoundException(
                                 getString(MessagesKeyType.JOB_POSITION_NOT_FOUND.message)));
+    }
+
+    @Override
+    public List<JobPosition> isThereAJobPositionAlreadyRegisteredForTheEmployee() {
+        return jobPositionRepositoryCustom.existsJobPositionInEmployee();
     }
 }

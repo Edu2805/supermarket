@@ -188,6 +188,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/salary/salariesavailable/**")
                 .hasAnyRole(ADMIN.role, HEAD.role, DEPARTMENT_MANAGER.role, MANAGER.role, HR.role)
 
+                //Jobpositionsavailable(Get)
+                .antMatchers(HttpMethod.GET, "/api/jobposition/jobpositionsavailable/**")
+                .hasAnyRole(ADMIN.role, HEAD.role, DEPARTMENT_MANAGER.role, MANAGER.role, HR.role)
+
+                //Peopleavailable(Get)
+                .antMatchers(HttpMethod.GET, "/api/jobposition/peopleavailable/**")
+                .hasAnyRole(ADMIN.role, HEAD.role, DEPARTMENT_MANAGER.role, MANAGER.role, HR.role)
+
                 //User(POST)
                 .antMatchers(HttpMethod.POST, "/api/user/**")
                 .permitAll()

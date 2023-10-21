@@ -1,8 +1,10 @@
 package br.com.amorim.supermarket.controller.jobposition;
 
 import br.com.amorim.supermarket.controller.jobposition.dto.ConvertJobPositionMapper;
-import br.com.amorim.supermarket.controller.jobposition.dto.JobPositionDTO;
+import br.com.amorim.supermarket.controller.jobposition.dto.request.JobPositionDTO;
+import br.com.amorim.supermarket.controller.jobposition.dto.response.JobPositionListOutputDTO;
 import br.com.amorim.supermarket.model.jobposition.JobPosition;
+import br.com.amorim.supermarket.repository.jobposition.JobPositionRepository;
 import br.com.amorim.supermarket.service.jobposition.JobPositionCrudServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.CREATED;
@@ -37,12 +40,12 @@ public class JobPositionController {
 
     private JobPositionCrudServiceImpl jobPositionService;
     private ConvertJobPositionMapper convertJobPositionMapper;
+    private final JobPositionRepository jobPositionRepository;
 
     @GetMapping
     @ApiOperation("Get all job positions")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Job positions returned successfully"),
-            @ApiResponse(code = 404, message = "An error occurred while fetching the job positions")
     })
     public Page<JobPosition> findAll (@RequestParam(
             value = "page",
@@ -100,4 +103,15 @@ public class JobPositionController {
     public void delete (@PathVariable @ApiParam("Job position id") UUID id) {
         jobPositionService.delete(id);
     }
+
+    @GetMapping("/jobpositionsavailable")
+    @ApiOperation("Get a list of job positions avaiable")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Job position returned successfully"),
+    })
+    public List<JobPositionListOutputDTO> jobPositionsAvailableForTheEmployee() {
+        var jobPositions = jobPositionService.isThereAJobPositionAlreadyRegisteredForTheEmployee();
+        return convertJobPositionMapper.jobPositionsAvailable(jobPositions);
+    }
+
 }

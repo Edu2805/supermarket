@@ -9,6 +9,7 @@ import br.com.amorim.supermarket.model.attatchment.Attachment;
 import br.com.amorim.supermarket.model.person.Person;
 import br.com.amorim.supermarket.repository.attachment.AttachmentRepository;
 import br.com.amorim.supermarket.repository.person.PersonRepository;
+import br.com.amorim.supermarket.repository.person.personrepositorycustom.PersonRepositoryCustom;
 import br.com.amorim.supermarket.service.common.utils.ImageUtil;
 import br.com.amorim.supermarket.service.person.getemailuser.PersonEmailUser;
 import br.com.amorim.supermarket.service.person.updatefullnameemployee.PersonUpdateUserNameInEmployee;
@@ -24,6 +25,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.UUID;
 
 import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
@@ -36,6 +38,7 @@ public class PersonCrudServiceImpl implements PersonCrudService {
     private static final int DECREASE_PAGE_SIZE = 1;
     private static final int ZERO_PAGE_SIZE = 0;
     private PersonRepository personRepository;
+    private PersonRepositoryCustom personRepositoryCustom;
     private AttachmentRepository attachmentRepository;
     private VerifyPageSize verifyPageSize;
     private VerifyPersonCpf verifyPersonCpf;
@@ -170,5 +173,10 @@ public class PersonCrudServiceImpl implements PersonCrudService {
                 }).orElseThrow(() ->
                         new NotFoundException(
                                 getString(MessagesKeyType.PERSON_DATA_NOT_FOUND.message)));
+    }
+
+    @Override
+    public List<Person> isThereAJPersonAlreadyRegisteredForTheEmployee() {
+        return personRepositoryCustom.existsJobPositionInEmployee();
     }
 }
