@@ -1,5 +1,6 @@
 package br.com.amorim.supermarket.controller.person.dto.response;
 
+import br.com.amorim.supermarket.model.attatchment.Attachment;
 import br.com.amorim.supermarket.model.userdata.UserData;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,4 +22,5 @@ public class PersonListOutputDTO {
     private String cpf;
     private String email;
     private UserData userData;
+    private Attachment personPhoto;
 }
