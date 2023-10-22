@@ -77,8 +77,8 @@ public class EmployeeCrudServiceImpl implements EmployeeCrudService {
                 .map(existingEmployee -> {
                    employee.setId(existingEmployee.getId());
                    employee.setRegisterNumber(existingEmployee.getRegisterNumber());
-                   employee.setFullName(existingEmployee.getFullName());
-                   employee.setPerson(existingEmployee.getPerson());
+                   employee.setPerson(employee.getPerson());
+                   employee.setFullName(employeeFullName.fillEmployeeFullName(employee));
                    employeeRepository.save(employee);
                    return existingEmployee;
                 }).orElseThrow(() ->
