@@ -72,6 +72,7 @@ public class GoodsReceiptCrudServiceImpl implements GoodsReceiptCrudService {
         changeProductPurchaseAmount.changePurchasePrice(goodsReceipt);
         setFieldPurchaseSummary.calculateTotalProducts(goodsReceipt);
         setFieldPurchaseSummary.setFieldsHistoricalGoodsReceipt(goodsReceipt);
+        goodsReceipt.setReceived(true);
     }
 
     @Transactional
