@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.CREATED;
@@ -67,6 +68,16 @@ public class ProductDataController {
     public ProductUnitTypeStringDTO getById (@PathVariable @ApiParam("Product id") UUID id) {
         var productData = productDataService.findById(id);
         return convertProductUnitTypeStringDTO.mapper(productData);
+    }
+
+    @GetMapping("/filter")
+    @ApiOperation("Filter products by EAN 13 or DUN 14 code")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Product returned successfully"),
+            @ApiResponse(code = 404, message = "Product not found for given id")
+    })
+    public List<ProductData> filterProducts (ProductData filter){
+        return productDataService.filterProducts(filter);
     }
 
     @PostMapping

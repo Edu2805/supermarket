@@ -14,14 +14,13 @@ import br.com.amorim.supermarket.service.productdata.validateean13anddun14.Valid
 import br.com.amorim.supermarket.service.productdata.validateproviderproduct.ValidateProductProviderProduct;
 import br.com.amorim.supermarket.service.productdata.validatesubsection.ValidateProductSubSection;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.List;
 import java.util.UUID;
 
 import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
@@ -151,5 +150,16 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
                 }).orElseThrow(() ->
                         new NotFoundException(
                                 getString(MessagesKeyType.PRODUCT_DATA_NOT_FOUND.message)));
+    }
+
+    @Override
+    public List<ProductData> filterProducts(ProductData filter) {
+        ExampleMatcher matcher = ExampleMatcher
+                .matching()
+                .withIgnoreCase()
+                .withStringMatcher(
+                        ExampleMatcher.StringMatcher.CONTAINING);
+        Example example = Example.of(filter, matcher);
+        return productDataRepository.findAll(example);
     }
 }
