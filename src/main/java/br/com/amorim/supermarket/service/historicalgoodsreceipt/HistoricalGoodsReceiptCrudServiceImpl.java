@@ -9,6 +9,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.UUID;
+
 @AllArgsConstructor
 
 @Service
@@ -26,5 +29,15 @@ public class HistoricalGoodsReceiptCrudServiceImpl implements HistoricalGoodsRec
         verifyPageSize.verifyPageSizeForGetAll(page, size);
         Pageable pageableRequest = PageRequest.of(page, size);
         return historicalGoodsReceiptRepository.findAll(pageableRequest);
+    }
+
+    @Override
+    public List<HistoricalGoodsReceipt> findByInvoice(String invoice) {
+        return historicalGoodsReceiptRepository.findByInvoice(invoice);
+    }
+
+    @Override
+    public List<HistoricalGoodsReceipt> findBySourceId(UUID sourceid) {
+        return historicalGoodsReceiptRepository.findBySourceId(sourceid);
     }
 }

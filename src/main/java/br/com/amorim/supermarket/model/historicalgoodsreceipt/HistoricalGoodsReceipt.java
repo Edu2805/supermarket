@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,6 +23,8 @@ import java.sql.Timestamp;
 @Table(name = "historical_goods_receipt")
 public class HistoricalGoodsReceipt extends CommonIdAndNameEntity {
 
+    @Column(name = "source_id")
+    private UUID sourceId;
     @Column(name = "product_code")
     private BigInteger productCode;
     @Column(name = "purchase_price")

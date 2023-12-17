@@ -38,6 +38,7 @@ public class SetFieldPurchaseSummaryImpl implements SetFieldPurchaseSummary {
             historicalGoodsReceipt.setTotalInvoice(goodsReceipt.getProductsTotal());
             historicalGoodsReceipt.setRegistrationDate(goodsReceipt.getRegistrationDate());
             historicalGoodsReceipt.setReceived(goodsReceipt.isReceived());
+            historicalGoodsReceipt.setSourceId(product.getId());
             saveHistoricalGoodsReceipt(historicalGoodsReceipt);
         });
     }

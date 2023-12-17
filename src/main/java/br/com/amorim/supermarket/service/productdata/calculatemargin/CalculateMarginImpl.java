@@ -1,6 +1,7 @@
 package br.com.amorim.supermarket.service.productdata.calculatemargin;
 
 import br.com.amorim.supermarket.model.productdata.ProductData;
+import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,7 @@ import java.math.RoundingMode;
 public class CalculateMarginImpl implements CalculateMargin {
 
     private static final int SCALE = 4;
+    private ProductDataRepository productDataRepository;
 
     /**
      * ML = Margem de Lucro
@@ -24,7 +26,20 @@ public class CalculateMarginImpl implements CalculateMargin {
      */
     @Override
     public BigDecimal calculate(ProductData productData) {
-        BigDecimal margin = productData.getSalePrice().subtract(productData.getPurchasePrice());
-        return margin.divide(productData.getSalePrice(), SCALE, RoundingMode.HALF_UP);
+        ProductData product = findProduct(productData);
+        BigDecimal margin = product.getSalePrice().subtract(product.getPurchasePrice());
+        return margin.divide(product.getSalePrice(), SCALE, RoundingMode.HALF_UP);
+    }
+
+    private ProductData findProduct(ProductData productData) {
+        productDataRepository.findById(productData.getId()).ifPresent(product -> {
+            if (productData.getSalePrice() == null) {
+                productData.setSalePrice(product.getSalePrice());
+            }
+            if (productData.getPurchasePrice() == null) {
+                productData.setPurchasePrice(product.getPurchasePrice());
+            }
+        });
+        return productData;
     }
 }
