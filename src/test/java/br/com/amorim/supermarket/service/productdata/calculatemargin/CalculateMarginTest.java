@@ -2,11 +2,13 @@ package br.com.amorim.supermarket.service.productdata.calculatemargin;
 
 import br.com.amorim.supermarket.common.enums.UnityType;
 import br.com.amorim.supermarket.model.productdata.ProductData;
+import br.com.amorim.supermarket.repository.productdata.ProductDataRepository;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.providerproduct.ProviderProductTest;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.subsection.SubSectionTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -22,6 +24,9 @@ public class CalculateMarginTest {
 
     @InjectMocks
     private CalculateMarginImpl calculateMarginImplMock;
+    @Mock
+    private ProductDataRepository productDataRepository;
+
     public static final java.util.UUID UUID = randomUUID();
     public static final String NAME = "Produto teste";
 

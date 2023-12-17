@@ -60,11 +60,11 @@ public class GoodsReceiptCrudServiceImpl implements GoodsReceiptCrudService {
     @Override
     public GoodsReceipt save (GoodsReceipt goodsReceipt) {
         verifyInvoice.verifyInvoiceInDatabase(goodsReceipt);
-        setFields(goodsReceipt);
+        setFieldsForSave(goodsReceipt);
         return goodsReceiptRepository.save(goodsReceipt);
     }
 
-    private void setFields(GoodsReceipt goodsReceipt) {
+    private void setFieldsForSave(GoodsReceipt goodsReceipt) {
         var generateRegisterNumber = generateControlNumberGoodsReceipt.generate(goodsReceipt);
         goodsReceipt.setControlNumber(generateRegisterNumber);
         goodsReceipt.setRegistrationDate(Timestamp.valueOf(LocalDateTime.now()));
@@ -81,11 +81,22 @@ public class GoodsReceiptCrudServiceImpl implements GoodsReceiptCrudService {
         goodsReceiptRepository.findById(id)
                 .map(existingGoodsReceipt -> {
                     goodsReceipt.setId(existingGoodsReceipt.getId());
+                    setFieldsForUpdate(goodsReceipt, existingGoodsReceipt);
                     goodsReceiptRepository.save(goodsReceipt);
                     return existingGoodsReceipt;
                 }).orElseThrow(() ->
                         new NotFoundException(
                                 getString(MessagesKeyType.GOODS_RECEIPT_NOT_FOUND.message)));
+    }
+
+    private void setFieldsForUpdate(GoodsReceipt goodsReceipt, GoodsReceipt existentGoodsReceipt) {
+        goodsReceipt.setControlNumber(existentGoodsReceipt.getControlNumber());
+        goodsReceipt.setRegistrationDate(Timestamp.valueOf(LocalDateTime.now()));
+        setProductList.setProduct(goodsReceipt);
+        changeProductPurchaseAmount.changePurchasePrice(goodsReceipt);
+        setFieldPurchaseSummary.calculateTotalProducts(goodsReceipt);
+        setFieldPurchaseSummary.setFieldsHistoricalGoodsReceipt(goodsReceipt);
+        goodsReceipt.setReceived(true);
     }
 
     @Transactional

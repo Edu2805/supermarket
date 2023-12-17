@@ -58,6 +58,8 @@ public class ProductData extends CommonIdNameAndCodeEntity {
     @NotNull(message = "{br.com.supermarket.PRODUCT_DATA_FIELD_INVENTORY_IS_NOT_EMPTY}")
     private BigDecimal inventory;
 
+    private BigDecimal total;
+
     @ManyToOne
     @JoinColumn(name = "subsection_id")
     @NotNull(message = "{br.com.supermarket.PRODUCT_DATA_FIELD_SUB_SECTION_IS_NOT_NULL}")

@@ -1,0 +1,1 @@
+ALTER TABLE IF EXISTS historical_goods_receipt ADD COLUMN IF NOT EXISTS source_id UUID DEFAULT null;
