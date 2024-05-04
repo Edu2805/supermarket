@@ -77,7 +77,7 @@ public class GoodsIssueController {
             @ApiResponse(code = 400, message = "An error occurred while saving the goods issue")
     })
     public GoodsIssue save (@RequestBody @Valid @ApiParam("Parameters for saving the goods issue") GoodsIssueDTO goodsIssueDTO) {
-        var newGoodsIssue = convertGoodsIssueMapper.createOrUpdateGoodsIssueMapper(goodsIssueDTO);
+        var newGoodsIssue = convertGoodsIssueMapper.createGoodsIssueMapper(goodsIssueDTO);
         return goodsIssueCrudService.save(newGoodsIssue);
     }
 
@@ -90,7 +90,7 @@ public class GoodsIssueController {
     })
     public void update (@RequestBody @Valid @ApiParam("Parameters for updating the goods issue")
                             GoodsIssueDTO goodsIssueDTO, @PathVariable @ApiParam("Goods issue id") UUID id) {
-        var updateGoodsIssue = convertGoodsIssueMapper.createOrUpdateGoodsIssueMapper(goodsIssueDTO);
+        var updateGoodsIssue = convertGoodsIssueMapper.updateGoodsIssueMapper(goodsIssueDTO);
         goodsIssueCrudService.update(updateGoodsIssue, id);
     }
 

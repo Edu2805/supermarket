@@ -4,5 +4,6 @@ import br.com.amorim.supermarket.model.goodsissue.GoodsIssue;
 
 public interface ConvertGoodsIssueMapper {
 
-    GoodsIssue createOrUpdateGoodsIssueMapper(GoodsIssueDTO goodsIssueDTO);
+    GoodsIssue createGoodsIssueMapper(GoodsIssueDTO goodsIssueDTO);
+    GoodsIssue updateGoodsIssueMapper(GoodsIssueDTO goodsIssueDTO);
 }
