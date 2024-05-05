@@ -1,7 +1,7 @@
 package br.com.amorim.supermarket.controller.establishment;
 
-import br.com.amorim.supermarket.controller.establishment.dto.ConvertEstablishmentMapper;
-import br.com.amorim.supermarket.controller.establishment.dto.EstablishmentDTO;
+import br.com.amorim.supermarket.controller.establishment.dto.request.ConvertEstablishmentMapper;
+import br.com.amorim.supermarket.controller.establishment.dto.request.EstablishmentDTO;
 import br.com.amorim.supermarket.model.establishment.Establishment;
 import br.com.amorim.supermarket.service.establishment.EstablishmentCrudServiceImpl;
 import io.swagger.annotations.Api;

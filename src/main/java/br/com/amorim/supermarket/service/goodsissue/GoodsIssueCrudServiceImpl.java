@@ -63,7 +63,7 @@ public class GoodsIssueCrudServiceImpl implements GoodsIssueCrudService {
     }
 
     private void setFields(GoodsIssue goodsIssue) {
-        var generate = this.generateSaleNumber.generate(goodsIssue);
+        var generate = this.generateSaleNumber.generate();
         goodsIssue.setSaleNumber(generate);
         setProductListForSale.fillProducts(goodsIssue);
         setFieldsSaleSummary.setFieldsSummary(goodsIssue);

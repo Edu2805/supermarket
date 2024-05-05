@@ -1,0 +1,1 @@
+ALTER TABLE IF EXISTS establishment ADD CONSTRAINT foreign_key_establishment_to_establiment_logo FOREIGN KEY (stablisment_logo) REFERENCES attachment (id);

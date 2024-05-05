@@ -19,7 +19,7 @@ public class GenerateSaleNumberRepositoryCustomImpl implements GenerateSaleNumbe
     private static final int INCREASE_SALE_NUMBER_ONE = 1;
 
     @Override
-    public BigInteger generateSaleNumber(GoodsIssue goodsIssue) {
+    public BigInteger generateSaleNumber() {
         QGoodsIssue qGoodsIssue = QGoodsIssue.goodsIssue;
         JPAQuery<GoodsIssue> query = new JPAQuery<>(entityManager);
         BigInteger goodsIssueDataQuery = query.select(qGoodsIssue.saleNumber.max())

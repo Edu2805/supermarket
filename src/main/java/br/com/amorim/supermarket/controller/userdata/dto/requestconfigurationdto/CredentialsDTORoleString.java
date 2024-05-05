@@ -1,6 +1,5 @@
 package br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto;
 
-import br.com.amorim.supermarket.configuration.security.roles.RoleType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

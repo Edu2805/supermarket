@@ -1,4 +1,4 @@
-package br.com.amorim.supermarket.controller.establishment.dto;
+package br.com.amorim.supermarket.controller.establishment.dto.request;
 
 import br.com.amorim.supermarket.model.establishment.Establishment;
 import lombok.AllArgsConstructor;

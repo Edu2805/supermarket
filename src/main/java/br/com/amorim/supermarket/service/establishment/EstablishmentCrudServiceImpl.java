@@ -3,8 +3,11 @@ package br.com.amorim.supermarket.service.establishment;
 import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
+import br.com.amorim.supermarket.model.attatchment.Attachment;
 import br.com.amorim.supermarket.model.establishment.Establishment;
+import br.com.amorim.supermarket.repository.attachment.AttachmentRepository;
 import br.com.amorim.supermarket.repository.establishment.EstablishmentRepository;
+import br.com.amorim.supermarket.service.common.utils.ImageUtil;
 import br.com.amorim.supermarket.service.establishment.generateinternalcode.GenerateInternalCodeEstablishment;
 import br.com.amorim.supermarket.service.establishment.verifycnpjestablishment.VerifyCnpjEstablishment;
 import br.com.amorim.supermarket.service.establishment.verifydepartment.VerifyDepartment;
@@ -34,6 +37,7 @@ public class EstablishmentCrudServiceImpl implements EstablishmentCrudService {
     private VerifyCnpjEstablishment verifyCnpjEstablishment;
     private VerifyPageSize verifyPageSize;
     private VerifyDepartment verifyDepartment;
+    private AttachmentRepository attachmentRepository;
 
     @Override
     public Page<Establishment> getAll (int page, int size) {
@@ -58,7 +62,16 @@ public class EstablishmentCrudServiceImpl implements EstablishmentCrudService {
     public Establishment save (Establishment establishment) {
         validateFieldsBeforeSave(establishment);
         setInternalCode(establishment);
+        setPhotoAndInsert(establishment);
         return establishmentRepository.save(establishment);
+    }
+
+    private void setPhotoAndInsert(Establishment establishment) {
+        if (establishment.getEstablismentLogo() != null) {
+            var imageData = establishment.getEstablismentLogo().getImageData();
+            establishment.getEstablismentLogo().setImageData(ImageUtil.compressFile(imageData));
+            attachmentRepository.save(establishment.getEstablismentLogo());
+        }
     }
 
     private void setInternalCode (Establishment establishment) {
@@ -79,11 +92,33 @@ public class EstablishmentCrudServiceImpl implements EstablishmentCrudService {
                     establishment.setId(existingEstablishment.getId());
                     validateFieldsBeforeUpdate(establishment);
                     establishment.setCode(existingEstablishment.getCode());
+                    setPhotoAndUpdate(establishment, existingEstablishment);
                     establishmentRepository.save(establishment);
                     return existingEstablishment;
                 }).orElseThrow(() ->
                         new NotFoundException(
                                 getString(MessagesKeyType.ESTABLISHMENT_NOT_FOUND.message)));
+    }
+
+    private void setPhotoAndUpdate(Establishment establishmentUpdateLogo, Establishment establishmentExistentLogo) {
+        if (establishmentExistentLogo.getEstablismentLogo() == null) {
+            var imageData = establishmentUpdateLogo.getEstablismentLogo().getImageData();
+            establishmentUpdateLogo.getEstablismentLogo().setImageData(ImageUtil.compressFile(imageData));
+            attachmentRepository.save(establishmentUpdateLogo.getEstablismentLogo());
+        } else {
+            if (!establishmentExistentLogo.getEstablismentLogo().getId().equals(establishmentUpdateLogo.getEstablismentLogo().getId())) {
+                deletePhoto(establishmentExistentLogo.getEstablismentLogo());
+                var imageData = establishmentUpdateLogo.getEstablismentLogo().getImageData();
+                establishmentUpdateLogo.getEstablismentLogo().setImageData(ImageUtil.compressFile(imageData));
+                attachmentRepository.save(establishmentUpdateLogo.getEstablismentLogo());
+            }
+        }
+    }
+
+    private void deletePhoto(Attachment attachment) {
+        if (attachment != null) {
+            attachmentRepository.delete(attachment);
+        }
     }
 
     private void validateFieldsBeforeUpdate(Establishment establishment) {
