@@ -1,21 +1,20 @@
-package br.com.amorim.supermarket.service.goodsissue.generatesalenumber;
+package br.com.amorim.supermarket.service.getsalenumber;
 
-import br.com.amorim.supermarket.model.goodsissue.GoodsIssue;
 import br.com.amorim.supermarket.repository.goodsissue.generatesalenumber.GenerateSaleNumberRepositoryCustom;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 
 @AllArgsConstructor
 
-@Component
-public class GenerateSaleNumberImpl implements GenerateSaleNumber {
+@Service
+public class GetSaleNumberImpl implements GetSaleNumber{
 
     private GenerateSaleNumberRepositoryCustom generateSaleNumberRepositoryCustom;
 
     @Override
-    public BigInteger generate() {
+    public BigInteger generateSaleNumber() {
         return generateSaleNumberRepositoryCustom.generateSaleNumber();
     }
 }

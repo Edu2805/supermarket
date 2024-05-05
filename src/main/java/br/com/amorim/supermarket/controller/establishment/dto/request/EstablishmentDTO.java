@@ -1,6 +1,7 @@
-package br.com.amorim.supermarket.controller.establishment.dto;
+package br.com.amorim.supermarket.controller.establishment.dto.request;
 
 import br.com.amorim.supermarket.controller.common.dto.CommonDTONameMunicipalAndStateRegistration;
+import br.com.amorim.supermarket.model.attatchment.Attachment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,4 +34,6 @@ public class EstablishmentDTO extends CommonDTONameMunicipalAndStateRegistration
     @NotBlank(message = "{br.com.supermarket.ESTABLISHMENT_DTO_FIELD_MANAGER_IS_NOT_EMPTY}")
     @Size(min = 5, max = 60, message = "{br.com.supermarket.ESTABLISHMENT_DTO_FIELD_MANAGER_CANNOT_BE_LESS_THAN_5_AND_GREATER_THAN_60}")
     private String manager;
+
+    private Attachment establismentLogo;
 }
