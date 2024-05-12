@@ -2,6 +2,7 @@ package br.com.amorim.supermarket.repository.financialstatementreport.expensies;
 
 import br.com.amorim.supermarket.controller.financialstatementreport.dto.receipt.FinancialExpensiesReportInput;
 import lombok.AllArgsConstructor;
+import org.hibernate.QueryException;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -10,6 +11,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 
@@ -38,140 +41,69 @@ public class FinancialExpensiesStatementReportRepositoryCustomImpl implements Fi
             to = Timestamp.from(Instant.now());
         }
 
-        var query = "SELECT SUM(hgr.purchasePrice * hgr.inventory) FROM HistoricalGoodsReceipt AS hgr ";
-        query += configureWhereClauseForProviderProductName(providerProductName);
-        query += configureWhereOrAndClauseForDepartmentName(providerProductName, departmentName);
-        query += configureWhereOrAndClauseForMainsectionName(providerProductName, departmentName, mainsectionName);
-        query += configureWhereOrAndClauseForSubsectionName(providerProductName, departmentName, mainsectionName, subsectionName);
-        query += configureWhereOrAndClauseForProductCode(providerProductName, departmentName, mainsectionName, subsectionName, productCode);
-        query += configureWhereOrAndClauseForInvoice(providerProductName, departmentName, mainsectionName, subsectionName, productCode, invoice);
-        query += configureWhereOrAndClauseForFromAndTo(providerProductName, departmentName, mainsectionName, subsectionName, productCode, invoice);
-        query += configureWhereOrAndClauseForIsReceived(providerProductName, departmentName, mainsectionName, subsectionName, productCode, invoice, from, to);
-
-        var createQuery = entityManager.createQuery(query, BigDecimal.class);
-        var bigDecimalTypedQuery = setParameters(createQuery, providerProductName, departmentName, mainsectionName,
-                subsectionName, productCode, invoice, from, to, isReceived);
-
-        return bigDecimalTypedQuery.getSingleResult();
-    }
-
-    private String configureWhereClauseForProviderProductName(String providerProductName) {
-        var query = "";
-        if (providerProductName != null && !providerProductName.isEmpty()) {
-            query = "WHERE hgr.providerProductName = :providerProductName ";
+        var query = "SELECT SUM(COALESCE(hgr.purchasePrice, 0) * COALESCE(hgr.inventory, 0)) FROM HistoricalGoodsReceipt AS hgr ";
+        List<String> conditions = new ArrayList<>();
+        if (providerProductName != null && (!providerProductName.isEmpty() || !providerProductName.isBlank())) {
+            conditions.add("hgr.providerProductName = :providerProductName");
         }
-        return query;
-    }
-
-    private String configureWhereOrAndClauseForDepartmentName(String providerProductName, String departmentName) {
-        var query = "";
-        if (providerProductName == null && departmentName != null && !departmentName.isEmpty()) {
-            query = "WHERE hgr.departmentName = :departmentName ";
-        } else {
-            if (departmentName != null) {
-                query = "AND hgr.departmentName = :departmentName ";
-            }
+        if (departmentName != null && (!departmentName.isEmpty() || !departmentName.isBlank())) {
+            conditions.add("hgr.departmentName = :departmentName");
         }
-        return query;
-    }
-
-    private String configureWhereOrAndClauseForMainsectionName(String providerProductName, String departmentName, String mainsectionName) {
-        var query = "";
-        if ((providerProductName == null && departmentName == null) && mainsectionName != null && !mainsectionName.isEmpty()) {
-            query = "WHERE hgr.mainsectionName = :mainsectionName ";
-        } else {
-            if (mainsectionName != null) {
-                query = "AND hgr.mainsectionName = :mainsectionName ";
-            }
+        if (mainsectionName != null && (!mainsectionName.isEmpty() || !mainsectionName.isBlank())) {
+            conditions.add("hgr.mainsectionName = :mainsectionName");
         }
-        return query;
-    }
-
-    private String configureWhereOrAndClauseForSubsectionName(String providerProductName, String departmentName,
-                                                              String mainsectionName, String subsectionName) {
-        var query = "";
-        if ((providerProductName == null && departmentName == null && mainsectionName == null) && subsectionName != null && !subsectionName.isEmpty()) {
-            query = "WHERE hgr.subsectionName = :subsectionName ";
-        } else {
-            if (subsectionName != null) {
-                query = "AND hgr.subsectionName = :subsectionName ";
-            }
+        if (subsectionName != null && (!subsectionName.isEmpty() || !subsectionName.isBlank())) {
+            conditions.add("hgr.subsectionName = :subsectionName");
         }
-        return query;
-    }
-
-    private String configureWhereOrAndClauseForProductCode(String providerProductName, String departmentName,
-                                                           String mainsectionName, String subsectionName, BigInteger productCode) {
-        var query = "";
-        if ((providerProductName == null && departmentName == null && mainsectionName == null && subsectionName == null) && productCode != null) {
-            query = "WHERE hgr.productCode = :productCode ";
-        } else {
-            if (productCode != null) {
-                query = "AND hgr.productCode = :productCode ";
-            }
+        if (productCode != null) {
+            conditions.add("hgr.productCode = :productCode");
         }
-        return query;
-    }
-
-    private String configureWhereOrAndClauseForInvoice(String providerProductName, String departmentName,
-                                                           String mainsectionName, String subsectionName, BigInteger productCode, String invoice) {
-        var query = "";
-        if ((providerProductName == null && departmentName == null && mainsectionName == null && subsectionName == null && productCode == null) && invoice != null) {
-            query = "WHERE hgr.invoice = :invoice ";
-        } else {
-            if (productCode != null) {
-                query = "AND hgr.invoice = :invoice ";
-            }
+        if (invoice != null && (!invoice.isEmpty() || !invoice.isBlank())) {
+            conditions.add("hgr.invoice = :invoice");
         }
-        return query;
-    }
+        conditions.add("hgr.registrationDate BETWEEN :from AND :to");
+        conditions.add("hgr.isReceived = :isReceived");
 
-    private String configureWhereOrAndClauseForFromAndTo(String providerProductName, String departmentName,
-                                                         String mainsectionName, String subsectionName, BigInteger productCode, String invoice) {
-        var query = "";
-        if (providerProductName == null && departmentName == null && mainsectionName == null && subsectionName == null && productCode == null && invoice == null) {
-            query = "WHERE hgr.registrationDate BETWEEN :from AND :to ";
-        } else {
-            query = "AND hgr.registrationDate BETWEEN :from AND :to ";
+        if (!conditions.isEmpty()) {
+            query += " WHERE " + String.join(" AND ", conditions);
         }
-        return query;
-    }
 
-    private String configureWhereOrAndClauseForIsReceived(String providerProductName, String departmentName,
-                                                          String mainsectionName, String subsectionName, BigInteger productCode,
-                                                          String invoice, Timestamp from, Timestamp to) {
-        var query = "";
-        if (providerProductName == null && departmentName == null && mainsectionName == null && subsectionName == null && productCode == null && invoice == null && from.toInstant() == null && to.toInstant() == null) {
-            query = "WHERE hgr.isReceived = :isReceived";
-        } else {
-            query = "AND hgr.isReceived = :isReceived";
+        try {
+            var createQuery = entityManager.createQuery(query, BigDecimal.class);
+            var bigDecimalTypedQuery = setParameters(createQuery, providerProductName, departmentName, mainsectionName,
+                    subsectionName, productCode, invoice, from, to, isReceived);
+
+            return bigDecimalTypedQuery.getSingleResult();
+        } catch (QueryException qe) {
+            throw new QueryException("Query error: " + qe.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException("Error: " + e.getMessage());
         }
-        return query;
     }
 
     private TypedQuery<BigDecimal> setParameters(TypedQuery<BigDecimal> createQuery, String providerProductName,
                                                  String departmentName, String mainsectionName, String subsectionName,
                                                  BigInteger productCode, String invoice,
                                                  Timestamp from, Timestamp to, boolean isReceived) {
-        if (providerProductName != null) {
+        if (providerProductName != null && (!providerProductName.isEmpty() || !providerProductName.isBlank())) {
             createQuery.setParameter("providerProductName", providerProductName);
         }
-        if (departmentName != null) {
+        if (departmentName != null && (!departmentName.isEmpty() || !departmentName.isBlank())) {
             createQuery.setParameter("departmentName", departmentName);
         }
-        if (mainsectionName != null) {
+        if (mainsectionName != null && (!mainsectionName.isEmpty() || !mainsectionName.isBlank())) {
             createQuery.setParameter("mainsectionName", mainsectionName);
         }
-        if (subsectionName != null) {
+        if (subsectionName != null && (!subsectionName.isEmpty() || !subsectionName.isBlank())) {
             createQuery.setParameter("subsectionName", subsectionName);
         }
         if (productCode != null) {
             createQuery.setParameter("productCode", productCode);
         }
-        if (invoice != null) {
+        if (invoice != null && (!invoice.isEmpty() || !invoice.isBlank())) {
             createQuery.setParameter("invoice", invoice);
         }
-        if (from.toInstant() != null && to.toInstant() != null) {
+        if (from != null && to != null) {
             createQuery.setParameter("from", from);
             createQuery.setParameter("to", to);
         }
