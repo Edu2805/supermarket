@@ -2,6 +2,7 @@ package br.com.amorim.supermarket.repository.financialstatementreport.sales;
 
 import br.com.amorim.supermarket.controller.financialstatementreport.dto.sales.FinancialSalesReportInput;
 import lombok.AllArgsConstructor;
+import org.hibernate.QueryException;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -10,6 +11,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 
@@ -28,9 +31,9 @@ public class FinancialSalesStatementReportRepositoryCustomImpl implements Financ
         var mainsectionName = financialSalesReportInput.getMainsectionName();
         var subsectionName = financialSalesReportInput.getSubsectionName();
         var productCode = financialSalesReportInput.getProductCode();
-        var saleNumber = financialSalesReportInput.getSaleNumber();
         var ean13 = financialSalesReportInput.getEan13();
         var dun14 = financialSalesReportInput.getDun14();
+        var saleNumber = financialSalesReportInput.getSaleNumber();
         var isEffectiveSale = financialSalesReportInput.isEffectiveSale();
         if (financialSalesReportInput.getFrom() != null && financialSalesReportInput.getTo() != null) {
             from = Timestamp.valueOf(financialSalesReportInput.getFrom().atStartOfDay());
@@ -40,185 +43,81 @@ public class FinancialSalesStatementReportRepositoryCustomImpl implements Financ
             to = Timestamp.from(Instant.now());
         }
 
-        var query = "SELECT SUM(hgi.salePrice * hgi.inventory) FROM HistoricalGoodsIssue AS hgi ";
-        query += configureWhereClauseForProviderProductName(providerProductName);
-        query += configureWhereOrAndClauseForDepartmentName(providerProductName, departmentName);
-        query += configureWhereOrAndClauseForMainsectionName(providerProductName, departmentName, mainsectionName);
-        query += configureWhereOrAndClauseForSubsectionName(providerProductName, departmentName, mainsectionName, subsectionName);
-        query += configureWhereOrAndClauseForProductCode(providerProductName, departmentName, mainsectionName, subsectionName, productCode);
-        query += configureWhereOrAndClauseForEan13(providerProductName, departmentName, mainsectionName, subsectionName, productCode, saleNumber, ean13);
-        query += configureWhereOrAndClauseForDun14(providerProductName, departmentName, mainsectionName, subsectionName, productCode, saleNumber, ean13, dun14);
-        query += configureWhereOrAndClauseForSaleNumber(providerProductName, departmentName, mainsectionName, subsectionName, productCode, saleNumber);
-        query += configureWhereOrAndClauseForFromAndTo(providerProductName, departmentName, mainsectionName, subsectionName, productCode, ean13, dun14, saleNumber);
-        query += configureWhereOrAndClauseForIsEffectiveSale(providerProductName, departmentName, mainsectionName, subsectionName, productCode, ean13, dun14, saleNumber, from, to);
-
-        var createQuery = entityManager.createQuery(query, BigDecimal.class);
-        var bigDecimalTypedQuery = setParameters(createQuery, providerProductName, departmentName, mainsectionName,
-                subsectionName, productCode, ean13, dun14, saleNumber, from, to, isEffectiveSale);
-
-        return bigDecimalTypedQuery.getSingleResult();
-    }
-
-    private String configureWhereClauseForProviderProductName(String providerProductName) {
-        var query = "";
-        if (providerProductName != null && !providerProductName.isEmpty()) {
-            query = "WHERE hgi.providerProductName = :providerProductName ";
+        var query = "SELECT SUM(COALESCE(hgi.salePrice, 0) * COALESCE(hgi.inventory, 0)) FROM HistoricalGoodsIssue AS hgi ";
+        List<String> conditions = new ArrayList<>();
+        if (providerProductName != null && (!providerProductName.isEmpty() || !providerProductName.isBlank())) {
+            conditions.add("hgi.providerProductName = :providerProductName");
         }
-        return query;
-    }
-
-    private String configureWhereOrAndClauseForDepartmentName(String providerProductName, String departmentName) {
-        var query = "";
-        if (providerProductName == null && departmentName != null && !departmentName.isEmpty()) {
-            query = "WHERE hgi.departmentName = :departmentName ";
-        } else {
-            if (departmentName != null) {
-                query = "AND hgi.departmentName = :departmentName ";
-            }
+        if (departmentName != null && (!departmentName.isEmpty() || !departmentName.isBlank())) {
+            conditions.add("hgi.departmentName = :departmentName");
         }
-        return query;
-    }
-
-    private String configureWhereOrAndClauseForMainsectionName(String providerProductName, String departmentName, String mainsectionName) {
-        var query = "";
-        if ((providerProductName == null && departmentName == null) && mainsectionName != null && !mainsectionName.isEmpty()) {
-            query = "WHERE hgi.mainsectionName = :mainsectionName ";
-        } else {
-            if (mainsectionName != null) {
-                query = "AND hgi.mainsectionName = :mainsectionName ";
-            }
+        if (mainsectionName != null && (!mainsectionName.isEmpty() || !mainsectionName.isBlank())) {
+            conditions.add("hgi.mainsectionName = :mainsectionName");
         }
-        return query;
-    }
-
-    private String configureWhereOrAndClauseForSubsectionName(String providerProductName, String departmentName,
-                                                              String mainsectionName, String subsectionName) {
-        var query = "";
-        if ((providerProductName == null && departmentName == null && mainsectionName == null) && subsectionName != null && !subsectionName.isEmpty()) {
-            query = "WHERE hgi.subsectionName = :subsectionName ";
-        } else {
-            if (subsectionName != null) {
-                query = "AND hgi.subsectionName = :subsectionName ";
-            }
+        if (subsectionName != null && (!subsectionName.isEmpty() || !subsectionName.isBlank())) {
+            conditions.add("hgi.subsectionName = :subsectionName");
         }
-        return query;
-    }
-
-    private String configureWhereOrAndClauseForProductCode(String providerProductName, String departmentName,
-                                                           String mainsectionName, String subsectionName, BigInteger productCode) {
-        var query = "";
-        if ((providerProductName == null && departmentName == null && mainsectionName == null && subsectionName == null) && productCode != null) {
-            query = "WHERE hgi.productCode = :productCode ";
-        } else {
-            if (productCode != null) {
-                query = "AND hgi.productCode = :productCode ";
-            }
+        if (productCode != null) {
+            conditions.add("hgi.productCode = :productCode");
         }
-        return query;
-    }
-
-    private String configureWhereOrAndClauseForEan13(String providerProductName, String departmentName,
-                                                     String mainsectionName, String subsectionName, BigInteger productCode,
-                                                     BigInteger saleNumber, String ean13) {
-        var query = "";
-        if ((providerProductName == null && departmentName == null && mainsectionName == null && subsectionName == null
-                && productCode == null && saleNumber == null) && ean13 != null) {
-            query = "WHERE hgi.ean13 = :ean13 ";
-        } else {
-            if (ean13 != null) {
-                query = "AND hgi.ean13 = :ean13 ";
-            }
+        if (ean13 != null && (!ean13.isEmpty() || !ean13.isBlank())) {
+            conditions.add("hgi.ean13 = :ean13");
         }
-        return query;
-    }
-
-    private String configureWhereOrAndClauseForDun14(String providerProductName, String departmentName,
-                                                     String mainsectionName, String subsectionName, BigInteger productCode,
-                                                     BigInteger saleNumber, String ean13, String dun14) {
-        var query = "";
-        if ((providerProductName == null && departmentName == null && mainsectionName == null && subsectionName == null
-                && productCode == null && saleNumber == null && ean13 == null) && dun14 != null) {
-            query = "WHERE hgi.dun14 = :dun14 ";
-        } else {
-            if (dun14 != null) {
-                query = "AND hgi.dun14 = :dun14 ";
-            }
+        if (dun14 != null && (!dun14.isEmpty() || !dun14.isBlank())) {
+            conditions.add("hgi.dun14 = :dun14");
         }
-        return query;
-    }
-
-    private String configureWhereOrAndClauseForSaleNumber(String providerProductName, String departmentName,
-                                                          String mainsectionName, String subsectionName, BigInteger productCode,
-                                                          BigInteger saleNumber) {
-        var query = "";
-        if ((providerProductName == null && departmentName == null && mainsectionName == null && subsectionName == null
-                && productCode == null) && saleNumber != null) {
-            query = "WHERE hgi.saleNumber = :saleNumber ";
-        } else {
-            if (saleNumber != null) {
-                query = "AND hgi.saleNumber = :saleNumber ";
-            }
+        if (saleNumber != null) {
+            conditions.add("hgi.saleNumber = :saleNumber");
         }
-        return query;
-    }
+        conditions.add("hgi.registrationDate BETWEEN :from AND :to");
+        conditions.add("hgi.isEffectiveSale = :isEffectiveSale");
 
-    private String configureWhereOrAndClauseForFromAndTo(String providerProductName, String departmentName,
-                                                         String mainsectionName, String subsectionName, BigInteger productCode,
-                                                         String ean13, String dun14, BigInteger saleNumber) {
-        var query = "";
-        if (providerProductName == null && departmentName == null && mainsectionName == null && subsectionName == null
-                && productCode == null && saleNumber == null && ean13 == null && dun14 == null) {
-            query = "WHERE hgi.registrationDate BETWEEN :from AND :to ";
-        } else {
-            query = "AND hgi.registrationDate BETWEEN :from AND :to ";
+        if (!conditions.isEmpty()) {
+            query += " WHERE " + String.join(" AND ", conditions);
         }
-        return query;
-    }
 
-    private String configureWhereOrAndClauseForIsEffectiveSale(String providerProductName, String departmentName,
-                                                               String mainsectionName, String subsectionName, BigInteger productCode,
-                                                               String ean13, String dun14, BigInteger saleNumber,
-                                                               Timestamp from, Timestamp to) {
-        var query = "";
-        if (providerProductName == null && departmentName == null && mainsectionName == null && subsectionName == null
-                && productCode == null && ean13 == null && dun14 == null && saleNumber == null && from.toInstant() == null
-                && to.toInstant() == null) {
-            query = "WHERE hgi.isEffectiveSale = :isEffectiveSale";
-        } else {
-            query = "AND hgi.isEffectiveSale = :isEffectiveSale";
+        try {
+            var createQuery = entityManager.createQuery(query, BigDecimal.class);
+            var bigDecimalTypedQuery = setParameters(createQuery, providerProductName, departmentName, mainsectionName,
+                    subsectionName, productCode, ean13, dun14, saleNumber, from, to, isEffectiveSale);
+
+            return bigDecimalTypedQuery.getSingleResult();
+        } catch (QueryException qe) {
+            throw new QueryException("Query error: " + qe.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException("Error: " + e.getMessage());
         }
-        return query;
     }
 
     private TypedQuery<BigDecimal> setParameters(TypedQuery<BigDecimal> createQuery, String providerProductName,
                                                  String departmentName, String mainsectionName, String subsectionName,
                                                  BigInteger productCode, String ean13, String dun14, BigInteger saleNumber,
                                                  Timestamp from, Timestamp to, boolean isEffectiveSale) {
-        if (providerProductName != null) {
+        if (providerProductName != null && (!providerProductName.isEmpty() || !providerProductName.isBlank())) {
             createQuery.setParameter("providerProductName", providerProductName);
         }
-        if (departmentName != null) {
+        if (departmentName != null && (!departmentName.isEmpty() || !departmentName.isBlank())) {
             createQuery.setParameter("departmentName", departmentName);
         }
-        if (mainsectionName != null) {
+        if (mainsectionName != null && (!mainsectionName.isEmpty() || !mainsectionName.isBlank())) {
             createQuery.setParameter("mainsectionName", mainsectionName);
         }
-        if (subsectionName != null) {
+        if (subsectionName != null && (!subsectionName.isEmpty() || !subsectionName.isBlank())) {
             createQuery.setParameter("subsectionName", subsectionName);
         }
         if (productCode != null) {
             createQuery.setParameter("productCode", productCode);
         }
-        if (ean13 != null) {
+        if (ean13 != null && (!ean13.isEmpty() || !ean13.isBlank())) {
             createQuery.setParameter("ean13", ean13);
         }
-        if (dun14 != null) {
+        if (dun14 != null && (!dun14.isEmpty() || !dun14.isBlank())) {
             createQuery.setParameter("dun14", dun14);
         }
         if (saleNumber != null) {
             createQuery.setParameter("saleNumber", saleNumber);
         }
-        if (from.toInstant() != null && to.toInstant() != null) {
+        if (from != null && to != null) {
             createQuery.setParameter("from", from);
             createQuery.setParameter("to", to);
         }
@@ -226,4 +125,5 @@ public class FinancialSalesStatementReportRepositoryCustomImpl implements Financ
 
         return createQuery;
     }
+
 }
