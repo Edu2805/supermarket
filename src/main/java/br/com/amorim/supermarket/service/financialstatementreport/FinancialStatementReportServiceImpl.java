@@ -49,9 +49,9 @@ public class FinancialStatementReportServiceImpl implements FinancialStatementRe
     @Override
     public List<HistoricalGoodsReceiptReportOutput> expensiesReportQueryList(ExpensiesReportInput expensiesReportInput) {
         var outputs = new ArrayList<HistoricalGoodsReceiptReportOutput>();
-        var output = new HistoricalGoodsReceiptReportOutput();
         List<HistoricalGoodsReceipt> historicalGoodsReceipts = financialStatementReportRepositoryCustom.expensiesReportQueryList(expensiesReportInput);
         historicalGoodsReceipts.forEach(historicalGoodsReceipt -> {
+            var output = new HistoricalGoodsReceiptReportOutput();
             output.setName(historicalGoodsReceipt.getName());
             output.setProductCode(historicalGoodsReceipt.getProductCode());
             output.setInventory(historicalGoodsReceipt.getInventory());
@@ -59,6 +59,7 @@ public class FinancialStatementReportServiceImpl implements FinancialStatementRe
             output.setDepartmentName(historicalGoodsReceipt.getDepartmentName());
             output.setMainsectionName(historicalGoodsReceipt.getMainsectionName());
             output.setSubsectionName(historicalGoodsReceipt.getSubsectionName());
+            output.setInvoiceNumber(historicalGoodsReceipt.getInvoice());
             output.setTotalInvoice(historicalGoodsReceipt.getTotalInvoice());
             output.setRegistrationDate(historicalGoodsReceipt.getRegistrationDate());
             output.setReceived(historicalGoodsReceipt.isReceived());
@@ -70,9 +71,9 @@ public class FinancialStatementReportServiceImpl implements FinancialStatementRe
     @Override
     public List<HistoricalGoodsIssueReportOutput> salesReportQueryList(RevenuesReportInput revenuesReportInput) {
         var outputs = new ArrayList<HistoricalGoodsIssueReportOutput>();
-        var output = new HistoricalGoodsIssueReportOutput();
         List<HistoricalGoodsIssue> historicalGoodsIssues = financialSalesStatementReportRepositoryCustom.salesReportQueryList(revenuesReportInput);
         historicalGoodsIssues.forEach(historicalGoodsIssue -> {
+            var output = new HistoricalGoodsIssueReportOutput();
             output.setName(historicalGoodsIssue.getName());
             output.setProductCode(historicalGoodsIssue.getProductCode());
             output.setEan13(historicalGoodsIssue.getEan13());

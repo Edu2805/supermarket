@@ -21,6 +21,7 @@ public class HistoricalGoodsReceiptReportOutput {
     private String departmentName;
     private String mainsectionName;
     private String subsectionName;
+    private String invoiceNumber;
     private BigDecimal totalInvoice;
     private Timestamp registrationDate;
     private boolean isReceived;
