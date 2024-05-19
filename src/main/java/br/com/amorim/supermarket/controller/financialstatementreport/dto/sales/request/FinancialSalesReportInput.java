@@ -1,4 +1,4 @@
-package br.com.amorim.supermarket.controller.financialstatementreport.dto.sales;
+package br.com.amorim.supermarket.controller.financialstatementreport.dto.sales.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

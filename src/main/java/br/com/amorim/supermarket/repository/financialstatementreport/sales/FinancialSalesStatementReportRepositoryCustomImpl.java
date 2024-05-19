@@ -1,6 +1,10 @@
 package br.com.amorim.supermarket.repository.financialstatementreport.sales;
 
-import br.com.amorim.supermarket.controller.financialstatementreport.dto.sales.FinancialSalesReportInput;
+import br.com.amorim.supermarket.controller.financialstatementreport.dto.sales.request.FinancialSalesReportInput;
+import br.com.amorim.supermarket.controller.financialstatementreport.dto.sales.request.RevenuesReportInput;
+import br.com.amorim.supermarket.model.historicalgoodsissue.HistoricalGoodsIssue;
+import br.com.amorim.supermarket.model.historicalgoodsissue.QHistoricalGoodsIssue;
+import com.querydsl.jpa.impl.JPAQuery;
 import lombok.AllArgsConstructor;
 import org.hibernate.QueryException;
 import org.springframework.stereotype.Repository;
@@ -124,6 +128,52 @@ public class FinancialSalesStatementReportRepositoryCustomImpl implements Financ
         createQuery.setParameter("isEffectiveSale", isEffectiveSale);
 
         return createQuery;
+    }
+
+    @Override
+    public List<HistoricalGoodsIssue> salesReportQueryList(RevenuesReportInput revenuesReportInput) {
+        Timestamp from;
+        Timestamp to;
+
+        if (revenuesReportInput.getFrom() != null && revenuesReportInput.getTo() != null) {
+            from = Timestamp.valueOf(revenuesReportInput.getFrom().atStartOfDay());
+            to = Timestamp.valueOf(revenuesReportInput.getTo().atStartOfDay());
+        } else {
+            from = Timestamp.from(Instant.now().minus(7, java.time.temporal.ChronoUnit.DAYS));
+            to = Timestamp.from(Instant.now());
+        }
+
+        QHistoricalGoodsIssue qHistoricalGoodsIssue = QHistoricalGoodsIssue.historicalGoodsIssue;
+        JPAQuery<HistoricalGoodsIssue> query = new JPAQuery<>(entityManager);
+        return query.select(qHistoricalGoodsIssue)
+                .from(qHistoricalGoodsIssue)
+                .where(qHistoricalGoodsIssue.isEffectiveSale.eq(Boolean.TRUE))
+                .where(qHistoricalGoodsIssue.registrationDate.between(from, to)).fetch();
+    }
+
+    @Override
+    public BigDecimal totalRevenues(RevenuesReportInput revenuesReportInput) {
+        Timestamp from;
+        Timestamp to;
+
+        if (revenuesReportInput.getFrom() != null && revenuesReportInput.getTo() != null) {
+            from = Timestamp.valueOf(revenuesReportInput.getFrom().atStartOfDay());
+            to = Timestamp.valueOf(revenuesReportInput.getTo().atStartOfDay());
+        } else {
+            from = Timestamp.from(Instant.now().minus(30, java.time.temporal.ChronoUnit.DAYS));
+            to = Timestamp.from(Instant.now());
+        }
+
+        QHistoricalGoodsIssue qHistoricalGoodsIssue = QHistoricalGoodsIssue.historicalGoodsIssue;
+        JPAQuery<HistoricalGoodsIssue> query = new JPAQuery<>(entityManager);
+        var result = query.select(qHistoricalGoodsIssue.salePrice.coalesce(BigDecimal.ZERO)
+                        .multiply(qHistoricalGoodsIssue.inventory.coalesce(BigDecimal.ZERO)).sum())
+                .from(qHistoricalGoodsIssue)
+                .where(qHistoricalGoodsIssue.isEffectiveSale.eq(Boolean.TRUE))
+                .where(qHistoricalGoodsIssue.registrationDate.between(from, to))
+                .fetchOne();
+
+        return result != null ? result : BigDecimal.ZERO;
     }
 
 }
