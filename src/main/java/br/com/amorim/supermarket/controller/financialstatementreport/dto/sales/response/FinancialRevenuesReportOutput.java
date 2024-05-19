@@ -1,4 +1,4 @@
-package br.com.amorim.supermarket.controller.financialstatementreport.dto.receipt;
+package br.com.amorim.supermarket.controller.financialstatementreport.dto.sales.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Getter
 @Setter
-public class FinancialExpensiesReportOutput {
+public class FinancialRevenuesReportOutput {
 
-    private BigDecimal result;
+    BigDecimal totalRevenues;
 }

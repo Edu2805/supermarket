@@ -136,6 +136,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,"/api/historical-goods-receipt/**")
                 .hasAnyRole(ADMIN.role, DEPARTMENT_MANAGER.role, MANAGER.role, FINANCE.role, SECTION_MANAGER.role, BUYER.role)
 
+                //Sale number
+                .antMatchers("/api/salenumber/**")
+                .hasAnyRole(ADMIN.role, DEPARTMENT_MANAGER.role, MANAGER.role, FINANCE.role, SECTION_MANAGER.role, BUYER.role, EMPLOYEE.role, HEAD.role, HR.role, RECEIPT.role)
+
+                //Operacional expensies reports
+                .antMatchers("/api/financial-report/expensies")
+                .hasAnyRole(ADMIN.role, DEPARTMENT_MANAGER.role, MANAGER.role, FINANCE.role, SECTION_MANAGER.role, BUYER.role, HEAD.role, HR.role, RECEIPT.role)
+
+                //Operacional sales reports
+                .antMatchers("/api/financial-report/sales")
+                .hasAnyRole(ADMIN.role, DEPARTMENT_MANAGER.role, MANAGER.role, FINANCE.role, SECTION_MANAGER.role, BUYER.role, HEAD.role, HR.role, RECEIPT.role)
+
+                //Operacional historical expensies reports
+                .antMatchers("/api/financial-report/expensies/historical")
+                .hasAnyRole(ADMIN.role, DEPARTMENT_MANAGER.role, MANAGER.role, FINANCE.role, SECTION_MANAGER.role, BUYER.role, HEAD.role, HR.role, RECEIPT.role)
+
+                //Operacional historical sales reports
+                .antMatchers("/api/financial-report/sales/historical")
+                .hasAnyRole(ADMIN.role, DEPARTMENT_MANAGER.role, MANAGER.role, FINANCE.role, SECTION_MANAGER.role, BUYER.role, HEAD.role, HR.role, RECEIPT.role)
+
+                //Financial reports
+                .antMatchers("/api/financial-report/**")
+                .hasAnyRole(ADMIN.role, MANAGER.role, FINANCE.role, HEAD.role)
+
                 //User (GET)
                 .antMatchers(HttpMethod.GET,"/api/user/**")
                 .hasAnyRole(ADMIN.role, HEAD.role, DEPARTMENT_MANAGER.role, MANAGER.role, HR.role)

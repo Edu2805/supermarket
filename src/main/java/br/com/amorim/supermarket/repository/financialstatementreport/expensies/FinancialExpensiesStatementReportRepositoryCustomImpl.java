@@ -1,6 +1,14 @@
 package br.com.amorim.supermarket.repository.financialstatementreport.expensies;
 
-import br.com.amorim.supermarket.controller.financialstatementreport.dto.receipt.FinancialExpensiesReportInput;
+import br.com.amorim.supermarket.controller.financialstatementreport.dto.receipt.request.FinancialExpensiesReportInput;
+import br.com.amorim.supermarket.controller.financialstatementreport.dto.receipt.request.ExpensiesReportInput;
+import br.com.amorim.supermarket.model.historicalgoodsreceipt.HistoricalGoodsReceipt;
+import br.com.amorim.supermarket.model.historicalgoodsreceipt.QHistoricalGoodsReceipt;
+import br.com.amorim.supermarket.model.otheraddition.OtherAddition;
+import br.com.amorim.supermarket.model.otheraddition.QOtherAddition;
+import br.com.amorim.supermarket.model.salary.QSalary;
+import br.com.amorim.supermarket.model.salary.Salary;
+import com.querydsl.jpa.impl.JPAQuery;
 import lombok.AllArgsConstructor;
 import org.hibernate.QueryException;
 import org.springframework.stereotype.Repository;
@@ -112,4 +120,100 @@ public class FinancialExpensiesStatementReportRepositoryCustomImpl implements Fi
         return createQuery;
     }
 
+    @Override
+    public List<HistoricalGoodsReceipt> expensiesReportQueryList(ExpensiesReportInput expensiesReportInput) {
+        Timestamp from;
+        Timestamp to;
+
+        if (expensiesReportInput.getFrom() != null && expensiesReportInput.getTo() != null) {
+            from = Timestamp.valueOf(expensiesReportInput.getFrom().atStartOfDay());
+            to = Timestamp.valueOf(expensiesReportInput.getTo().atStartOfDay());
+        } else {
+            from = Timestamp.from(Instant.now().minus(7, java.time.temporal.ChronoUnit.DAYS));
+            to = Timestamp.from(Instant.now());
+        }
+
+        QHistoricalGoodsReceipt qHistoricalGoodsReceipt = QHistoricalGoodsReceipt.historicalGoodsReceipt;
+        JPAQuery<HistoricalGoodsReceipt> query = new JPAQuery<>(entityManager);
+        return query.select(qHistoricalGoodsReceipt)
+                .from(qHistoricalGoodsReceipt)
+                .where(qHistoricalGoodsReceipt.isReceived.eq(Boolean.TRUE))
+                .where(qHistoricalGoodsReceipt.registrationDate.between(from, to)).fetch();
+    }
+
+    @Override
+    public BigDecimal directExpensiesReportDre(ExpensiesReportInput expensiesReportInput) {
+        Timestamp from;
+        Timestamp to;
+
+        if (expensiesReportInput.getFrom() != null && expensiesReportInput.getTo() != null) {
+            from = Timestamp.valueOf(expensiesReportInput.getFrom().atStartOfDay());
+            to = Timestamp.valueOf(expensiesReportInput.getTo().atStartOfDay());
+        } else {
+            from = Timestamp.from(Instant.now().minus(30, java.time.temporal.ChronoUnit.DAYS));
+            to = Timestamp.from(Instant.now());
+        }
+
+        QHistoricalGoodsReceipt qHistoricalGoodsReceipt = QHistoricalGoodsReceipt.historicalGoodsReceipt;
+        JPAQuery<HistoricalGoodsReceipt> query = new JPAQuery<>(entityManager);
+
+        var result = query.select(qHistoricalGoodsReceipt.purchasePrice.coalesce(BigDecimal.ZERO)
+                        .multiply(qHistoricalGoodsReceipt.inventory.coalesce(BigDecimal.ZERO)).sum())
+                .from(qHistoricalGoodsReceipt)
+                .where(qHistoricalGoodsReceipt.isReceived.eq(Boolean.TRUE))
+                .where(qHistoricalGoodsReceipt.registrationDate.between(from, to))
+                .fetchOne();
+
+        return result != null ? result : BigDecimal.ZERO;
+    }
+
+    @Override
+    public BigDecimal indirectExpensiesReportDre(ExpensiesReportInput expensiesReportInput) {
+        Timestamp from;
+        Timestamp to;
+
+        if (expensiesReportInput.getFrom() != null && expensiesReportInput.getTo() != null) {
+            from = Timestamp.valueOf(expensiesReportInput.getFrom().atStartOfDay());
+            to = Timestamp.valueOf(expensiesReportInput.getTo().atStartOfDay());
+        } else {
+            from = Timestamp.from(Instant.now().minus(30, java.time.temporal.ChronoUnit.DAYS));
+            to = Timestamp.from(Instant.now());
+        }
+
+        QOtherAddition qOtherAddition = QOtherAddition.otherAddition;
+        JPAQuery<OtherAddition> query = new JPAQuery<>(entityManager);
+
+        var result = query.select(qOtherAddition.additionValue.coalesce(BigDecimal.ZERO).sum())
+                .from(qOtherAddition)
+                .where(qOtherAddition.salary.competenceStart.eq(from.toLocalDateTime().toLocalDate()))
+                .where(qOtherAddition.salary.finalCompetence.eq(to.toLocalDateTime().toLocalDate()))
+                .fetchOne();
+
+        return result != null ? result : BigDecimal.ZERO;
+    }
+
+    @Override
+    public BigDecimal taxesExpensiesReportDre(ExpensiesReportInput expensiesReportInput) {
+        Timestamp from;
+        Timestamp to;
+
+        if (expensiesReportInput.getFrom() != null && expensiesReportInput.getTo() != null) {
+            from = Timestamp.valueOf(expensiesReportInput.getFrom().atStartOfDay());
+            to = Timestamp.valueOf(expensiesReportInput.getTo().atStartOfDay());
+        } else {
+            from = Timestamp.from(Instant.now().minus(30, java.time.temporal.ChronoUnit.DAYS));
+            to = Timestamp.from(Instant.now());
+        }
+
+        QSalary qSalary = QSalary.salary;
+        JPAQuery<Salary> query = new JPAQuery<>(entityManager);
+
+        var result = query.select(qSalary.fgts.coalesce(BigDecimal.ZERO).sum())
+                .from(qSalary)
+                .where(qSalary.competenceStart.eq(from.toLocalDateTime().toLocalDate()))
+                .where(qSalary.finalCompetence.eq(to.toLocalDateTime().toLocalDate()))
+                .fetchOne();
+
+        return result != null ? result : BigDecimal.ZERO;
+    }
 }
