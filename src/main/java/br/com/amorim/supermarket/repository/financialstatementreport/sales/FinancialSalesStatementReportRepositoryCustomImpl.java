@@ -147,7 +147,6 @@ public class FinancialSalesStatementReportRepositoryCustomImpl implements Financ
         JPAQuery<HistoricalGoodsIssue> query = new JPAQuery<>(entityManager);
         return query.select(qHistoricalGoodsIssue)
                 .from(qHistoricalGoodsIssue)
-                .where(qHistoricalGoodsIssue.isEffectiveSale.eq(Boolean.TRUE))
                 .where(qHistoricalGoodsIssue.registrationDate.between(from, to)).fetch();
     }
 

@@ -137,7 +137,6 @@ public class FinancialExpensiesStatementReportRepositoryCustomImpl implements Fi
         JPAQuery<HistoricalGoodsReceipt> query = new JPAQuery<>(entityManager);
         return query.select(qHistoricalGoodsReceipt)
                 .from(qHistoricalGoodsReceipt)
-                .where(qHistoricalGoodsReceipt.isReceived.eq(Boolean.TRUE))
                 .where(qHistoricalGoodsReceipt.registrationDate.between(from, to)).fetch();
     }
 
