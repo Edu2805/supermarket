@@ -121,7 +121,7 @@ public class UserDataController {
     public UserNameOutput findByUserName (@RequestBody @Valid @ApiParam("User name") GetUserByUserNameDTO getUserByUserNameDTO) {
         var userDataMapper = converterUserDataMapper.getByUserNameMapper(getUserByUserNameDTO);
         var user = userDataService.findByUserName(userDataMapper);
-        return new UserNameOutput(user.getRole());
+        return new UserNameOutput(user.getId(), user.getRole());
     }
 
     @PostMapping
