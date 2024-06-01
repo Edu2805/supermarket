@@ -3,6 +3,7 @@ package br.com.amorim.supermarket.service.userdata;
 import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
+import br.com.amorim.supermarket.controller.userdata.dto.request.PasswordChangeDTO;
 import br.com.amorim.supermarket.model.person.Person;
 import br.com.amorim.supermarket.model.userdata.UserData;
 import br.com.amorim.supermarket.repository.person.PersonRepository;
@@ -15,7 +16,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
@@ -42,6 +46,7 @@ public class UserDataCrudServiceImpl implements UserDataCrudService {
     private UserNameInPerson userNameInPerson;
     private UserDataUpdateIsEmployee userDataUpdateIsEmployee;
     private EncryptedPassword encryptedPassword;
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public Page<UserData> getAll (int page, int size) {
@@ -129,5 +134,14 @@ public class UserDataCrudServiceImpl implements UserDataCrudService {
             }
         });
         return usersAvailable;
+    }
+
+    public void changePassword(UUID id, PasswordChangeDTO passwordChangeDTO) {
+        UserData user = findById(id);
+        if (!passwordEncoder.matches(passwordChangeDTO.getOldPassword(), user.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Old password is incorrect");
+        }
+        user.setPassword(passwordEncoder.encode(passwordChangeDTO.getNewPassword()));
+        userDataRepository.save(user);
     }
 }

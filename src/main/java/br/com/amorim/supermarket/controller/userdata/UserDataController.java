@@ -3,6 +3,7 @@ package br.com.amorim.supermarket.controller.userdata;
 import br.com.amorim.supermarket.common.exception.invalidpasswordexception.InvalidPasswordException;
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.controller.common.accessrestriction.AccessRestriction;
+import br.com.amorim.supermarket.controller.userdata.dto.request.PasswordChangeDTO;
 import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.ConverterUserDataRequestMapper;
 import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.CredentialsDTORoleString;
 import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.GetUserByUserNameDTO;
@@ -186,5 +187,17 @@ public class UserDataController {
     })
     public void delete (@PathVariable @ApiParam("User id") UUID id) {
         userDataService.delete(id);
+    }
+
+    @PutMapping("/change-password/{id}")
+    @ResponseStatus(NO_CONTENT)
+    @ApiOperation("Change a user's password")
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "Password changed successfully"),
+            @ApiResponse(code = 400, message = "An error occurred while changing the password")
+    })
+    public void changePassword(@PathVariable @ApiParam("User id") UUID id,
+                               @RequestBody @Valid @ApiParam("Old and new password") PasswordChangeDTO passwordChangeDTO) {
+        userDataService.changePassword(id, passwordChangeDTO);
     }
 }
