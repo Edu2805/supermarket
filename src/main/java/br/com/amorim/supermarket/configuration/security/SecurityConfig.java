@@ -60,6 +60,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST,"/api/user/username/**")
                 .hasAnyRole(ADMIN.role, DEPARTMENT_MANAGER.role, MANAGER.role, FINANCE.role, SECTION_MANAGER.role, BUYER.role, EMPLOYEE.role, HEAD.role, HR.role, RECEIPT.role)
 
+                //Change password
+                .antMatchers("/api/user/change-password/**")
+                .hasAnyRole(ADMIN.role, DEPARTMENT_MANAGER.role, MANAGER.role, FINANCE.role, SECTION_MANAGER.role, BUYER.role, EMPLOYEE.role, HEAD.role, HR.role, RECEIPT.role)
+
                 //Establishment
                 .antMatchers("/api/establishment/**")
                 .hasAnyRole(ADMIN.role, HEAD.role, MANAGER.role, HR.role)
