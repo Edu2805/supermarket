@@ -64,6 +64,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/user/change-password/**")
                 .hasAnyRole(ADMIN.role, DEPARTMENT_MANAGER.role, MANAGER.role, FINANCE.role, SECTION_MANAGER.role, BUYER.role, EMPLOYEE.role, HEAD.role, HR.role, RECEIPT.role)
 
+                //Change user status
+                .antMatchers("/api/user/change-approve-status/**")
+                .hasAnyRole(ADMIN.role, MANAGER.role, HEAD.role, HR.role)
+
+                //Get inactive users
+                .antMatchers("/api/user/get-users-not-approved/**")
+                .hasAnyRole(ADMIN.role, MANAGER.role, HEAD.role, HR.role)
+
                 //Establishment
                 .antMatchers("/api/establishment/**")
                 .hasAnyRole(ADMIN.role, HEAD.role, MANAGER.role, HR.role)
@@ -114,7 +122,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 //User (hr)
                 .antMatchers("/api/user/hr/**")
-                .hasAnyRole(ADMIN.role, HEAD.role, DEPARTMENT_MANAGER.role, MANAGER.role, HR.role)
+                .hasAnyRole(ADMIN.role, HEAD.role, MANAGER.role, HR.role)
 
                 //Otheraddition
                 .antMatchers("/api/otheraddition/**")

@@ -2,6 +2,7 @@ package br.com.amorim.supermarket.service.userdata.userdetail;
 
 import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.exception.invalidpasswordexception.InvalidPasswordException;
+import br.com.amorim.supermarket.common.exception.notapprovedexception.NotApporvedException;
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.controller.userdata.dto.mapper.RoleTypeMapper;
 import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.CredentialsDTO;
@@ -37,6 +38,9 @@ public class UserLoginServiceImpl implements UserDetailsService {
         var userData = userDataRepository.findByUserName(username)
                 .orElseThrow(() ->
                         new NotFoundException(getString(MessagesKeyType.USER_DATA_NOT_FOUND.message)));
+        if (!userData.getIsApproved()) {
+            throw new NotApporvedException(getString(MessagesKeyType.USER_DATA_NOT_APPROVED.message));
+        }
         return User
                 .builder()
                 .username(userData.getUserName())

@@ -5,6 +5,7 @@ import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleExcep
 import br.com.amorim.supermarket.common.exception.invalidactionexception.InvalidActionException;
 import br.com.amorim.supermarket.common.exception.invaliddocument.InvalidDocumentException;
 import br.com.amorim.supermarket.common.exception.invalidpasswordexception.InvalidPasswordException;
+import br.com.amorim.supermarket.common.exception.notapprovedexception.NotApporvedException;
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -62,6 +63,13 @@ public class ApplicationControllerAdvice {
     @ExceptionHandler(InvalidPasswordException.class)
     @ResponseStatus(BAD_REQUEST)
     public ApiErros handlerInvalidPasswordException (InvalidPasswordException exception) {
+        String messageError = exception.getMessage();
+        return new ApiErros(messageError);
+    }
+
+    @ExceptionHandler(NotApporvedException.class)
+    @ResponseStatus(NOT_FOUND)
+    public ApiErros handlerNotApporvedException (NotApporvedException exception) {
         String messageError = exception.getMessage();
         return new ApiErros(messageError);
     }
