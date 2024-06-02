@@ -124,8 +124,9 @@ public class UserDataController {
             @ApiResponse(code = 200, message = "User returned successfully"),
             @ApiResponse(code = 404, message = "User not found for given id")
     })
-    public UserData getUser (@PathVariable @ApiParam("User id") UUID id) {
-        return userDataService.findById(id);
+    public UserDataResponseDTO getUser (@PathVariable @ApiParam("User id") UUID id) {
+        var findUser = userDataService.findById(id);
+        return converterUserDataResponseMapper.getUserDataMapper(findUser);
     }
 
     @PostMapping("/username")
