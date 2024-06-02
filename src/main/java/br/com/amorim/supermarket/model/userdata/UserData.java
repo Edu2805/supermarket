@@ -42,4 +42,8 @@ public class UserData extends CommonIdEntity {
     @Column(name = "is_employee", nullable = false)
     @NotNull(message = "{br.com.supermarket.USER_DATA_FIELD_IS_EMPLOYEE_IS_NOT_EMPTY}")
     private Boolean isEmployee;
+
+    @Column(name = "is_approved", nullable = false)
+    @NotNull(message = "{br.com.supermarket.USER_DATA_FIELD_IS_APPROVED_IS_NOT_EMPTY}")
+    private Boolean isApproved;
 }

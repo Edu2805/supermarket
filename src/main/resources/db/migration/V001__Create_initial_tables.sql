@@ -111,6 +111,7 @@ CREATE TABLE IF NOT EXISTS user_data (
    role VARCHAR(50) NOT NULL,
    registration_date TIMESTAMP WITHOUT TIME ZONE NOT NULL,
    is_employee BOOLEAN NOT NULL,
+   is_approved BOOLEAN NOT NULL,
    CONSTRAINT pk_user_data PRIMARY KEY (id)
 );
 

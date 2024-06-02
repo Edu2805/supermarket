@@ -2,3 +2,14 @@ CREATE TABLE IF NOT EXISTS role (
    id UUID NOT NULL,
    name VARCHAR(50) NOT NULL
 );
+
+INSERT INTO role (id, name) VALUES('5b1828d5-a8b9-40e0-a8a5-729094b5b8bc', 'ADMIN');
+INSERT INTO role (id, name) VALUES('8db132af-11fb-4f66-8640-387a28f2e9e6', 'EMPLOYEE');
+INSERT INTO role (id, name) VALUES('e1653532-afcb-491d-b42d-2c915ca09187', 'SECTION_MANAGER');
+INSERT INTO role (id, name) VALUES('3235d5d8-d429-429a-b3c0-465b80360d5c', 'DEPARTMENT_MANAGER');
+INSERT INTO role (id, name) VALUES('07eface4-d2d7-421d-a9c6-aba060f3be04', 'MANAGER');
+INSERT INTO role (id, name) VALUES('6961a8c1-112e-4d41-9179-f98b590504ba', 'BUYER');
+INSERT INTO role (id, name) VALUES('23c2e52b-99ea-465b-95bd-11b23ed30878', 'HEAD');
+INSERT INTO role (id, name) VALUES('c26f19a7-e06e-4bda-b926-8ccdc532fedb', 'HR');
+INSERT INTO role (id, name) VALUES('fa23dc0a-5916-4700-a571-695df98c71e1', 'FINANCE');
+INSERT INTO role (id, name) VALUES('d5c9f372-eb03-4e83-b9a0-a95d9302f79b', 'RECEIPT');

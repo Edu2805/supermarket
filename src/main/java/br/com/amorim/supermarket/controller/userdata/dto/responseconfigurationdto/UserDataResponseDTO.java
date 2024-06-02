@@ -1,6 +1,5 @@
 package br.com.amorim.supermarket.controller.userdata.dto.responseconfigurationdto;
 
-import br.com.amorim.supermarket.configuration.security.roles.RoleType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,4 +19,5 @@ public class UserDataResponseDTO {
     private String role;
     private Timestamp registrationDate;
     private boolean isEmployee;
+    private boolean isApproved;
 }

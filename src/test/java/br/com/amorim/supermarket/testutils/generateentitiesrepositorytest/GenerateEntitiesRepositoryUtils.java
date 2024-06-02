@@ -225,6 +225,7 @@ public class GenerateEntitiesRepositoryUtils {
         userData.setUserName(String.valueOf(userName));
         userData.setPassword("123456");
         userData.setIsEmployee(false);
+        userData.setIsApproved(true);
         userData.setRole(RoleType.ADMIN);
         userData.setRegistrationDate(Timestamp.from(Instant.now()));
         userDataService.save(userData);
