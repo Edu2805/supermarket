@@ -4,10 +4,12 @@ import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.common.verifypagesize.VerifyPageSize;
 import br.com.amorim.supermarket.controller.userdata.dto.request.PasswordChangeDTO;
+import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.UserStatusDTO;
 import br.com.amorim.supermarket.model.person.Person;
 import br.com.amorim.supermarket.model.userdata.UserData;
 import br.com.amorim.supermarket.repository.person.PersonRepository;
 import br.com.amorim.supermarket.repository.userdata.UserDataRepository;
+import br.com.amorim.supermarket.repository.userdata.userdatarepositorycustom.UserDataRepositoryCustom;
 import br.com.amorim.supermarket.service.userdata.setisemployee.UserDataUpdateIsEmployee;
 import br.com.amorim.supermarket.service.userdata.setusernameinperson.UserNameInPerson;
 import br.com.amorim.supermarket.service.userdata.userdetail.encryptpassword.EncryptedPassword;
@@ -47,6 +49,7 @@ public class UserDataCrudServiceImpl implements UserDataCrudService {
     private UserDataUpdateIsEmployee userDataUpdateIsEmployee;
     private EncryptedPassword encryptedPassword;
     private PasswordEncoder passwordEncoder;
+    private UserDataRepositoryCustom userDataRepositoryCustom;
 
     @Override
     public Page<UserData> getAll (int page, int size) {
@@ -78,6 +81,7 @@ public class UserDataCrudServiceImpl implements UserDataCrudService {
     private void setFields(UserData userData) {
         encryptedPassword.encrypt(userData);
         userData.setIsEmployee(false);
+        userData.setIsApproved(false);
         userData.setRegistrationDate(Timestamp.from(Instant.now()));
     }
 
@@ -134,6 +138,22 @@ public class UserDataCrudServiceImpl implements UserDataCrudService {
             }
         });
         return usersAvailable;
+    }
+
+    @Override
+    public Page<UserData> getAllNotApproved(int page, int size) {
+        if (page > ZERO_PAGE_SIZE) {
+            page -= DECREASE_PAGE_SIZE;
+        }
+        verifyPageSize.verifyPageSizeForGetAll(page, size);
+        return userDataRepositoryCustom.findByIdAndIsApproved(page, size);
+    }
+
+    @Override
+    public void changeApproveStatus(UUID id, UserStatusDTO userStatusDTO) {
+        UserData userData = findById(id);
+        userData.setIsApproved(userStatusDTO.isApproved());
+        userDataRepository.save(userData);
     }
 
     public void changePassword(UUID id, PasswordChangeDTO passwordChangeDTO) {

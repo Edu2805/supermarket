@@ -4,7 +4,7 @@ import br.com.amorim.supermarket.common.enums.MessagesKeyType;
 import br.com.amorim.supermarket.common.exception.businessrule.BusinessRuleException;
 import br.com.amorim.supermarket.model.userdata.UserData;
 import br.com.amorim.supermarket.repository.userdata.UserDataRepository;
-import br.com.amorim.supermarket.repository.userdata.verifyusernamerepositorycustom.VerifyUserNameRepositoryCustom;
+import br.com.amorim.supermarket.repository.userdata.userdatarepositorycustom.UserDataRepositoryCustom;
 import br.com.amorim.supermarket.testutils.generateentitiesunittests.userdata.UserDataTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +29,7 @@ class VerifyUserNameImplTest {
     @InjectMocks
     private VerifyUserNameImpl verifyUserName;
     @Mock
-    private VerifyUserNameRepositoryCustom verifyUserNameRepositoryCustom;
+    private UserDataRepositoryCustom userDataRepositoryCustom;
     @Mock
     private UserDataRepository userDataRepositoryMock;
 
@@ -53,7 +53,7 @@ class VerifyUserNameImplTest {
 
     @Test
     void shouldReturnFalseWhenUserNameNotExistsBeforeSave() {
-        when(verifyUserNameRepositoryCustom.isUserNameAlreadyExistsInTheDatabase(userData1))
+        when(userDataRepositoryCustom.isUserNameAlreadyExistsInTheDatabase(userData1))
                 .thenReturn(false);
         var verifyUserNameBeforeSave = verifyUserName.verifyUserDataBeforeSave(userData1);
 
@@ -65,7 +65,7 @@ class VerifyUserNameImplTest {
         String messageError = getString(MessagesKeyType
                 .USER_DATA_USER_NAME_ALREADY_EXISTS_WHEN_SAVE.message);
 
-        when(verifyUserNameRepositoryCustom.isUserNameAlreadyExistsInTheDatabase(userData1))
+        when(userDataRepositoryCustom.isUserNameAlreadyExistsInTheDatabase(userData1))
                 .thenReturn(true);
 
         String exceptionMessage = Assertions.assertThrows(
