@@ -4,10 +4,7 @@ import br.com.amorim.supermarket.common.exception.invalidpasswordexception.Inval
 import br.com.amorim.supermarket.common.exception.notfound.NotFoundException;
 import br.com.amorim.supermarket.controller.common.accessrestriction.AccessRestriction;
 import br.com.amorim.supermarket.controller.userdata.dto.request.PasswordChangeDTO;
-import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.ConverterUserDataRequestMapper;
-import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.CredentialsDTORoleString;
-import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.GetUserByUserNameDTO;
-import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.UserDataDTO;
+import br.com.amorim.supermarket.controller.userdata.dto.requestconfigurationdto.*;
 import br.com.amorim.supermarket.controller.userdata.dto.responseconfigurationdto.ConverterUserDataResponseMapper;
 import br.com.amorim.supermarket.controller.userdata.dto.responseconfigurationdto.RegisterUserResponseOutput;
 import br.com.amorim.supermarket.controller.userdata.dto.responseconfigurationdto.TokenDTO;
@@ -75,6 +72,24 @@ public class UserDataController {
                                            required = false,
                                            defaultValue = "20") @ApiParam("Number of records on each page") int size) {
         return userDataService.getAll(page, size);
+    }
+
+    @GetMapping("/get-users-not-approved")
+    @ApiOperation("Get all users not approved")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Users returned successfully"),
+            @ApiResponse(code = 404, message = "An error occurred while fetching the users")
+    })
+    public Page<UserDataResponseDTO> findAllNotApproved (@RequestParam(
+            value = "page",
+            required = false,
+            defaultValue = "0") @ApiParam("Users list page") int page,
+                                   @RequestParam(
+                                           value = "size",
+                                           required = false,
+                                           defaultValue = "20") @ApiParam("Number of records on each page") int size) {
+        Page<UserData> allNotApproved = userDataService.getAllNotApproved(page, size);
+        return allNotApproved.map(converterUserDataResponseMapper::getUserDataMapper);
     }
 
     @GetMapping("/user-is-not-employee")
@@ -199,5 +214,17 @@ public class UserDataController {
     public void changePassword(@PathVariable @ApiParam("User id") UUID id,
                                @RequestBody @Valid @ApiParam("Old and new password") PasswordChangeDTO passwordChangeDTO) {
         userDataService.changePassword(id, passwordChangeDTO);
+    }
+
+    @PutMapping("/change-approve-status/{id}")
+    @ResponseStatus(NO_CONTENT)
+    @ApiOperation("Change the approval status of a user")
+    @ApiResponses({
+            @ApiResponse(code = 204, message = "Approval status changed successfully"),
+            @ApiResponse(code = 400, message = "An error occurred while changing the approval status")
+    })
+    public void changeApproveStatus(@PathVariable @ApiParam("User id") UUID id,
+                                    @RequestBody @Valid @ApiParam("User status") UserStatusDTO userStatusDTO) {
+        userDataService.changeApproveStatus(id, userStatusDTO);
     }
 }

@@ -1,4 +1,4 @@
-package br.com.amorim.supermarket.repository.userdata.verifyusernamerepositorycustom;
+package br.com.amorim.supermarket.repository.userdata.userdatarepositorycustom;
 
 import br.com.amorim.supermarket.model.userdata.UserData;
 import br.com.amorim.supermarket.testutils.generateentitiesrepositorytest.GenerateEntitiesRepositoryUtils;
@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class VerifyUserNameRepositoryCustomImplTest {
 
     @Autowired
-    private VerifyUserNameRepositoryCustomImpl verifyUserNameRepositoryCustom;
+    private UserDataRepositoryCustomImpl verifyUserNameRepositoryCustom;
     @Autowired
     private GenerateEntitiesRepositoryUtils generateEntitiesRepositoryUtils;
 
