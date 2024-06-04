@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static br.com.amorim.supermarket.common.enums.MessagesKeyType.USER_DATA_INVALID_ACTUAL_PASSWORD;
 import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
 import static org.apache.logging.log4j.ThreadContext.isEmpty;
 
@@ -159,7 +160,7 @@ public class UserDataCrudServiceImpl implements UserDataCrudService {
     public void changePassword(UUID id, PasswordChangeDTO passwordChangeDTO) {
         UserData user = findById(id);
         if (!passwordEncoder.matches(passwordChangeDTO.getOldPassword(), user.getPassword())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Old password is incorrect");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, getString(USER_DATA_INVALID_ACTUAL_PASSWORD.message));
         }
         user.setPassword(passwordEncoder.encode(passwordChangeDTO.getNewPassword()));
         userDataRepository.save(user);
