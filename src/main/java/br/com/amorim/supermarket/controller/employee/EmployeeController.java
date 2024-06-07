@@ -1,8 +1,10 @@
 package br.com.amorim.supermarket.controller.employee;
 
 import br.com.amorim.supermarket.controller.employee.dto.ConvertEmployeeMapper;
+import br.com.amorim.supermarket.controller.employee.dto.EmployeeDetailsOutputDTO;
 import br.com.amorim.supermarket.controller.employee.dto.EmployeeSaveDTO;
 import br.com.amorim.supermarket.controller.employee.dto.EmployeeUpdateDTO;
+import br.com.amorim.supermarket.controller.employee.dto.mapper.EmployeeMapper;
 import br.com.amorim.supermarket.model.employee.Employee;
 import br.com.amorim.supermarket.service.employee.EmployeeCrudServiceImpl;
 import io.swagger.annotations.Api;
@@ -38,6 +40,7 @@ public class EmployeeController {
 
     private EmployeeCrudServiceImpl employeeService;
     private ConvertEmployeeMapper convertEmployeeMapper;
+    private EmployeeMapper employeeMapper;
 
     @GetMapping
     @ApiOperation("Get all employees")
@@ -64,6 +67,16 @@ public class EmployeeController {
     })
     public Employee getById (@PathVariable @ApiParam("Employee id") UUID id) {
         return employeeService.findById(id);
+    }
+
+    @GetMapping("/employee-detail/{id}")
+    @ApiOperation("Get a specific employee")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Employee returned successfully"),
+            @ApiResponse(code = 404, message = "Employee not found for given id")
+    })
+    public EmployeeDetailsOutputDTO getByEmployeeDetailsOutputDTOId (@PathVariable @ApiParam("Employee id") UUID id) {
+        return employeeMapper.toEmployeeDetailsOutputDTO(employeeService.findById(id));
     }
 
     @PostMapping
