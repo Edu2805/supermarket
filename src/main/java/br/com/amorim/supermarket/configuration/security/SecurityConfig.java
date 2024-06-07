@@ -98,7 +98,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 //Product
                 .antMatchers("/api/product/**")
-                .hasAnyRole(ADMIN.role, HEAD.role, MANAGER.role, DEPARTMENT_MANAGER.role, SECTION_MANAGER.role, BUYER.role)
+                .hasAnyRole(ADMIN.role, HEAD.role, MANAGER.role, DEPARTMENT_MANAGER.role, SECTION_MANAGER.role, BUYER.role, EMPLOYEE.role)
 
                 //Person
                 .antMatchers("/api/person/**")
@@ -134,7 +134,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 //Goods issue
                 .antMatchers("/api/goods-issue/**")
-                .hasAnyRole(ADMIN.role, BUYER.role, RECEIPT.role)
+                .hasAnyRole(ADMIN.role, BUYER.role, RECEIPT.role, EMPLOYEE.role)
 
                 //Goods receipt
                 .antMatchers("/api/goods-receipt/**")
