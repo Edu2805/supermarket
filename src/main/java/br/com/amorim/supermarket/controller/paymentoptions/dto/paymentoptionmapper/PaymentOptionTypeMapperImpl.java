@@ -10,29 +10,28 @@ import static br.com.amorim.supermarket.common.enums.PaymentOptionsType.MEAL_TIC
 import static br.com.amorim.supermarket.common.enums.PaymentOptionsType.MONEY;
 import static br.com.amorim.supermarket.common.enums.PaymentOptionsType.OPENED;
 import static br.com.amorim.supermarket.common.enums.PaymentOptionsType.PIX;
-import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
 
 @Component
 public class PaymentOptionTypeMapperImpl implements PaymentOptionTypeMapper{
     @Override
-    public PaymentOptionsType mapperPaymentoOptionsType(String paymentOptionType) {
+    public PaymentOptionsType mapperPaymentOptionsType(String paymentOptionType) {
         PaymentOptionsType paymentOption = OPENED;
-        if (getString(MONEY.name()).equals(paymentOptionType)) {
+        if (MONEY.name().equals(paymentOptionType)) {
             paymentOption = MONEY;
         }
-        else if (getString(CREDIT_CARD.name()).equals(paymentOptionType)) {
+        else if (CREDIT_CARD.name().equals(paymentOptionType)) {
             paymentOption = CREDIT_CARD;
         }
-        else if (getString(DEBIT_CARD.name()).equals(paymentOptionType)) {
+        else if (DEBIT_CARD.name().equals(paymentOptionType)) {
             paymentOption = DEBIT_CARD;
         }
-        else if (getString(MEAL_TICKET.name()).equals(paymentOptionType)) {
+        else if (MEAL_TICKET.name().equals(paymentOptionType)) {
             paymentOption = MEAL_TICKET;
         }
-        else if (getString(FOOD_VOUCHER.name()).equals(paymentOptionType)) {
+        else if (FOOD_VOUCHER.name().equals(paymentOptionType)) {
             paymentOption = FOOD_VOUCHER;
         }
-        else if (getString(PIX.name()).equals(paymentOptionType)) {
+        else if (PIX.name().equals(paymentOptionType)) {
             paymentOption = PIX;
         }
         return paymentOption;
