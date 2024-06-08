@@ -15,7 +15,7 @@ public class ConvertGoodsIssueMapperImpl implements ConvertGoodsIssueMapper {
     @Override
     public GoodsIssue createGoodsIssueMapper(GoodsIssueDTO goodsIssueDTO) {
         GoodsIssue goodsIssue = new GoodsIssue();
-        goodsIssue.setPaymentOptionsType(paymentOptionTypeMapper.mapperPaymentoOptionsType(goodsIssueDTO.getPaymentOptionsType()));
+        goodsIssue.setPaymentOptionsType(paymentOptionTypeMapper.mapperPaymentOptionsType(goodsIssueDTO.getPaymentOptionsType()));
         goodsIssue.setProductDataList(goodsIssueDTO.getProductDataList());
         goodsIssue.setSaleNumber(goodsIssueDTO.getSaleNumber());
         goodsIssue.setChange(goodsIssueDTO.getChange());
@@ -31,7 +31,7 @@ public class ConvertGoodsIssueMapperImpl implements ConvertGoodsIssueMapper {
     public GoodsIssue updateGoodsIssueMapper(GoodsIssueDTO goodsIssueDTO) {
         GoodsIssue goodsIssue = new GoodsIssue();
         goodsIssue.setId(goodsIssueDTO.getId());
-        goodsIssue.setPaymentOptionsType(paymentOptionTypeMapper.mapperPaymentoOptionsType(goodsIssueDTO.getPaymentOptionsType()));
+        goodsIssue.setPaymentOptionsType(paymentOptionTypeMapper.mapperPaymentOptionsType(goodsIssueDTO.getPaymentOptionsType()));
         goodsIssue.setProductDataList(goodsIssueDTO.getProductDataList());
         goodsIssue.setSaleNumber(goodsIssueDTO.getSaleNumber());
         goodsIssue.setChange(goodsIssueDTO.getChange());
