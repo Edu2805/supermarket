@@ -124,7 +124,7 @@ class ProductDataCrudServiceImplTest {
 
     @Test
     void shouldSaveWithSuccess() {
-        when(calculateMarginMock.calculate(productData)).thenReturn(BigDecimal.valueOf(0.555));
+        when(calculateMarginMock.calculateWhenInsert(productData)).thenReturn(BigDecimal.valueOf(0.555));
         when(generateInternalCodeMock.generate(productData)).thenReturn(BigInteger.valueOf(1));
         when(productDataRepositoryMock.save(productData)).thenReturn(productData);
 
@@ -141,7 +141,7 @@ class ProductDataCrudServiceImplTest {
         ArgumentCaptor<UUID> knownIdCapture = ArgumentCaptor.forClass(UUID.class);
         when(productDataRepositoryMock.findById(knownIdCapture.capture()))
                 .thenReturn(Optional.of(productData));
-        when(calculateMarginMock.calculate(productData))
+        when(calculateMarginMock.calculateWhenInsert(productData))
                 .thenReturn(BigDecimal.valueOf(0.555));
         when(generateInternalCodeMock.generate(productData))
                 .thenReturn(BigInteger.valueOf(1));

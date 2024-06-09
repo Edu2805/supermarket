@@ -80,7 +80,7 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
     }
 
     private void setMargin (ProductData productData) {
-        BigDecimal margin = calculateMargin.calculate(productData);
+        BigDecimal margin = calculateMargin.calculateWhenInsert(productData);
         productData.setMargin(margin);
     }
 
@@ -102,7 +102,7 @@ public class ProductDataCrudServiceImpl implements ProductDataCrudService {
                 .map(existingProduct -> {
                     productData.setId(existingProduct.getId());
                     validateBeforeUpdate(productData);
-                    BigDecimal margin = calculateMargin.calculate(productData);
+                    BigDecimal margin = calculateMargin.calculateWhenUpdate(productData);
                     productData.setMargin(margin);
                     productData.setCode(existingProduct.getCode());
                     setPhotoAndUpdate(productData, existingProduct);
