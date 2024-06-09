@@ -1,17 +1,15 @@
 package br.com.amorim.supermarket.controller.unity.dto;
 
-import lombok.AllArgsConstructor;
+import br.com.amorim.supermarket.common.enums.EnumCommonEntity;
+import br.com.amorim.supermarket.common.enums.UnityType;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
-public class UnityOutput {
+public class UnityOutput extends EnumCommonEntity<UnityType> {
 
-    List<String> names;
+    public UnityOutput(UnityType key, String name) {
+        super(key, name);
+    }
 }

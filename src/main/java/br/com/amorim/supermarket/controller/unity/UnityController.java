@@ -1,5 +1,6 @@
 package br.com.amorim.supermarket.controller.unity;
 
+import br.com.amorim.supermarket.common.enums.UnityType;
 import br.com.amorim.supermarket.controller.unity.dto.UnityOutput;
 import br.com.amorim.supermarket.service.unity.UnityCrudService;
 import lombok.AllArgsConstructor;
@@ -23,9 +24,11 @@ public class UnityController {
 
     @GetMapping
     @ApiIgnore
-    public UnityOutput findAll () {
-        List<String> unityName = new ArrayList<>();
-        unityCrudService.findAllUnities().forEach(unity -> unityName.add(getString(unity.getName())));
-        return new UnityOutput(unityName);
+    public List<UnityOutput> findAll () {
+        List<UnityOutput> unityOutputs = new ArrayList<>();
+        for (UnityType type : UnityType.values()) {
+            unityOutputs.add(new UnityOutput(type, getString(type.name())));
+        }
+        return unityOutputs;
     }
 }

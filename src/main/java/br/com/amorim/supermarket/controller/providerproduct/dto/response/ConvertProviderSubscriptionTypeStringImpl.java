@@ -4,6 +4,8 @@ import br.com.amorim.supermarket.model.providerproduct.ProviderProduct;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import static br.com.amorim.supermarket.configuration.internacionalizationmessages.ResourcesBundleMessages.getString;
+
 @AllArgsConstructor
 
 @Component
@@ -21,7 +23,7 @@ public class ConvertProviderSubscriptionTypeStringImpl implements ConvertProvide
         providerProductDTO.setCode(providerProduct.getCode());
         providerProductDTO.setPhone(providerProduct.getPhone());
         providerProductDTO.setSubscriptionNumber(providerProduct.getSubscriptionNumber());
-        providerProductDTO.setSubscriptionType(providerProduct.getSubscriptionType().name());
+        providerProductDTO.setSubscriptionType(getString(providerProduct.getSubscriptionType().name()));
         providerProductDTO.setMunicipalRegistration(providerProduct.getMunicipalRegistration());
         providerProductDTO.setStateRegistration(providerProduct.getStateRegistration());
         providerProductDTO.setAddress(providerProduct.getAddress());

@@ -2,14 +2,14 @@ package br.com.amorim.supermarket.common.enums;
 
 public enum ScholarityType {
 
-    ILLITERATE("{br.com.supermarket.ILLITERATE}"),
-    ELEMENTARY_SCHOOL("{br.com.supermarket.ELEMENTARY_SCHOOL}"),
-    HIGH_SCHOOL("{br.com.supermarket.HIGH_SCHOOL}"),
-    UNIVERSITY_EDUCATION("{br.com.supermarket.UNIVERSITY_EDUCATION}"),
-    POSTGRADUATE("{messages_es.properties}"),
-    MASTER_DEGREE("{br.com.supermarket.MASTER_DEGREE}"),
-    DOCTORATE_DEGREE("{br.com.supermarket.DOCTORATE_DEGREE}"),
-    UNINFORMED("{br.com.supermarket.UNINFORMED}");
+    ILLITERATE("ILLITERATE"),
+    ELEMENTARY_SCHOOL("ELEMENTARY_SCHOOL"),
+    HIGH_SCHOOL("HIGH_SCHOOL"),
+    UNIVERSITY_EDUCATION("UNIVERSITY_EDUCATION"),
+    POSTGRADUATE("POSTGRADUATE"),
+    MASTER_DEGREE("MASTER_DEGREE"),
+    DOCTORATE_DEGREE("DOCTORATE_DEGREE"),
+    UNINFORMED("UNINFORMED");
 
     public final String scholarity;
 

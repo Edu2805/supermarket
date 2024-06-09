@@ -2,10 +2,10 @@ package br.com.amorim.supermarket.common.enums;
 
 public enum SubscriptionType {
 
-    CNPJ("{br.com.supermarket.CNPJ}"),
-    CPF("{br.com.supermarket.CPF}"),
-    CEI("{br.com.supermarket.CEI}"),
-    UNINFORMED("{br.com.supermarket.UNINFORMED}");;
+    CNPJ("CNPJ"),
+    CPF("CPF"),
+    CEI("CEI"),
+    UNINFORMED("UNINFORMED");
 
     public final String subscription;
 

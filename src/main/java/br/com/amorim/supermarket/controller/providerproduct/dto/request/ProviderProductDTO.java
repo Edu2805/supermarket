@@ -1,6 +1,5 @@
 package br.com.amorim.supermarket.controller.providerproduct.dto.request;
 
-import br.com.amorim.supermarket.common.enums.SubscriptionType;
 import br.com.amorim.supermarket.controller.common.dto.CommonDTONameMunicipalAndStateRegistration;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +17,7 @@ import javax.validation.constraints.Size;
 public class ProviderProductDTO extends CommonDTONameMunicipalAndStateRegistration {
 
     @NotNull(message = "{br.com.supermarket.PROVIDER_PRODUCT_DTO_FIELD_SUBSCRIPTION_TYPE_IS_NOT_EMPTY}")
-    private SubscriptionType subscriptionType;
+    private String subscriptionType;
 
     @NotBlank(message = "{br.com.supermarket.PROVIDER_PRODUCT_DTO_FIELD_SUBSCRIPTION_NUMBER_IS_NOT_EMPTY}")
     @Size(min = 11, max = 14, message = "{br.com.supermarket.PROVIDER_PRODUCT_DTO_FIELD_SUBSCRIPTION_NUMBER_CANNOT_BE_LESS_THAN_11_AND_GREATER_THAN_14}")
