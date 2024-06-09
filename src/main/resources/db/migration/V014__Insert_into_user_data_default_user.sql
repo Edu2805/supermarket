@@ -1,0 +1,2 @@
+INSERT INTO user_data (id, user_name, "password", "role", registration_date, is_employee, is_approved)
+VALUES ('8674cb37-a85a-486f-9f88-91c14d7857bd', 'admin@amorim.com', '$2a$10$UsF3T1I3Q2K19iwqyXkheOAzoVQCSP5HXJ/sGfZoLURcQGlqOgf1C', 'ADMIN', now()::timestamp, true, true);
