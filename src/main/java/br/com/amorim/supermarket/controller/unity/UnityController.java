@@ -2,7 +2,6 @@ package br.com.amorim.supermarket.controller.unity;
 
 import br.com.amorim.supermarket.common.enums.UnityType;
 import br.com.amorim.supermarket.controller.unity.dto.UnityOutput;
-import br.com.amorim.supermarket.service.unity.UnityCrudService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +18,6 @@ import static br.com.amorim.supermarket.configuration.internacionalizationmessag
 @RestController
 @RequestMapping("api/unity")
 public class UnityController {
-
-    private UnityCrudService unityCrudService;
 
     @GetMapping
     @ApiIgnore
