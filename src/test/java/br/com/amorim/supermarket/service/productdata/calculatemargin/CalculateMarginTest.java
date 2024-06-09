@@ -55,11 +55,11 @@ public class CalculateMarginTest {
     }
 
     @Test
-    public void shouldCalculateMargin () {
+    public void shouldCalculateWhenInsertMargin() {
         var calculate = productData.getSalePrice().subtract(productData.getPurchasePrice());
         var marginCalculed = calculate.divide(productData.getSalePrice(), 4, RoundingMode.HALF_UP);
 
-        var margin = calculateMarginImplMock.calculate(productData);
+        var margin = calculateMarginImplMock.calculateWhenInsert(productData);
 
         assertEquals(marginCalculed, margin);
     }

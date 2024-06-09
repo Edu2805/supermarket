@@ -21,7 +21,7 @@ public class ChangeProductPurchaseAmountImpl implements ChangeProductPurchaseAmo
             findProducts.map(productData -> {
                 productData.setPurchasePrice(receiptProduct.getPurchasePrice());
                 productData.setInventory(receiptProduct.getInventory());
-                var calculateMargim = calculateMargin.calculate(receiptProduct);
+                var calculateMargim = calculateMargin.calculateWhenInsert(receiptProduct);
                 productData.setMargin(calculateMargim);
                 productDataRepository.save(productData);
                 return receiptProduct;

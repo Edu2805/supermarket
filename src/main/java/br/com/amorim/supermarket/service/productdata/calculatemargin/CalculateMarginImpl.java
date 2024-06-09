@@ -25,7 +25,13 @@ public class CalculateMarginImpl implements CalculateMargin {
      * @return a margem de lucro do produto
      */
     @Override
-    public BigDecimal calculate(ProductData productData) {
+    public BigDecimal calculateWhenInsert(ProductData productData) {
+        BigDecimal margin = productData.getSalePrice().subtract(productData.getPurchasePrice());
+        return margin.divide(productData.getSalePrice(), SCALE, RoundingMode.HALF_UP);
+    }
+
+    @Override
+    public BigDecimal calculateWhenUpdate(ProductData productData) {
         ProductData product = findProduct(productData);
         BigDecimal margin = product.getSalePrice().subtract(product.getPurchasePrice());
         return margin.divide(product.getSalePrice(), SCALE, RoundingMode.HALF_UP);

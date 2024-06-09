@@ -6,5 +6,6 @@ import java.math.BigDecimal;
 
 public interface CalculateMargin {
 
-    BigDecimal calculate (ProductData productData);
+    BigDecimal calculateWhenInsert(ProductData productData);
+    BigDecimal calculateWhenUpdate(ProductData productData);
 }
