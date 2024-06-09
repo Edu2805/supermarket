@@ -1,17 +1,15 @@
 package br.com.amorim.supermarket.controller.scholarity.dto;
 
-import lombok.AllArgsConstructor;
+import br.com.amorim.supermarket.common.enums.EnumCommonEntity;
+import br.com.amorim.supermarket.common.enums.ScholarityType;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
-public class ScholarityOutput {
+public class ScholarityOutput extends EnumCommonEntity<ScholarityType> {
 
-    List<String> names;
+    public ScholarityOutput(ScholarityType key, String name) {
+        super(key, name);
+    }
 }

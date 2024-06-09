@@ -1,7 +1,7 @@
 package br.com.amorim.supermarket.controller.scholarity;
 
+import br.com.amorim.supermarket.common.enums.ScholarityType;
 import br.com.amorim.supermarket.controller.scholarity.dto.ScholarityOutput;
-import br.com.amorim.supermarket.service.scholarity.ScholarityCrudService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,13 +19,13 @@ import static br.com.amorim.supermarket.configuration.internacionalizationmessag
 @RequestMapping("api/scholarity")
 public class ScholarityController {
 
-    private ScholarityCrudService scholarityCrudService;
-
     @GetMapping
     @ApiIgnore
-    public ScholarityOutput findAll () {
-        List<String> scholarityName = new ArrayList<>();
-        scholarityCrudService.findAllEducations().forEach(scholarity -> scholarityName.add(getString(scholarity.getName())));
-        return new ScholarityOutput(scholarityName);
+    public List<ScholarityOutput> findAll () {
+        List<ScholarityOutput> scholarityOutputs = new ArrayList<>();
+        for (ScholarityType type : ScholarityType.values()) {
+            scholarityOutputs.add(new ScholarityOutput(type, getString(type.name())));
+        }
+        return scholarityOutputs;
     }
 }
