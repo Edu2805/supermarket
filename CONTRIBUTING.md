@@ -1,37 +1,37 @@
-# Contribuindo para o Supermarket
+# Contributing to Supermarket
 
-O Supermarket é um projeto de código aberto e nós apreciamos contribuições da comunidade. Este documento contém informações sobre como você pode ajudar.
+Supermarket is an open-source project, and we appreciate contributions from the community. This document contains information on how you can help.
 
-## Como Contribuir
+## How to Contribute
 
-1. Primeiro, faça um fork do repositório.
-2. Clone o fork em sua máquina local: git clone https://gitlab.com/seu-usuario/supermarket.git
-3. Crie uma nova branch para suas alterações: git checkout -b branch/número-da-issue
-   - Crie uma branch a partir da branch `master`. Para novas funcionalidades usar a branch `feature`, para correções de bugs usar a branch `bugfix`.
-   - Antes de criar a nova branch, verifique no repositório original se há alguma branch que já esteja tratando do mesmo problema.
-4. Faça suas alterações e adicione testes, se aplicável.
-5. Certifique-se de seguir as convenções de codificação para Java, como as especificadas pelo [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html) ou [Java Coding Conventions](https://www.oracle.com/java/technologies/javase/codeconventions-introduction.html).
-6. Faça *commit* das suas alterações: git commit -m '#identificação-da-branch - Descrição das alterações'
-7. Envie suas alterações para o seu fork: git push origin identificação-da-branch
-8. Abra um novo *merge request* explicando suas alterações.
+1. First, fork the repository.
+2. Clone the fork to your local machine: `git clone https://gitlab.com/your-username/supermarket.git`
+3. Create a new branch for your changes: `git checkout -b branch/issue-number`
+   - Create a branch from the `master` branch. For new features, use the `feature` branch; for bug fixes, use the `bugfix` branch.
+   - Before creating the new branch, check the original repository for any existing branches addressing the same issue.
+4. Make your changes and add tests, if applicable.
+5. Make sure to follow the coding conventions for Java, such as those specified by the [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html) or [Java Coding Conventions](https://www.oracle.com/java/technologies/javase/codeconventions-introduction.html).
+6. Commit your changes: `git commit -m '#branch-identification - Description of changes'`
+7. Push your changes to your fork: `git push origin branch-identification`
+8. Open a new merge request explaining your changes.
 
-## Padrões de Código
+## Code Standards
 
-- Siga as convenções de codificação para Java, como as especificadas pelo [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html) ou [Java Coding Conventions](https://www.oracle.com/java/technologies/javase/codeconventions-introduction.html).
-- Mantenha um código limpo e legível.
-- Documente seu código de forma clara.
+- Follow coding conventions for Java, such as those specified by the [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html) or [Java Coding Conventions](https://www.oracle.com/java/technologies/javase/codeconventions-introduction.html).
+- Maintain clean and readable code.
+- Document your code clearly.
 
-## Diretrizes para Solicitações de Pull
+## Pull Request Guidelines
 
-- Forneça uma descrição detalhada das alterações feitas.
-- Se possível, vincule a um problema existente que sua solicitação de pull resolve.
-- Certifique-se de que seus commits sejam claros e bem estruturados.
-- Execute testes locais antes de enviar sua solicitação de pull.
+- Provide a detailed description of the changes made.
+- If possible, link to an existing issue that your pull request resolves.
+- Ensure your commits are clear and well-structured.
+- Run local tests before submitting your pull request.
 
-## Contato
+## Contact
 
-Se você tiver alguma dúvida ou precisar de ajuda, sinta-se à vontade para entrar em contato com os mantenedores do projeto através das issues ou por email: [eduardoamorim927@gmail.com](mailto:eduardoamorim927@gmail.com).
+If you have any questions or need assistance, feel free to contact the project maintainers through issues or via email: [eduardoamorim927@gmail.com](mailto:eduardoamorim927@gmail.com).
 
-## Agradecimentos
+## Acknowledgements
 
-Agradecemos por considerar contribuir para o Supermarket.
+Thank you for considering contributing to Supermarket.
