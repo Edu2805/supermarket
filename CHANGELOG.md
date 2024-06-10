@@ -3,12 +3,9 @@
 ## Alterações não lançadas
 
 jun 10, 2024
+- [#documentation/08](https://gitlab.com/Edu2805/supermarket/-/merge_requests/210) - #documentation/08 - Criação do LICENSE
 - [#documentation/07](https://gitlab.com/Edu2805/supermarket/-/merge_requests/209) - #documentation/07 - Criação do CHANGELOG
-
-Jun 10, 2024
 - [#documentation/06](https://gitlab.com/Edu2805/supermarket/-/merge_requests/208) - #documentation/06 - Atualização do README
-
-Jun 10, 2024
 - [#bugfix/25](https://gitlab.com/Edu2805/supermarket/-/merge_requests/206) - #bugfix/25 - Correção do problema de mesmo nome do cargo ao atualizar um cargo
 
 Jun 09, 2024
