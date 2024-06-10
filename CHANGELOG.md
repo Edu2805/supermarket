@@ -3,6 +3,7 @@
 ## Alterações não lançadas
 
 jun 10, 2024
+- [#documentation/09](https://gitlab.com/Edu2805/supermarket/-/merge_requests/211) - #documentation/09 - Criação do CONTRIBUTING
 - [#documentation/08](https://gitlab.com/Edu2805/supermarket/-/merge_requests/210) - #documentation/08 - Criação do LICENSE
 - [#documentation/07](https://gitlab.com/Edu2805/supermarket/-/merge_requests/209) - #documentation/07 - Criação do CHANGELOG
 - [#documentation/06](https://gitlab.com/Edu2805/supermarket/-/merge_requests/208) - #documentation/06 - Atualização do README
