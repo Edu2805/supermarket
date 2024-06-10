@@ -77,7 +77,6 @@ public class JobPositionCrudServiceImpl implements JobPositionCrudService {
                     jobPosition.setName(existingJobPosition.getName());
                     jobPosition.setCode(existingJobPosition.getCode());
                     fillPositionNameBySalary.fillPositionName(jobPosition);
-                    verifyJobPositionName.isPositionNameAlreadyExistsInSalary(jobPosition);
                     jobPositionRepository.save(jobPosition);
                     return existingJobPosition;
                 }).orElseThrow(() ->
