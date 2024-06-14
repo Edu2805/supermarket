@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -45,7 +46,7 @@ public class ProductUnityStringDTO {
     private String dun14;
 
     @NotNull(message = "{br.com.supermarket.PRODUCT_DATA_DTO_FIELD_INVENTORY_IS_NOT_NULL}")
-    @Positive(message = "{br.com.supermarket.PRODUCT_DATA_DTO_FIELD_INVENTORY_IS_NOT_NEGATIVE}")
+    @Min(value = 0, message = "{br.com.supermarket.PRODUCT_DATA_DTO_FIELD_INVENTORY_IS_NOT_NEGATIVE}")
     @Digits(integer = 10, fraction = 2, message = "{br.com.supermarket.PRODUCT_DATA_DTO_FIELD_INVENTORY_INCORRECT_FORMAT}")
     private BigDecimal inventory;
 

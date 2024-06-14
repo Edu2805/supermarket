@@ -2,6 +2,9 @@
 
 ## Alterações não lançadas
 
+Jun 14, 2024
+- [#bugfix/26](https://gitlab.com/Edu2805/supermarket/-/merge_requests/212) - #bugfix/26 - Correção no validador da quantidade de estoque no cadastro para permitir valores zerados.
+
 jun 10, 2024
 - [#documentation/09](https://gitlab.com/Edu2805/supermarket/-/merge_requests/211) - #documentation/09 - Criação do CONTRIBUTING
 - [#documentation/08](https://gitlab.com/Edu2805/supermarket/-/merge_requests/210) - #documentation/08 - Criação do LICENSE
